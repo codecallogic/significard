@@ -1,0 +1,135 @@
+.signup {
+  text-align: center;
+
+  &-container {
+    display: flex;
+    justify-content: center;
+    margin: 10rem 0 0 0;
+  }
+
+  &-heading {
+    font-size: 2.2rem;
+    font-weight: 400;
+  }
+
+  &-subheading {
+    font-size: 1.8rem;
+    font-weight: 400;
+  }
+
+  &-form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 2rem 1rem;
+    border: 0.1rem solid $color-scheme-4-alt-2;
+    width: 50rem;
+    box-sizing: border-box;
+    border-radius: 1.2rem;
+    margin: 5rem 0;
+
+    &-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 0.1rem solid $color-input;
+      padding: 1rem 2rem;
+      border-radius: 1.2rem;
+      width: 30rem;
+      margin: 1rem 0;
+      box-sizing: border-box;
+
+      svg {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+
+      input {
+        flex-grow: 1;
+        border: none;
+        outline: none;
+        margin-left: 2rem;
+        font-size: 1.8rem;
+        color: $color-input;
+
+        &::placeholder {
+          color: $color-input;
+        }
+      }
+    }
+
+    button {
+      background-color: $color-scheme-3;
+      color: white;
+      border-radius: 1.2rem;
+      width: 30rem;
+      height: 5rem;
+      font-size: 1.8rem;
+      transition: all 1s ease-in-out;
+      border: none;
+      outline: none;
+
+      &:hover {
+        background-color: $color-scheme-4;
+        cursor: pointer;
+      }
+    }
+
+    &-break {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin: 3rem 0;
+      padding: 0 3rem;
+
+      span:first-child {
+        height: 0.1rem;
+        background-color: black;
+        width: 100%;
+      }
+
+      p {
+        width: 100%;
+        font-size: 1.6rem;
+        padding: 0 1rem;
+      }
+
+      span:last-child {
+        height: 0.1rem;
+        background-color: black;
+        width: 100%;
+      }
+    }
+
+    &-signin {
+      font-size: 1.6rem;
+      margin: 2.5rem 0;
+
+      a {
+        margin-left: 0.5rem;
+      }
+    }
+  }
+}
+
+#firebaseui_container {
+  width: 100% !important;
+}
+
+.firebaseui-container {
+  max-width: 100% !important;
+}
+
+.firebaseui-card-content {
+  box-sizing: border-box;
+}
+
+.firebaseui-idp-list {
+  display: flex;
+  box-sizing: border-box;
+}
+
+.firebaseui-list-item:not(:first-child) {
+  margin-left: 1rem;
+}
