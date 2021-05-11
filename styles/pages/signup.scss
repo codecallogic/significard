@@ -108,6 +108,13 @@
 
       a {
         margin-left: 0.5rem;
+        text-decoration: underline;
+        color: $color-scheme-1;
+
+        &:hover {
+          cursor: pointer;
+          color: $color-scheme-2;
+        }
       }
     }
   }

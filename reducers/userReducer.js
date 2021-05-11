@@ -1,7 +1,7 @@
 const initialState = {
   nav: 'logins',
-  userName: 'dummyName',
-  userEmail: 'dummyEmail'
+  userName: null,
+  userEmail: null
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -9,7 +9,7 @@ export const userReducer = (state = initialState, action) => {
     case "USER":
       return {
         ...state,
-        userName: action.payload.displayName
+        userName: action.payload.userName
       }
     
     default: 

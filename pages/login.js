@@ -29,42 +29,41 @@ const SignUp = ({newUser, userUpdate}) => {
     ],
     callbacks: {
       signInSuccessWithAuthResult: (authResult, redirectUrl) => {
-        signUpFirebase(authResult.user)
+        loginFirebase(authResult.user)
         return false
       },
       signInFailure: (error) => console.log(error)
     }
   }
 
-  const signUp = async (e) => {
+  const login = async (e) => {
     e.preventDefault()
     try {
-      const responseSignUp = await axios.post(`${API}/auth/signup`, {name, email, password})
-      userUpdate(responseSignUp.data)
+      const responseLogin = await axios.post(`${API}/auth/login`, {email, password})
+      userUpdate(responseLogin.data)
       router.push('/')
     } catch (error) {
       console.log(error)
     }
   }
 
-  const signUpFirebase = async (user) => {
+  const loginFirebase = async (user) => {
     try {
-      const responseSignUp = await axios.post(`${API}/auth/signup`, {user})
-      userUpdate(responseSignUp.data)
+      const responseLogin = await axios.post(`${API}/auth/login`, {user})
+      userUpdate(responseLogin.data)
       router.push('/')
     } catch (error) {
       console.log(error)
     }
   }
-
+  
   return (
     <>
     <Nav></Nav>
     <div className="signup-container">
     <div className="signup">
-      <h1 className="signup-heading">Let's set up your account:</h1>
-      <h2 className="signup-subheading">Select one or more events.</h2>
-      <form className="signup-form" onSubmit={signUp}>
+      <h1 className="signup-heading">Login to access your account</h1>
+      <form className="signup-form" onSubmit={login}>
         <div className="signup-form-group">
           <svg><use xlinkHref="sprite.svg#icon-user"></use></svg>
           <input type="text" name="name" placeholder="Name" value={name} onChange={ (e) => setName(e.target.value)}/>
@@ -87,7 +86,7 @@ const SignUp = ({newUser, userUpdate}) => {
           uiConfig={uiConfig}
           firebaseAuth={firebase.auth()}
         />
-        <p className="signup-form-signin">Already have an account? <a href="/login">Login</a></p>
+        <p className="signup-form-signin">Don't have an account? <a href="/signup">Sign Up</a></p>
       </form>
     </div>
     </div>
