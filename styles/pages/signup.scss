@@ -28,6 +28,11 @@
     border-radius: 1.2rem;
     margin: 5rem 0;
 
+    &-message {
+      font-size: 1.2rem;
+      color: $color-scheme-1;
+    }
+
     &-group {
       display: flex;
       align-items: center;

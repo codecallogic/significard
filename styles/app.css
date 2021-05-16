@@ -105,6 +105,9 @@ body {
     box-sizing: border-box;
     border-radius: 1.2rem;
     margin: 5rem 0; }
+    .signup-form-message {
+      font-size: 1.2rem;
+      color: #e84925; }
     .signup-form-group {
       display: flex;
       align-items: center;
@@ -200,3 +203,11 @@ body {
     .home-logout:hover {
       color: #d7dcfe;
       cursor: pointer; }
+
+.giphy-loading {
+  margin: 1rem 0 !important; }
+  .giphy-loading-space {
+    width: 3rem !important;
+    height: 4rem !important;
+    padding: 0 !important;
+    color: transparent; }

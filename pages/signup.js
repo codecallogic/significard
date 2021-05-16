@@ -14,11 +14,12 @@ axios.defaults.withCredentials = true
 
 initializeFirebase()
 
-const SignUp = ({newUser, userUpdate}) => {
+const SignUp = ({newUser, user, userUpdate, userMessage}) => {
   const router = useRouter()
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [name, setName] = useState('Fabricio')
+  const [email, setEmail] = useState('contact@fabricioguardia.com')
+  const [password, setPassword] = useState('12345')
+  const [loading, setLoading] = useState(false)
   
   const uiConfig = {
     signInFlow: 'popup',
@@ -37,23 +38,28 @@ const SignUp = ({newUser, userUpdate}) => {
   }
 
   const signUp = async (e) => {
+    setLoading(true)
     e.preventDefault()
     try {
       const responseSignUp = await axios.post(`${API}/auth/signup`, {name, email, password})
-      userUpdate(responseSignUp.data)
-      router.push('/')
+      console.log(responseSignUp)
+      userMessage(responseSignUp.data)
+      setLoading(false)
     } catch (error) {
       console.log(error)
+      setLoading(false)
     }
   }
 
   const signUpFirebase = async (user) => {
+    setLoading(true)
     try {
       const responseSignUp = await axios.post(`${API}/auth/signup`, {user})
-      userUpdate(responseSignUp.data)
-      router.push('/')
+      userMessage(responseSignUp.data)
+      setLoading(false)
     } catch (error) {
       console.log(error)
+      setLoading(false)
     }
   }
 
@@ -78,6 +84,9 @@ const SignUp = ({newUser, userUpdate}) => {
           <input type="password" name="password" placeholder="Password" value={password} onChange={ (e) => setPassword(e.target.value)}/>
         </div>
         <button type="submit">Continue with e-mail</button>
+        <br/>
+        {loading ? <iframe src="https://giphy.com/embed/sSgvbe1m3n93G" width="30" height="30" frameBorder="0" className="giphy-loading" allowFullScreen></iframe> : null }
+        {user.message !== null ? <div className="signup-form-message">{user.message !== null ? user.message : ''} </div> : loading ? null : <div className="giphy-loading-space">Loading...</div>}
         <div className="signup-form-break">
           <span></span>
           <p>OR continue with</p>
@@ -96,10 +105,17 @@ const SignUp = ({newUser, userUpdate}) => {
   )
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
   return {
-      userUpdate: (user) => dispatch({type: 'USER', payload: user})
+      user: state.user
   }
 }
 
-export default connect(null, mapDispatchToProps)(withUser(SignUp))
+const mapDispatchToProps = dispatch => {
+  return {
+      userUpdate: (user) => dispatch({type: 'USER', payload: user}),
+      userMessage: (message) => dispatch({type: 'MESSAGE', payload: message})
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withUser(SignUp))
