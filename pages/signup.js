@@ -51,6 +51,9 @@ const SignUp = ({newUser, user, userUpdate, userMessage}) => {
       console.log(responseSignUp)
       userMessage(responseSignUp.data)
       setLoading(false)
+      setName('')
+      setEmail('')
+      setPassword('')
     } catch (error) {
       console.log(error)
       setLoading(false)
@@ -63,6 +66,9 @@ const SignUp = ({newUser, user, userUpdate, userMessage}) => {
       const responseSignUp = await axios.post(`${API}/auth/signup`, {user})
       userMessage(responseSignUp.data)
       setLoading(false)
+      setName('')
+      setEmail('')
+      setPassword('')
     } catch (error) {
       console.log(error)
       setLoading(false)

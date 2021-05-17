@@ -225,6 +225,67 @@ body {
       color: #d7dcfe;
       cursor: pointer; }
 
+.survey {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  width: 100%;
+  align-items: center;
+  padding: 8rem 0rem;
+  position: relative; }
+  .survey-title {
+    grid-column: 5/7;
+    justify-self: center;
+    font-size: 2.2rem; }
+  .survey-subtitle {
+    grid-column: 4/8;
+    justify-self: center;
+    font-size: 1.8rem; }
+  .survey-recipient {
+    grid-column: 3/9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: 5rem 0; }
+    .survey-recipient-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 19rem;
+      min-height: 18.2rem;
+      font-size: 2.2rem;
+      line-height: 2.5rem;
+      border: 0.1rem solid #0f2e4c;
+      border-radius: 1.2rem;
+      padding: 2rem 3rem;
+      transition: all 0.5s cubic-bezier(0.47, 0, 0.745, 0.715); }
+      .survey-recipient-item:hover {
+        background-color: #0f2e4c;
+        color: white;
+        cursor: pointer; }
+  .survey-button {
+    grid-column: 1/-1;
+    justify-self: center;
+    padding: 1rem 5rem;
+    color: #0f2e4c;
+    background-color: transparent;
+    border-radius: 1.2rem; }
+    .survey-button:hover {
+      cursor: pointer; }
+  .survey-next {
+    position: absolute;
+    right: 10rem;
+    top: 5rem; }
+    .survey-next svg {
+      width: 5rem;
+      height: 5rem;
+      fill: #e5e5e5;
+      transition: all 0.5s cubic-bezier(0.47, 0, 0.745, 0.715); }
+      .survey-next svg:hover {
+        fill: #0f2e4c;
+        cursor: pointer; }
+
 .giphy-loading {
   margin: 1rem 0 !important; }
   .giphy-loading-space {
