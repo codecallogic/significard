@@ -14,18 +14,26 @@ axios.defaults.withCredentials = true
 
 initializeFirebase()
 
-const SignUp = ({newUser, userUpdate}) => {
+const SignUp = ({newUser, user, userUpdate, userMessage}) => {
   const router = useRouter()
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('contact@fabricioguardia.com')
+  const [password, setPassword] = useState('12345')
+  const [loading, setLoading] = useState(false)
+
+  console.log(newUser)
   
   const uiConfig = {
     signInFlow: 'popup',
     // signInSuccessUrl: `/signup`,
     signInOptions: [
-      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID
+      {
+        provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        fullLabel: 'Facebook'
+      },
+      {
+        provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        fullLabel: 'Google'
+      }
     ],
     callbacks: {
       signInSuccessWithAuthResult: (authResult, redirectUrl) => {
@@ -65,10 +73,6 @@ const SignUp = ({newUser, userUpdate}) => {
       <h1 className="signup-heading">Login to access your account</h1>
       <form className="signup-form" onSubmit={login}>
         <div className="signup-form-group">
-          <svg><use xlinkHref="sprite.svg#icon-user"></use></svg>
-          <input type="text" name="name" placeholder="Name" value={name} onChange={ (e) => setName(e.target.value)}/>
-        </div>
-        <div className="signup-form-group">
           <svg><use xlinkHref="sprite.svg#icon-envelope"></use></svg>
           <input type="email" name="email" placeholder="E-mail" value={email} onChange={ (e) => setEmail(e.target.value)}/>
         </div>
@@ -77,6 +81,8 @@ const SignUp = ({newUser, userUpdate}) => {
           <input type="password" name="password" placeholder="Password" value={password} onChange={ (e) => setPassword(e.target.value)}/>
         </div>
         <button type="submit">Continue with e-mail</button>
+        {loading ? <iframe src="https://giphy.com/embed/sSgvbe1m3n93G" width="30" height="30" frameBorder="0" className="giphy-loading" allowFullScreen></iframe> : null }
+        {user.message !== null ? <div className="signup-form-message">{user.message !== null ? user.message : ''} </div> : loading ? null : <div className="giphy-loading-space">Loading...</div>}
         <div className="signup-form-break">
           <span></span>
           <p>OR continue with</p>
@@ -95,10 +101,16 @@ const SignUp = ({newUser, userUpdate}) => {
   )
 }
 
+const mapStateToProps = state => {
+  return {
+      user: state.user
+  }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
       userUpdate: (user) => dispatch({type: 'USER', payload: user})
   }
 }
 
-export default connect(null, mapDispatchToProps)(withUser(SignUp))
+export default connect(mapStateToProps, mapDispatchToProps)(withUser(SignUp))

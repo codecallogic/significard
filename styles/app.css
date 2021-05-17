@@ -31,7 +31,7 @@ body {
     .nav-logo svg {
       width: 4.7rem;
       height: 4.7rem;
-      fill: white; }
+      fill: red; }
     .nav-logo span {
       font-size: 2.4rem;
       margin-left: 1rem; }
@@ -70,7 +70,7 @@ body {
     line-height: 5rem; }
   .footer-left-list-link {
     list-style-type: none;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     line-height: 3rem;
     font-weight: 200; }
   .footer-right-heading {
@@ -82,6 +82,27 @@ body {
     height: 3rem; }
     .footer-right-icons svg:not(:first-child) {
       margin-left: 0.5rem; }
+
+.activate {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  align-items: center;
+  font-size: 2.8rem; }
+  .activate-login {
+    text-align: center;
+    text-decoration: none;
+    font-size: 2.4rem;
+    margin: 2rem 0;
+    color: white;
+    background-color: #e84925;
+    padding: 1rem 2rem;
+    border-radius: 1.2rem;
+    min-width: 20rem; }
+    .activate-login:hover {
+      cursor: pointer; }
 
 .signup {
   text-align: center; }
@@ -211,3 +232,17 @@ body {
     height: 4rem !important;
     padding: 0 !important;
     color: transparent; }
+
+.firebaseui-idp-list {
+  justify-content: center;
+  margin: 0 auto !important; }
+
+.firebaseui-id-idp-button {
+  width: auto !important;
+  padding: 0 3rem !important;
+  text-align: center !important;
+  font-size: 2.4rem !important; }
+
+.firebaseui-idp-text-long {
+  text-align: center !important;
+  font-size: 1.6rem !important; }

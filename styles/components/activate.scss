@@ -1,0 +1,25 @@
+.activate {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  align-items: center;
+  font-size: 2.8rem;
+
+  &-login {
+    text-align: center;
+    text-decoration: none;
+    font-size: 2.4rem;
+    margin: 2rem 0;
+    color: white;
+    background-color: $color-scheme-1;
+    padding: 1rem 2rem;
+    border-radius: 1.2rem;
+    min-width: 20rem;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

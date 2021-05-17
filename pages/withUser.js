@@ -23,7 +23,7 @@ const withUser = Page => {
                 contentType: `application/json`
             }
           })
-          newUser = true
+          newUser = responseUser.data
         } catch (error) {
           console.log(error) 
           if(error) newUser = false

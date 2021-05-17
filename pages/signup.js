@@ -16,17 +16,23 @@ initializeFirebase()
 
 const SignUp = ({newUser, user, userUpdate, userMessage}) => {
   const router = useRouter()
-  const [name, setName] = useState('Fabricio')
-  const [email, setEmail] = useState('contact@fabricioguardia.com')
-  const [password, setPassword] = useState('12345')
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   
   const uiConfig = {
     signInFlow: 'popup',
     // signInSuccessUrl: `/signup`,
     signInOptions: [
-      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID
+      {
+        provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        fullLabel: 'Facebook'
+      },
+      {
+        provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        fullLabel: 'Google'
+      }
     ],
     callbacks: {
       signInSuccessWithAuthResult: (authResult, redirectUrl) => {

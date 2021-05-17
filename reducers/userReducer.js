@@ -6,12 +6,11 @@ const initialState = {
 }
 
 export const userReducer = (state = initialState, action) => {
-  console.log(action)
   switch(action.type){
     case "USER":
       return {
         ...state,
-        userName: action.payload.userName
+        userName: action.payload.username
       }
 
     case "MESSAGE":

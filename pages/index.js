@@ -4,16 +4,17 @@ import firebase from 'firebase'
 import {initializeFirebase} from '../helpers/firebase'
 import axios from 'axios'
 import {API} from '../config'
+import Nav from '../components/nav'
 
 initializeFirebase()
 
 const Home = ({user, userUpdate}) => {
+  console.log(user)
 
   const signOut = async () => {
     try {
       const responseSignOut = await axios.post(`${API}/auth/logout`)
       firebase.auth().signOut()
-      userUpdate(user)
       window.location.href = '/signup'
     } catch (error) {
       console.log(error)
@@ -21,10 +22,13 @@ const Home = ({user, userUpdate}) => {
   }
   
   return (
+    <>
+    <Nav></Nav>
     <div className="home">
       <div>Hi, {user.userName}</div>
       {user.userName ? <p className="home-logout" onClick={signOut}>Logout</p> : null }
     </div>
+    </>
   )
 }
 
