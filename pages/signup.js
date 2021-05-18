@@ -55,7 +55,7 @@ const SignUp = ({newUser, user, userUpdate, userMessage}) => {
       setEmail('')
       setPassword('')
     } catch (error) {
-      console.log(error)
+      error.response.data ? error.response.data.error ? userMessage(error.response.data.error.msg) : null : console.log(error)
       setLoading(false)
     }
   }
