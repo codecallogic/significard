@@ -14,10 +14,10 @@ axios.defaults.withCredentials = true
 
 initializeFirebase()
 
-const Login = ({newUser, user, userUpdate, userMessage, userEmail}) => {
+const Login = ({user, userUpdate, userMessage, userEmail}) => {
   const router = useRouter()
-  const [email, setEmail] = useState('contact@fabricioguardia.com')
-  const [password, setPassword] = useState('12345')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   
   const uiConfig = {
@@ -49,6 +49,7 @@ const Login = ({newUser, user, userUpdate, userMessage, userEmail}) => {
       const responseLogin = await axios.post(`${API}/auth/login`, {email, password})
       setLoading(false)
       userUpdate(responseLogin.data)
+      userEmail(responseLogin.data)
       router.push('/')
     } catch (error) {
       if(error) error.response ? userMessage(error.response.data) : userMessage(null)
