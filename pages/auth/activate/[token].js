@@ -1,39 +1,74 @@
 import Nav from '../../../components/nav'
 import axios from 'axios'
 import {API} from '../../../config'
-import {useState, useEffect} from 'react'
+import { useRouter } from 'next/router'
+import {useState} from 'react'
+import {connect} from 'react-redux'
+axios.defaults.withCredentials = true
 
-const ActivateAccount = ({data, message}) => {
+const ActivateAccount = ({user, userUpdate, userMessage}) => {
+  const router = useRouter()
+
+  const activateUser = async (e) => {
+    e.preventDefault()
+    
+    let query = router.query
+    try {
+      const responseActivate = await axios.post(`${API}/auth/activate-account`, {query})
+      userUpdate(responseActivate.data)
+      userMessage(null)
+      window.location.href = '/survey'
+    } catch (error) {
+      console.log(error)
+      if(error) error.response ? userMessage(error.response.data) : userMessage(null)
+    }
+  }
   
   return (
     <>
-      {data && <div className="activate">
-        <div>Hi {data.username}, your account is now activated!</div>
-        <a href="/survey" className="activate-login">Click here to continue!</a>
+      {user.message == null && <div className="activate">
+        <div>Hello, click on the button below to activate!</div>
+        <a href="/survey" className="activate-login" onClick={activateUser}>Activate Account!</a>
       </div>
       }
-      {message && <div className="activate">
-        <div>{message}</div>
-        <a href="/signup" className="activate-login">Signup</a>
+
+      {user.message !== null && <div className="activate">
+        <div>{user.message}</div>
+        <a href="/signup" className="activate-login">Signup to Start</a>
       </div>
       }
     </>
   )
 }
 
-ActivateAccount.getInitialProps = async ({query, ctx}) => {  
+// ActivateAccount.getInitialProps = async ({query, ctx}) => {  
+
   
-  try {
-    const responseActivate = await axios.post(`${API}/auth/activate-account`, {query})
-    return {
-      data: responseActivate.data ? responseActivate.data : null,
-    }
+//   try {
+//     const responseActivate = await axios.post(`${API}/auth/activate-account`, {query})
+
+//     return {
+//       data: responseActivate.data ? responseActivate.data : null,
+//     }
     
-  } catch (error) {
-    return {
-      message: error.response.data ? error.response.data : null,
-    }
+//   } catch (error) {
+//     return {
+//       message: error.response.data ? error.response.data : null,
+//     }
+//   }
+// }
+
+const mapStateToProps = state => {
+  return {
+      user: state.user
   }
 }
 
-export default ActivateAccount
+const mapDispatchToProps = dispatch => {
+  return {
+      userUpdate: (user) => dispatch({type: 'USER', payload: user}),
+      userMessage: (message) => dispatch({type: 'MESSAGE', payload: message})
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ActivateAccount)

@@ -1,7 +1,6 @@
 import {API} from '../config'
 import axios from 'axios'
 import {getUser, getToken} from '../helpers/user'
-import Cookies from 'cookies'
 axios.defaults.withCredentials = true
 
 const withUser = Page => {

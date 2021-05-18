@@ -10,7 +10,6 @@ initializeFirebase()
 
 const Home = ({user, userUpdate}) => {
   console.log(user)
-
   const signOut = async () => {
     try {
       const responseSignOut = await axios.post(`${API}/auth/logout`)
@@ -25,8 +24,8 @@ const Home = ({user, userUpdate}) => {
     <>
     <Nav></Nav>
     <div className="home">
-      <div>Hi, {user.userName}</div>
-      {user.userName ? <p className="home-logout" onClick={signOut}>Logout</p> : null }
+      <div>Hi, {user.userName ? user.userName : user.userEmail}</div>
+      <p className="home-logout" onClick={signOut}>Logout</p>
     </div>
     </>
   )

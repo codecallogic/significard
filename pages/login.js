@@ -14,13 +14,11 @@ axios.defaults.withCredentials = true
 
 initializeFirebase()
 
-const SignUp = ({newUser, user, userUpdate, userMessage}) => {
+const SignUp = ({newUser, user, userUpdate, userMessage, userEmail}) => {
   const router = useRouter()
   const [email, setEmail] = useState('contact@fabricioguardia.com')
   const [password, setPassword] = useState('12345')
   const [loading, setLoading] = useState(false)
-
-  console.log(newUser)
   
   const uiConfig = {
     signInFlow: 'popup',
@@ -45,23 +43,30 @@ const SignUp = ({newUser, user, userUpdate, userMessage}) => {
   }
 
   const login = async (e) => {
+    setLoading(true)
     e.preventDefault()
     try {
       const responseLogin = await axios.post(`${API}/auth/login`, {email, password})
+      setLoading(false)
       userUpdate(responseLogin.data)
       router.push('/')
     } catch (error) {
-      console.log(error)
+      if(error) error.response ? userMessage(error.response.data) : userMessage(null)
+      setLoading(false)
     }
   }
 
   const loginFirebase = async (user) => {
+    setLoading(true)
     try {
       const responseLogin = await axios.post(`${API}/auth/login`, {user})
-      userUpdate(responseLogin.data)
+      console.log(responseLogin)
+      userEmail(responseLogin.data)
+      setLoading(false)
       router.push('/')
     } catch (error) {
       console.log(error)
+      setLoading(false)
     }
   }
   
@@ -82,6 +87,7 @@ const SignUp = ({newUser, user, userUpdate, userMessage}) => {
         </div>
         <button type="submit">Continue with e-mail</button>
         {loading ? <iframe src="https://giphy.com/embed/sSgvbe1m3n93G" width="30" height="30" frameBorder="0" className="giphy-loading" allowFullScreen></iframe> : null }
+        <br />
         {user.message !== null ? <div className="signup-form-message">{user.message !== null ? user.message : ''} </div> : loading ? null : <div className="giphy-loading-space">Loading...</div>}
         <div className="signup-form-break">
           <span></span>
@@ -109,7 +115,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-      userUpdate: (user) => dispatch({type: 'USER', payload: user})
+      userUpdate: (user) => dispatch({type: 'USER', payload: user}),
+      userMessage: (message) => dispatch({type: 'MESSAGE', payload: message}),
+      userEmail: (email) => dispatch({type: 'EMAIL', payload: email}),
   }
 }
 

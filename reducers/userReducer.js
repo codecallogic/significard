@@ -12,6 +12,12 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         userName: action.payload.username
       }
+    
+    case "EMAIL":
+      return {
+        ...state,
+        userName: action.payload.email
+      }
 
     case "MESSAGE":
       return {

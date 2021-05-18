@@ -237,8 +237,9 @@ body {
     justify-self: center;
     font-size: 2.2rem; }
   .survey-subtitle {
-    grid-column: 4/8;
+    grid-column: 3/9;
     justify-self: center;
+    text-align: center;
     font-size: 1.8rem; }
   .survey-recipient {
     grid-column: 3/9;
@@ -270,9 +271,15 @@ body {
     padding: 1rem 5rem;
     color: #0f2e4c;
     background-color: transparent;
-    border-radius: 1.2rem; }
+    border-radius: 1.2rem;
+    outline: none;
+    border: 0.1rem solid #0f2e4c;
+    transition: all 0.5s cubic-bezier(0.47, 0, 0.745, 0.715); }
     .survey-button:hover {
-      cursor: pointer; }
+      cursor: pointer;
+      background-color: #0f2e4c;
+      color: white;
+      outline: none; }
   .survey-next {
     position: absolute;
     right: 10rem;

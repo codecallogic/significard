@@ -2,7 +2,10 @@ import Nav from '../components/nav'
 import Footer from '../components/footer'
 import withUser from './withUser'
 
-const Survey = ({newUser}) => {
+const Survey = ({}) => {
+
+  // console.log(newUser)
+  
   return (
 
     // TODO: Will users only go through the survey process after signup or can they go through the survey at a later point after signup and already a user?
@@ -34,4 +37,4 @@ const Survey = ({newUser}) => {
   )
 }
 
-export default withUser(Survey)
+export default Survey

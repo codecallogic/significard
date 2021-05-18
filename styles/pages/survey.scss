@@ -13,8 +13,9 @@
   }
 
   &-subtitle {
-    grid-column: 4/8;
+    grid-column: 3/9;
     justify-self: center;
+    text-align: center;
     font-size: 1.8rem;
   }
 
@@ -55,9 +56,15 @@
     color: $color-scheme-3;
     background-color: transparent;
     border-radius: 1.2rem;
+    outline: none;
+    border: 0.1rem solid $color-scheme-3;
+    transition: all 0.5s cubic-bezier(0.47, 0, 0.745, 0.715);
 
     &:hover {
       cursor: pointer;
+      background-color: $color-scheme-3;
+      color: white;
+      outline: none;
     }
   }
 

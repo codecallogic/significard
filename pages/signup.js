@@ -130,4 +130,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withUser(SignUp))
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
