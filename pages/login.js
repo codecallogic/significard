@@ -14,7 +14,7 @@ axios.defaults.withCredentials = true
 
 initializeFirebase()
 
-const SignUp = ({newUser, user, userUpdate, userMessage, userEmail}) => {
+const Login = ({newUser, user, userUpdate, userMessage, userEmail}) => {
   const router = useRouter()
   const [email, setEmail] = useState('contact@fabricioguardia.com')
   const [password, setPassword] = useState('12345')
@@ -121,4 +121,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withUser(SignUp))
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
