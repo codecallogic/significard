@@ -41,23 +41,6 @@ const ActivateAccount = ({user, userUpdate, userMessage}) => {
   )
 }
 
-// ActivateAccount.getInitialProps = async ({query, ctx}) => {  
-
-  
-//   try {
-//     const responseActivate = await axios.post(`${API}/auth/activate-account`, {query})
-
-//     return {
-//       data: responseActivate.data ? responseActivate.data : null,
-//     }
-    
-//   } catch (error) {
-//     return {
-//       message: error.response.data ? error.response.data : null,
-//     }
-//   }
-// }
-
 const mapStateToProps = state => {
   return {
       user: state.user
