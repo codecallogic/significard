@@ -33,6 +33,7 @@ body {
       height: 4.7rem;
       fill: red; }
     .nav-logo span {
+      font-family: 'Sanchez', serif;
       font-size: 2.4rem;
       margin-left: 1rem; }
   .nav-menu {
@@ -60,19 +61,16 @@ body {
     justify-content: space-between;
     flex-grow: 0.5; }
   .footer-left-logo {
-    font-family: Sanchez;
+    font-family: 'Sanchez', serif;
     font-size: 4rem;
     font-style: normal;
     font-weight: 400; }
   .footer-left-list-heading {
-    font-size: 2.4rem;
-    font-weight: 500;
-    line-height: 5rem; }
+    font-size: 24px;
+    font-weight: 500; }
   .footer-left-list-link {
     list-style-type: none;
-    font-size: 1.6rem;
-    line-height: 3rem;
-    font-weight: 200; }
+    font-size: 22px; }
   .footer-right-heading {
     line-height: 5rem; }
   .footer-right-container {
