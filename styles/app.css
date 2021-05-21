@@ -303,8 +303,9 @@ body {
     transition: all 0.5s cubic-bezier(0.47, 0, 0.745, 0.715); }
     .survey-button:hover {
       cursor: pointer;
-      background-color: #0f2e4c;
-      color: white;
+      background-color: #d8f1ff;
+      color: #0f2e4c;
+      border: 0.1rem solid #d8f1ff;
       outline: none; }
   .survey-next {
     position: absolute;

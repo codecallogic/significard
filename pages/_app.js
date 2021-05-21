@@ -14,6 +14,8 @@ function MyApp({ Component, pageProps }) {
       <title>Significard</title>
       <link rel="preconnect" href="https://fonts.gstatic.com"></link>
       <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"></link>
+      <link rel="preconnect" href="https://fonts.gstatic.com"></link>
+      <link href="https://fonts.googleapis.com/css2?family=Sanchez&display=swap" rel="stylesheet"></link>
     </Head>
     <Provider store={store}>
       <Component {...pageProps} />

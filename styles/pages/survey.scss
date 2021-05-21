@@ -93,8 +93,9 @@
 
     &:hover {
       cursor: pointer;
-      background-color: $color-scheme-3;
-      color: white;
+      background-color: $color-scheme-3-alt-1;
+      color: $color-scheme-3;
+      border: 0.1rem solid $color-scheme-3-alt-1;
       outline: none;
     }
   }
