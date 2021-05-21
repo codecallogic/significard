@@ -150,8 +150,8 @@ body {
         .signup-form-group input::placeholder {
           color: #778186; }
     .signup-form button {
-      background-color: #0f2e4c;
-      color: white;
+      background-color: #d8f1ff;
+      color: #0f2e4c;
       border-radius: 1.2rem;
       width: 30rem;
       height: 5rem;
@@ -160,7 +160,7 @@ body {
       border: none;
       outline: none; }
       .signup-form button:hover {
-        background-color: #041219;
+        background-color: #d8f1ff;
         cursor: pointer; }
     .signup-form-break {
       display: flex;
@@ -261,8 +261,8 @@ body {
       margin: 1rem 1rem;
       transition: all 0.5s cubic-bezier(0.47, 0, 0.745, 0.715); }
       .survey-recipient-item:hover {
-        background-color: #0f2e4c;
-        color: white;
+        background-color: #d7dcfe;
+        color: #0f2e4c;
         cursor: pointer; }
   .survey-recipient-age {
     grid-column: 3/9;
@@ -286,8 +286,8 @@ body {
       margin: 1rem 1rem;
       transition: all 0.5s cubic-bezier(0.47, 0, 0.745, 0.715); }
       .survey-recipient-age-item:hover {
-        background-color: #0f2e4c;
-        color: white;
+        background-color: #d7dcfe;
+        color: #0f2e4c;
         cursor: pointer; }
   .survey-button {
     grid-column: 1/-1;

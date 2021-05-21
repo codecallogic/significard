@@ -64,8 +64,8 @@
     }
 
     button {
-      background-color: $color-scheme-3;
-      color: white;
+      background-color: $color-scheme-3-alt-1;
+      color: $color-scheme-3;
       border-radius: 1.2rem;
       width: 30rem;
       height: 5rem;
@@ -75,7 +75,7 @@
       outline: none;
 
       &:hover {
-        background-color: $color-scheme-4;
+        background-color: $color-scheme-3-alt-1;
         cursor: pointer;
       }
     }
