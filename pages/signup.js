@@ -63,7 +63,7 @@ const SignUp = ({newUser, user, userUpdate, userMessage}) => {
   const signUpFirebase = async (user) => {
     setLoading(true)
     try {
-      const responseSignUp = await axios.post(`${API}/auth/signup`, {user})
+      const responseSignUp = await axios.post(`${API}/auth/signup-firebase`, {user})
       userMessage(responseSignUp.data)
       setLoading(false)
       setName('')

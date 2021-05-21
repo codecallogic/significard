@@ -7,7 +7,8 @@
   align-items: center;
   font-size: 2.8rem;
 
-  &-logout {
+  a {
+    text-decoration: none;
     font-size: 1.8rem;
     color: $color-scheme-1;
 

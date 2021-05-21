@@ -24,8 +24,8 @@ const Home = ({user, userUpdate}) => {
     <>
     <Nav></Nav>
     <div className="home">
-      <div>Hi, {user.userName ? user.userName : user.userEmail}</div>
-      <p className="home-logout" onClick={signOut}>Logout</p>
+      <div>Welcome, {user.userName ? user.userName : user.userEmail}</div>
+      {user.userName ? <a className="home-logout" onClick={signOut}>Logout</a> : <a href="/login"> Login</a>}
     </div>
     </>
   )

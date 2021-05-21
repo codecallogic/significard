@@ -218,10 +218,11 @@ body {
   height: 100vh;
   align-items: center;
   font-size: 2.8rem; }
-  .home-logout {
+  .home a {
+    text-decoration: none;
     font-size: 1.8rem;
     color: #e84925; }
-    .home-logout:hover {
+    .home a:hover {
       color: #d7dcfe;
       cursor: pointer; }
 
@@ -265,6 +266,31 @@ body {
         background-color: #0f2e4c;
         color: white;
         cursor: pointer; }
+  .survey-recipient-age {
+    grid-column: 3/9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0 5rem;
+    margin: 5rem 0; }
+    .survey-recipient-age-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: calc(100% / 4);
+      min-height: 18.2rem;
+      font-size: 2.2rem;
+      line-height: 2.5rem;
+      border: 0.1rem solid #0f2e4c;
+      border-radius: 1.2rem;
+      padding: 2rem 3rem;
+      margin: 1rem 1rem;
+      transition: all 0.5s cubic-bezier(0.47, 0, 0.745, 0.715); }
+      .survey-recipient-age-item:hover {
+        background-color: #0f2e4c;
+        color: white;
+        cursor: pointer; }
   .survey-button {
     grid-column: 1/-1;
     justify-self: center;
@@ -290,6 +316,18 @@ body {
       fill: #e5e5e5;
       transition: all 0.5s cubic-bezier(0.47, 0, 0.745, 0.715); }
       .survey-next svg:hover {
+        fill: #0f2e4c;
+        cursor: pointer; }
+  .survey-back {
+    position: absolute;
+    left: 10rem;
+    top: 5rem; }
+    .survey-back svg {
+      width: 5rem;
+      height: 5rem;
+      fill: #e5e5e5;
+      transition: all 0.5s cubic-bezier(0.47, 0, 0.745, 0.715); }
+      .survey-back svg:hover {
         fill: #0f2e4c;
         cursor: pointer; }
 

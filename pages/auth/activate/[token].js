@@ -6,7 +6,7 @@ import {useState} from 'react'
 import {connect} from 'react-redux'
 axios.defaults.withCredentials = true
 
-const ActivateAccount = ({user, userUpdate, userMessage}) => {
+const ActivateAccount = ({user, userUpdate, userMessage, userEmail}) => {
   const router = useRouter()
 
   const activateUser = async (e) => {
@@ -15,7 +15,7 @@ const ActivateAccount = ({user, userUpdate, userMessage}) => {
     let query = router.query
     try {
       const responseActivate = await axios.post(`${API}/auth/activate-account`, {query})
-      userUpdate(responseActivate.data)
+      console.log(responseActivate)
       userMessage(null)
       window.location.href = '/survey'
     } catch (error) {
@@ -49,8 +49,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-      userUpdate: (user) => dispatch({type: 'USER', payload: user}),
-      userMessage: (message) => dispatch({type: 'MESSAGE', payload: message})
+      userMessage: (message) => dispatch({type: 'MESSAGE', payload: message}),
   }
 }
 
