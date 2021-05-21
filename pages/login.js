@@ -52,6 +52,7 @@ const Login = ({user, userUpdate, userMessage, userEmail}) => {
       userEmail(responseLogin.data)
       router.push('/')
     } catch (error) {
+      console.log(error.response.data)
       if(error) error.response ? userMessage(error.response.data) : userMessage(null)
       setLoading(false)
     }
@@ -66,7 +67,8 @@ const Login = ({user, userUpdate, userMessage, userEmail}) => {
       setLoading(false)
       router.push('/')
     } catch (error) {
-      console.log(error)
+      console.log(error.response.data)
+      if(error) error.response ? userMessage(error.response.data) : userMessage(null)
       setLoading(false)
     }
   }
