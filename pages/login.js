@@ -88,7 +88,7 @@ const Login = ({user, userUpdate, userMessage, userEmail}) => {
           <svg><use xlinkHref="sprite.svg#icon-lock"></use></svg>
           <input type="password" name="password" placeholder="Password" value={password} onChange={ (e) => setPassword(e.target.value)}/>
         </div>
-        <button type="submit">Continue with e-mail</button>
+        <button type="submit">Continue with E-mail</button>
         {loading ? <iframe src="https://giphy.com/embed/sSgvbe1m3n93G" width="30" height="30" frameBorder="0" className="giphy-loading" allowFullScreen></iframe> : null }
         <br />
         {user.message !== null ? <div className="signup-form-message">{user.message !== null ? user.message : ''} </div> : loading ? null : <div className="giphy-loading-space">Loading...</div>}
