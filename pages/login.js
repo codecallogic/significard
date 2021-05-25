@@ -19,6 +19,8 @@ const Login = ({user, userUpdate, userMessage, userEmail}) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [placeholderEmail, setPlaceholderEmail] = useState(null)
+  const [placeholderPassword, setPlaceholderPassword] = useState(null)
   
   const uiConfig = {
     signInFlow: 'popup',
@@ -50,7 +52,7 @@ const Login = ({user, userUpdate, userMessage, userEmail}) => {
       setLoading(false)
       userUpdate(responseLogin.data)
       userEmail(responseLogin.data)
-      router.push('/')
+      router.push('/survey')
     } catch (error) {
       console.log(error.response.data)
       if(error) error.response ? userMessage(error.response.data) : userMessage(null)
@@ -82,11 +84,11 @@ const Login = ({user, userUpdate, userMessage, userEmail}) => {
       <form className="signup-form" onSubmit={login}>
         <div className="signup-form-group">
           <svg><use xlinkHref="sprite.svg#icon-envelope"></use></svg>
-          <input type="email" name="email" placeholder="E-mail" value={email} onChange={ (e) => setEmail(e.target.value)}/>
+          <input type="email" name="email" placeholder={placeholderEmail ? placeholderEmail : 'Email'} onFocus={() => setPlaceholderEmail(' ')} onBlur={() => setPlaceholderEmail('Email')} value={email} onChange={ (e) => setEmail(e.target.value)}/>
         </div>
         <div className="signup-form-group">
           <svg><use xlinkHref="sprite.svg#icon-lock"></use></svg>
-          <input type="password" name="password" placeholder="Password" value={password} onChange={ (e) => setPassword(e.target.value)}/>
+          <input type="password" name="password" placeholder={placeholderPassword ? placeholderPassword : 'Password'} value={password} onFocus={() => setPlaceholderPassword(' ')} onBlur={() => setPlaceholderPassword('Password')} onChange={ (e) => setPassword(e.target.value)}/>
         </div>
         <button type="submit">Continue with E-mail</button>
         {loading ? <iframe src="https://giphy.com/embed/sSgvbe1m3n93G" width="30" height="30" frameBorder="0" className="giphy-loading" allowFullScreen></iframe> : null }

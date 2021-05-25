@@ -20,6 +20,9 @@ const SignUp = ({newUser, user, userUpdate, userMessage}) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [placeholderName, setPlaceholderName] = useState(null)
+  const [placeholderEmail, setPlaceholderEmail] = useState(null)
+  const [placeholderPassword, setPlaceholderPassword] = useState(null)
   
   const uiConfig = {
     signInFlow: 'popup',
@@ -85,15 +88,15 @@ const SignUp = ({newUser, user, userUpdate, userMessage}) => {
       <form className="signup-form" onSubmit={signUp}>
         <div className="signup-form-group">
           <svg><use xlinkHref="sprite.svg#icon-user"></use></svg>
-          <input type="text" name="name" placeholder="Name" value={name} onChange={ (e) => setName(e.target.value)}/>
+          <input type="text" name="name" placeholder="Name" placeholder={placeholderName ? placeholderName : 'Name'} onFocus={() => setPlaceholderName(' ')} onBlur={() => setPlaceholderName('Name')} value={name} onChange={ (e) => setName(e.target.value)}/>
         </div>
         <div className="signup-form-group">
           <svg><use xlinkHref="sprite.svg#icon-envelope"></use></svg>
-          <input type="email" name="email" placeholder="E-mail" value={email} onChange={ (e) => setEmail(e.target.value)}/>
+          <input type="email" name="email" placeholder="E-mail" placeholder={placeholderEmail ? placeholderEmail : 'Email'} onFocus={() => setPlaceholderEmail(' ')} onBlur={() => setPlaceholderEmail('Email')} value={email} onChange={ (e) => setEmail(e.target.value)}/>
         </div>
         <div className="signup-form-group">
           <svg><use xlinkHref="sprite.svg#icon-lock"></use></svg>
-          <input type="password" name="password" placeholder="Password" value={password} onChange={ (e) => setPassword(e.target.value)}/>
+          <input type="password" name="password" placeholder="Password" placeholder={placeholderPassword ? placeholderPassword : 'Password'} value={password} onFocus={() => setPlaceholderPassword(' ')} onBlur={() => setPlaceholderPassword('Password')} value={password} onChange={ (e) => setPassword(e.target.value)}/>
         </div>
         <button type="submit">Continue with E-mail</button>
         <br/>
