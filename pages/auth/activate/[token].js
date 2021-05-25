@@ -17,7 +17,7 @@ const ActivateAccount = ({user, userUpdate, userMessage, userEmail}) => {
       const responseActivate = await axios.post(`${API}/auth/activate-account`, {query})
       console.log(responseActivate)
       userMessage(null)
-      window.location.href = '/survey'
+      window.location.href = '/quiz'
     } catch (error) {
       console.log(error)
       if(error) error.response ? userMessage(error.response.data) : userMessage(null)
@@ -28,7 +28,7 @@ const ActivateAccount = ({user, userUpdate, userMessage, userEmail}) => {
     <>
       {user.message == null && <div className="activate">
         <div>Hello, click on the button below to activate!</div>
-        <a href="/survey" className="activate-login" onClick={activateUser}>Activate Account!</a>
+        <a href="/quiz" className="activate-login" onClick={activateUser}>Activate Account!</a>
       </div>
       }
 

@@ -52,7 +52,7 @@ const Login = ({user, userUpdate, userMessage, userEmail}) => {
       setLoading(false)
       userUpdate(responseLogin.data)
       userEmail(responseLogin.data)
-      router.push('/survey')
+      router.push('/quiz')
     } catch (error) {
       console.log(error.response.data)
       if(error) error.response ? userMessage(error.response.data) : userMessage(null)
