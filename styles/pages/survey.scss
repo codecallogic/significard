@@ -43,7 +43,7 @@
       transition: all 0.3s cubic-bezier(0.47, 0, 0.745, 0.715);
 
       &:hover {
-        background-color: $color-scheme-3-alt-2;
+        background-color: $color-scheme-3;
         color: $color-white;
         cursor: pointer;
       }
@@ -82,7 +82,7 @@
       transition: all 0.1s cubic-bezier(0.47, 0, 0.745, 0.715);
 
       &:hover {
-        background-color: $color-scheme-3-alt-2;
+        background-color: $color-scheme-3;
         color: $color-white;
         cursor: pointer;
       }
