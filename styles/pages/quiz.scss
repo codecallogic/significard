@@ -40,7 +40,7 @@
       border-radius: 1.2rem;
       padding: 2rem 3rem;
       margin: 1rem 1rem;
-      transition: all 0.3s cubic-bezier(0.47, 0, 0.745, 0.715);
+      transition: all 0.5s cubic-bezier(0.47, 0, 0.745, 0.715);
 
       &:hover {
         background-color: $color-scheme-3-alt-2;
@@ -48,10 +48,16 @@
         cursor: pointer;
       }
 
-      &:active {
-        background-color: $color-scheme-3-alt-2;
+      &-active {
+        background-color: $color-scheme-3;
         color: white;
         cursor: pointer;
+
+        &:hover {
+          background-color: $color-scheme-3;
+          color: white;
+          cursor: pointer;
+        }
       }
     }
   }
@@ -75,7 +81,7 @@
       min-height: 18.2rem;
       font-size: 2.2rem;
       line-height: 2.5rem;
-      border: 0.2rem solid $color-scheme-3;
+      border: 0.2rem solid $color-light-gray-alt-2;
       border-radius: 1.2rem;
       padding: 2rem 3rem;
       margin: 1rem 1rem;
@@ -98,13 +104,15 @@
   &-button {
     grid-column: 1/-1;
     justify-self: center;
-    padding: 1rem 5rem;
+    width: 19rem;
+    height: 5.3rem;
     color: $color-scheme-3;
     background-color: transparent;
     border-radius: 1.2rem;
     outline: none;
-    border: 0.1rem solid $color-scheme-3;
-    transition: all 0.5s cubic-bezier(0.47, 0, 0.745, 0.715);
+    border: 0.2rem solid $color-scheme-3;
+    font-size: 1.8rem;
+    transition: all 0.4s cubic-bezier(0.47, 0, 0.745, 0.715);
 
     &:hover {
       cursor: pointer;

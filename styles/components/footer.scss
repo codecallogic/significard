@@ -6,6 +6,10 @@
   border-bottom: 0.1rem solid #e9e9e9;
   padding: 5rem 3rem;
 
+  @media only screen and (max-width: $large) {
+    display: none;
+  }
+
   &-left {
     &-container {
       display: flex;

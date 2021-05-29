@@ -4,8 +4,8 @@ $color-scheme-2: #efbb1c;
 $color-scheme-2-alt-1: #fbeda9;
 $color-scheme-2-alt-2: #fdf4cc;
 $color-scheme-3: #0f2e4c;
-// $color-scheme-3-alt-1: #003e5f;
-// $color-scheme-3-alt-2: #024060;
+$color-scheme-3-alt-1: #003e5f;
+$color-scheme-3-alt-2: #024060;
 $color-scheme-3-alt-1: #d8f1ff;
 $color-scheme-3-alt-2: #d7dcfe;
 $color-scheme-4: #041219;
@@ -18,6 +18,14 @@ $color-light-gray: #e5e5e5;
 $color-light-gray-alt-1: rgba(119, 129, 134, 1);
 $color-light-gray-alt-2: rgba(229, 229, 229, 1);
 $color-white: rgba(255, 255, 255, 1);
+
+//BREAKPOINTS
+$wide: 1500px;
+$extra-large: 1200px;
+$large-medium: 1050px;
+$large: 992px;
+$medium: 768px;
+$small: 600px;
 
 *,
 *::before,

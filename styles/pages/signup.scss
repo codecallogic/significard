@@ -1,32 +1,61 @@
 .signup {
   text-align: center;
 
+  @media only screen and (max-width: $large) {
+    width: 100%;
+  }
+
   &-container {
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
     margin: 10rem 0 0 0;
+
+    @media only screen and (max-width: $large) {
+      margin: 0;
+      padding: 2rem 4rem;
+      width: 100%;
+    }
   }
 
   &-heading {
-    font-size: 2.2rem;
+    font-size: 2rem;
     font-weight: 400;
+
+    @media only screen and (max-width: $large) {
+      color: $color-scheme-3;
+      font-weight: 700;
+      text-align: left;
+      margin-left: -2rem;
+    }
   }
 
   &-subheading {
     font-size: 1.8rem;
     font-weight: 400;
+
+    @media only screen and (max-width: $large) {
+      display: none;
+    }
   }
 
   &-form {
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding: 2rem 1rem;
+    padding: 4rem 1rem;
     border: 0.1rem solid $color-scheme-4-alt-2;
     width: 50rem;
     box-sizing: border-box;
     border-radius: 1.2rem;
-    margin: 5rem 0;
+    margin: 5rem 0 0 0;
+
+    @media only screen and (max-width: $large) {
+      width: 100%;
+      border: none;
+      padding: 2rem 0;
+    }
 
     &-message {
       font-size: 1.2rem;
@@ -43,6 +72,10 @@
       width: 30rem;
       margin: 1rem 0;
       box-sizing: border-box;
+
+      @media only screen and (max-width: $large) {
+        width: 100%;
+      }
 
       svg {
         width: 2.5rem;
@@ -74,6 +107,10 @@
       border: none;
       outline: none;
 
+      @media only screen and (max-width: $large) {
+        width: 100%;
+      }
+
       &:hover {
         background-color: $color-scheme-3-alt-1;
         cursor: pointer;
@@ -89,10 +126,19 @@
       margin: 3rem 0;
       padding: 0 3rem;
 
+      @media only screen and (max-width: $large) {
+        padding: 0;
+      }
+
       span:first-child {
         height: 0.1rem;
         background-color: black;
         width: 100%;
+
+        @media only screen and (max-width: $large) {
+          width: 150%;
+          margin-left: -5rem;
+        }
       }
 
       p {
@@ -105,6 +151,11 @@
         height: 0.1rem;
         background-color: black;
         width: 100%;
+
+        @media only screen and (max-width: $large) {
+          width: 150%;
+          margin-right: -5rem;
+        }
       }
     }
 
@@ -122,6 +173,16 @@
           color: $color-scheme-2;
         }
       }
+    }
+  }
+
+  &-terms {
+    font-size: 1.8rem;
+    color: #011722;
+    margin-top: 1.5rem;
+
+    a {
+      color: $color-scheme-3;
     }
   }
 }
@@ -145,4 +206,10 @@
 
 .firebaseui-list-item:not(:first-child) {
   margin-left: 1rem;
+}
+
+.firebaseui-idp-facebook {
+  @media only screen and (max-width: $large) {
+    width: 5rem !important;
+  }
 }

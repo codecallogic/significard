@@ -79,33 +79,34 @@ const Login = ({user, userUpdate, userMessage, userEmail}) => {
     <>
     <Nav></Nav>
     <div className="signup-container">
-    <div className="signup">
-      <h1 className="signup-heading">Login to access your account</h1>
-      <form className="signup-form" onSubmit={login}>
-        <div className="signup-form-group">
-          <svg><use xlinkHref="sprite.svg#icon-envelope"></use></svg>
-          <input type="email" name="email" placeholder={placeholderEmail ? placeholderEmail : 'Email'} onFocus={() => setPlaceholderEmail(' ')} onBlur={() => setPlaceholderEmail('Email')} value={email} onChange={ (e) => setEmail(e.target.value)}/>
-        </div>
-        <div className="signup-form-group">
-          <svg><use xlinkHref="sprite.svg#icon-lock"></use></svg>
-          <input type="password" name="password" placeholder={placeholderPassword ? placeholderPassword : 'Password'} value={password} onFocus={() => setPlaceholderPassword(' ')} onBlur={() => setPlaceholderPassword('Password')} onChange={ (e) => setPassword(e.target.value)}/>
-        </div>
-        <button type="submit">Continue with E-mail</button>
-        {loading ? <iframe src="https://giphy.com/embed/sSgvbe1m3n93G" width="30" height="30" frameBorder="0" className="giphy-loading" allowFullScreen></iframe> : null }
-        <br />
-        {user.message !== null ? <div className="signup-form-message">{user.message !== null ? user.message : ''} </div> : loading ? null : <div className="giphy-loading-space">Loading...</div>}
-        <div className="signup-form-break">
-          <span></span>
-          <p>OR continue with</p>
-          <span></span>
-        </div>
-        <StyledFirebaseAuth 
-          uiConfig={uiConfig}
-          firebaseAuth={firebase.auth()}
-        />
-        <p className="signup-form-signin">Don't have an account? <a href="/signup">Sign Up</a></p>
-      </form>
-    </div>
+      <div className="signup">
+        <h1 className="signup-heading">Login to access your account</h1>
+        <form className="signup-form" onSubmit={login}>
+          <div className="signup-form-group">
+            <svg><use xlinkHref="sprite.svg#icon-envelope"></use></svg>
+            <input type="email" name="email" placeholder={placeholderEmail ? placeholderEmail : 'Email'} onFocus={() => setPlaceholderEmail(' ')} onBlur={() => setPlaceholderEmail('Email')} value={email} onChange={ (e) => setEmail(e.target.value)}/>
+          </div>
+          <div className="signup-form-group">
+            <svg><use xlinkHref="sprite.svg#icon-lock"></use></svg>
+            <input type="password" name="password" placeholder={placeholderPassword ? placeholderPassword : 'Password'} value={password} onFocus={() => setPlaceholderPassword(' ')} onBlur={() => setPlaceholderPassword('Password')} onChange={ (e) => setPassword(e.target.value)}/>
+          </div>
+          <button type="submit">Continue with E-mail</button>
+          {loading ? <iframe src="https://giphy.com/embed/sSgvbe1m3n93G" width="30" height="30" frameBorder="0" className="giphy-loading" allowFullScreen></iframe> : null }
+          <br />
+          {user.message !== null ? <div className="signup-form-message">{user.message !== null ? user.message : ''} </div> : loading ? null : <div className="giphy-loading-space">Loading...</div>}
+          <div className="signup-form-break">
+            <span></span>
+            <p>OR continue with</p>
+            <span></span>
+          </div>
+          <StyledFirebaseAuth 
+            uiConfig={uiConfig}
+            firebaseAuth={firebase.auth()}
+          />
+          <p className="signup-form-signin">Don't have an account? <a href="/signup">Sign Up</a></p>
+        </form>
+      </div>
+      <span className="signup-terms">By continuing, you accept Significard's <a href="">Terms & Conditions</a></span>
     </div>
     <Footer></Footer>
     </>
