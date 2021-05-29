@@ -3,73 +3,75 @@ import Footer from '../components/footer'
 import withUser from './withUser'
 import {useState} from 'react'
 
-const Survey = ({}) => {
+const quiz = ({}) => {
 
-  const [survey, setSurvey] = useState('recipient')
+  const [quiz, setquiz] = useState('recipient')
   const [recipient, setRecipient] = useState('')
 
-  const surveyProgress = (e, next) => {
-    console.log(e.target.textContent)
-    
-    let els = document.querySelectorAll('.survey-recipient-item')
+  const quizProgress = (e, next) => {
+    let els = document.querySelectorAll('.quiz-recipient-item')
+    let els2 = document.querySelectorAll('.quiz-recipient-age-item')
 
-    els.forEach( (el) => {
-      el.classList.remove("survey-recipient-item-active")
-    })
+    els.forEach( (el) => {el.classList.remove("quiz-recipient-item-active")})
+    els2.forEach( (el) => {el.classList.remove("quiz-recipient-age-item-active")})
 
-    els.forEach( (el) => {
-      el.textContent == e.target.textContent ? el.classList.add("survey-recipient-item-active") : null
-    })
+    els.forEach( (el) => {el.textContent == e.target.textContent ? el.classList.add("quiz-recipient-item-active") : null})
+    els2.forEach( (el) => {el.textContent == e.target.textContent ? el.classList.add("quiz-recipient-age-item-active") : null})
 
-    // setTimeout(() => {
-    //   setSurvey(next)
-    // }, 1000);
+    setTimeout(() => {
+      setquiz(next)
+    }, 700);
+  }
+
+  const quizProgressNav = (e, next) => {
+    setquiz(next)
   }
   
   return (
 
-    // TODO: Will users only go through the survey process after signup or can they go through the survey at a later point after signup and already a user?
+    // TODO: Will users only go through the quiz process after signup or can they go through the quiz at a later point after signup and already a user?
     
     <>
       <Nav></Nav>
-      <div className="survey">
-        {survey == 'recipient' && <>
-          <div className="survey-title">Who are we sending a card to?</div>
-          <div className="survey-subtitle">For now just pick <span>one person</span>. Later, you can finish adding other loved ones in your profile.</div>
-          <div className="survey-recipient">
-            <div className="survey-recipient-item" onClick={(e) => surveyProgress(e,'age')}>Friend</div>
-            <div className="survey-recipient-item" onClick={(e) => surveyProgress(e,'age')}>Partner</div>
-            <div className="survey-recipient-item" onClick={(e) => surveyProgress(e,'age')}>Mom</div>
-            <div className="survey-recipient-item" onClick={(e) => surveyProgress(e,'age')}>Dad</div>
-            <div className="survey-recipient-item" onClick={(e) => surveyProgress(e,'age')}>Sister</div>
-            <div className="survey-recipient-item" onClick={(e) => surveyProgress(e,'age')}>Brother</div>
-            <div className="survey-recipient-item" onClick={(e) => surveyProgress(e,'age')}>Grandma</div>
-            <div className="survey-recipient-item" onClick={(e) => surveyProgress(e,'age')}>Grandpa</div>
-            <div className="survey-recipient-item" onClick={(e) => surveyProgress(e,'age')}>Daughter</div>
-            <div className="survey-recipient-item" onClick={(e) => surveyProgress(e,'age')}>Other</div>
+      <div className="quiz">
+        {quiz == 'recipient' && <>
+          <div className="quiz-title">Who are we sending a card to?</div>
+          <div className="quiz-subtitle">For now just pick <span>one person</span>. Later, you can finish adding other loved ones in your profile.</div>
+          <div className="quiz-recipient">
+            <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Friend</div>
+            <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Partner</div>
+            <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Mom</div>
+            <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Dad</div>
+            <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Sister</div>
+            <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Brother</div>
+            <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Grandma</div>
+            <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Grandpa</div>
+            <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Daughter</div>
+            <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Other</div>
           </div>
-          <button className="survey-button" onClick={(e) => surveyProgress(e, 'age')}>Next</button>
-          <div className="survey-next" onClick={(e) => surveyProgress(e, 'age')}>
+          <button className="quiz-button" onClick={(e) => quizProgress(e, 'age')}>Next</button>
+          <div className="quiz-next" onClick={(e) => quizProgress(e, 'age')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>
         </>
         }
-        {survey == 'age' && <>
-          <div className="survey-back" onClick={(e) => surveyProgress(e, 'recipient')}>
+        {quiz == 'age' && <>
+          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'recipient')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
-          <div className="survey-title">What's their age group?</div>
-          <div className="survey-subtitle">Select one.</div>
-          <div className="survey-recipient-age">
-            <div className="survey-recipient-age-item" onClick={(e) => surveyProgress(e,'age')}>18-24</div>
-            <div className="survey-recipient-age-item" onClick={(e) => surveyProgress(e,'age')}>25-34</div>
-            <div className="survey-recipient-age-item" onClick={(e) => surveyProgress(e,'age')}>35-44</div>
-            <div className="survey-recipient-age-item" onClick={(e)=> surveyProgress(e, 'age')}>45-54</div>
-            <div className="survey-recipient-age-item" onClick={(e) => surveyProgress(e,'age')}>55-64</div>
-            <div className="survey-recipient-age-item" onClick={(e) => surveyProgress(e,'age')}>65 or above</div>
+          <div className="quiz-title">What's their age group?</div>
+          <div className="quiz-subtitle">Select one.</div>
+          <div className="quiz-recipient-age">
+            <div className="quiz-recipient-age-item" onClick={(e) => quizProgress(e,'age')}>18-24</div>
+            <div className="quiz-recipient-age-item" onClick={(e) => quizProgress(e,'age')}>25-34</div>
+            <div className="quiz-recipient-age-item" onClick={(e) => quizProgress(e,'age')}>35-44</div>
+            <div className="quiz-recipient-age-item" onClick={(e) => quizProgress(e, 'age')}>45-54</div>
+            <div className="quiz-recipient-age-item" onClick={(e) => quizProgress(e,'age')}>55-64</div>
+            <div className="quiz-recipient-age-item" onClick={(e) => quizProgress(e,'age')}>65 or above</div>
           </div>
-          <button className="survey-button" onClick={(e) => surveyProgress(e,'age')}>Next</button>
-          <div className="survey-next" onClick={(e) => surveyProgress(e,'age')}>
+          <button className="quiz-button" onClick={(e) => quizProgress(e,'age')}>Next</button>
+          <button className="quiz-button" onClick={(e) => quizProgress(e,'recipient')}>Back</button>
+          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'age')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>
         </>
@@ -80,4 +82,4 @@ const Survey = ({}) => {
   )
 }
 
-export default Survey
+export default quiz
