@@ -49,8 +49,8 @@ const quiz = ({}) => {
             <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Daughter</div>
             <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Other</div>
           </div>
-          <button className="quiz-button" onClick={(e) => quizProgress(e, 'age')}>Next</button>
-          <div className="quiz-next" onClick={(e) => quizProgress(e, 'age')}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgress(e, 'age')}>Next</button></div>
+          <div className="quiz-next" onClick={(e) => quizProgressNav(e, 'age')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>
         </>
@@ -69,8 +69,7 @@ const quiz = ({}) => {
             <div className="quiz-recipient-age-item" onClick={(e) => quizProgress(e,'age')}>55-64</div>
             <div className="quiz-recipient-age-item" onClick={(e) => quizProgress(e,'age')}>65 or above</div>
           </div>
-          <button className="quiz-button" onClick={(e) => quizProgress(e,'age')}>Next</button>
-          <button className="quiz-button" onClick={(e) => quizProgress(e,'recipient')}>Back</button>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'age')}>Next</button><div className="quiz-button-container"></div></div>
           <div className="quiz-next" onClick={(e) => quizProgressNav(e,'age')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>
