@@ -78,7 +78,7 @@
       }
 
       &:hover {
-        background-color: $color-scheme-3-alt-2;
+        background-color: $color-scheme-3-variation-1;
         color: $color-scheme-3;
         cursor: pointer;
       }
@@ -171,9 +171,9 @@
 
     &:hover {
       cursor: pointer;
-      background-color: $color-scheme-3-alt-1;
+      background-color: $color-scheme-3-variation-1;
       color: $color-scheme-3;
-      border: 0.1rem solid $color-scheme-3-alt-1;
+      border: 0.1rem solid $color-scheme-3-variation-1;
       outline: none;
     }
   }

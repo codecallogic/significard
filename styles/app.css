@@ -183,13 +183,13 @@ body {
         .signup-form-group input::placeholder {
           color: #778186; }
     .signup-form button {
-      background-color: #0f2e4c;
+      background-color: #003e5f;
       color: white;
       border-radius: 1.2rem;
       width: 30rem;
       height: 5rem;
       font-size: 1.8rem;
-      transition: all 1s ease-in-out;
+      transition: all 0.5s ease-in-out;
       border: none;
       outline: none; }
       @media only screen and (max-width: 992px) {
@@ -231,7 +231,7 @@ body {
             margin-right: -5rem; } }
     .signup-form-signin {
       font-size: 1.6rem;
-      margin: 2.5rem 0; }
+      margin: 2.5rem 0 1rem 0; }
       .signup-form-signin a {
         margin-left: 0.5rem;
         text-decoration: underline;
@@ -239,6 +239,12 @@ body {
         .signup-form-signin a:hover {
           cursor: pointer;
           color: #efbb1c; }
+    .signup-form-forgotPassword {
+      color: #0f2e4c;
+      font-size: 1.6rem;
+      text-decoration: underline; }
+      .signup-form-forgotPassword:hover {
+        cursor: pointer; }
   .signup-terms {
     font-size: 1.8rem;
     color: #011722;
@@ -279,7 +285,7 @@ body {
     font-size: 1.8rem;
     color: #e84925; }
     .home a:hover {
-      color: #d7dcfe;
+      color: #024060;
       cursor: pointer; }
 
 .quiz {
@@ -348,7 +354,7 @@ body {
           padding: 0;
           min-height: 0; } }
       .quiz-recipient-item:hover {
-        background-color: #d7dcfe;
+        background-color: #003e5f;
         color: #0f2e4c;
         cursor: pointer; }
       .quiz-recipient-item-active {
@@ -420,9 +426,9 @@ body {
     transition: all 0.4s cubic-bezier(0.47, 0, 0.745, 0.715); }
     .quiz-button:hover {
       cursor: pointer;
-      background-color: #d8f1ff;
+      background-color: #003e5f;
       color: #0f2e4c;
-      border: 0.1rem solid #d8f1ff;
+      border: 0.1rem solid #003e5f;
       outline: none; }
   .quiz-next {
     position: absolute;
@@ -454,6 +460,117 @@ body {
       .quiz-back svg:hover {
         fill: #0f2e4c;
         cursor: pointer; }
+
+.forgotPassword {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10rem 0; }
+  @media only screen and (max-width: 992px) {
+    .forgotPassword {
+      padding: 0 2rem; } }
+  .forgotPassword-title {
+    font-size: 4.8rem; }
+    @media only screen and (max-width: 992px) {
+      .forgotPassword-title {
+        font-size: 3.2rem; } }
+  .forgotPassword-subtitle {
+    font-size: 1.8rem; }
+    @media only screen and (max-width: 992px) {
+      .forgotPassword-subtitle {
+        padding: 2rem 0;
+        text-align: center; } }
+  .forgotPassword input {
+    width: 40rem;
+    padding: 1rem 2rem;
+    margin: 3rem 0 0 0;
+    border: none;
+    border-bottom: 0.1rem solid #0f2e4c;
+    font-size: 1.8rem; }
+    @media only screen and (max-width: 992px) {
+      .forgotPassword input {
+        width: 80%;
+        margin: 0.5rem 0; } }
+    .forgotPassword input:focus {
+      outline: none; }
+  .forgotPassword-message {
+    height: 2rem;
+    font-size: 1.4rem;
+    margin: 1rem 0;
+    color: #e84925; }
+    @media only screen and (max-width: 992px) {
+      .forgotPassword-message {
+        font-size: 1.2rem;
+        height: 3rem;
+        margin: 2rem 0;
+        text-align: center; } }
+  .forgotPassword button {
+    width: 30rem;
+    height: 5rem;
+    font-size: 1.8rem;
+    border-radius: 1.2rem;
+    background-color: #003e5f;
+    color: white;
+    outline: none;
+    border: none; }
+    .forgotPassword button:hover {
+      cursor: pointer; }
+  .forgotPassword-signup {
+    font-size: 1.8rem;
+    margin: 1rem 0;
+    color: #0f2e4c; }
+
+.resetPassword {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10rem 0; }
+  @media only screen and (max-width: 992px) {
+    .resetPassword {
+      width: 100%; } }
+  .resetPassword-title {
+    font-size: 4.8rem; }
+    @media only screen and (max-width: 600px) {
+      .resetPassword-title {
+        font-size: 3.2rem; } }
+  .resetPassword-subtitle {
+    font-size: 1.8rem; }
+  .resetPassword input {
+    width: 40rem;
+    padding: 1rem 2rem;
+    margin: 3rem 0 0 0;
+    border: none;
+    border-bottom: 0.1rem solid #0f2e4c;
+    font-size: 1.8rem; }
+    @media only screen and (max-width: 992px) {
+      .resetPassword input {
+        width: 80%; } }
+    .resetPassword input:focus {
+      outline: none; }
+  .resetPassword-message {
+    height: 2rem;
+    font-size: 1.4rem;
+    margin: 1.5rem 0;
+    color: #e84925; }
+  .resetPassword button {
+    width: 30rem;
+    height: 5rem;
+    font-size: 1.8rem;
+    border-radius: 1.2rem;
+    background-color: #003e5f;
+    color: white;
+    outline: none;
+    border: none; }
+    .resetPassword button:hover {
+      cursor: pointer; }
+  .resetPassword-login {
+    font-size: 1.8rem;
+    margin: 1rem 0;
+    color: #0f2e4c; }
 
 .giphy-loading {
   margin: 1rem 0 !important; }

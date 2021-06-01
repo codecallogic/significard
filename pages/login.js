@@ -104,6 +104,7 @@ const Login = ({user, userUpdate, userMessage, userEmail}) => {
             firebaseAuth={firebase.auth()}
           />
           <p className="signup-form-signin">Don't have an account? <a href="/signup">Sign Up</a></p>
+          <a className="signup-form-forgotPassword" onClick={() => router.push('/forgot-password')}>Forgot password?</a>
         </form>
       </div>
       <span className="signup-terms">By continuing, you accept Significard's <a href="">Terms & Conditions</a></span>
