@@ -6,7 +6,7 @@ import {eventsList} from '../utils/quiz'
 
 const quiz = ({}) => {
 
-  const [quiz, setquiz] = useState('events')
+  const [quiz, setquiz] = useState('recipient')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
@@ -86,7 +86,7 @@ const quiz = ({}) => {
         </>
         }
         {quiz == 'events' && <>
-          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'recipient')}>
+          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'age')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
           <div className="quiz-title">What are the events you'd like to send cards for your mom?</div>
