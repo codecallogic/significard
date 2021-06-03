@@ -21,14 +21,17 @@ const ForgotPassword = ({}) => {
   return (
     <>
       <Nav></Nav>
-      <div className="forgotPassword">
+      {!message ? <div className="forgotPassword">
         <h1 className="forgotPassword-title">Forgot Password?</h1>
         <div className="forgotPassword-subtitle">Enter the email address associated with your account.</div>
         <input autoFocus={true} type="text" className="forgotPassword-email" name="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-        <span className="forgotPassword-message">{message ? message : null}</span>
         <button className="forgotPassword-button" onClick={submitRequest}>Submit</button>
         <a href="/login" className="forgotPassword-signup">Sign up</a>
       </div>
+      : 
+      null
+      }
+      {message ? <div className="forgotPassword"><span className="forgotPassword-message">{message}</span></div> : null}
       {/* <Footer></Footer> */}
     </>
   )
