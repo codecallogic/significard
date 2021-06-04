@@ -31,7 +31,7 @@ const ForgotPassword = ({}) => {
       : 
       null
       }
-      {message ? <div className="forgotPassword"><span className="forgotPassword-message">{message}</span></div> : null}
+      {message ? <div className="forgotPassword"><span className="forgotPassword-message">{message}</span><a className="forgotPassword-login" href="/login">Login</a></div> : null}
       {/* <Footer></Footer> */}
     </>
   )

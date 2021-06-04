@@ -64,3 +64,84 @@ export const eventsList = [
     subtitle: 'Other (Specify)'
   }
 ]
+
+
+export const stylesList = [
+  {
+    imageName: 'simple.png',
+    subtitle: 'simple',
+    rotate: -8
+  },
+  {
+    imageName: 'colorful.png',
+    subtitle: 'colorful',
+    rotate: 6.82
+  },
+  {
+    imageName: 'traditional.png',
+    subtitle: 'tranditional',
+    rotate: -8.54
+  },
+  {
+    imageName: 'humorous.png',
+    subtitle: 'humorous',
+    rotate: 8.5
+  },
+  {
+    imageName: 'modern.png',
+    subtitle: 'modern',
+    rotate: -8.17
+
+  },
+  {
+    imageName: 'cute.png',
+    subtitle: 'cute',
+    rotate: 13.26
+  }
+]
+
+export const stylesListDrop = [
+  {
+    color: '#EF6130',
+  },
+  {
+    color: '#E58A5D',
+  },
+  {
+    color: '#ECAB7D',
+  },
+  {
+    color: '#F4CD9D',
+  },
+  {
+    color: '#F6D9A8',
+  },
+  {
+    color: '#F6D9A8'
+  }
+]
+
+export const packageList = [
+  {
+    image: 'champagne.png',
+    rotate: -23
+  },
+  {
+    image: 'cards_flower.png',
+  },
+  {
+    image: 'card-cone.png',
+    rotate: 23
+  },
+  {
+    image: 'pig.png',
+    rotate: -23
+  },
+  {
+    image: 'cards_diaversary.png'
+  },
+  {
+    image: 'cards_elephant.png',
+    rotate: 23
+  }
+]
