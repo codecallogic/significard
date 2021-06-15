@@ -6,7 +6,7 @@ import {eventsList, stylesList, stylesListDrop, packageList} from '../utils/quiz
 
 const quiz = ({}) => {
 
-  const [quiz, setquiz] = useState('recipient')
+  const [quiz, setquiz] = useState('package')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
@@ -31,6 +31,16 @@ const quiz = ({}) => {
 
   const quizProgressNav = (e, next) => {
     setquiz(next)
+  }
+
+  const showTooltip = (e, type) => {
+    const els = document.querySelectorAll('.quiz-recipient-package-description-text-bubble-tooltip')
+    els[type].classList.add('display')
+  }
+
+  const hideTooltip = (e, type) => {
+    const els = document.querySelectorAll('.quiz-recipient-package-description-text-bubble-tooltip')
+    els[type].classList.remove('display')
   }
   
   return (
@@ -224,7 +234,7 @@ const quiz = ({}) => {
               <div className="quiz-recipient-package-item-subtitle">Cards that you can recycle</div>
               <div className="quiz-recipient-package-item-image-container">
                 {packageList.slice(0, 3).map((item, idx) =>
-                  <img style={{transform: `rotate(${item.rotate}deg)`}} src={`/media/package/${item.image}`} alt="" />
+                  <img key={idx} style={{transform: `rotate(${item.rotate}deg)`}} src={`/media/package/${item.image}`} alt="" />
                 )}
               </div>
               <div className="quiz-recipient-package-item-price">$8.99 /card</div>
@@ -237,7 +247,7 @@ const quiz = ({}) => {
               <div className="quiz-recipient-package-item-subtitle">Cards that you can plant</div>
               <div className="quiz-recipient-package-item-image-container">
                 {packageList.slice(3, 6).map((item, idx) =>
-                  <img style={{transform: `rotate(${item.rotate}deg)`}} src={`/media/package/${item.image}`} alt="" />
+                  <img key={idx} style={{transform: `rotate(${item.rotate}deg)`}} src={`/media/package/${item.image}`} alt="" />
                 )}
               </div>
               <div className="quiz-recipient-package-item-price">$10.99 /card</div>
@@ -245,6 +255,30 @@ const quiz = ({}) => {
               <button className="quiz-recipient-package-item-button">Select</button>
               <div>Free Shipping</div>
             </div>
+          </div>
+          <div className="quiz-recipient-package-bulk">For bulk orders <a href="">click here</a></div>
+          <div className="quiz-recipient-package-description">
+              <div className="quiz-recipient-package-description-title">All cards are 5 x 7 (A7 Folded) and include: </div>
+                <div className="quiz-recipient-package-description-text">• Handwritten address on the envelope.</div>
+                <div className="quiz-recipient-package-description-text">• Recipients name in front of card.</div>
+                <div className="quiz-recipient-package-description-text">• Blank or Preselected message inside the card (2-3 sentences)</div>
+              <div className="quiz-recipient-package-description-title">Optional </div>
+              <div className="quiz-recipient-package-description-text">• You can add handwritten message inside the card for extra $1.00. 
+                <div className="quiz-recipient-package-description-text-bubble">
+                  <svg onMouseOver={(e) => showTooltip(e, 0)} onMouseLeave={(e) => hideTooltip(e, 0)}><use xlinkHref="sprite.svg#icon-information"></use></svg>
+                  <div className="quiz-recipient-package-description-text-bubble-tooltip">
+                  Our team of artists will beautifully handwrite your message inside the card
+                  </div>
+                </div>
+              </div>
+              <div className="quiz-recipient-package-description-text">• Get advice on what to write inside the card for extra $2.00. 
+                <div className="quiz-recipient-package-description-text-bubble">
+                  <svg onMouseOver={(e) => showTooltip(e, 1)} onMouseLeave={(e) => hideTooltip(e, 1)}><use xlinkHref="sprite.svg#icon-information"></use></svg>
+                  <div className="quiz-recipient-package-description-text-bubble-tooltip">
+                  Don’t know what to write? We got you! We’ll give you options on what you could write inside the card.
+                  </div>
+                </div>
+              </div>
           </div>
           <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'recipient')}>Next</button><div className="quiz-button-container"></div></div>
           <div className="quiz-next" onClick={(e) => quizProgressNav(e,'recipient')}>
