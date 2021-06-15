@@ -91,7 +91,7 @@ const quiz = ({}) => {
           </div>
           <div className="quiz-title">What are the events you'd like to send cards for your mom?</div>
           <div className="quiz-title-mobile">Select an event for mom.</div>
-          <div className="quiz-subtitle">Pick one or more events. Select teh estimated arrival date for each card. Make sure it's at least 3 weeks away!</div>
+          <div className="quiz-subtitle">Pick one or more events. Select the estimated arrival date for each card. Make sure it's at least 3 weeks away!</div>
           <div className="quiz-subtitle-mobile">Select the estimated arrival date for the event.</div>
           <div className="quiz-recipient-event">
             {eventsList.slice(0, toggleEvents ? 20 : 8).map( (item, idx) => 

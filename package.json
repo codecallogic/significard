@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "watch:css": "node-sass styles/main.scss styles/app.css -w"
+    "watch:css": "node-sass styles/main.scss styles/app.css -w",
+    "compile:sass": "node-sass styles/main.scss styles/app.comp.css",
+    "prefix:css": "postcss --use autoprefixer -b 'last 7 versions' styles/app.comp.css -o styles/app.prefix.css",
+    "compress:css": "node-sass styles/app.prefix.css styles/app.css --output-style compressed",
+    "build:css": "npm-run-all compile:sass prefix:css compress:css"
   },
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
@@ -23,6 +27,9 @@
     "redux-devtools-extension": "^2.13.9"
   },
   "devDependencies": {
-    "node-sass": "^5.0.0"
+    "autoprefixer": "^10.2.6",
+    "node-sass": "^5.0.0",
+    "npm-run-all": "^4.1.5",
+    "postcss-cli": "^8.3.1"
   }
 }
