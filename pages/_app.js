@@ -16,6 +16,7 @@ function MyApp({ Component, pageProps }) {
       <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"></link>
       <link rel="preconnect" href="https://fonts.gstatic.com"></link>
       <link href="https://fonts.googleapis.com/css2?family=Sanchez&display=swap" rel="stylesheet"></link>
+      <script type="text/javascript" src="DragDropTouch.js"></script>
     </Head>
     <Provider store={store}>
       <Component {...pageProps} />

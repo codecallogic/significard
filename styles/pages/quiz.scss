@@ -382,6 +382,9 @@
       align-items: center;
       flex-direction: column;
       position: relative;
+      width: 167px;
+      // border: 0.1rem solid $color-light-gray;
+      height: 233px;
 
       @media only screen and (max-width: $large) {
         margin: 1.4rem 1.2rem;
