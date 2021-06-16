@@ -880,6 +880,7 @@
 
       @media only screen and (max-width: $large) {
         width: 90%;
+        padding: 0 2rem;
       }
 
       &-container {
@@ -937,6 +938,14 @@
             font-weight: 700;
             font-size: 1.6rem;
             color: $color-scheme-3-variation-3;
+
+            @media only screen and (max-width: $large) {
+              font-size: 1.4rem;
+            }
+
+            @media only screen and (max-width: $extra-small) {
+              font-size: 1rem;
+            }
           }
         }
       }

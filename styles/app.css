@@ -975,7 +975,8 @@ body {
       margin: 0 0 4rem 0; }
       @media only screen and (max-width: 992px) {
         .quiz-recipient-mail-address {
-          width: 90%; } }
+          width: 90%;
+          padding: 0 2rem; } }
       .quiz-recipient-mail-address-container {
         display: flex;
         flex-direction: column;
@@ -1018,6 +1019,12 @@ body {
             font-weight: 700;
             font-size: 1.6rem;
             color: #011722; } }
+    @media only screen and (max-width: 992px) and (max-width: 992px) {
+      .quiz-recipient-message-container form div > label {
+        font-size: 1.4rem; } }
+    @media only screen and (max-width: 992px) and (max-width: 350px) {
+      .quiz-recipient-message-container form div > label {
+        font-size: 1rem; } }
   .quiz-recipient-description {
     grid-column: 1/-1;
     justify-self: center;
@@ -1347,6 +1354,9 @@ body {
   width: 300px;
   height: 53px;
   margin: 0 0 1rem 0; }
+  @media only screen and (max-width: 992px) {
+    .mail {
+      width: 90%; } }
   .mail input {
     border-radius: 1.2rem !important;
     padding: 1.6rem 0 1.6rem 2.3rem; }
@@ -1360,6 +1370,9 @@ body {
     border: none;
     color: white;
     border-radius: 1.2rem; }
+    @media only screen and (max-width: 992px) {
+      .mail-button {
+        width: 90%; } }
 
 .message {
   width: 300px;
@@ -1396,6 +1409,9 @@ body {
     margin-right: 0.5rem; }
   .checkbox span {
     font-size: 1.8rem; }
+    @media only screen and (max-width: 992px) {
+      .checkbox span {
+        font-size: 1.6rem; } }
 
 .checkbox_2 {
   display: flex;
@@ -1408,7 +1424,10 @@ body {
     font-size: 1.8rem; }
     @media only screen and (max-width: 992px) {
       .checkbox_2 span {
-        font-size: 1.6rem; } }
+        font-size: 1.4rem; } }
+    @media only screen and (max-width: 350px) {
+      .checkbox_2 span {
+        font-size: 1rem; } }
 
 .w-4 {
   width: 40.1rem !important; }
@@ -1507,3 +1526,6 @@ body {
   .form-group-list label {
     font-size: 2.2rem;
     color: #011722; }
+    @media only screen and (max-width: 350px) {
+      .form-group-list label {
+        font-size: 1.6rem; } }

@@ -93,6 +93,10 @@
   height: 53px;
   margin: 0 0 1rem 0;
 
+  @media only screen and (max-width: $large) {
+    width: 90%;
+  }
+
   input {
     border-radius: 1.2rem !important;
     padding: 1.6rem 0 1.6rem 2.3rem;
@@ -108,6 +112,10 @@
     border: none;
     color: white;
     border-radius: 1.2rem;
+
+    @media only screen and (max-width: $large) {
+      width: 90%;
+    }
   }
 }
 
@@ -157,6 +165,10 @@
 
   span {
     font-size: 1.8rem;
+
+    @media only screen and (max-width: $large) {
+      font-size: 1.6rem;
+    }
   }
 }
 
@@ -174,7 +186,11 @@
     font-size: 1.8rem;
 
     @media only screen and (max-width: $large) {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
+    }
+
+    @media only screen and (max-width: $extra-small) {
+      font-size: 1rem;
     }
   }
 }
@@ -304,5 +320,9 @@
   label {
     font-size: 2.2rem;
     color: $color-scheme-3-variation-3;
+
+    @media only screen and (max-width: $extra-small) {
+      font-size: 1.6rem;
+    }
   }
 }
