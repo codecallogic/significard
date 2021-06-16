@@ -6,26 +6,33 @@ import {eventsList, stylesList, stylesListDrop, packageList} from '../utils/quiz
 
 const quiz = ({}) => {
 
-  const [quiz, setquiz] = useState('package')
+  const [quiz, setquiz] = useState('message')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
+  const [address, setAddress] = useState('')
 
   const quizProgress = (e, next) => {
     let els = document.querySelectorAll('.quiz-recipient-item')
     let els2 = document.querySelectorAll('.quiz-recipient-age-item')
     let els3 = document.querySelectorAll('.quiz-recipient-event-item')
+    let els4 = document.querySelectorAll('.quiz-recipient-involvement-item')
+    let els5 = document.querySelectorAll('.quiz-recipient-mail-item')
 
     els.forEach( (el) => {el.classList.remove("quiz-recipient-item-active")})
     els2.forEach( (el) => {el.classList.remove("quiz-recipient-age-item-active")})
     els3.forEach( (el) => {el.classList.remove("quiz-recipient-age-event-active")})
+    els4.forEach( (el) => {el.classList.remove("quiz-recipient-involvement-item-active")})
+    els5.forEach( (el) => {el.classList.remove("quiz-recipient-mail-item-active")})
 
     els.forEach( (el) => {el.textContent == e.target.textContent ? el.classList.add("quiz-recipient-item-active") : null})
     els2.forEach( (el) => {el.textContent == e.target.textContent ? el.classList.add("quiz-recipient-age-item-active") : null})
     els3.forEach( (el) => {el.textContent == e.target.textContent ? el.classList.add("quiz-recipient-event-item-active") : null})
+    els4.forEach( (el) => {el.textContent == e.target.textContent ? el.classList.add("quiz-recipient-involvement-item-active") : null})
+    els5.forEach( (el) => {el.textContent == e.target.textContent ? el.classList.add("quiz-recipient-mail-item-active") : null})
 
     setTimeout(() => {
-      setquiz(next)
+      if(next) setquiz(next)
     }, 500);
   }
 
@@ -56,16 +63,16 @@ const quiz = ({}) => {
           <div className="quiz-subtitle">For now just pick <span>one person</span>. Later, you can finish adding other loved ones in your profile.</div>
           <div className="quiz-subtitle-mobile">For now just pick <span>one person</span>. Later, you can finish adding other loved ones in your profile.</div>
           <div className="quiz-recipient">
-            <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Friend</div>
-            <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Partner</div>
-            <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Mom</div>
-            <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Dad</div>
-            <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Sister</div>
-            <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Brother</div>
-            <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Grandma</div>
-            <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Grandpa</div>
-            <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Daughter</div>
-            <div className="quiz-recipient-item" onClick={(e) => quizProgress(e,'age')}>Other</div>
+            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), setRecipient(e.target.textContent.toLowerCase()))}>Friend</div>
+            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), setRecipient(e.target.textContent.toLowerCase()))}>Partner</div>
+            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), setRecipient(e.target.textContent.toLowerCase()))}>Mom</div>
+            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), setRecipient(e.target.textContent.toLowerCase()))}>Dad</div>
+            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), setRecipient(e.target.textContent.toLowerCase()))}>Sister</div>
+            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), setRecipient(e.target.textContent.toLowerCase()))}>Brother</div>
+            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), setRecipient(e.target.textContent.toLowerCase()))}>Grandma</div>
+            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), setRecipient(e.target.textContent.toLowerCase()))}>Grandpa</div>
+            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), setRecipient(e.target.textContent.toLowerCase()))}>Daughter</div>
+            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), setRecipient(e.target.textContent.toLowerCase()))}>Other</div>
           </div>
           <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e, 'age')}>Next</button></div>
           <div className="quiz-next" onClick={(e) => quizProgressNav(e, 'age')}>
@@ -99,8 +106,8 @@ const quiz = ({}) => {
           <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'age')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
-          <div className="quiz-title">What are the events you'd like to send cards for your mom?</div>
-          <div className="quiz-title-mobile">Select an event for mom.</div>
+          <div className="quiz-title">What are the events you'd like to send cards for your {recipient ? recipient : 'recipient'}?</div>
+          <div className="quiz-title-mobile">Select an event for {recipient ? recipient : 'recipient'}.</div>
           <div className="quiz-subtitle">Pick one or more events. Select the estimated arrival date for each card. Make sure it's at least 3 weeks away!</div>
           <div className="quiz-subtitle-mobile">Select the estimated arrival date for the event.</div>
           <div className="quiz-recipient-event">
@@ -122,10 +129,10 @@ const quiz = ({}) => {
           <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'events')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
-          <div className="quiz-title">How would you rank the styles that describe your mom?</div>
-          <div className="quiz-title-mobile">Rate the cards for mom.</div>
-          <div className="quiz-subtitle">How would you rank the styles that describe your mom?</div>
-          <div className="quiz-subtitle-mobile">What does mom like? Drag and drog from 1 (most important) to 6 (least important).</div>
+          <div className="quiz-title">How would you rank the styles that describe your {recipient ? recipient : 'recipient'}?</div>
+          <div className="quiz-title-mobile">Rate the cards for {recipient ? recipient : 'recipient'}.</div>
+          <div className="quiz-subtitle">How would you rank the styles that describe your {recipient ? recipient : 'recipient'}?</div>
+          <div className="quiz-subtitle-mobile">What does {recipient ? recipient : 'recipient'} like? Drag and drog from 1 (most important) to 6 (least important).</div>
           <div className="quiz-recipient-style">
             {stylesList.map( (item, idx) => 
             <div key={idx} style={{transform: `rotate(${item.rotate}deg)`}} className="quiz-recipient-style-item">
@@ -151,8 +158,8 @@ const quiz = ({}) => {
           <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'ranking')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
-          <div className="quiz-title">Anything specific your mom might like?</div>
-          <div className="quiz-title-mobile">Anything specific your mom might like?</div>
+          <div className="quiz-title">Anything specific your {recipient ? recipient : 'recipient'} might like?</div>
+          <div className="quiz-title-mobile">Anything specific your {recipient ? recipient : 'recipient'} might like?</div>
           <div className="quiz-subtitle">Animals, flowers, foods etc. Add as many words as you'd like!</div>
           <div className="quiz-subtitle-mobile">Animals, flowers, foods etc. Add as many words as you'd like!</div>
           <div className="quiz-recipient-tags">
@@ -280,8 +287,113 @@ const quiz = ({}) => {
                 </div>
               </div>
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'recipient')}>Next</button><div className="quiz-button-container"></div></div>
-          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'recipient')}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'mail')}>Next</button><div className="quiz-button-container"></div></div>
+          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'mail')}>
+            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
+          </div>
+        </>
+        }
+        {quiz == 'mail' && <>
+          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'involvement')}>
+            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
+          </div>
+          <div className="quiz-title">Where should we mail your card?</div>
+          <div className="quiz-title-mobile">Where should we mail your card?</div>
+          <div className="quiz-recipient-mail">
+            <div className="quiz-recipient-mail-item" onClick={(e) => (setAddress('me'), quizProgress(e))}>
+              To me
+            </div>
+            <div className="quiz-recipient-mail-item" onClick={(e) => (setAddress('recipient'), quizProgress(e))}>
+              To the recipient
+            </div>
+          </div>
+          {address == 'me' &&
+          <div className="quiz-recipient-mail-address">
+            <div className="quiz-recipient-mail-address-container">
+              <div className="quiz-recipient-mail-address-heading">Your address:</div>
+              <form>
+                <div className="form-group-single  mail">
+                  <input type="text" placeholder="Full Name" required/>
+                </div>
+                <div className="form-group-single mail">
+                  <input type="text" placeholder="Address Line 1" required/>
+                </div>
+                <div className="form-group-single mail">
+                  <input type="text" placeholder="Address Line 2"/>
+                </div>
+                <div className="form-group-double mail">
+                  <input type="text" placeholder="City" required/>
+                  <input type="text" placeholder="State" required/>
+                </div>
+                <div className="form-group-single mail">
+                  <input type="text" placeholder="Zip Code" required/>
+                </div>
+                <button className="form-button mail-button">Add Address</button>
+              </form>
+            </div>
+          </div>
+          }
+          {address == 'recipient' &&
+            <div className="quiz-recipient-mail-address">
+              <div className="form-group-single checkbox">
+                <input type="checkbox"/>
+                <span>I don’t know their address, email them for me to ask their address</span>
+              </div>
+              <div className="quiz-recipient-mail-address-container">
+                <form>
+                  <div className="form-group-single  mail">
+                    <input type="text" placeholder="Full Name" required/>
+                  </div>
+                  <div className="form-group-single mail">
+                    <input type="text" placeholder="Address Line 1" required/>
+                  </div>
+                  <div className="form-group-single mail">
+                    <input type="text" placeholder="Address Line 2"/>
+                  </div>
+                  <div className="form-group-double mail">
+                    <input type="text" placeholder="City" required/>
+                    <input type="text" placeholder="State" required/>
+                  </div>
+                  <div className="form-group-single mail">
+                    <input type="text" placeholder="Zip Code" required/>
+                  </div>
+                  <button className="form-button mail-button">Add Address</button>
+                </form>
+              </div>
+            </div>
+          }
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'message')}>Next</button><div className="quiz-button-container"></div></div>
+          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'message')}>
+            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
+          </div>
+        </>
+        }
+        {quiz == 'message' && <>
+          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'other')}>
+            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
+          </div>
+          <div className="quiz-title">What would you like the card to say?</div>
+          <div className="quiz-title-mobile">What would you like the card to say?</div>
+          <div className="quiz-subtitle">Fill in the blank!</div>
+          <div className="quiz-subtitle-mobile">Fill in the blank!</div>
+          <div className="quiz-recipient-message">
+            <div className="quiz-recipient-message-heading">Mother's Day</div>
+            <div className="quiz-recipient-message-container">
+              <form>
+                <div className="form-group-single message">
+                  <label htmlFor="name">Name/Nickname in front of the card:</label>
+                  <input type="text" name="name" required/>
+                  <div className="checkbox_2"><input type="checkbox" /><span>Leave it blank</span></div>
+                </div>
+                <div className="form-group-single message">
+                  <label htmlFor="message">Handwritten message inside:</label>
+                  <textarea></textarea>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'message')}>Next</button><div className="quiz-button-container"></div></div>
+          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'message')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>
         </>
