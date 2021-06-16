@@ -6,7 +6,7 @@ import {eventsList, stylesList, stylesListDrop, packageList} from '../utils/quiz
 
 const quiz = ({}) => {
 
-  const [quiz, setquiz] = useState('message')
+  const [quiz, setquiz] = useState('description')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
@@ -294,7 +294,7 @@ const quiz = ({}) => {
         </>
         }
         {quiz == 'mail' && <>
-          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'involvement')}>
+          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'package')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
           <div className="quiz-title">Where should we mail your card?</div>
@@ -369,7 +369,7 @@ const quiz = ({}) => {
         </>
         }
         {quiz == 'message' && <>
-          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'other')}>
+          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'mail')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
           <div className="quiz-title">What would you like the card to say?</div>
@@ -385,15 +385,98 @@ const quiz = ({}) => {
                   <input type="text" name="name" required/>
                   <div className="checkbox_2"><input type="checkbox" /><span>Leave it blank</span></div>
                 </div>
-                <div className="form-group-single message">
+                <div className="form-group-single message p-0">
                   <label htmlFor="message">Handwritten message inside:</label>
-                  <textarea></textarea>
+                  <textarea className="w-4" cols="100" rows="5"></textarea>
+                  <div className="checkbox_2"><input type="checkbox" /><span>Leave it blank</span></div>
+                  <div className="checkbox_2 w-4 info-popup"><input type="checkbox" />
+                    <span>Give me message options for $2.00</span>
+                    <div className="quiz-recipient-package-description-text-bubble">
+                      <svg onMouseOver={(e) => showTooltip(e, 0)} onMouseLeave={(e) => hideTooltip(e, 0)}><use xlinkHref="sprite.svg#icon-information"></use></svg>
+                      <div className="quiz-recipient-package-description-text-bubble-tooltip">
+                      We got you! We’ll send you different message options for just $2.00 per card once you sign up.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="form-group-single message p-0">
+                  <label htmlFor="name">Signature:</label>
+                  <input type="text" name="name" required/>
                 </div>
               </form>
+              <div className="checkbox_2 center show-on-mobile"><input type="checkbox" /><span>Not sure yet, ask me later</span></div>
             </div>
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'message')}>Next</button><div className="quiz-button-container"></div></div>
-          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'message')}>
+          <div className="checkbox_2 center hide-on-mobile"><input type="checkbox" /><span>Not sure yet, ask me later</span></div>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'description')}>Next</button><div className="quiz-button-container"></div></div>
+          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'description')}>
+            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
+          </div>
+        </>
+        }
+        {quiz == 'description' && <>
+          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'message')}>
+            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
+          </div>
+          <div className="quiz-title">What best describes mom?</div>
+          <div className="quiz-title-mobile">What best describes mom?</div>
+          <div className="quiz-subtitle">Select one.</div>
+          <div className="quiz-subtitle-mobile">Select one.</div>
+          <div className="quiz-recipient-description">
+            <div className="quiz-recipient-description-container">
+              <div className="form-group-list">
+                <div className="form-group-list-container">
+                  <input type="checkbox" name="wager"/>
+                  <span></span>
+                  <div className="form-group-list-fill"></div>
+                </div>
+                <label>The life of a party</label>
+              </div>
+              <div className="form-group-list">
+                <div className="form-group-list-container">
+                  <input type="checkbox" name="wager"/>
+                  <span></span>
+                  <div className="form-group-list-fill"></div>
+                </div>
+                <label>Soft spoken</label>
+              </div>
+              <div className="form-group-list">
+                <div className="form-group-list-container">
+                  <input type="checkbox" name="wager"/>
+                  <span></span>
+                  <div className="form-group-list-fill"></div>
+                </div>
+                <label>Thoughful</label>
+              </div>
+              <div className="form-group-list">
+                <div className="form-group-list-container">
+                  <input type="checkbox" name="wager"/>
+                  <span></span>
+                  <div className="form-group-list-fill"></div>
+                </div>
+                <label>Strong minded</label>
+              </div>
+              <div className="form-group-list">
+                <div className="form-group-list-container">
+                  <input type="checkbox" name="wager"/>
+                  <span></span>
+                  <div className="form-group-list-fill"></div>
+                </div>
+                <label>Super chill & down to earth</label>
+              </div>
+              <div className="form-group-list">
+                <div className="form-group-list-container">
+                  <input type="checkbox" name="wager"/>
+                  <span></span>
+                  <div className="form-group-list-fill"></div>
+                </div>
+                <label>Other (please specify)</label>
+              </div>
+              <input type="text" className="quiz-recipient-description-other"/>
+            </div>
+          </div>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'description')}>Next</button><div className="quiz-button-container"></div></div>
+          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'description')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>
         </>
