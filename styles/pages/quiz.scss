@@ -378,7 +378,6 @@
           gap: 0;
           padding: 0;
           min-height: 0;
-          margin: 0 0 2rem 0;
         }
 
         @media only screen and (max-width: $small) {
@@ -438,9 +437,12 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          border-radius: 1.2rem;
           font-size: 1.8rem;
-          color: white;
+          color: black;
+
+          &:first-child {
+            border-radius: 1.2rem;
+          }
 
           @media only screen and (max-width: $large) {
             top: -8%;
@@ -458,6 +460,53 @@
       position: relative;
       width: 16.7rem;
       height: 23.3rem;
+
+      &-container {
+        border-radius: 1.2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        position: relative;
+        width: 16.7rem;
+        height: 23.3rem;
+
+        @media only screen and (max-width: $large) {
+          width: 16.7rem;
+          height: 23.3rem;
+          margin: 1.4rem 5rem;
+          padding: 0;
+          min-height: 0;
+          filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
+        }
+
+        @media only screen and (max-width: $extra-medium) {
+          width: 12.7rem;
+          height: 19.3rem;
+          margin: 1.4rem 5rem;
+          padding: 0;
+          min-height: 0;
+          filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
+        }
+
+        @media only screen and (max-width: $small) {
+          width: 10rem;
+          height: 14rem;
+          margin: 1.4rem 1.2rem;
+          padding: 0;
+          min-height: 0;
+          filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
+        }
+
+        @media only screen and (max-width: $extra-small-alt-1) {
+          width: 8rem;
+          height: 11rem;
+          margin: 1.4rem 1.2rem;
+          padding: 0;
+          min-height: 0;
+          filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
+        }
+      }
 
       @media only screen and (max-width: $large) {
         width: 16.7rem;
@@ -498,6 +547,7 @@
       img {
         width: 16.7rem;
         height: 23.3rem;
+        pointer-events: none;
 
         @media only screen and (max-width: $large) {
           width: 16.7rem;
@@ -537,6 +587,7 @@
       span {
         font-size: 2.2rem;
         text-transform: capitalize;
+        pointer-events: none;
 
         @media only screen and (max-width: $large) {
           position: absolute;

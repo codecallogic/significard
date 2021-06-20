@@ -6,7 +6,7 @@ import {eventsList, stylesList, stylesListDrop, packageList} from '../utils/quiz
 
 const quiz = ({}) => {
 
-  const [quiz, setquiz] = useState('recipient')
+  const [quiz, setquiz] = useState('ranking')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
@@ -51,7 +51,7 @@ const quiz = ({}) => {
   }
 
   const onDragStart = (e) => {
-    console.log(e)
+    console.log(e.target)
     console.log('Hello')
     e.dataTransfer.setData("item", e.target.id);
   }
@@ -61,10 +61,9 @@ const quiz = ({}) => {
   }
 
   const onDrop = (e) => {
-    console.log(e)
     let id = e.dataTransfer.getData("item");
     let el = document.getElementById(id)
-    
+    console.log(el)
     e.target.appendChild(el)
   }
 
@@ -161,10 +160,19 @@ const quiz = ({}) => {
           <div className="quiz-subtitle">How would you rank the styles that describe your {recipient ? recipient : 'recipient'}?</div>
           <div className="quiz-subtitle-mobile">What does {recipient ? recipient : 'recipient'} like? Drag and drog from 1 (most important) to 6 (least important).</div>
           <div className="quiz-recipient-style">
-            {stylesList.map( (item, idx) => 
+            {/* {stylesList.map( (item, idx) => 
             <div key={idx} onDragOver={(e)=> onDragOver(e)} onDrop={(e) => onDropBack(e)} style={{transform: `rotate(${item.rotate}deg)`}} className="quiz-recipient-style-item">
               {item.imageName ? <img id={`event-${idx}`} draggable onDragStart={(e) => onDragStart(e)} src={`/media/styles/${item.imageName}`}></img> : null}
               <span >{item.subtitle}</span>
+            </div>
+            )
+            } */}
+            {stylesList.map( (item, idx) => 
+            <div onDragOver={(e)=> onDragOver(e)} onDrop={(e) => onDropBack(e)}  className="quiz-recipient-style-item-container">
+              <div key={idx} id={`event-${idx}`} draggable onDragStart={(e) => onDragStart(e)}  style={{transform: `rotate(${item.rotate}deg)`}} className="quiz-recipient-style-item">
+                {item.imageName ? <img src={`/media/styles/${item.imageName}`}></img> : null}
+                <span >{item.subtitle}</span>
+              </div>
             </div>
             )
             }
