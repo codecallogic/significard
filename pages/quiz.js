@@ -6,7 +6,7 @@ import {eventsList, stylesList, stylesListDrop, packageList} from '../utils/quiz
 
 const quiz = ({}) => {
 
-  const [quiz, setquiz] = useState('ranking')
+  const [quiz, setquiz] = useState('message')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
@@ -160,13 +160,6 @@ const quiz = ({}) => {
           <div className="quiz-subtitle">How would you rank the styles that describe your {recipient ? recipient : 'recipient'}?</div>
           <div className="quiz-subtitle-mobile">What does {recipient ? recipient : 'recipient'} like? Drag and drog from 1 (most important) to 6 (least important).</div>
           <div className="quiz-recipient-style">
-            {/* {stylesList.map( (item, idx) => 
-            <div key={idx} onDragOver={(e)=> onDragOver(e)} onDrop={(e) => onDropBack(e)} style={{transform: `rotate(${item.rotate}deg)`}} className="quiz-recipient-style-item">
-              {item.imageName ? <img id={`event-${idx}`} draggable onDragStart={(e) => onDragStart(e)} src={`/media/styles/${item.imageName}`}></img> : null}
-              <span >{item.subtitle}</span>
-            </div>
-            )
-            } */}
             {stylesList.map( (item, idx) => 
             <div onDragOver={(e)=> onDragOver(e)} onDrop={(e) => onDropBack(e)}  className="quiz-recipient-style-item-container">
               <div key={idx} id={`event-${idx}`} draggable onDragStart={(e) => onDragStart(e)}  style={{transform: `rotate(${item.rotate}deg)`}} className="quiz-recipient-style-item">
@@ -268,16 +261,15 @@ const quiz = ({}) => {
           </div>
           <div className="quiz-title">Choose a package</div>
           <div className="quiz-title-mobile">Choose a package</div>
-          <div className="quiz-subtitle">Select one.</div>
-          <div className="quiz-subtitle-mobile">Select one.</div>
           <div className="quiz-recipient-package">
             <div className="quiz-recipient-package-item">
               <div className="quiz-recipient-package-item-title">Standard</div>
               <div className="quiz-recipient-package-item-subtitle">Cards that you can recycle</div>
               <div className="quiz-recipient-package-item-image-container">
-                {packageList.slice(0, 3).map((item, idx) =>
+                <img src={`/media/package/standard.png`} alt="" />
+                {/* {packageList.slice(0, 3).map((item, idx) =>
                   <img key={idx} style={{transform: `rotate(${item.rotate}deg)`}} src={`/media/package/${item.image}`} alt="" />
-                )}
+                )} */}
               </div>
               <div className="quiz-recipient-package-item-price">$8.99 /card</div>
               <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div>
@@ -288,9 +280,10 @@ const quiz = ({}) => {
               <div className="quiz-recipient-package-item-title">Plantable</div>
               <div className="quiz-recipient-package-item-subtitle">Cards that you can plant</div>
               <div className="quiz-recipient-package-item-image-container">
-                {packageList.slice(3, 6).map((item, idx) =>
+                {/* {packageList.slice(3, 6).map((item, idx) =>
                   <img key={idx} style={{transform: `rotate(${item.rotate}deg)`}} src={`/media/package/${item.image}`} alt="" />
-                )}
+                )} */}
+                <img src={`/media/package/plantable.png`} alt="" />
               </div>
               <div className="quiz-recipient-package-item-price">$10.99 /card</div>
               <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div>

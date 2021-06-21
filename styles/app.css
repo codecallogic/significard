@@ -1085,6 +1085,14 @@ body {
             font-size: 1.6rem;
             z-index: 20;
             display: none; }
+            @media only screen and (max-width: 600px) {
+              .quiz-recipient-package-description-text-bubble-tooltip {
+                top: -11rem;
+                left: -18rem; } }
+            @media only screen and (max-width: 375px) {
+              .quiz-recipient-package-description-text-bubble-tooltip {
+                top: -11rem;
+                left: -21rem; } }
   .quiz-recipient-mail {
     grid-column: 1/-1;
     justify-self: center;

@@ -996,6 +996,16 @@
             font-size: 1.6rem;
             z-index: 20;
             display: none;
+
+            @media only screen and (max-width: $small) {
+              top: -11rem;
+              left: -18rem;
+            }
+
+            @media only screen and (max-width: $extra-small-alt-1) {
+              top: -11rem;
+              left: -21rem;
+            }
           }
         }
       }
