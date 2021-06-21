@@ -109,6 +109,79 @@ body {
     .activate-login:hover {
       cursor: pointer; }
 
+.slider {
+  grid-column: 1/-1;
+  display: none;
+  margin: 10rem 0 0 0; }
+  @media only screen and (max-width: 992px) {
+    .slider {
+      display: block; } }
+  .slider-slides-container {
+    width: 100%;
+    display: flex;
+    transition: all 0.5s cubic-bezier(0.47, 0, 0.745, 0.715); }
+  .slider-slides-item {
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 0.2rem solid #e5e5e5;
+    border-radius: 1.2rem;
+    box-sizing: border-box;
+    color: #011722;
+    padding: 1.7rem 1.7rem;
+    margin-left: 1.2rem; }
+    .slider-slides-item-title {
+      font-family: Sanchez;
+      font-size: 2.2rem;
+      text-align: center;
+      margin-bottom: 0.3rem; }
+    .slider-slides-item-subtitle {
+      font-size: 1.4rem;
+      color: #011722;
+      margin-bottom: 0.7rem; }
+    .slider-slides-item-image {
+      width: 200px;
+      height: 111.3px;
+      margin-bottom: 0.7rem; }
+    .slider-slides-item-price {
+      font-family: Sanchez;
+      font-size: 2.2rem;
+      color: #011722;
+      margin-bottom: 0.3rem; }
+    .slider-slides-item-discount {
+      font-size: 1.4rem;
+      color: #011722;
+      margin-bottom: 0.7rem; }
+    .slider-slides-item-button {
+      width: 120px;
+      height: 45px;
+      background-color: #0f2e4c;
+      border-radius: 1.2rem;
+      outline: none;
+      border: none;
+      color: white;
+      font-size: 1.6rem;
+      margin-bottom: 0.7rem; }
+    .slider-slides-item-shipping {
+      font-size: 1.4rem;
+      color: #011722;
+      text-align: center; }
+  .slider-slides-dots {
+    display: flex;
+    justify-content: center; }
+    .slider-slides-dots-dot {
+      width: 8px;
+      height: 8px;
+      margin: 2rem 0 0 0;
+      margin-right: 0.5rem;
+      cursor: pointer;
+      border-radius: 50%; }
+      .slider-slides-dots-dot:hover {
+        cursor: pointer; }
+
 .signup {
   text-align: center; }
   @media only screen and (max-width: 992px) {
@@ -975,8 +1048,7 @@ body {
     margin: 4rem 0 4rem 0; }
     @media only screen and (max-width: 992px) {
       .quiz-recipient-package {
-        display: grid;
-        grid-template-columns: 1fr; } }
+        display: none; } }
     .quiz-recipient-package-item {
       width: 35rem;
       height: 49.3rem;

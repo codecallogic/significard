@@ -1,12 +1,13 @@
 import Nav from '../components/nav'
 import Footer from '../components/footer'
 import withUser from './withUser'
+import Slider from '../components/slider/slider'
 import {useState, useEffect} from 'react'
 import {eventsList, stylesList, stylesListDrop, packageList} from '../utils/quiz'
 
 const quiz = ({}) => {
 
-  const [quiz, setquiz] = useState('message')
+  const [quiz, setquiz] = useState('package')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
@@ -291,6 +292,7 @@ const quiz = ({}) => {
               <div>Free Shipping</div>
             </div>
           </div>
+          <Slider></Slider>
           <div className="quiz-recipient-package-bulk">For bulk orders <a href="">click here</a></div>
           <div className="quiz-recipient-package-description">
               <div className="quiz-recipient-package-description-title">All cards are 5 x 7 (A7 Folded) and include: </div>
