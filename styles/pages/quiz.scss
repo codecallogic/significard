@@ -380,7 +380,6 @@
           width: 19rem;
           gap: 0;
           padding: 0;
-          min-height: 0;
         }
 
         @media only screen and (max-width: $small) {
@@ -388,7 +387,6 @@
           height: 14rem;
           margin: 1.4rem 1.2rem;
           padding: 0;
-          min-height: 0;
           filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
         }
 
@@ -397,7 +395,6 @@
           height: 11rem;
           margin: 1.4rem 1.2rem;
           padding: 0;
-          min-height: 0;
           filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
         }
 
@@ -479,7 +476,6 @@
           height: 23.3rem;
           margin: 1.4rem 5rem;
           padding: 0;
-          min-height: 0;
           filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
         }
 
@@ -488,7 +484,6 @@
           height: 19.3rem;
           margin: 1.4rem 5rem;
           padding: 0;
-          min-height: 0;
           filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
         }
 
@@ -497,7 +492,6 @@
           height: 14rem;
           margin: 1.4rem 1.2rem;
           padding: 0;
-          min-height: 0;
           filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
         }
 
@@ -506,7 +500,6 @@
           height: 11rem;
           margin: 1.4rem 1.2rem;
           padding: 0;
-          min-height: 0;
           filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
         }
       }
@@ -516,7 +509,6 @@
         height: 23.3rem;
         margin: 1.4rem 5rem;
         padding: 0;
-        min-height: 0;
         filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
       }
 
@@ -530,7 +522,7 @@
       }
 
       @media only screen and (max-width: $small) {
-        width: 10rem;
+        width: 100%;
         height: 14rem;
         margin: 1.4rem 1.2rem;
         padding: 0;
@@ -539,7 +531,7 @@
       }
 
       @media only screen and (max-width: $extra-small-alt-1) {
-        width: 8rem;
+        width: 100%;
         height: 11rem;
         margin: 1.4rem 1.2rem;
         padding: 0;
@@ -556,7 +548,6 @@
           width: 16.7rem;
           height: 23.3rem;
           padding: 0;
-          min-height: 0;
         }
 
         @media only screen and (max-width: $extra-medium) {
@@ -564,16 +555,14 @@
           height: 19.3rem;
           margin: 1.4rem 5rem;
           padding: 0;
-          min-height: 0;
           filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
         }
 
         @media only screen and (max-width: $small) {
-          width: 10rem;
-          height: 14rem;
-          margin: 1.4rem 1.2rem;
+          width: 100%;
+          height: 100;
+          margin: 0rem 1.2rem;
           padding: 0;
-          min-height: 0;
           filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
         }
 
@@ -582,7 +571,6 @@
           height: 11rem;
           margin: 1.4rem 1.2rem;
           padding: 0;
-          min-height: 0;
           filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
         }
       }
@@ -594,7 +582,7 @@
 
         @media only screen and (max-width: $large) {
           position: absolute;
-          top: 0;
+          top: -15%;
           left: 0;
           font-size: 1.2rem;
           background-color: $color-scheme-3-variation-1;
