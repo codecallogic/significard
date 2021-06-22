@@ -7,7 +7,7 @@ import {eventsList, stylesList, stylesListDrop, packageList} from '../utils/quiz
 
 const quiz = ({}) => {
 
-  const [quiz, setquiz] = useState('package')
+  const [quiz, setquiz] = useState('events')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))

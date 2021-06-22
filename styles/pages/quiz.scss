@@ -213,7 +213,6 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 3rem;
     margin: 4rem 0 4rem 0;
 
     @media only screen and (max-width: $large) {
@@ -231,6 +230,7 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      margin: 0 3rem 3rem 0;
 
       @media only screen and (max-width: $large) {
         width: 15.2rem;
@@ -334,7 +334,6 @@
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
-      gap: 3rem;
       border-radius: 1.2rem;
       width: 129.1rem;
       height: 32.1rem;
@@ -371,6 +370,10 @@
         align-items: center;
         flex-direction: column;
         position: relative;
+
+        &:not(:last-child) {
+          margin: 0 3rem 0 0;
+        }
 
         @media only screen and (max-width: $large) {
           justify-self: center;
@@ -777,7 +780,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 3rem;
     flex-wrap: wrap;
     margin: 4rem 0 4rem 0;
 
@@ -800,6 +802,7 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      margin: 0 3rem 0 0;
       transition: all 0.5s ease-in-out;
 
       * {
@@ -842,7 +845,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 3rem;
     flex-wrap: wrap;
     margin: 4rem 0 4rem 0;
 
@@ -857,6 +859,7 @@
       border-radius: 1.2rem;
       padding: 5.8rem 3.8rem;
       text-align: center;
+      margin: 0 3rem 0 0;
 
       @media only screen and (max-width: $large) {
         width: 100%;
@@ -1017,7 +1020,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 3rem;
     flex-wrap: wrap;
     margin: 4rem 0 4rem 0;
 
@@ -1031,6 +1033,7 @@
       align-items: center;
       justify-content: center;
       font-size: 2.2rem;
+      margin: 0 3rem 0 0;
 
       @media only screen and (max-width: $large) {
         width: 162px;

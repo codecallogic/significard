@@ -535,7 +535,6 @@ body {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 3rem;
     margin: 4rem 0 4rem 0; }
     @media only screen and (max-width: 992px) {
       .quiz-recipient-event {
@@ -550,7 +549,8 @@ body {
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column; }
+      flex-direction: column;
+      margin: 0 3rem 3rem 0; }
       @media only screen and (max-width: 992px) {
         .quiz-recipient-event-item {
           width: 15.2rem;
@@ -635,7 +635,6 @@ body {
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
-      gap: 3rem;
       border-radius: 1.2rem;
       width: 129.1rem;
       height: 32.1rem;
@@ -669,6 +668,8 @@ body {
         align-items: center;
         flex-direction: column;
         position: relative; }
+        .quiz-recipient-style-drop-item:not(:last-child) {
+          margin: 0 3rem 0 0; }
         @media only screen and (max-width: 992px) {
           .quiz-recipient-style-drop-item {
             justify-self: center;
@@ -994,7 +995,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 3rem;
     flex-wrap: wrap;
     margin: 4rem 0 4rem 0; }
     @media only screen and (max-width: 992px) {
@@ -1015,6 +1015,7 @@ body {
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      margin: 0 3rem 0 0;
       transition: all 0.5s ease-in-out; }
       .quiz-recipient-involvement-item * {
         pointer-events: none; }
@@ -1043,7 +1044,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 3rem;
     flex-wrap: wrap;
     margin: 4rem 0 4rem 0; }
     @media only screen and (max-width: 992px) {
@@ -1055,7 +1055,8 @@ body {
       border: 0.2rem solid #e5e5e5;
       border-radius: 1.2rem;
       padding: 5.8rem 3.8rem;
-      text-align: center; }
+      text-align: center;
+      margin: 0 3rem 0 0; }
       @media only screen and (max-width: 992px) {
         .quiz-recipient-package-item {
           width: 100%; } }
@@ -1171,7 +1172,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 3rem;
     flex-wrap: wrap;
     margin: 4rem 0 4rem 0; }
     .quiz-recipient-mail-item {
@@ -1183,7 +1183,8 @@ body {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2.2rem; }
+      font-size: 2.2rem;
+      margin: 0 3rem 0 0; }
       @media only screen and (max-width: 992px) {
         .quiz-recipient-mail-item {
           width: 162px;
