@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react'
 import {connect} from 'react-redux'
 import { useDispatch } from 'react-redux';
+import { useSwipeable } from 'react-swipeable';
 
 const Slider = ({slider}) => {
   const dispatch = useDispatch()
@@ -10,6 +11,17 @@ const Slider = ({slider}) => {
     i == 1 ? dispatch({type: "NEXT", width: (-el.offsetWidth + (el.offsetWidth/8)), active: i}) : null
     i == 0 ? dispatch({type: "NEXT", width: (el.offsetWidth - (el.offsetWidth/1.5)), active: i}) : null
   }
+
+  const handlers = useSwipeable({
+    onSwipedLeft: () => {
+      let el = document.querySelector('.slider-slides-item')
+      dispatch({type: "NEXT", width: (-el.offsetWidth + (el.offsetWidth/8)), active: 1})
+    },
+    onSwipedRight: () => {
+      let el = document.querySelector('.slider-slides-item')
+      dispatch({type: "NEXT", width: (el.offsetWidth - (el.offsetWidth/1.5)), active: 0})
+    }
+  });
   
   return (
     <div className="slider">
@@ -18,6 +30,7 @@ const Slider = ({slider}) => {
          style={{
           transform: `translateX(${slider.translate}px)`
           }}
+         {...handlers}
         >
           <div className="slider-slides-item">
             <div className="slider-slides-item-title">Standard</div>
