@@ -193,7 +193,7 @@ const quiz = ({}) => {
           <div className="quiz-subtitle-mobile">Animals, flowers, foods etc. Add as many words as you'd like!</div>
           <div className="quiz-recipient-tags">
             <div className="quiz-recipient-tags-box"><input type="text" name="tags"/><button>Add</button></div>
-            <div className="quiz-recipient-tags-checkbox"><input type="checkbox" name="unsure"/><span>I'm not sure</span></div>
+            <div className="quiz-recipient-tags-checkbox"><input type="checkbox" name="unsure" onClick={(e) => quizProgressNav(e,'avoid')}/><span>I'm not sure</span></div>
           </div>
           <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'avoid')}>Next</button><div className="quiz-button-container"></div></div>
           <div className="quiz-next" onClick={(e) => quizProgressNav(e,'avoid')}>
@@ -211,7 +211,7 @@ const quiz = ({}) => {
           <div className="quiz-subtitle-mobile">Color, theme, animals etc.</div>
           <div className="quiz-recipient-avoid">
             <textarea type="text" name="avoid" cols="100"/>
-            <div className="quiz-recipient-avoid-checkbox"><input type="checkbox" name="avoid"/><span>Nope</span></div>
+            <div className="quiz-recipient-avoid-checkbox"><input type="checkbox" name="avoid" onClick={(e) => quizProgressNav(e,'other')}/><span>Nope</span></div>
           </div>
           <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'other')}>Next</button><div className="quiz-button-container"></div></div>
           <div className="quiz-next" onClick={(e) => quizProgressNav(e,'other')}>
@@ -229,7 +229,7 @@ const quiz = ({}) => {
           <div className="quiz-subtitle-mobile">Add any other details here.</div>
           <div className="quiz-recipient-other">
             <textarea type="text" name="other" cols="100"/>
-            <div className="quiz-recipient-other-checkbox"><input type="checkbox" name="other"/><span>Nope</span></div>
+            <div className="quiz-recipient-other-checkbox"><input type="checkbox" name="other" onClick={(e) => quizProgressNav(e,'involvement')}/><span>Nope</span></div>
           </div>
           <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'involvement')}>Next</button><div className="quiz-button-container"></div></div>
           <div className="quiz-next" onClick={(e) => quizProgressNav(e,'involvement')}>
