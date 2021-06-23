@@ -4,14 +4,18 @@ import withUser from './withUser'
 import Slider from '../components/slider/slider'
 import {useState, useEffect} from 'react'
 import {eventsList, stylesList, stylesListDrop, packageList} from '../utils/quiz'
+import {manageTags} from '../helpers/forms'
+import { useDispatch } from 'react-redux'
 
 const quiz = ({}) => {
+  const dispatch = useDispatch()
 
-  const [quiz, setquiz] = useState('package')
+  const [quiz, setquiz] = useState('tags')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
   const [address, setAddress] = useState('')
+  const [tags, setTags] = useState('')
 
   const quizProgress = (e, next) => {
     let els = document.querySelectorAll('.quiz-recipient-item')
@@ -75,6 +79,43 @@ const quiz = ({}) => {
     console.log(e.target.id)
     console.log(id)
     if(e.target.id !== id) e.target.appendChild(el)
+  }
+
+  // HANDLE KEY PRESS
+  const handleKeyPress = (e, clicked) => {
+    if(e.key === 'Enter' || clicked == 'true'){
+      e.preventDefault();
+      manageTags('addTag')
+      let closeIcon = document.querySelectorAll('.form-tag')
+      let postHidden = document.getElementById("tagValue")
+      let values = postHidden.getAttribute('value').split(',')
+
+      closeIcon.forEach( (e) => {
+        e.addEventListener('click', function(e){
+          let parent = e.target.parentNode
+          let parentOfParent = parent.parentNode
+          parentOfParent.remove()
+
+          let tagValues = document.querySelectorAll(".tag > span")
+          let newValues = []
+          
+          tagValues.forEach( e => {
+            newValues.push(e.innerHTML)
+          })
+
+          dispatch({
+            type: 'UPDATE_TAGS',
+            payload: newValues
+          })
+        })
+      })
+
+      dispatch({
+        type: 'UPDATE_TAGS',
+        payload: values
+      })
+      setTags('')
+    }
   }
   
   return (
@@ -192,7 +233,12 @@ const quiz = ({}) => {
           <div className="quiz-subtitle">Animals, flowers, foods etc. Add as many words as you'd like!</div>
           <div className="quiz-subtitle-mobile">Animals, flowers, foods etc. Add as many words as you'd like!</div>
           <div className="quiz-recipient-tags">
-            <div className="quiz-recipient-tags-box"><input type="text" name="tags"/><button>Add</button></div>
+            <div className="quiz-recipient-tags-box">
+              <input type="hidden" name="tags" id="tagValue" value="" required></input>
+              <input type="text" id="researchInterests" name="tags" value={tags} onChange={ (e) => setTags(e.target.value)} onKeyPress={(e) => handleKeyPress(e)}/>
+              <button onClick={(e) => handleKeyPress(e, 'true')}>Add</button>
+            </div>
+            <div className="form-tag-container"></div>
             <div className="quiz-recipient-tags-checkbox"><input type="checkbox" name="unsure" onClick={(e) => quizProgressNav(e,'avoid')}/><span>I'm not sure</span></div>
           </div>
           <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'avoid')}>Next</button><div className="quiz-button-container"></div></div>

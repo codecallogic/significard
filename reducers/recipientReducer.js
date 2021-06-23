@@ -1,11 +1,15 @@
 const initialState = {
-  recipient: ''
+  recipient: '',
+  tags: []
 }
 
 export const recipientReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "UPDATE_STATE":
-      
+    case 'UPDATE_TAGS':
+      return {
+        ...state,
+        tags: action.payload
+      }
       break;
   
     default:
