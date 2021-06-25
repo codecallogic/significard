@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux'
 const quiz = ({}) => {
   const dispatch = useDispatch()
 
-  const [quiz, setquiz] = useState('tags')
+  const [quiz, setquiz] = useState('events')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
