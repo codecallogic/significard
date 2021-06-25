@@ -442,26 +442,34 @@ body {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 3rem;
     margin: 4rem 0 4rem 0; }
     @media only screen and (max-width: 992px) {
       .quiz-recipient {
         grid-column: 1/-1;
         grid-template-columns: repeat(2, 1fr);
+        justify-self: center;
         padding: 0 2rem;
         gap: 0; } }
     .quiz-recipient-item {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 190px;
+      width: 19rem;
       min-height: 18.2rem;
       font-size: 1.6rem;
       line-height: 2.5rem;
       border: 0.2rem solid #e5e5e5;
       border-radius: 1.2rem;
       padding: 2rem 3rem;
+      margin: 0 3rem 3rem 0;
       transition: all 0.5s cubic-bezier(0.47, 0, 0.745, 0.715); }
+      @media only screen and (max-width: 1200px) {
+        .quiz-recipient-item {
+          width: 16.2rem;
+          height: 16.2rem;
+          padding: 0;
+          min-height: 0;
+          margin: 1.4rem 1.6rem 0 1.4rem; } }
       @media only screen and (max-width: 992px) {
         .quiz-recipient-item {
           width: 16.2rem;
@@ -483,19 +491,18 @@ body {
           cursor: pointer; }
   .quiz-recipient-age {
     grid-column: 4/8;
-    width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     align-items: center;
     justify-content: center;
     padding: 0 1rem;
     margin: 5rem 0;
-    gap: 3rem;
     transition: all 0.3s cubic-bezier(0.47, 0, 0.745, 0.715); }
     @media only screen and (max-width: 992px) {
       .quiz-recipient-age {
         grid-column: 1/-1;
         grid-template-columns: repeat(2, 1fr);
+        justify-self: center;
         padding: 0 2rem; } }
     .quiz-recipient-age-item {
       display: flex;
@@ -508,11 +515,13 @@ body {
       border: 0.2rem solid #e5e5e5;
       border-radius: 1.2rem;
       padding: 2rem 3rem;
+      margin: 0 3rem 3rem 0;
       transition: all 0.1s cubic-bezier(0.47, 0, 0.745, 0.715); }
       @media only screen and (max-width: 992px) {
         .quiz-recipient-age-item {
           width: 16.2rem;
           height: 4.8rem;
+          margin: 0 3rem 3rem 0;
           padding: 0;
           min-height: 0; } }
       .quiz-recipient-age-item:hover {
@@ -536,6 +545,9 @@ body {
     align-items: center;
     flex-wrap: wrap;
     margin: 4rem 0 4rem 0; }
+    @media only screen and (min-width: 992px) {
+      .quiz-recipient-event {
+        padding: 0 1rem; } }
     @media only screen and (max-width: 992px) {
       .quiz-recipient-event {
         display: grid;
@@ -551,6 +563,14 @@ body {
       align-items: center;
       flex-direction: column;
       margin: 0 3rem 3rem 0; }
+      @media only screen and (max-width: 1800px) {
+        .quiz-recipient-event-item {
+          width: 19rem;
+          height: 18.2rem; } }
+      @media only screen and (max-width: 1500px) {
+        .quiz-recipient-event-item {
+          width: calc(100% / 5);
+          height: 14.2rem; } }
       @media only screen and (max-width: 992px) {
         .quiz-recipient-event-item {
           width: 15.2rem;
@@ -613,11 +633,11 @@ body {
       .quiz-recipient-style {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 1rem;
         width: 100%;
         border: 0;
         height: 100%;
-        padding: 0 3rem; } }
+        padding: 0 3rem;
+        margin: 3rem 0 3rem 0 !important; } }
     @media only screen and (max-width: 800px) {
       .quiz-recipient-style {
         display: grid;
@@ -627,38 +647,27 @@ body {
         border: 0;
         height: 100%;
         padding: 0 3rem;
-        margin: 3rem 0 0 0; } }
+        margin: 3rem 0 3rem 0; } }
     .quiz-recipient-style-drop {
       grid-column: 1/-1;
       justify-self: center;
       display: flex;
       justify-content: center;
-      align-items: center;
       flex-wrap: wrap;
       border-radius: 1.2rem;
-      width: 129.1rem;
-      height: 32.1rem;
-      margin: 4rem 0; }
+      width: 132.1rem;
+      height: 32.1rem; }
       @media only screen and (max-width: 1200px) {
         .quiz-recipient-style-drop {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 1rem;
-          width: 50%;
-          border: 0;
-          height: 100%;
-          padding: 0 3rem;
-          margin: 5rem 0 5rem 0; } }
+          display: flex;
+          width: 100%;
+          height: 100%; } }
       @media only screen and (max-width: 992px) {
         .quiz-recipient-style-drop {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 0;
+          grid-template-columns: repeat(3, min-content);
           width: 100%;
-          height: 100%;
-          border: 0;
-          margin: 0;
-          padding: 4rem 5rem; } }
+          height: 100%; } }
       .quiz-recipient-style-drop-item {
         width: 19rem;
         height: 30.2rem;
@@ -667,29 +676,31 @@ body {
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        position: relative; }
+        position: relative;
+        gap: 0; }
         .quiz-recipient-style-drop-item:not(:last-child) {
           margin: 0 3rem 0 0; }
+        @media only screen and (max-width: 1200px) {
+          .quiz-recipient-style-drop-item {
+            width: 19rem;
+            margin: 0 3rem 3rem 0; } }
         @media only screen and (max-width: 992px) {
           .quiz-recipient-style-drop-item {
-            justify-self: center;
             width: 19rem;
-            gap: 0;
-            padding: 0; } }
+            margin: 0 3rem 3rem 0 !important; } }
         @media only screen and (max-width: 600px) {
           .quiz-recipient-style-drop-item {
             width: 10rem;
             height: 14rem;
             padding: 0;
             gap: 0;
-            filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25)); }
-            .quiz-recipient-style-drop-item:not(:last-child) {
-              margin: 1.4rem 1.2rem; } }
+            filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
+            margin: 1.4rem 1.2rem !important; } }
         @media only screen and (max-width: 375px) {
           .quiz-recipient-style-drop-item {
             width: 8rem;
             height: 11rem;
-            margin: 1.4rem 1.2rem;
+            margin: 1.4rem 1.2rem !important;
             padding: 0;
             filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25)); } }
         .quiz-recipient-style-drop-item img {
@@ -699,15 +710,13 @@ body {
             .quiz-recipient-style-drop-item img {
               width: 16.7rem;
               height: 23.3rem;
-              padding: 0;
-              min-height: 0; } }
+              padding: 0; } }
           @media only screen and (max-width: 800px) {
             .quiz-recipient-style-drop-item img {
               width: 12.7rem;
               height: 19.3rem;
               margin: 1.4rem 5rem;
               padding: 0;
-              min-height: 0;
               filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25)); } }
           @media only screen and (max-width: 600px) {
             .quiz-recipient-style-drop-item img {
@@ -715,7 +724,6 @@ body {
               height: 11rem;
               margin: 1.4rem 1.2rem;
               padding: 0;
-              min-height: 0;
               filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25)); } }
         .quiz-recipient-style-drop-item span {
           position: absolute;
@@ -792,7 +800,6 @@ body {
           height: 19.3rem;
           margin: 1.4rem 5rem;
           padding: 0;
-          min-height: 0;
           filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25)); } }
       @media only screen and (max-width: 600px) {
         .quiz-recipient-style-item {
@@ -800,7 +807,6 @@ body {
           height: 14rem;
           margin: 1.4rem 1.2rem;
           padding: 0;
-          min-height: 0;
           filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25)); } }
       @media only screen and (max-width: 375px) {
         .quiz-recipient-style-item {
@@ -847,15 +853,19 @@ body {
         @media only screen and (max-width: 992px) {
           .quiz-recipient-style-item span {
             position: absolute;
-            top: -15%;
+            top: -2%;
             left: 0;
             font-size: 1.2rem;
             background-color: #003e5f;
             color: white;
             width: 100%;
             text-align: center;
-            padding: 0;
-            min-height: 0; } }
+            padding: 0; } }
+        @media only screen and (max-width: 375px) {
+          .quiz-recipient-style-item span {
+            position: absolute;
+            top: -18%;
+            left: 0; } }
       .quiz-recipient-style-item:hover {
         background-color: #d7dcfe;
         color: #0f2e4c;
