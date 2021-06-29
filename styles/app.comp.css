@@ -563,6 +563,10 @@ body {
       align-items: center;
       flex-direction: column;
       margin: 0 3rem 3rem 0; }
+      @media only screen and (min-width: 1800px) {
+        .quiz-recipient-event-item {
+          width: 23rem;
+          height: 18.2rem; } }
       @media only screen and (max-width: 1800px) {
         .quiz-recipient-event-item {
           width: 19rem;
@@ -571,13 +575,12 @@ body {
         .quiz-recipient-event-item {
           width: calc(100% / 5);
           height: 14.2rem; } }
-      @media only screen and (max-width: 992px) {
+      @media only screen and (max-width: 1200px) {
         .quiz-recipient-event-item {
-          width: 15.2rem;
+          width: 12rem;
           height: 8.3rem;
           margin: 1.4rem 1.2rem;
-          padding: 0;
-          min-height: 0; } }
+          padding: 0; } }
       .quiz-recipient-event-item svg {
         width: 4.5rem;
         height: 4.5rem;
@@ -659,7 +662,8 @@ body {
       height: 32.1rem; }
       @media only screen and (max-width: 1200px) {
         .quiz-recipient-style-drop {
-          display: flex;
+          display: grid;
+          grid-template-columns: repeat(3, min-content);
           width: 100%;
           height: 100%; } }
       @media only screen and (max-width: 992px) {
@@ -683,7 +687,7 @@ body {
         @media only screen and (max-width: 1200px) {
           .quiz-recipient-style-drop-item {
             width: 19rem;
-            margin: 0 3rem 3rem 0; } }
+            margin: 0 3rem 3rem 0 !important; } }
         @media only screen and (max-width: 992px) {
           .quiz-recipient-style-drop-item {
             width: 19rem;
@@ -943,7 +947,8 @@ body {
       border: 0.2rem solid #e5e5e5;
       border-radius: 1.2rem;
       font-size: 1.8rem;
-      font-family: inherit !important; }
+      font-family: inherit !important;
+      padding: 1rem 3rem; }
       @media only screen and (max-width: 992px) {
         .quiz-recipient-avoid textarea {
           width: 100%; } }
@@ -976,7 +981,8 @@ body {
       border: 0.2rem solid #e5e5e5;
       border-radius: 1.2rem;
       font-size: 1.8rem;
-      font-family: inherit !important; }
+      font-family: inherit !important;
+      padding: 1rem 3rem; }
       @media only screen and (max-width: 992px) {
         .quiz-recipient-other textarea {
           width: 100%; } }
@@ -1326,6 +1332,8 @@ body {
       color: white;
       border: 0.1rem solid #003e5f;
       outline: none; }
+    .quiz-button:disabled {
+      pointer-events: none; }
   .quiz-next {
     position: absolute;
     right: 10rem;
@@ -1600,7 +1608,8 @@ body {
     background: #fff;
     display: flex;
     flex-wrap: wrap;
-    align-content: flex-start; }
+    align-content: flex-start;
+    width: 630px; }
     .form-tag-container input {
       flex: 1;
       width: auto;
@@ -1813,7 +1822,7 @@ body {
     background-color: white;
     border: 0.1rem solid #003e5f;
     padding: 0.2rem;
-    height: 1.2rem;
-    width: 1.2rem;
+    height: 1.5rem;
+    width: 1.5rem;
     margin-left: 1rem;
     fill: #003e5f; }
