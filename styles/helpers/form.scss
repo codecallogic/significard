@@ -93,6 +93,7 @@
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
+    width: 630px;
 
     input {
       flex: 1;
@@ -371,8 +372,8 @@
     background-color: white;
     border: 0.1rem solid $color-scheme-3-variation-1;
     padding: 0.2rem;
-    height: 1.2rem;
-    width: 1.2rem;
+    height: 1.5rem;
+    width: 1.5rem;
     margin-left: 1rem;
     fill: $color-scheme-3-variation-1;
   }

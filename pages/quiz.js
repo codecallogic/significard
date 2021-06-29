@@ -5,12 +5,14 @@ import Slider from '../components/slider/slider'
 import {useState, useEffect} from 'react'
 import {eventsList, stylesList, stylesListDrop, packageList} from '../utils/quiz'
 import {manageTags} from '../helpers/forms'
-import { useDispatch } from 'react-redux'
+import { useDispatch, connect } from 'react-redux'
+import {useRouter} from 'next/router'
 
-const quiz = ({}) => {
+const quiz = ({quizState}) => {
   const dispatch = useDispatch()
+  const router = useRouter()
 
-  const [quiz, setquiz] = useState('events')
+  const [quiz, setquiz] = useState('description')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
@@ -56,8 +58,6 @@ const quiz = ({}) => {
   }
 
   const onDragStart = (e) => {
-    console.log(e.target)
-    console.log('Hello')
     e.dataTransfer.setData("item", e.target.id);
   }
 
@@ -65,19 +65,22 @@ const quiz = ({}) => {
     e.preventDefault()
   }
 
-  const onDrop = (e) => {
+  const onDrop = (e, idx) => {
     let id = e.dataTransfer.getData("item");
     let el = document.getElementById(id)
-    console.log(el)
+
+    handleChange('ranking', el, idx)
     e.target.appendChild(el)
   }
 
   const onDropBack = (e) => {
-    console.log(e)
     let id = e.dataTransfer.getData("item");
     let el = document.getElementById(id)
-    console.log(e.target.id)
-    console.log(id)
+
+    let span = el.querySelectorAll('span')
+
+    dispatch({type: 'REMOVE_RANK', payload: span[0].textContent.toLowerCase()})
+
     if(e.target.id !== id) e.target.appendChild(el)
   }
 
@@ -117,6 +120,122 @@ const quiz = ({}) => {
       setTags('')
     }
   }
+
+  // HANDLE CHANGE
+  const handleChange = (question, e, idx, type) => {
+
+    if(question == 'ranking'){
+      let span = e.querySelectorAll('span')
+      let ranking = new Object()
+
+      ranking.style = span[0].textContent.toLowerCase()
+      ranking.rank = idx + 1
+      
+      dispatch({type: 'UPDATE_RANK', name: question, payload: ranking})
+
+      return 
+    }
+
+    if(question == 'avoid'){
+      window.localStorage.setItem(question, e.target.value); 
+      return dispatch({type: 'UPDATE_TEXTAREA', name:'avoid', payload: e.target.value})
+    }
+
+    if(question == 'other'){
+      window.localStorage.setItem(question, e.target.value); 
+      return dispatch({type: 'UPDATE_TEXTAREA', name:'other', payload: e.target.value})
+    }
+
+    if(question == 'package'){
+      window.localStorage.setItem(question, type)
+      return dispatch({type: 'UPDATE_CHANGE', name: question, payload: type})
+    }
+
+    if(question == 'mail'){
+      window.localStorage.setItem(type, e.target.value)
+      return dispatch({type: 'UPDATE_CHANGE', name: type, payload: e.target.value})
+    }
+
+    if(question == 'nickname'){
+      window.localStorage.setItem(question, type)
+      return dispatch({type: 'UPDATE_CHANGE', name: question, payload: type})
+    }
+
+    if(question == 'message'){
+      window.localStorage.setItem(question, type)
+      return dispatch({type: 'UPDATE_TEXTAREA', name: question, payload: type})
+    }
+
+    if(question == 'signature'){
+      window.localStorage.setItem(question, type)
+      return dispatch({type: 'UPDATE_CHANGE', name: question, payload: type})
+    }
+    
+    window.localStorage.setItem(question, e.target.textContent.toLowerCase())
+    dispatch({type: 'UPDATE_CHANGE', name: question, payload: e.target.textContent.toLowerCase()})
+  }
+
+  const handleFormDisableButtons = (type) => {
+    if(type == 'mail'){
+      let inputs = []
+      if(quizState.name.length < 1){ inputs.push('true')}
+      if(quizState.address_one.length < 1){ inputs.push('true')}
+      if(quizState.city.length < 1){ inputs.push('true')}
+      if(quizState.state.length < 1){ inputs.push('true')}
+      if(quizState.zip_code.length < 1){ inputs.push('true')}
+
+      if(inputs.length > 0) return true
+    }
+
+    if(type == 'message'){
+      let inputs = []
+      if(quizState.nickname.length < 1){ inputs.push('true')}
+      if(quizState.message.length < 1){ inputs.push('true')}
+      if(quizState.signature.length < 1){ inputs.push('true')}
+
+      if(inputs.length > 0) return true
+    }
+  }
+
+  const handleFormProgressButtons = (type) => {
+    if(type == 'mail'){
+      let inputs = []
+      if(quizState.name.length > 1){ inputs.push('true')}
+      if(quizState.address_one.length > 1){ inputs.push('true')}
+      if(quizState.city.length > 1){ inputs.push('true')}
+      if(quizState.state.length > 1){ inputs.push('true')}
+      if(quizState.zip_code.length > 1){ inputs.push('true')}
+
+      if(inputs.length > 4) return true
+    }
+
+    if(type == 'message'){
+      let inputs = []
+      if(quizState.nickname.length > 1){ inputs.push('true')}
+      if(quizState.message.length > 1){ inputs.push('true')}
+      if(quizState.signature.length > 1){ inputs.push('true')}
+
+      if(inputs.length > 2) return true
+    }
+  }
+
+  const handleCheckboxList = (e, description) => {
+    let allInputs = document.querySelectorAll('.form-group-list-container > input')
+    
+    allInputs.forEach( (item) => {
+      item.checked = false
+    })
+
+    e.target.checked = true
+
+    window.localStorage.setItem('description', description.toLowerCase())
+    dispatch({type: 'UPDATE_CHANGE', name: 'description', payload: description.toLowerCase()})
+  }
+
+  useEffect(() => {
+    if(quiz == 'ranking') window.localStorage.setItem('rank', JSON.stringify(quizState.rank))
+    if(quiz == 'tags') window.localStorage.setItem('tags', JSON.stringify(quizState.tags))
+  }, [quizState.rank, quizState.tags])
   
   return (
 
@@ -131,21 +250,21 @@ const quiz = ({}) => {
           <div className="quiz-subtitle">For now just pick <span>one person</span>. Later, you can finish adding other loved ones in your profile.</div>
           <div className="quiz-subtitle-mobile">For now just pick <span>one person</span>. Later, you can finish adding other loved ones in your profile.</div>
           <div className="quiz-recipient">
-            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), setRecipient(e.target.textContent.toLowerCase()))}>Friend</div>
-            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), setRecipient(e.target.textContent.toLowerCase()))}>Partner</div>
-            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), setRecipient(e.target.textContent.toLowerCase()))}>Mom</div>
-            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), setRecipient(e.target.textContent.toLowerCase()))}>Dad</div>
-            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), setRecipient(e.target.textContent.toLowerCase()))}>Sister</div>
-            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), setRecipient(e.target.textContent.toLowerCase()))}>Brother</div>
-            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), setRecipient(e.target.textContent.toLowerCase()))}>Grandma</div>
-            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), setRecipient(e.target.textContent.toLowerCase()))}>Grandpa</div>
-            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), setRecipient(e.target.textContent.toLowerCase()))}>Daughter</div>
-            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), setRecipient(e.target.textContent.toLowerCase()))}>Other</div>
+            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), handleChange('recipient', e))}>Friend</div>
+            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), handleChange('recipient', e))}>Partner</div>
+            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), handleChange('recipient', e))}>Mom</div>
+            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), handleChange('recipient', e))}>Dad</div>
+            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), handleChange('recipient', e))}>Sister</div>
+            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), handleChange('recipient', e))}>Brother</div>
+            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), handleChange('recipient', e))}>Grandma</div>
+            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), handleChange('recipient', e))}>Grandpa</div>
+            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), handleChange('recipient', e))}>Daughter</div>
+            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), handleChange('recipient', e))}>Other</div>
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e, 'age')}>Next</button></div>
-          <div className="quiz-next" onClick={(e) => quizProgressNav(e, 'age')}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e, 'age')} disabled={quizState.recipient.length < 1 ? true : false}>Next</button></div>
+          {quizState.recipient && <div className="quiz-next" onClick={(e) => quizProgressNav(e, 'age')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
-          </div>
+          </div>}
         </>
         }
         {quiz == 'age' && <>
@@ -157,40 +276,42 @@ const quiz = ({}) => {
           <div className="quiz-subtitle">Select one.</div>
           <div className="quiz-subtitle-mobile">Select one.</div>
           <div className="quiz-recipient-age">
-            <div className="quiz-recipient-age-item" onClick={(e) => quizProgress(e,'events')}>18-24</div>
-            <div className="quiz-recipient-age-item" onClick={(e) => quizProgress(e,'events')}>25-34</div>
-            <div className="quiz-recipient-age-item" onClick={(e) => quizProgress(e,'events')}>35-44</div>
-            <div className="quiz-recipient-age-item" onClick={(e) => quizProgress(e, 'events')}>45-54</div>
-            <div className="quiz-recipient-age-item" onClick={(e) => quizProgress(e,'events')}>55-64</div>
-            <div className="quiz-recipient-age-item" onClick={(e) => quizProgress(e,'events')}>65 or above</div>
+            <div className="quiz-recipient-age-item" onClick={(e) => (quizProgress(e,'events'), handleChange('age', e))}>18-24</div>
+            <div className="quiz-recipient-age-item" onClick={(e) => (quizProgress(e,'events'), handleChange('age', e))}>25-34</div>
+            <div className="quiz-recipient-age-item" onClick={(e) => (quizProgress(e,'events'), handleChange('age', e))}>35-44</div>
+            <div className="quiz-recipient-age-item" onClick={(e) => (quizProgress(e,'events'), handleChange('age', e))}>45-54</div>
+            <div className="quiz-recipient-age-item" onClick={(e) => (quizProgress(e,'events'), handleChange('age', e))}>55-64</div>
+            <div className="quiz-recipient-age-item" onClick={(e) => (quizProgress(e,'events'), handleChange('age', e))}>65 or above</div>
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'events')}>Next</button><div className="quiz-button-container"></div></div>
-          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'events')}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'events')} disabled={quizState.age.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
+          {quizState.age && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'events')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>
+          }
         </>
         }
         {quiz == 'events' && <>
           <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'age')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
-          <div className="quiz-title">What are the events you'd like to send cards for your {recipient ? recipient : 'recipient'}?</div>
-          <div className="quiz-title-mobile">Select an event for {recipient ? recipient : 'recipient'}.</div>
+          <div className="quiz-title">What are the events you'd like to send cards for your {quizState.recipient ? quizState.recipient : 'recipient'}?</div>
+          <div className="quiz-title-mobile">Select an event for {quizState.recipient ? quizState.recipient : 'recipient'}.</div>
           <div className="quiz-subtitle">Pick one or more events. Select the estimated arrival date for each card. Make sure it's at least 3 weeks away!</div>
           <div className="quiz-subtitle-mobile">Select the estimated arrival date for the event.</div>
           <div className="quiz-recipient-event">
             {eventsList.slice(0, toggleEvents ? 20 : 8).map( (item, idx) => 
-            <div key={idx} className={`quiz-recipient-event-item`} onClick={(e) => item.subtitle == 'more' ? setToggleEvents(!toggleEvents) : quizProgress(e,'ranking')}>
+            <div key={idx} className={`quiz-recipient-event-item`} onClick={(e) => item.subtitle == 'more' ? setToggleEvents(!toggleEvents) : (quizProgress(e,'ranking'), handleChange('event', e))}>
               {item.imageName ? <img src={`/media/emojis/${item.imageName}`}></img> : null}
               <span className={item.subtitle == 'more' ? 'expand' : null}>{item.subtitle == 'more' ? toggleEvents ? 'less' : 'more' : item.subtitle}</span>
             </div>
             )
             }
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'ranking')}>Next</button><div className="quiz-button-container"></div></div>
-          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'ranking')}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'ranking')} disabled={quizState.event.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
+          {quizState.event && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'ranking')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>
+          }
         </>
         }
         {quiz == 'ranking' && <>
@@ -214,14 +335,15 @@ const quiz = ({}) => {
           </div>
           <div className="quiz-recipient-style-drop">
             {stylesListDrop.map( (item, idx) => 
-            <div onDrop={(e) => onDrop(e)} onDragOver={(e)=> onDragOver(e)} key={idx} className="quiz-recipient-style-drop-item" style={{border: `2px solid ${item.color}`}}><span style={{backgroundColor: `${item.color}`}}>{idx + 1}</span></div>
+            <div onDrop={(e) => onDrop(e, idx)} onDragOver={(e)=> onDragOver(e)} key={idx} className="quiz-recipient-style-drop-item" style={{border: `2px solid ${item.color}`}}><span style={{backgroundColor: `${item.color}`}}>{idx + 1}</span></div>
             )
             }
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'tags')}>Next</button><div className="quiz-button-container"></div></div>
-          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'tags')}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'tags')} disabled={quizState.rank.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
+          {quizState.rank.length >= 1 && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'tags')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>
+          }
         </>
         }
         {quiz == 'tags' && <>
@@ -241,10 +363,11 @@ const quiz = ({}) => {
             <div className="form-tag-container"></div>
             <div className="quiz-recipient-tags-checkbox"><input type="checkbox" name="unsure" onClick={(e) => quizProgressNav(e,'avoid')}/><span>I'm not sure</span></div>
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'avoid')}>Next</button><div className="quiz-button-container"></div></div>
-          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'avoid')}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'avoid')} disabled={quizState.tags.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
+          {quizState.tags.length >= 1 && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'avoid')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>
+          }
         </>
         }
         {quiz == 'avoid' && <>
@@ -256,13 +379,13 @@ const quiz = ({}) => {
           <div className="quiz-subtitle">Color, theme, animals etc.</div>
           <div className="quiz-subtitle-mobile">Color, theme, animals etc.</div>
           <div className="quiz-recipient-avoid">
-            <textarea type="text" name="avoid" cols="100"/>
+            <textarea type="text" name="avoid" cols="100" value={quizState.avoid} onChange={ (e) => handleChange('avoid', e)}/>
             <div className="quiz-recipient-avoid-checkbox"><input type="checkbox" name="avoid" onClick={(e) => quizProgressNav(e,'other')}/><span>Nope</span></div>
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'other')}>Next</button><div className="quiz-button-container"></div></div>
-          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'other')}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'other')} disabled={quizState.avoid.length < 1 ? true : false}>Next</button></div>
+          {quizState.avoid && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'other')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
-          </div>
+          </div>}
         </>
         }
         {quiz == 'other' && <>
@@ -274,13 +397,13 @@ const quiz = ({}) => {
           <div className="quiz-subtitle">Add any other details here.</div>
           <div className="quiz-subtitle-mobile">Add any other details here.</div>
           <div className="quiz-recipient-other">
-            <textarea type="text" name="other" cols="100"/>
+            <textarea type="text" name="other" cols="100" value={quizState.other} onChange={ (e) => handleChange('other', e)}/>
             <div className="quiz-recipient-other-checkbox"><input type="checkbox" name="other" onClick={(e) => quizProgressNav(e,'involvement')}/><span>Nope</span></div>
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'involvement')}>Next</button><div className="quiz-button-container"></div></div>
-          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'involvement')}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'involvement')}>Next</button><div className="quiz-button-container" disabled={quizState.other.length < 1 ? true : false}></div></div>
+          {quizState.other && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'involvement')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
-          </div>
+          </div>}
         </>
         }
         {quiz == 'involvement' && <>
@@ -292,14 +415,14 @@ const quiz = ({}) => {
           <div className="quiz-subtitle">Select one.</div>
           <div className="quiz-subtitle-mobile">Select one.</div>
           <div className="quiz-recipient-involvement">
-            <div className="quiz-recipient-involvement-item" onClick={(e) => quizProgress(e,'package')}>Not at all <span>I give full freedom to the artist to be adventurous with the design.</span></div>
-            <div className="quiz-recipient-involvement-item" onClick={(e) => quizProgress(e,'package')}>Somewhat <span>I have some ideas, but not sure.</span></div>
-            <div className="quiz-recipient-involvement-item" onClick={(e) => quizProgress(e,'package')}>Very <span>I have each detail of the design figured out.</span></div>
+            <div className="quiz-recipient-involvement-item" onClick={(e) => (quizProgress(e,'package'), handleChange('involvement', e))}>Not at all <span>I give full freedom to the artist to be adventurous with the design.</span></div>
+            <div className="quiz-recipient-involvement-item" onClick={(e) => (quizProgress(e,'package'), handleChange('involvement', e))}>Somewhat <span>I have some ideas, but not sure.</span></div>
+            <div className="quiz-recipient-involvement-item" onClick={(e) => (quizProgress(e,'package'), handleChange('involvement', e))}>Very <span>I have each detail of the design figured out.</span></div>
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'package')}>Next</button><div className="quiz-button-container"></div></div>
-          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'package')}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'package')} disabled={quizState.involvement.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
+          {quizState.involvement && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'package')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
-          </div>
+          </div>}
         </>
         }
         {quiz == 'package' && <>
@@ -320,7 +443,7 @@ const quiz = ({}) => {
               </div>
               <div className="quiz-recipient-package-item-price">$8.99 /card</div>
               <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div>
-              <button className="quiz-recipient-package-item-button">Select</button>
+              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package', e, null, 'standard'))}>Select</button>
               <div>Free Shipping</div>
             </div>
             <div className="quiz-recipient-package-item">
@@ -334,7 +457,7 @@ const quiz = ({}) => {
               </div>
               <div className="quiz-recipient-package-item-price">$10.99 /card</div>
               <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div>
-              <button className="quiz-recipient-package-item-button">Select</button>
+              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package', e, null, 'plantable'))}>Select</button>
               <div>Free Shipping</div>
             </div>
           </div>
@@ -363,10 +486,10 @@ const quiz = ({}) => {
                 </div>
               </div>
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'mail')}>Next</button><div className="quiz-button-container"></div></div>
-          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'mail')}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'mail')} disabled={quizState.package.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
+          {quizState.package && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'mail')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
-          </div>
+          </div>}
         </>
         }
         {quiz == 'mail' && <>
@@ -387,24 +510,24 @@ const quiz = ({}) => {
           <div className="quiz-recipient-mail-address">
             <div className="quiz-recipient-mail-address-container">
               <div className="quiz-recipient-mail-address-heading">Your address:</div>
-              <form>
+              <form onSubmit={(e) => quizProgressNav(e,'message')}>
                 <div className="form-group-single  mail">
-                  <input type="text" placeholder="Full Name" required/>
+                  <input type="text" placeholder="Full Name" value={quizState.name} onChange={ (e) => handleChange('mail', e, null, 'name')} required/>
                 </div>
                 <div className="form-group-single mail">
-                  <input type="text" placeholder="Address Line 1" required/>
+                  <input type="text" placeholder="Address Line 1" value={quizState.address_one} onChange={ (e) => handleChange('mail', e, null, 'address_one')} required/>
                 </div>
                 <div className="form-group-single mail">
-                  <input type="text" placeholder="Address Line 2"/>
+                  <input type="text" placeholder="Address Line 2" value={quizState.address_two} onChange={ (e) => handleChange('mail', e, null, 'address_two')} />
                 </div>
                 <div className="form-group-double mail">
-                  <input type="text" placeholder="City" required/>
-                  <input type="text" placeholder="State" required/>
+                  <input type="text" placeholder="City" value={quizState.city} onChange={ (e) => handleChange('mail', e, null, 'city')} required/>
+                  <input type="text" placeholder="State" value={quizState.state} onChange={ (e) => handleChange('mail', e, null, 'state')} required/>
                 </div>
                 <div className="form-group-single mail">
-                  <input type="text" placeholder="Zip Code" required/>
+                  <input type="text" placeholder="Zip Code" value={quizState.zip_code} onChange={ (e) => handleChange('mail', e, null, 'zip_code')} required/>
                 </div>
-                <button className="form-button mail-button">Add Address</button>
+                <button type="submit" className="form-button mail-button">Add Address</button>
               </form>
             </div>
           </div>
@@ -412,36 +535,36 @@ const quiz = ({}) => {
           {address == 'recipient' &&
             <div className="quiz-recipient-mail-address">
               <div className="form-group-single checkbox">
-                <input type="checkbox"/>
-                <span>I don’t know their address, email them for me to ask their address</span>
+                <input type="checkbox" onClick={ (e) => quizProgressNav(e,'message')}/>
+                <span>I don’t know their address, email them for me to ask for their address</span>
               </div>
               <div className="quiz-recipient-mail-address-container">
-                <form>
+                <form onSubmit={(e) => quizProgressNav(e,'message')}>
                   <div className="form-group-single  mail">
-                    <input type="text" placeholder="Full Name" required/>
+                    <input type="text" placeholder="Full Name" value={quizState.name} onChange={ (e) => handleChange('mail', e, null, 'name')} required/>
                   </div>
                   <div className="form-group-single mail">
-                    <input type="text" placeholder="Address Line 1" required/>
+                    <input type="text" placeholder="Address Line 1" value={quizState.address_one} onChange={ (e) => handleChange('mail', e, null, 'address_one')} required/>
                   </div>
                   <div className="form-group-single mail">
-                    <input type="text" placeholder="Address Line 2"/>
+                    <input type="text" placeholder="Address Line 2" value={quizState.address_two} onChange={ (e) => handleChange('mail', e, null, 'address_two')}/>
                   </div>
                   <div className="form-group-double mail">
-                    <input type="text" placeholder="City" required/>
-                    <input type="text" placeholder="State" required/>
+                    <input type="text" placeholder="City" value={quizState.city} onChange={ (e) => handleChange('mail', e, null, 'city')} required/>
+                    <input type="text" placeholder="State" value={quizState.state} onChange={ (e) => handleChange('mail', e, null, 'state')} required/>
                   </div>
                   <div className="form-group-single mail">
-                    <input type="text" placeholder="Zip Code" required/>
+                    <input type="text" placeholder="Zip Code" value={quizState.zip_code} onChange={ (e) => handleChange('mail', e, null, 'zip_code')} required/>
                   </div>
-                  <button className="form-button mail-button">Add Address</button>
+                  <button type="submit" className="form-button mail-button">Add Address</button>
                 </form>
               </div>
             </div>
           }
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'message')}>Next</button><div className="quiz-button-container"></div></div>
-          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'message')}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'message')} disabled={ handleFormDisableButtons('mail') ? true : false}>Next</button><div className="quiz-button-container"></div></div>
+          {handleFormProgressButtons('mail') && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'message')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
-          </div>
+          </div>}
         </>
         }
         {quiz == 'message' && <>
@@ -458,14 +581,14 @@ const quiz = ({}) => {
               <form>
                 <div className="form-group-single message">
                   <label htmlFor="name">Name/Nickname in front of the card:</label>
-                  <input type="text" name="name" required/>
-                  <div className="checkbox_2"><input type="checkbox" /><span>Leave it blank</span></div>
+                  <input type="text" name="name" required value={quizState.nickname == 'blank' ? '' : quizState.nickname} onChange={(e) => handleChange('nickname', e, null, e.target.value)}/>
+                  <div className="checkbox_2"><input type="checkbox" onClick={(e) => handleChange('nickname', e, null, 'blank')}/><span>Leave it blank</span></div>
                 </div>
                 <div className="form-group-single message p-0">
                   <label htmlFor="message">Handwritten message inside:</label>
-                  <textarea className="w-4" cols="100" rows="5"></textarea>
-                  <div className="checkbox_2"><input type="checkbox" /><span>Leave it blank</span></div>
-                  <div className="checkbox_2 w-4 info-popup"><input type="checkbox" />
+                  <textarea className="w-4" cols="100" rows="5" value={quizState.message == 'blank' ? '' : quizState.message} onChange={(e) => handleChange('message', e, null, e.target.value)}></textarea>
+                  <div className="checkbox_2"><input type="checkbox" onClick={(e) => handleChange('message', e, null, 'blank')}/><span>Leave it blank</span></div>
+                  <div className="checkbox_2 w-4 info-popup"><input type="checkbox" onClick={(e) => handleChange('message', e, null, 'message_options')}/>
                     <span>Give me message options for $2.00</span>
                     <div className="quiz-recipient-package-description-text-bubble">
                       <svg onMouseOver={(e) => showTooltip(e, 0)} onMouseLeave={(e) => hideTooltip(e, 0)}><use xlinkHref="sprite.svg#icon-information"></use></svg>
@@ -477,17 +600,18 @@ const quiz = ({}) => {
                 </div>
                 <div className="form-group-single message p-0">
                   <label htmlFor="name">Signature:</label>
-                  <input type="text" name="name" required/>
+                  <input type="text" name="signature" required value={quizState.signature} onChange={(e) => handleChange('signature', e, null, e.target.value)}/>
                 </div>
               </form>
-              <div className="checkbox_2 center show-on-mobile"><input type="checkbox" /><span>Not sure yet, ask me later</span></div>
+              <div className="checkbox_2 center show-on-mobile"><input type="checkbox"onClick={ (e) => quizProgressNav(e,'description')} /><span>Not sure yet, ask me later</span></div>
             </div>
           </div>
-          <div className="checkbox_2 center hide-on-mobile"><input type="checkbox" /><span>Not sure yet, ask me later</span></div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'description')}>Next</button><div className="quiz-button-container"></div></div>
-          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'description')}>
+          <div className="checkbox_2 center hide-on-mobile"><input type="checkbox" onClick={ (e) => quizProgressNav(e,'description')}/><span>Not sure yet, ask me later</span></div>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'description')} disabled={ handleFormDisableButtons('message') ? true : false}>Next</button><div className="quiz-button-container"></div></div>
+          {handleFormProgressButtons('message') && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'description')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>
+          }
         </>
         }
         {quiz == 'description' && <>
@@ -502,7 +626,7 @@ const quiz = ({}) => {
             <div className="quiz-recipient-description-container">
               <div className="form-group-list">
                 <div className="form-group-list-container">
-                  <input type="checkbox" name="wager"/>
+                  <input type="checkbox" name="wager" onClick={ (e) => handleCheckboxList(e, 'The life of a party')}/>
                   <span></span>
                   <div className="form-group-list-fill"></div>
                 </div>
@@ -510,7 +634,7 @@ const quiz = ({}) => {
               </div>
               <div className="form-group-list">
                 <div className="form-group-list-container">
-                  <input type="checkbox" name="wager"/>
+                  <input type="checkbox" name="wager" onClick={ (e) => handleCheckboxList(e, 'Soft spoken')}/>
                   <span></span>
                   <div className="form-group-list-fill"></div>
                 </div>
@@ -518,7 +642,7 @@ const quiz = ({}) => {
               </div>
               <div className="form-group-list">
                 <div className="form-group-list-container">
-                  <input type="checkbox" name="wager"/>
+                  <input type="checkbox" name="wager" onClick={ (e) => handleCheckboxList(e, 'Thoughtful')}/>
                   <span></span>
                   <div className="form-group-list-fill"></div>
                 </div>
@@ -526,7 +650,7 @@ const quiz = ({}) => {
               </div>
               <div className="form-group-list">
                 <div className="form-group-list-container">
-                  <input type="checkbox" name="wager"/>
+                  <input type="checkbox" name="wager" onClick={ (e) => handleCheckboxList(e, 'Strong minded')}/>
                   <span></span>
                   <div className="form-group-list-fill"></div>
                 </div>
@@ -534,7 +658,7 @@ const quiz = ({}) => {
               </div>
               <div className="form-group-list">
                 <div className="form-group-list-container">
-                  <input type="checkbox" name="wager"/>
+                  <input type="checkbox" name="wager" onClick={ (e) => handleCheckboxList(e, 'Super chill & down to earth')}/>
                   <span></span>
                   <div className="form-group-list-fill"></div>
                 </div>
@@ -542,19 +666,19 @@ const quiz = ({}) => {
               </div>
               <div className="form-group-list">
                 <div className="form-group-list-container">
-                  <input type="checkbox" name="wager"/>
+                  <input type="checkbox" name="wager" onClick={ (e) => handleCheckboxList(e, 'Other (please specify)')}/>
                   <span></span>
                   <div className="form-group-list-fill"></div>
                 </div>
                 <label>Other (please specify)</label>
               </div>
-              <input type="text" className="quiz-recipient-description-other"/>
+              <input type="text" className="quiz-recipient-description-other" value={quizState.description_other == 'other (please specify)' ? '' : quizState.description_other} onChange={ (e) => (window.localStorage.setItem('description', e.target.value), dispatch({type: 'UPDATE_CHANGE', name: 'description_other', payload: e.target.value}))}/>
             </div>
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'description')}>Next</button><div className="quiz-button-container"></div></div>
-          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'description')}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={() =>router.push('/checkout')} disabled={quizState.description.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
+          {quizState.description && <div className="quiz-next" onClick={() => router.push('/checkout')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
-          </div>
+          </div>}
         </>
         }
       </div>
@@ -563,4 +687,10 @@ const quiz = ({}) => {
   )
 }
 
-export default quiz
+const mapStateToProps = state => {
+  return {
+    quizState: state.recipient
+  }
+}
+
+export default connect(mapStateToProps)(quiz)
