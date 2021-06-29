@@ -12,7 +12,7 @@ const quiz = ({quizState}) => {
   const dispatch = useDispatch()
   const router = useRouter()
 
-  const [quiz, setquiz] = useState('package')
+  const [quiz, setquiz] = useState('recipient')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
