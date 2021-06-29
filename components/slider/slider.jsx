@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import { useDispatch } from 'react-redux';
 import { useSwipeable } from 'react-swipeable';
 
-const Slider = ({slider}) => {
+const Slider = ({slider, quizProgressNav, handleChange}) => {
   const dispatch = useDispatch()
 
   const goToSlide = (e, i) => {
@@ -38,7 +38,7 @@ const Slider = ({slider}) => {
             <img src={`/media/package/standard.png`} alt="" className="slider-slides-item-image" />
             <div className="slider-slides-item-price">$8.99 /card</div>
             <div className="slider-slides-item-discount">15% discount for 10+ cards</div>
-            <button className="slider-slides-item-button">Select</button>
+            <button className="slider-slides-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package', e, null, 'standard'))}>Select</button>
             <div className="slider-slides-item-shipping">Free shipping</div>
           </div>
           <div className="slider-slides-item">
@@ -47,7 +47,7 @@ const Slider = ({slider}) => {
             <img src={`/media/package/standard.png`} alt="" className="slider-slides-item-image" />
             <div className="slider-slides-item-price">$10.99 /card</div>
             <div className="slider-slides-item-discount">15% discount for 10+ cards</div>
-            <button className="slider-slides-item-button">Select</button>
+            <button className="slider-slides-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package', e, null, 'plantable'))}>Select</button>
             <div className="slider-slides-item-shipping">Free shipping</div>
           </div>
         </div>

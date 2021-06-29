@@ -12,7 +12,7 @@ const quiz = ({quizState}) => {
   const dispatch = useDispatch()
   const router = useRouter()
 
-  const [quiz, setquiz] = useState('recipient')
+  const [quiz, setquiz] = useState('package')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
@@ -469,7 +469,7 @@ const quiz = ({quizState}) => {
               <div>Free Shipping</div>
             </div>
           </div>
-          <Slider></Slider>
+          <Slider quizProgressNav={quizProgressNav} handleChange={handleChange}></Slider>
           <div className="quiz-recipient-package-bulk">For bulk orders <a href="">click here</a></div>
           <div className="quiz-recipient-package-description">
               <div className="quiz-recipient-package-description-title">All cards are 5 x 7 (A7 Folded) and include: </div>
