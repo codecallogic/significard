@@ -12,7 +12,7 @@ const quiz = ({quizState}) => {
   const dispatch = useDispatch()
   const router = useRouter()
 
-  const [quiz, setquiz] = useState('description')
+  const [quiz, setquiz] = useState('recipient')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
@@ -230,6 +230,14 @@ const quiz = ({quizState}) => {
 
     window.localStorage.setItem('description', description.toLowerCase())
     dispatch({type: 'UPDATE_CHANGE', name: 'description', payload: description.toLowerCase()})
+  }
+
+  const handleRecipient = () => {
+    try {
+      
+    } catch (error) {
+      
+    }
   }
 
   useEffect(() => {
@@ -675,8 +683,8 @@ const quiz = ({quizState}) => {
               <input type="text" className="quiz-recipient-description-other" value={quizState.description_other == 'other (please specify)' ? '' : quizState.description_other} onChange={ (e) => (window.localStorage.setItem('description', e.target.value), dispatch({type: 'UPDATE_CHANGE', name: 'description_other', payload: e.target.value}))}/>
             </div>
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={() =>router.push('/checkout')} disabled={quizState.description.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
-          {quizState.description && <div className="quiz-next" onClick={() => router.push('/checkout')}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={() => handleRecipient()} disabled={quizState.description.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
+          {quizState.description && <div className="quiz-next" onClick={() => handleRecipient()}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>}
         </>

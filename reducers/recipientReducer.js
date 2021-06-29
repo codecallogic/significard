@@ -8,7 +8,6 @@ const initialState = {
   other: '',
   involvement: '',
   package: '',
-  mail: null,
   name: '',
   address_one: '',
   address_two: '',
