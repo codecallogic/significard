@@ -563,6 +563,8 @@ body {
       align-items: center;
       flex-direction: column;
       margin: 0 3rem 3rem 0; }
+      .quiz-recipient-event-item * {
+        pointer-events: none; }
       @media only screen and (min-width: 1800px) {
         .quiz-recipient-event-item {
           width: 23rem;
