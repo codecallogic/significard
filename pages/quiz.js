@@ -178,7 +178,7 @@ const quiz = ({quizState}) => {
       window.localStorage.setItem(question, type)
       return dispatch({type: 'UPDATE_CHANGE', name: question, payload: type})
     }
-    
+    console.log(e.target.textContent.toLowerCase())
     window.localStorage.setItem(question, e.target.textContent.toLowerCase())
     dispatch({type: 'UPDATE_CHANGE', name: question, payload: e.target.textContent.toLowerCase()})
   }

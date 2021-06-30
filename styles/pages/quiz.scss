@@ -247,6 +247,10 @@
       flex-direction: column;
       margin: 0 3rem 3rem 0;
 
+      * {
+        pointer-events: none;
+      }
+
       @media only screen and (min-width: $wide-large) {
         width: 23rem;
         height: 18.2rem;
