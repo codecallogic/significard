@@ -7,19 +7,26 @@ import {eventsList, stylesList, stylesListDrop, packageList} from '../utils/quiz
 import {manageTags} from '../helpers/forms'
 import { useDispatch, connect } from 'react-redux'
 import {useRouter} from 'next/router'
+import {nanoid} from 'nanoid'
 
 const quiz = ({quizState}) => {
   const dispatch = useDispatch()
   const router = useRouter()
 
-  const [quiz, setquiz] = useState('recipient')
+  const [quiz, setQuiz] = useState('recipient')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
   const [address, setAddress] = useState('')
   const [tags, setTags] = useState('')
 
+  useEffect(() => {
+    if(window.localStorage.getItem('quiz_question')) window.localStorage.getItem('quiz_question').length > 0 ? window.localStorage.getItem('quiz_question') == 'checkout' ? window.location.href = '/checkout' : setQuiz(window.localStorage.getItem('quiz_question')) : null
+  }, [])
+
   const quizProgress = (e, next) => {
+    if(next == 'ranking') (window.localStorage.removeItem('rank'), dispatch({type: 'RESET_RANK', name: 'ranking', payload: []}))
+    window.localStorage.setItem('quiz_question', quiz)
     let els = document.querySelectorAll('.quiz-recipient-item')
     let els2 = document.querySelectorAll('.quiz-recipient-age-item')
     let els3 = document.querySelectorAll('.quiz-recipient-event-item')
@@ -39,12 +46,14 @@ const quiz = ({quizState}) => {
     els5.forEach( (el) => {el.textContent == e.target.textContent ? el.classList.add("quiz-recipient-mail-item-active") : null})
 
     setTimeout(() => {
-      if(next) setquiz(next)
+      if(next) setQuiz(next)
     }, 500);
   }
 
   const quizProgressNav = (e, next) => {
-    setquiz(next)
+    if(next == 'ranking') (window.localStorage.removeItem('rank'), dispatch({type: 'RESET_RANK', name: 'ranking', payload: []}))
+    window.localStorage.setItem('quiz_question', next)
+    setQuiz(next)
   }
 
   const showTooltip = (e, type) => {
@@ -123,7 +132,6 @@ const quiz = ({quizState}) => {
 
   // HANDLE CHANGE
   const handleChange = (question, e, idx, type) => {
-
     if(question == 'ranking'){
       let span = e.querySelectorAll('span')
       let ranking = new Object()
@@ -146,7 +154,7 @@ const quiz = ({quizState}) => {
       return dispatch({type: 'UPDATE_TEXTAREA', name:'other', payload: e.target.value})
     }
 
-    if(question == 'package'){
+    if(question == 'package_plan'){
       window.localStorage.setItem(question, type)
       return dispatch({type: 'UPDATE_CHANGE', name: question, payload: type})
     }
@@ -232,18 +240,14 @@ const quiz = ({quizState}) => {
     dispatch({type: 'UPDATE_CHANGE', name: 'description', payload: description.toLowerCase()})
   }
 
-  const handleRecipient = () => {
-    try {
-      
-    } catch (error) {
-      
-    }
-  }
-
   useEffect(() => {
     if(quiz == 'ranking') window.localStorage.setItem('rank', JSON.stringify(quizState.rank))
     if(quiz == 'tags') window.localStorage.setItem('tags', JSON.stringify(quizState.tags))
   }, [quizState.rank, quizState.tags])
+
+  const handleQuizID = () => {
+    if(!window.localStorage.getItem('quiz_session')) window.localStorage.setItem('quiz_session', nanoid())
+  }
   
   return (
 
@@ -451,7 +455,7 @@ const quiz = ({quizState}) => {
               </div>
               <div className="quiz-recipient-package-item-price">$8.99 /card</div>
               <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div>
-              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package', e, null, 'standard'))}>Select</button>
+              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package_plan', e, null, 'standard'))}>Select</button>
               <div>Free Shipping</div>
             </div>
             <div className="quiz-recipient-package-item">
@@ -465,7 +469,7 @@ const quiz = ({quizState}) => {
               </div>
               <div className="quiz-recipient-package-item-price">$10.99 /card</div>
               <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div>
-              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package', e, null, 'plantable'))}>Select</button>
+              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package_plan', e, null, 'plantable'))}>Select</button>
               <div>Free Shipping</div>
             </div>
           </div>
@@ -494,8 +498,8 @@ const quiz = ({quizState}) => {
                 </div>
               </div>
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'mail')} disabled={quizState.package.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
-          {quizState.package && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'mail')}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'mail')} disabled={quizState.package_plan.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
+          {quizState.package_plan && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'mail')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>}
         </>
@@ -683,10 +687,10 @@ const quiz = ({quizState}) => {
               <input type="text" className="quiz-recipient-description-other" value={quizState.description_other == 'other (please specify)' ? '' : quizState.description_other} onChange={ (e) => (window.localStorage.setItem('description', e.target.value), dispatch({type: 'UPDATE_CHANGE', name: 'description_other', payload: e.target.value}))}/>
             </div>
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={() => handleRecipient()} disabled={quizState.description.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
-          {quizState.description && <div className="quiz-next" onClick={() => handleRecipient()}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={() => (window.localStorage.setItem('quiz_question', 'checkout'), handleQuizID(), window.location.href = '/checkout')} disabled={quizState.description.length < 1 ? true : false}>Submit</button><div className="quiz-button-container"></div></div>
+          {/* {quizState.description && <div className="quiz-next" onClick={() => handleRecipient()}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
-          </div>}
+          </div>} */}
         </>
         }
       </div>

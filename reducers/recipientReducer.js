@@ -7,7 +7,7 @@ const initialState = {
   avoid: '',
   other: '',
   involvement: '',
-  package: '',
+  package_plan: '',
   name: '',
   address_one: '',
   address_two: '',
@@ -40,6 +40,13 @@ export const recipientReducer = (state = initialState, action) => {
       return {
         ...state,
         rank: [...state.rank, action.payload]
+      }
+      break;
+
+    case 'RESET_RANK':
+      return {
+        ...state,
+        rank: [...action.payload]
       }
       break;
 

@@ -57,7 +57,9 @@ const SignUp = ({newUser, user, userUpdate, userMessage}) => {
       setName('')
       setEmail('')
       setPassword('')
-      router.push('/quiz')
+      setTimeout(() => {
+        router.push('/quiz')
+      }, 1500);
     } catch (error) {
       error.response.data ? error.response.data.error ? userMessage(error.response.data.error.msg) : null : console.log(error)
       setLoading(false)
@@ -73,7 +75,9 @@ const SignUp = ({newUser, user, userUpdate, userMessage}) => {
       setName('')
       setEmail('')
       setPassword('')
-      router.push('/quiz')
+      setTimeout(() => {
+        router.push('/quiz')
+      }, 1500);
     } catch (error) {
       console.log(error)
       setLoading(false)

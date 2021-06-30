@@ -25,11 +25,10 @@ const withUser = Page => {
           newUser = responseUser.data
         } catch (error) {
           console.log(error) 
-          if(error) newUser = false
         }
       }
 
-      if(newUser == false){
+      if(!newUser){
         context.res.writeHead(302, {
           Location: '/signup'
         });
