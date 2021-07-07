@@ -52,7 +52,7 @@ const Login = ({user, userUpdate, userMessage, userEmail}) => {
       setLoading(false)
       userUpdate(responseLogin.data)
       userEmail(responseLogin.data)
-      router.push('/quiz')
+      window.location.href = '/quiz'
     } catch (error) {
       console.log(error.response.data)
       if(error) error.response ? userMessage(error.response.data) : userMessage(null)
@@ -67,7 +67,7 @@ const Login = ({user, userUpdate, userMessage, userEmail}) => {
       console.log(responseLogin)
       userEmail(responseLogin.data)
       setLoading(false)
-      router.push('/')
+      window.location.href = '/quiz'
     } catch (error) {
       console.log(error.response.data)
       if(error) error.response ? userMessage(error.response.data) : userMessage(null)
