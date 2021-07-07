@@ -8,6 +8,8 @@ import {manageTags} from '../helpers/forms'
 import { useDispatch, connect } from 'react-redux'
 import {useRouter} from 'next/router'
 import {nanoid} from 'nanoid'
+import PlacesAutocomplete, {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
+import {PLACES} from '../config'
 
 const quiz = ({quizState}) => {
   const dispatch = useDispatch()
@@ -21,6 +23,7 @@ const quiz = ({quizState}) => {
   const [tags, setTags] = useState('')
 
   useEffect(() => {
+    // manageTags('interests', quizState.tags)
     if(window.localStorage.getItem('quiz_question')) window.localStorage.getItem('quiz_question').length > 0 ? window.localStorage.getItem('quiz_question') == 'checkout' ? window.location.href = '/checkout' : setQuiz(window.localStorage.getItem('quiz_question')) : null
   }, [])
 
@@ -159,8 +162,13 @@ const quiz = ({quizState}) => {
       return dispatch({type: 'UPDATE_CHANGE', name: question, payload: type})
     }
 
+    if(question == 'mail_api'){
+      window.localStorage.setItem(type, e)
+      return dispatch({type: 'UPDATE_CHANGE', name: type, payload: e})
+    }
+
     if(question == 'mail'){
-      window.localStorage.setItem(type, e.target.value)
+      window.localStorage.setItem(type, e)
       return dispatch({type: 'UPDATE_CHANGE', name: type, payload: e.target.value})
     }
 
@@ -242,11 +250,18 @@ const quiz = ({quizState}) => {
 
   useEffect(() => {
     if(quiz == 'ranking') window.localStorage.setItem('rank', JSON.stringify(quizState.rank))
-    if(quiz == 'tags') window.localStorage.setItem('tags', JSON.stringify(quizState.tags))
+    if(quiz == 'tags') window.localStorage.setItem('tags', JSON.stringify(quizState.tags));
   }, [quizState.rank, quizState.tags])
 
   const handleQuizID = () => {
     if(!window.localStorage.getItem('quiz_session')) window.localStorage.setItem('quiz_session', nanoid())
+  }
+
+  const handleSelect = async (question, e, idx, type) => {
+    if(question == 'mail'){
+      window.localStorage.setItem(type, e)
+      return dispatch({type: 'UPDATE_CHANGE', name: type, payload: e})
+    }
   }
   
   return (
@@ -336,8 +351,8 @@ const quiz = ({quizState}) => {
           <div className="quiz-subtitle-mobile">What does {recipient ? recipient : 'recipient'} like? Drag and drog from 1 (most important) to 6 (least important).</div>
           <div className="quiz-recipient-style">
             {stylesList.map( (item, idx) => 
-            <div onDragOver={(e)=> onDragOver(e)} onDrop={(e) => onDropBack(e)}  className="quiz-recipient-style-item-container">
-              <div key={idx} id={`event-${idx}`} draggable onDragStart={(e) => onDragStart(e)}  style={{transform: `rotate(${item.rotate}deg)`}} className="quiz-recipient-style-item">
+            <div key={idx} onDragOver={(e)=> onDragOver(e)} onDrop={(e) => onDropBack(e)}  className="quiz-recipient-style-item-container">
+              <div id={`event-${idx}`} draggable onDragStart={(e) => onDragStart(e)}  style={{transform: `rotate(${item.rotate}deg)`}} className="quiz-recipient-style-item">
                 {item.imageName ? <img src={`/media/styles/${item.imageName}`}></img> : null}
                 <span >{item.subtitle}</span>
               </div>
@@ -373,16 +388,19 @@ const quiz = ({quizState}) => {
               <button onClick={(e) => handleKeyPress(e, 'true')}>Add</button>
             </div>
             <div className="form-tag-container"></div>
-            <div className="quiz-recipient-tags-checkbox"><input type="checkbox" name="unsure" onClick={(e) => quizProgressNav(e,'avoid')}/><span>I'm not sure</span></div>
+            <div className="quiz-recipient-tags-checkbox"><input type="checkbox" name="unsure" onClick={(e) => (setTimeout(() => {
+              quizProgressNav(e,'other')
+            }, 500), dispatch({type: 'UPDATE_TAGS', payload: []})
+            )}/><span>I'm not sure</span></div>
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'avoid')} disabled={quizState.tags.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
-          {quizState.tags.length >= 1 && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'avoid')}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'other')} disabled={quizState.tags.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
+          {quizState.tags.length >= 1 && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'other')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>
           }
         </>
         }
-        {quiz == 'avoid' && <>
+        {/* {quiz == 'avoid' && <>
           <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'tags')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
@@ -392,25 +410,29 @@ const quiz = ({quizState}) => {
           <div className="quiz-subtitle-mobile">Color, theme, animals etc.</div>
           <div className="quiz-recipient-avoid">
             <textarea type="text" name="avoid" cols="100" value={quizState.avoid} onChange={ (e) => handleChange('avoid', e)}/>
-            <div className="quiz-recipient-avoid-checkbox"><input type="checkbox" name="avoid" onClick={(e) => quizProgressNav(e,'other')}/><span>Nope</span></div>
+            <div className="quiz-recipient-avoid-checkbox"><input type="checkbox" name="avoid" onClick={(e) => setTimeout(() => {
+              quizProgressNav(e,'other')
+            }, 500)}/><span>Nope</span></div>
           </div>
           <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'other')} disabled={quizState.avoid.length < 1 ? true : false}>Next</button></div>
           {quizState.avoid && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'other')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>}
         </>
-        }
+        } */}
         {quiz == 'other' && <>
-          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'avoid')}>
+          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'tags')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
-          <div className="quiz-title">Anything else you want us to know?</div>
-          <div className="quiz-title-mobile">Anything else you want us to know?</div>
-          <div className="quiz-subtitle">Add any other details here.</div>
-          <div className="quiz-subtitle-mobile">Add any other details here.</div>
+          <div className="quiz-title">Is there anything else you want us to know or any designs we should avoid?</div>
+          <div className="quiz-title-mobile">Is there anything else you want us to know or any designs we should avoid?</div>
+          <div className="quiz-subtitle">Color, theme, animals, etc.</div>
+          <div className="quiz-subtitle-mobile">Color, theme, animals, etc.</div>
           <div className="quiz-recipient-other">
             <textarea type="text" name="other" cols="100" value={quizState.other} onChange={ (e) => handleChange('other', e)}/>
-            <div className="quiz-recipient-other-checkbox"><input type="checkbox" name="other" onClick={(e) => quizProgressNav(e,'involvement')}/><span>Nope</span></div>
+            <div className="quiz-recipient-other-checkbox"><input type="checkbox" name="other" onClick={(e) => setTimeout(() => {
+              quizProgressNav(e,'involvement')
+            }, 500)}/><span>Nope</span></div>
           </div>
           <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'involvement')}>Next</button><div className="quiz-button-container" disabled={quizState.other.length < 1 ? true : false}></div></div>
           {quizState.other && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'involvement')}>
@@ -524,20 +546,45 @@ const quiz = ({quizState}) => {
               <div className="quiz-recipient-mail-address-heading">Your address:</div>
               <form onSubmit={(e) => quizProgressNav(e,'message')}>
                 <div className="form-group-single  mail">
-                  <input type="text" placeholder="Full Name" value={quizState.name} onChange={ (e) => handleChange('mail', e, null, 'name')} required/>
+                  <input type="text" placeholder="Full Name" value={quizState.name} onChange={ (e) => handleChange('mail', e, null, 'name')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Full Name'} required/>
                 </div>
-                <div className="form-group-single mail">
-                  <input type="text" placeholder="Address Line 1" value={quizState.address_one} onChange={ (e) => handleChange('mail', e, null, 'address_one')} required/>
-                </div>
-                <div className="form-group-single mail">
-                  <input type="text" placeholder="Address Line 2" value={quizState.address_two} onChange={ (e) => handleChange('mail', e, null, 'address_two')} />
-                </div>
+                <PlacesAutocomplete value={quizState.address_one} onChange={(e) => handleChange('mail_api', e, null, 'address_one')} onSelect={(e) => {handleSelect('mail', e, null, 'address_one')}}>
+                  {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                    <div className="form-group-single mail form-autocomplete-container">
+                      <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'Address Line 1'})} required/>
+                      {loading ? <div>...loading</div> : null}
+                      {suggestions.map((suggestion, idx) => {
+                        const className = suggestion.active
+                        ? 'form-autocomplete-suggestion-active'
+                        : 'form-autocomplete-suggestion';
+                        const style = suggestion.active ? {backgroundColor: '#003e5f', cursor: 'pointer'} : {backgroundColor: '#fff', cursor: 'pointer'}
+                        return <div  className="form-autocomplete-box" key={idx} {...getSuggestionItemProps(suggestion, {className, style})}>{suggestion.description}</div> 
+                      })}
+                      {/* <input type="text" placeholder="Address Line 1" value={quizState.address_one} onChange={ (e) => handleChange('mail', e, null, 'address_one')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Address Line 1'} required/> */}
+                    </div>
+                  )}
+                </PlacesAutocomplete>
+                <PlacesAutocomplete value={quizState.address_two} onChange={(e) => handleChange('mail_api', e, null, 'address_two')} onSelect={(e) => {handleSelect('mail', e, null, 'address_two')}}>
+                  {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                    <div className="form-group-single mail form-autocomplete-container_2">
+                      <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'Address Line 2'})}/>
+                      {loading ? <div>...loading</div> : null}
+                      {suggestions.map((suggestion, idx) => {
+                        const className = suggestion.active
+                        ? 'form-autocomplete-suggestion-active'
+                        : 'form-autocomplete-suggestion';
+                        const style = suggestion.active ? {backgroundColor: '#003e5f', cursor: 'pointer'} : {backgroundColor: '#fff', cursor: 'pointer'}
+                        return <div  className="form-autocomplete-box" key={idx} {...getSuggestionItemProps(suggestion, {className, style})}>{suggestion.description}</div> 
+                      })}
+                    </div>
+                  )}
+                </PlacesAutocomplete>
                 <div className="form-group-double mail">
-                  <input type="text" placeholder="City" value={quizState.city} onChange={ (e) => handleChange('mail', e, null, 'city')} required/>
-                  <input type="text" placeholder="State" value={quizState.state} onChange={ (e) => handleChange('mail', e, null, 'state')} required/>
+                  <input type="text" placeholder="City" value={quizState.city} onChange={ (e) => handleChange('mail', e, null, 'city')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'City'} required/>
+                  <input type="text" placeholder="State" value={quizState.state} onChange={ (e) => handleChange('mail', e, null, 'state')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'State'} required/>
                 </div>
                 <div className="form-group-single mail">
-                  <input type="text" placeholder="Zip Code" value={quizState.zip_code} onChange={ (e) => handleChange('mail', e, null, 'zip_code')} required/>
+                  <input type="text" placeholder="Zip Code" value={quizState.zip_code} onChange={ (e) => handleChange('mail', e, null, 'zip_code')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Zip Code'} required/>
                 </div>
                 <button type="submit" className="form-button mail-button">Add Address</button>
               </form>
@@ -547,26 +594,53 @@ const quiz = ({quizState}) => {
           {address == 'recipient' &&
             <div className="quiz-recipient-mail-address">
               <div className="form-group-single checkbox">
-                <input type="checkbox" onClick={ (e) => quizProgressNav(e,'message')}/>
+                <input type="checkbox" onClick={ (e) => setTimeout(() => {
+                  quizProgressNav(e,'message')
+                }, 500)}/>
                 <span>I don’t know their address, email them for me to ask for their address</span>
               </div>
               <div className="quiz-recipient-mail-address-container">
                 <form onSubmit={(e) => quizProgressNav(e,'message')}>
                   <div className="form-group-single  mail">
-                    <input type="text" placeholder="Full Name" value={quizState.name} onChange={ (e) => handleChange('mail', e, null, 'name')} required/>
+                    <input type="text" placeholder="Full Name" value={quizState.name} onChange={ (e) => handleChange('mail', e, null, 'name')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Full Name'} required/>
                   </div>
-                  <div className="form-group-single mail">
-                    <input type="text" placeholder="Address Line 1" value={quizState.address_one} onChange={ (e) => handleChange('mail', e, null, 'address_one')} required/>
-                  </div>
-                  <div className="form-group-single mail">
-                    <input type="text" placeholder="Address Line 2" value={quizState.address_two} onChange={ (e) => handleChange('mail', e, null, 'address_two')}/>
-                  </div>
+                  <PlacesAutocomplete value={quizState.address_one} onChange={(e) => handleChange('mail_api', e, null, 'address_one')} onSelect={(e) => {handleSelect('mail', e, null, 'address_one')}}>
+                  {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                    <div className="form-group-single mail form-autocomplete-container">
+                      <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'Address Line 1'})} required/>
+                      {loading ? <div>...loading</div> : null}
+                      {suggestions.map((suggestion, idx) => {
+                        const className = suggestion.active
+                        ? 'form-autocomplete-suggestion-active'
+                        : 'form-autocomplete-suggestion';
+                        const style = suggestion.active ? {backgroundColor: '#003e5f', cursor: 'pointer'} : {backgroundColor: '#fff', cursor: 'pointer'}
+                        return <div  className="form-autocomplete-box" key={idx} {...getSuggestionItemProps(suggestion, {className, style})}>{suggestion.description}</div> 
+                      })}
+                      {/* <input type="text" placeholder="Address Line 1" value={quizState.address_one} onChange={ (e) => handleChange('mail', e, null, 'address_one')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Address Line 1'} required/> */}
+                    </div>
+                  )}
+                  </PlacesAutocomplete>
+                  <PlacesAutocomplete value={quizState.address_two} onChange={(e) => handleChange('mail_api', e, null, 'address_two')} onSelect={(e) => {handleSelect('mail', e, null, 'address_two')}}>
+                    {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                      <div className="form-group-single mail form-autocomplete-container_2">
+                        <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'Address Line 2'})}/>
+                        {loading ? <div>...loading</div> : null}
+                        {suggestions.map((suggestion, idx) => {
+                          const className = suggestion.active
+                          ? 'form-autocomplete-suggestion-active'
+                          : 'form-autocomplete-suggestion';
+                          const style = suggestion.active ? {backgroundColor: '#003e5f', cursor: 'pointer'} : {backgroundColor: '#fff', cursor: 'pointer'}
+                          return <div  className="form-autocomplete-box" key={idx} {...getSuggestionItemProps(suggestion, {className, style})}>{suggestion.description}</div> 
+                        })}
+                      </div>
+                    )}
+                  </PlacesAutocomplete>
                   <div className="form-group-double mail">
-                    <input type="text" placeholder="City" value={quizState.city} onChange={ (e) => handleChange('mail', e, null, 'city')} required/>
-                    <input type="text" placeholder="State" value={quizState.state} onChange={ (e) => handleChange('mail', e, null, 'state')} required/>
+                    <input type="text" placeholder="City" value={quizState.city} onChange={ (e) => handleChange('mail', e, null, 'city')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'City'} required/>
+                    <input type="text" placeholder="State" value={quizState.state} onChange={ (e) => handleChange('mail', e, null, 'state')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'State'} required/>
                   </div>
                   <div className="form-group-single mail">
-                    <input type="text" placeholder="Zip Code" value={quizState.zip_code} onChange={ (e) => handleChange('mail', e, null, 'zip_code')} required/>
+                    <input type="text" placeholder="Zip Code" value={quizState.zip_code} onChange={ (e) => handleChange('mail', e, null, 'zip_code')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Zip Code'} required/>
                   </div>
                   <button type="submit" className="form-button mail-button">Add Address</button>
                 </form>
@@ -593,14 +667,14 @@ const quiz = ({quizState}) => {
               <form>
                 <div className="form-group-single message">
                   <label htmlFor="name">Name/Nickname in front of the card:</label>
-                  <input type="text" name="name" required value={quizState.nickname == 'blank' ? '' : quizState.nickname} onChange={(e) => handleChange('nickname', e, null, e.target.value)}/>
-                  <div className="checkbox_2"><input type="checkbox" onClick={(e) => handleChange('nickname', e, null, 'blank')}/><span>Leave it blank</span></div>
+                  <input type="text" name="name" required value={quizState.nickname == 'blank' ? '' : quizState.nickname} onChange={(e) => (handleChange('nickname', e, null, e.target.value), document.getElementsByName('nickname_blank')[0].checked = false)}/>
+                  <div className="checkbox_2"><input type="checkbox" name="nickname_blank" onClick={(e) => handleChange('nickname', e, null, 'blank')}/><span>Leave it blank</span></div>
                 </div>
                 <div className="form-group-single message p-0">
                   <label htmlFor="message">Handwritten message inside:</label>
-                  <textarea className="w-4" cols="100" rows="5" value={quizState.message == 'blank' ? '' : quizState.message} onChange={(e) => handleChange('message', e, null, e.target.value)}></textarea>
-                  <div className="checkbox_2"><input type="checkbox" onClick={(e) => handleChange('message', e, null, 'blank')}/><span>Leave it blank</span></div>
-                  <div className="checkbox_2 w-4 info-popup"><input type="checkbox" onClick={(e) => handleChange('message', e, null, 'message_options')}/>
+                  <textarea className="w-4" cols="100" rows="5" value={quizState.message == 'blank' || quizState.message == 'message_options' ? '' : quizState.message} onChange={(e) => (handleChange('message', e, null, e.target.value), document.getElementsByName('message_blank')[0].checked = false, document.getElementsByName('message_textarea_blank')[0].checked = false)}></textarea>
+                  <div className="checkbox_2"><input type="checkbox" name="message_blank" onClick={(e) => (handleChange('message', e, null, 'blank'), document.getElementsByName('message_textarea_blank')[0].checked = false)}/><span>Leave it blank</span></div>
+                  <div className="checkbox_2 w-4 info-popup"><input type="checkbox" name="message_textarea_blank" onClick={(e) => (handleChange('message', e, null, 'message_options'), document.getElementsByName('message_blank')[0].checked = false)}/>
                     <span>Give me message options for $2.00</span>
                     <div className="quiz-recipient-package-description-text-bubble">
                       <svg onMouseOver={(e) => showTooltip(e, 0)} onMouseLeave={(e) => hideTooltip(e, 0)}><use xlinkHref="sprite.svg#icon-information"></use></svg>
@@ -705,4 +779,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(quiz)
+export default connect(mapStateToProps)(withUser(quiz))

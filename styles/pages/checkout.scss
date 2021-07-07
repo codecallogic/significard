@@ -117,12 +117,28 @@
     justify-self: center;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    margin: 6rem 0;
+    margin: 10rem 0;
+
+    @media only screen and (max-width: $large) {
+      grid-template-columns: 1fr;
+    }
 
     &-left {
+      justify-content: flex-start;
+
       &-title {
         font-size: 2.4rem;
         color: $color-scheme-3-variation-3;
+        font-weight: 700;
+      }
+
+      &-subtitle {
+        font-size: 1.8rem;
+        margin: 2rem 0 0 0;
+      }
+
+      &-form {
+        margin: 5rem 0;
       }
     }
 
@@ -131,6 +147,74 @@
       height: 473px;
       border: 0.2rem solid $color-light-gray;
       border-radius: 1.2rem;
+      margin-left: 5rem;
+      padding: 4rem 4rem;
+
+      &-package {
+        font-size: 2.4rem;
+        font-weight: 700;
+      }
+
+      &-delivery {
+        font-size: 1.8rem;
+        font-weight: 400;
+        margin: 10rem 0 0 0;
+
+        span {
+          margin-left: 1rem;
+        }
+      }
+
+      &-price {
+        display: flex;
+        justify-content: space-between;
+        margin: 4rem 0 0 0;
+
+        span {
+          font-size: 1.8rem;
+          text-transform: capitalize;
+        }
+      }
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-self: center;
+      justify-content: center;
+      width: 19rem;
+      height: 5.3rem;
+      color: $color-scheme-3;
+      background-color: transparent;
+      border-radius: 1.2rem;
+      outline: none;
+      border: 0.2rem solid $color-scheme-3;
+      font-size: 1.8rem;
+      transition: all 0.4s cubic-bezier(0.47, 0, 0.745, 0.715);
+
+      &-container {
+        grid-column: 1/-1;
+        margin: 0 auto;
+      }
+
+      @media only screen and (max-width: $large) {
+        margin: 0 auto;
+        width: max-content;
+        width: 19rem;
+        height: 5.3rem;
+      }
+
+      &:hover {
+        cursor: pointer;
+        background-color: $color-scheme-3-variation-1;
+        color: white;
+        border: 0.1rem solid $color-scheme-3-variation-1;
+        outline: none;
+      }
+
+      &:disabled {
+        pointer-events: none;
+      }
     }
   }
 }

@@ -2,6 +2,36 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 
+  &-autocomplete-container {
+    position: relative;
+    z-index: 2000 !important;
+  }
+
+  &-autocomplete-container_2 {
+    position: relative;
+    z-index: 1000 !important;
+  }
+
+  &-autocomplete-box {
+    position: absolute;
+    top: 100%;
+    overflow-x: scroll;
+  }
+
+  &-autocomplete-suggestion {
+    font-size: 1.4rem;
+    padding: 1rem 1rem;
+    width: 300px;
+    z-index: 100;
+  }
+
+  &-autocomplete-suggestion-active {
+    font-size: 1.4rem;
+    padding: 1rem 1rem;
+    color: white;
+    width: 300px;
+  }
+
   &-group-double {
     padding: 1.5rem 0 0 0;
     margin-right: 2rem;
@@ -97,6 +127,10 @@
 
     @media only screen and (max-width: $large) {
       width: 100%;
+    }
+
+    @media only screen and (max-width: $small) {
+      width: 90%;
     }
 
     input {
@@ -204,6 +238,7 @@
   display: flex;
   align-items: center;
   color: $color-light-gray-alt-1;
+  margin: 0.3rem 0;
 
   input {
     width: min-content;
@@ -370,14 +405,14 @@
 
   svg {
     position: absolute;
-    right: 0;
+    right: -0.5rem;
     top: 0;
     border-radius: 50%;
     background-color: white;
     border: 0.1rem solid $color-scheme-3-variation-1;
     padding: 0.2rem;
-    height: 1.5rem;
-    width: 1.5rem;
+    height: 1.8rem;
+    width: 1.8rem;
     margin-left: 1rem;
     fill: $color-scheme-3-variation-1;
   }

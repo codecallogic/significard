@@ -1,5 +1,3 @@
-import cookie from 'js-cookie'
-
 export const getUser = (req) => {
   if(!req.headers.cookie){
     return undefined

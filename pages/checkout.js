@@ -6,8 +6,17 @@ import axios from 'axios'
 import {API} from '../config'
 import {useRouter} from 'next/router'
 
+// STRIPE
+import {Elements, CardElement} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
+import CheckOutForm from '../components/checkoutForm'
+
+const stripePromise = loadStripe("pk_test_51J7NJWAFcPAVZmVLGQUNzfzOeZvL0kkT5nVkJPphZmV16Lqk9Q3tD0iijyXWVehFvCqRjGecfYgKsSmcXk1a5Exg00IVaeKVy0")
+
 const Checkout = ({newUser}) => {
   const router = useRouter()
+
+  const [recipient, setRecipient] = useState([])
 
   const quizProgressNav = (e, next) => {
     window.localStorage.setItem('quiz_question', next)
@@ -22,7 +31,6 @@ const Checkout = ({newUser}) => {
     recipientData.event = window.localStorage.getItem('event')
     recipientData.rank = JSON.parse(window.localStorage.getItem('rank'))
     recipientData.tags = JSON.parse(window.localStorage.getItem('tags'))
-    recipientData.avoid = window.localStorage.getItem('avoid')
     recipientData.other = window.localStorage.getItem('other')
     recipientData.involvement = window.localStorage.getItem('involvement')
     recipientData.package_plan = window.localStorage.getItem('package_plan')
@@ -36,6 +44,8 @@ const Checkout = ({newUser}) => {
     recipientData.signature = window.localStorage.getItem('signature')
     recipientData.description = window.localStorage.getItem('description')
     recipientData.quiz_session = window.localStorage.getItem('quiz_session')
+      
+    setRecipient(recipientData)
 
     try {
       const responseRecipient = await axios.post(`${API}/recipient/quiz`, {newUser, recipientData})
@@ -61,8 +71,17 @@ const Checkout = ({newUser}) => {
         <div className="checkout-container">
           <div className="checkout-container-left">
             <div className="checkout-container-left-title">Payment Method</div>
+            <div className="checkout-container-left-subtitle">What's your payment method?</div>
+            <Elements stripe={stripePromise}>
+              <CheckOutForm></CheckOutForm>
+            </Elements>
           </div>
-          <div className="checkout-container-right"></div>
+          <div className="checkout-container-right">
+            <div className="checkout-container-right-package">Package: {recipient.package_plan ? recipient.package_plan : ''} </div>
+            <div className="checkout-container-right-delivery">📩 <span>Estimated arrival date: May 8, 2021</span></div>
+            <div className="checkout-container-right-price"><span>{recipient.event ? recipient.event : ''}</span><span>{recipient.package_plan == 'standard' ? '$8.99' : '10.99' }</span></div>
+            <div className="checkout-container-right-price"><span>Sales Tax</span><span>$0.84</span></div>
+          </div>
         </div>
         
         </div>

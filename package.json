@@ -13,6 +13,8 @@
     "build:css": "npm-run-all compile:sass prefix:css compress:css"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^1.4.1",
+    "@stripe/stripe-js": "^1.15.1",
     "@zeit/next-css": "^1.0.1",
     "axios": "^0.21.1",
     "cookies": "^0.8.0",
@@ -23,6 +25,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-firebaseui": "^5.0.2",
+    "react-places-autocomplete": "^7.3.0",
     "react-redux": "^7.2.4",
     "react-swipeable": "^6.1.2",
     "redux": "^4.1.0",

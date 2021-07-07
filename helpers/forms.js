@@ -3,13 +3,13 @@ export const manageTags = (initialize, data) => {
   const tagContainer = document.querySelector('.form-tag-container')
 
   let tags = []
-
   // LOAD TAGS FROM DATABASE
   if(initialize === 'interests'){
     if(data){
-      tags = data.map( (item) => {
-        return item.tag
+      data.map( (item) => {
+        tags.push(item)
       })
+      console.log(tags)
       addTags()
     }
   }
@@ -25,7 +25,7 @@ export const manageTags = (initialize, data) => {
 
   function addTags(){
     tags.slice().reverse().forEach( t => {
-      const tag = createTag(t)
+      let tag = createTag(t)
       tagContainer.prepend(tag)
     })
     let tagValues = document.querySelectorAll(".tag > span")

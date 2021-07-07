@@ -12,6 +12,14 @@
       width: 100%;
       display: flex;
       transition: all 0.5s cubic-bezier(0.47, 0, 0.745, 0.715);
+
+      @media only screen and (max-width: $large) {
+        margin-left: 16rem;
+      }
+
+      @media only screen and (max-width: $small) {
+        margin-left: -1rem;
+      }
     }
 
     &-item {

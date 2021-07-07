@@ -136,6 +136,13 @@
         margin: 1.4rem 1.6rem 0 1.4rem;
       }
 
+      @media only screen and (max-width: $small) {
+        width: 12.2rem;
+        height: 4.8rem;
+        margin: 1rem 1rem;
+        padding: 0;
+      }
+
       &:hover {
         background-color: $color-scheme-3-alt-2;
         color: $color-scheme-3-variation-3;
@@ -188,12 +195,27 @@
       margin: 0 3rem 3rem 0;
       transition: all 0.1s cubic-bezier(0.47, 0, 0.745, 0.715);
 
+      @media only screen and (max-width: $extra-large) {
+        width: 16.2rem;
+        height: 16.2rem;
+        padding: 0;
+        min-height: 0;
+        margin: 1.4rem 1.6rem 0 1.4rem;
+      }
+
       @media only screen and (max-width: $large) {
         width: 16.2rem;
         height: 4.8rem;
         margin: 0 3rem 3rem 0;
         padding: 0;
         min-height: 0;
+      }
+
+      @media only screen and (max-width: $small) {
+        width: 12.2rem;
+        height: 4.8rem;
+        margin: 1rem 1rem;
+        padding: 0;
       }
 
       &:hover {
@@ -218,9 +240,8 @@
 
   &-recipient-event {
     grid-column: 3/9;
-    padding: 0 10rem;
-    text-align: center;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
@@ -233,6 +254,7 @@
     @media only screen and (max-width: $large) {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
+      justify-self: center;
       gap: 0;
     }
 
@@ -251,6 +273,13 @@
         pointer-events: none;
       }
 
+      @media only screen and (max-width: $extra-large) {
+        width: 12rem;
+        height: 8.3rem;
+        margin: 1.4rem 1.2rem;
+        padding: 0;
+      }
+
       @media only screen and (min-width: $wide-large) {
         width: 23rem;
         height: 18.2rem;
@@ -262,25 +291,30 @@
       }
 
       @media only screen and (max-width: $wide) {
-        width: calc(100% / 5);
-        height: 14.2rem;
+        width: 16.2rem;
+        height: 16.2rem;
       }
 
-      @media only screen and (max-width: $extra-large) {
-        width: 12rem;
-        height: 8.3rem;
-        margin: 1.4rem 1.2rem;
+      @media only screen and (max-width: $large) {
+        width: 16.2rem;
+        height: 4.8rem;
         padding: 0;
       }
 
-      svg {
+      @media only screen and (max-width: $small) {
+        width: 12.2rem;
+        height: 4.8rem;
+        padding: 0;
+      }
+
+      img {
         width: 4.5rem;
         height: 4.5rem;
         fill: black;
 
         @media only screen and (max-width: $large) {
-          width: 3.5rem;
-          height: 3.5rem;
+          width: auto;
+          height: auto;
           padding: 0;
           min-height: 0;
         }
@@ -382,6 +416,7 @@
         grid-template-columns: repeat(3, min-content);
         width: 100%;
         height: 100%;
+        margin: 5rem 0 0 0;
       }
 
       &-item {
@@ -663,6 +698,10 @@
 
       @media only screen and (max-width: $large) {
         width: max-content;
+      }
+
+      @media only screen and (max-width: $small) {
+        width: 90%;
       }
 
       input {
@@ -1065,6 +1104,7 @@
         width: 162px;
         height: 48px;
         font-size: 1.6rem;
+        margin: 1rem;
       }
 
       &:hover {
@@ -1165,7 +1205,7 @@
             }
 
             @media only screen and (max-width: $extra-small) {
-              font-size: 1rem;
+              font-size: 1.2rem;
             }
           }
         }
