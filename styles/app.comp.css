@@ -1510,12 +1510,13 @@ body {
   .checkout-container {
     grid-column: 1/-1;
     justify-self: center;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    justify-content: space-between;
     margin: 10rem 0; }
     @media only screen and (max-width: 992px) {
       .checkout-container {
-        grid-template-columns: 1fr; } }
+        flex-direction: column-reverse;
+        align-items: center; } }
     .checkout-container-left {
       justify-content: flex-start; }
       .checkout-container-left-title {
@@ -1532,8 +1533,14 @@ body {
       height: 473px;
       border: 0.2rem solid #e5e5e5;
       border-radius: 1.2rem;
-      margin-left: 5rem;
+      margin-left: 10rem;
       padding: 4rem 4rem; }
+      @media only screen and (max-width: 992px) {
+        .checkout-container-right {
+          margin-bottom: 5rem;
+          margin-left: 0;
+          width: 100%;
+          padding: 4rem 2rem; } }
       .checkout-container-right-package {
         font-size: 2.4rem;
         font-weight: 700; }
