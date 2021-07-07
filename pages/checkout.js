@@ -20,7 +20,7 @@ const Checkout = ({newUser}) => {
 
   const quizProgressNav = (e, next) => {
     window.localStorage.setItem('quiz_question', next)
-    router.push('/quiz')
+    window.location.href = '/quiz'
   }
 
   useEffect( async () => {
