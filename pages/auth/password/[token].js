@@ -27,8 +27,8 @@ const ResetPassword = ({token}) => {
     <>
     {!message ? <div className="resetPassword">
       <h1 className="resetPassword-title">Reset Password</h1>
-      <input autoFocus={true} type="password" className="resetPassword-password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="New Password" required/>
-      <input autoFocus={true} type="password" className="resetPassword-password" name="confirmPassword" value={confirmPassword} onChange={(e) => (setConfirmPassword(e.target.value), setMessage(''))} placeholder="Confirm New Password" required/>
+      <input autoFocus={true} type="password" className="resetPassword-password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" onFocus={(e) => e.target.placeholder=''} onBlur={(e) => e.target.placeholder='Password'} required/>
+      <input autoFocus={true} type="password" className="resetPassword-password" name="confirmPassword" value={confirmPassword} onChange={(e) => (setConfirmPassword(e.target.value), setMessage(''))} placeholder="Confirm password" onFocus={(e) => e.target.placeholder=''} onBlur={(e) => e.target.placeholder='Confirm password'}  required/>
       <span className="resetPassword-message">{password !== confirmPassword ? `Passwords don't match` : null}{error ? error: null}</span>
       <button className="resetPassword-button" onClick={submitPasswords}>Reset Password</button>
       <a href="/login" className="resetPassword-login">Login</a>
