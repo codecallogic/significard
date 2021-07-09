@@ -28,7 +28,7 @@ const quiz = ({quizState}) => {
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
-  const [address, setAddress] = useState('me')
+  const [address, setAddress] = useState('')
   const [tags, setTags] = useState('')
   const [state_list, setStateList] = useState(false)
   const [message, setMessage] = useState('')
