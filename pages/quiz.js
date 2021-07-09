@@ -163,12 +163,12 @@ const quiz = ({quizState}) => {
     }
 
     if(question == 'mail_api'){
-      window.localStorage.setItem(type, e)
+      window.localStorage.setItem(type,  JSON.stringify(e))
       return dispatch({type: 'UPDATE_CHANGE', name: type, payload: e})
     }
 
     if(question == 'mail'){
-      window.localStorage.setItem(type, e)
+      window.localStorage.setItem(type, e.target.value)
       return dispatch({type: 'UPDATE_CHANGE', name: type, payload: e.target.value})
     }
 
@@ -251,7 +251,8 @@ const quiz = ({quizState}) => {
   useEffect(() => {
     if(quiz == 'ranking') window.localStorage.setItem('rank', JSON.stringify(quizState.rank))
     if(quiz == 'tags') window.localStorage.setItem('tags', JSON.stringify(quizState.tags));
-  }, [quizState.rank, quizState.tags])
+    if(address) address == 'me' ? window.localStorage.setItem('mail_to', 'user') : window.localStorage.setItem('mail_to', 'recipient')
+  }, [quizState.rank, quizState.tags, address])
 
   const handleQuizID = () => {
     if(!window.localStorage.getItem('quiz_session')) window.localStorage.setItem('quiz_session', nanoid())
