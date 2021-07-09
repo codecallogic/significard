@@ -571,7 +571,7 @@ body {
     margin: 4rem 0 4rem 0; }
     @media only screen and (min-width: 992px) {
       .quiz-recipient-event {
-        padding: 0 1rem; } }
+        padding: 0 10rem; } }
     @media only screen and (max-width: 992px) {
       .quiz-recipient-event {
         display: grid;
@@ -592,18 +592,18 @@ body {
         pointer-events: none; }
       @media only screen and (max-width: 1200px) {
         .quiz-recipient-event-item {
-          width: 12rem;
-          height: 8.3rem;
+          width: 19rem;
+          height: 18.2rem;
           margin: 1.4rem 1.2rem;
           padding: 0; } }
       @media only screen and (min-width: 1800px) {
         .quiz-recipient-event-item {
-          width: 23rem;
-          height: 18.2rem; } }
-      @media only screen and (max-width: 1800px) {
-        .quiz-recipient-event-item {
           width: 19rem;
           height: 18.2rem; } }
+      @media only screen and (max-width: 1200px) {
+        .quiz-recipient-event-item {
+          width: 16.2rem;
+          height: 16.2rem; } }
       @media only screen and (max-width: 1500px) {
         .quiz-recipient-event-item {
           width: 16.2rem;

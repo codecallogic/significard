@@ -435,7 +435,7 @@ const quiz = ({quizState}) => {
               quizProgressNav(e,'involvement')
             }, 500)}/><span>Nope</span></div>
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'involvement')}>Next</button><div className="quiz-button-container" disabled={quizState.other.length < 1 ? true : false}></div></div>
+          <div className="quiz-button-container"><button className="quiz-button" disabled={quizState.other.length < 1 ? true : false} onClick={(e) => quizProgressNav(e,'involvement')}>Next</button><div className="quiz-button-container"></div></div>
           {quizState.other && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'involvement')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>}

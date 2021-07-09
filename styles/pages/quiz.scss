@@ -248,7 +248,7 @@
     margin: 4rem 0 4rem 0;
 
     @media only screen and (min-width: $large) {
-      padding: 0 1rem;
+      padding: 0 10rem;
     }
 
     @media only screen and (max-width: $large) {
@@ -274,20 +274,20 @@
       }
 
       @media only screen and (max-width: $extra-large) {
-        width: 12rem;
-        height: 8.3rem;
+        width: 19rem;
+        height: 18.2rem;
         margin: 1.4rem 1.2rem;
         padding: 0;
       }
 
       @media only screen and (min-width: $wide-large) {
-        width: 23rem;
+        width: 19rem;
         height: 18.2rem;
       }
 
-      @media only screen and (max-width: $wide-large) {
-        width: 19rem;
-        height: 18.2rem;
+      @media only screen and (max-width: $extra-large) {
+        width: 16.2rem;
+        height: 16.2rem;
       }
 
       @media only screen and (max-width: $wide) {
