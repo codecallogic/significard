@@ -21,6 +21,7 @@ const Checkout = ({newUser}) => {
   const [tax, setTax] = useState(0)
   const [total, setTotal] = useState(0)
   const [cardholder, setCardholder] = useState('Fabricio')
+  const [delivery, setDeliveryDate] = useState('')
 
   const quizProgressNav = (e, next) => {
     window.localStorage.setItem('quiz_question', next)
@@ -52,9 +53,39 @@ const Checkout = ({newUser}) => {
       recipientData.quiz_session = window.localStorage.getItem('quiz_session')
     }
 
+    if(!recipientData.recipient) return  (window.localStorage.setItem('quiz_question', 'recipient'), window.location.href = '/quiz')
+    if(!recipientData.age) return  (window.localStorage.setItem('quiz_question', 'age'), window.location.href = '/quiz')
+    if(!recipientData.event) return  (window.localStorage.setItem('quiz_question', 'events'), window.location.href = '/quiz')
+    if(!recipientData.rank) return  (window.localStorage.setItem('quiz_question', 'ranking'), window.location.href = '/quiz')
+    if(!recipientData.tags) return  (window.localStorage.setItem('quiz_question', 'tags'), window.location.href = '/quiz')
+    if(!recipientData.other) return  (window.localStorage.setItem('quiz_question', 'other'), window.location.href = '/quiz')
+    if(!recipientData.involement) return  (window.localStorage.setItem('quiz_question', 'involvement'), window.location.href = '/quiz')
+    if(!recipientData.package_plan) return  (window.localStorage.setItem('quiz_question', 'package'), window.location.href = '/quiz')
+    if(!recipientData.mail_to) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
+    if(!recipientData.name) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
+    if(!recipientData.address_one) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
+    if(!recipientData.zip_code) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
+    if(!recipientData.state) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
+    if(!recipientData.city) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
+    if(!recipientData.nickname) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
+    if(!recipientData.message) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
+    if(!recipientData.signature) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
+    if(!recipientData.description) return  (window.localStorage.setItem('quiz_question', 'description'), window.location.href = '/quiz')
+
     recipientData.package_plan === 'standard' ? (setPackagePrice(8.99), setTax(8.99 * .1)) : recipientData.package_plan == 'plantable' ? (setPackagePrice(10.99), setTax(10.99 * .1)) : null
 
     recipientData.package_plan === 'standard' ? setTotal(8.99 + 8.99 * .1) : recipientData.package_plan == 'plantable' ? setTotal(10.99 + 10.99 * .1): null
+
+    let delivery = new Date(Date.now() + 12096e5)
+
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    var month = monthNames[delivery.getUTCMonth()]
+    var day = delivery.getUTCDate()
+    var year = delivery.getUTCFullYear()
+
+    setDeliveryDate(`${month} ${day}, ${year}`)
+    setRecipient(recipientData)
 
     try {
       const responseRecipient = await axios.post(`${API}/recipient/quiz`, {newUser, recipientData})
@@ -62,12 +93,6 @@ const Checkout = ({newUser}) => {
     } catch (error) {
       console.log(error)
     }
-
-    // if(!recipientData.description) return  (window.localStorage.setItem('quiz_question', 'description'), window.location.href = '/quiz')
-    // if(!recipientData.zip_code) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
-    // if(!recipientData.state) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
-    // if(!recipientData.city) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
-    // if(!recipientData.address_one) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
 
   }, [])
   
@@ -98,7 +123,7 @@ const Checkout = ({newUser}) => {
           </div>
           <div className="checkout-container-right">
             <div className="checkout-container-right-package">Package: {recipient.package_plan ? recipient.package_plan : ''} </div>
-            <div className="checkout-container-right-delivery">📩 <span>Estimated arrival date: May 8, 2021</span></div>
+            <div className="checkout-container-right-delivery">📩 <span>Estimated arrival date: {delivery}</span></div>
             <div className="checkout-container-right-price"><span>{recipient.event ? recipient.event : ''}</span><span>{`$ ` + Math.ceil(package_price * 100) / 100}</span></div>
             <div className="checkout-container-right-tax"><span>Sales Tax</span><span>{`$ ` + Math.ceil(tax * 100) / 100}</span></div>
             <div className="checkout-container-right-total"><span>Total</span><span>{`$ ` + Math.ceil(total * 100) / 100}</span></div>

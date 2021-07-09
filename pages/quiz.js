@@ -3,13 +3,22 @@ import Footer from '../components/footer'
 import withUser from './withUser'
 import Slider from '../components/slider/slider'
 import {useState, useEffect} from 'react'
-import {eventsList, stylesList, stylesListDrop, packageList} from '../utils/quiz'
+import {eventsList, stylesList, stylesListDrop, packageList, usStates} from '../utils/quiz'
 import {manageTags} from '../helpers/forms'
 import { useDispatch, connect } from 'react-redux'
 import {useRouter} from 'next/router'
 import {nanoid} from 'nanoid'
 import PlacesAutocomplete, {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
-import {PLACES} from '../config'
+
+const searchOptionsAddress = {
+  componentRestrictions: {country: 'us'},
+  types: ['address']
+}
+
+const searchOptionsCities = {
+  componentRestrictions: {country: 'us'},
+  types: ['(cities)']
+}
 
 const quiz = ({quizState}) => {
   const dispatch = useDispatch()
@@ -19,8 +28,10 @@ const quiz = ({quizState}) => {
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
-  const [address, setAddress] = useState('')
+  const [address, setAddress] = useState('me')
   const [tags, setTags] = useState('')
+  const [state_list, setStateList] = useState(false)
+  const [message, setMessage] = useState('')
 
   useEffect(() => {
     // manageTags('interests', quizState.tags)
@@ -54,8 +65,12 @@ const quiz = ({quizState}) => {
   }
 
   const quizProgressNav = (e, next) => {
+    console.log(next)
+    if(e) e.preventDefault()
     if(next == 'ranking') (window.localStorage.removeItem('rank'), dispatch({type: 'RESET_RANK', name: 'ranking', payload: []}))
+    if(next == 'message') if(!/^\d{5}(-\d{4})?$/.test(quizState.zip_code)) return setMessage('Zip code is invalid')
     window.localStorage.setItem('quiz_question', next)
+    setMessage('')
     setQuiz(next)
   }
 
@@ -172,6 +187,11 @@ const quiz = ({quizState}) => {
       return dispatch({type: 'UPDATE_CHANGE', name: type, payload: e.target.value})
     }
 
+    if(question == 'mail_item'){
+      window.localStorage.setItem(type,  e)
+      return dispatch({type: 'UPDATE_CHANGE', name: type, payload: e})
+    }
+
     if(question == 'nickname'){
       window.localStorage.setItem(question, type)
       return dispatch({type: 'UPDATE_CHANGE', name: question, payload: type})
@@ -222,6 +242,8 @@ const quiz = ({quizState}) => {
       if(quizState.state.length > 1){ inputs.push('true')}
       if(quizState.zip_code.length > 1){ inputs.push('true')}
 
+      // console.log(/^\d{5}(-\d{4})?$/.test(quizState.zip_code))
+      
       if(inputs.length > 4) return true
     }
 
@@ -266,8 +288,6 @@ const quiz = ({quizState}) => {
   }
   
   return (
-
-    // TODO: Will users only go through the quiz process after signup or can they go through the quiz at a later point after signup and already a user?
     
     <>
       <Nav></Nav>
@@ -549,10 +569,10 @@ const quiz = ({quizState}) => {
                 <div className="form-group-single  mail">
                   <input type="text" placeholder="Full Name" value={quizState.name} onChange={ (e) => handleChange('mail', e, null, 'name')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Full Name'} required/>
                 </div>
-                <PlacesAutocomplete value={quizState.address_one} onChange={(e) => handleChange('mail_api', e, null, 'address_one')} onSelect={(e) => {handleSelect('mail', e, null, 'address_one')}}>
+                <PlacesAutocomplete value={quizState.address_one} onChange={(e) => handleChange('mail_api', e, null, 'address_one')} onSelect={(e) => {handleSelect('mail', e, null, 'address_one')}} searchOptions={searchOptionsAddress}>
                   {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                     <div className="form-group-single mail form-autocomplete-container">
-                      <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'Address Line 1'})} required/>
+                      <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'Address Line 1'})} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Address Line 1'} required/>
                       {loading ? <div>...loading</div> : null}
                       {suggestions.map((suggestion, idx) => {
                         const className = suggestion.active
@@ -565,10 +585,10 @@ const quiz = ({quizState}) => {
                     </div>
                   )}
                 </PlacesAutocomplete>
-                <PlacesAutocomplete value={quizState.address_two} onChange={(e) => handleChange('mail_api', e, null, 'address_two')} onSelect={(e) => {handleSelect('mail', e, null, 'address_two')}}>
+                <PlacesAutocomplete value={quizState.address_two} onChange={(e) => handleChange('mail_api', e, null, 'address_two')} onSelect={(e) => {handleSelect('mail', e, null, 'address_two')}} searchOptions={searchOptionsAddress}>
                   {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                     <div className="form-group-single mail form-autocomplete-container_2">
-                      <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'Address Line 2'})}/>
+                      <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'Address Line 2'})} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Address Line 2'}/>
                       {loading ? <div>...loading</div> : null}
                       {suggestions.map((suggestion, idx) => {
                         const className = suggestion.active
@@ -580,14 +600,45 @@ const quiz = ({quizState}) => {
                     </div>
                   )}
                 </PlacesAutocomplete>
-                <div className="form-group-double mail">
+                <PlacesAutocomplete value={quizState.city} onChange={(e) => handleChange('mail_api', e, null, 'city')} onSelect={(e) => {handleSelect('mail', e, null, 'city')}} searchOptions={searchOptionsCities}>
+                  {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                    <div className="form-group-double mail form-autocomplete-container_3">
+                      <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'City'})} required/>
+                      <div className="form-group-double-dropdown">
+                        <input type="text" placeholder="State" value={quizState.state} onChange={ (e) => handleChange('mail', e, null, 'state')} onFocus={(e) => (e.target.placeholder = '', setStateList(true))} onBlur={(e) => (e.target.placeholder = 'State')} required/>
+                        {state_list && 
+                        <div className="form-group-double-dropdown-list">
+                            {/* TODO: Add state dropdown list */}
+                            <div className="form-group-double-dropdown-list-container">
+                              {usStates.map( (item, idx) => (
+                                <div className="form-group-double-dropdown-list-item" onClick={(e) => (handleChange('mail_item', e.target.innerText, null, 'state'), setStateList(false))} key={idx} >{item.abbreviation}</div>
+                              ))
+                              }
+                          </div>
+                        </div>
+                        }
+                      </div>
+                      {loading ? <div>...loading</div> : null}
+                      {suggestions.map((suggestion, idx) => {
+                        const className = suggestion.active
+                        ? 'form-autocomplete-suggestion-active'
+                        : 'form-autocomplete-suggestion';
+                        const style = suggestion.active ? {backgroundColor: '#003e5f', cursor: 'pointer'} : {backgroundColor: '#fff', cursor: 'pointer'}
+                        return <div  className="form-autocomplete-box" key={idx} {...getSuggestionItemProps(suggestion, {className, style})}>{suggestion.description}</div> 
+                      })}
+                      {/* <input type="text" placeholder="Address Line 1" value={quizState.address_one} onChange={ (e) => handleChange('mail', e, null, 'address_one')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Address Line 1'} required/> */}
+                    </div>
+                  )}
+                </PlacesAutocomplete>
+                {/* <div className="form-group-double mail">
                   <input type="text" placeholder="City" value={quizState.city} onChange={ (e) => handleChange('mail', e, null, 'city')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'City'} required/>
                   <input type="text" placeholder="State" value={quizState.state} onChange={ (e) => handleChange('mail', e, null, 'state')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'State'} required/>
-                </div>
+                </div> */}
                 <div className="form-group-single mail">
-                  <input type="text" placeholder="Zip Code" value={quizState.zip_code} onChange={ (e) => handleChange('mail', e, null, 'zip_code')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Zip Code'} required/>
+                  <input type="text" placeholder="Zip Code" value={quizState.zip_code} onChange={ (e) => (handleChange('mail', e, null, 'zip_code'))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Zip Code'} required/>
                 </div>
-                <button type="submit" className="form-button mail-button">Add Address</button>
+                <button onClick={(e) => quizProgressNav(e, 'message')} className="form-button mail-button">Add Address</button>
+                {message && <div className="form-message-error">{message}</div>}
               </form>
             </div>
           </div>
@@ -605,7 +656,7 @@ const quiz = ({quizState}) => {
                   <div className="form-group-single  mail">
                     <input type="text" placeholder="Full Name" value={quizState.name} onChange={ (e) => handleChange('mail', e, null, 'name')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Full Name'} required/>
                   </div>
-                  <PlacesAutocomplete value={quizState.address_one} onChange={(e) => handleChange('mail_api', e, null, 'address_one')} onSelect={(e) => {handleSelect('mail', e, null, 'address_one')}}>
+                  <PlacesAutocomplete value={quizState.address_one} onChange={(e) => handleChange('mail_api', e, null, 'address_one')} onSelect={(e) => {handleSelect('mail', e, null, 'address_one')}} searchOptions={searchOptionsAddress}>
                   {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                     <div className="form-group-single mail form-autocomplete-container">
                       <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'Address Line 1'})} required/>
@@ -621,7 +672,7 @@ const quiz = ({quizState}) => {
                     </div>
                   )}
                   </PlacesAutocomplete>
-                  <PlacesAutocomplete value={quizState.address_two} onChange={(e) => handleChange('mail_api', e, null, 'address_two')} onSelect={(e) => {handleSelect('mail', e, null, 'address_two')}}>
+                  <PlacesAutocomplete value={quizState.address_two} onChange={(e) => handleChange('mail_api', e, null, 'address_two')} onSelect={(e) => {handleSelect('mail', e, null, 'address_two')}} searchOptions={searchOptionsAddress}>
                     {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                       <div className="form-group-single mail form-autocomplete-container_2">
                         <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'Address Line 2'})}/>
@@ -636,14 +687,46 @@ const quiz = ({quizState}) => {
                       </div>
                     )}
                   </PlacesAutocomplete>
-                  <div className="form-group-double mail">
+                  <PlacesAutocomplete value={quizState.city} onChange={(e) => handleChange('mail_api', e, null, 'city')} onSelect={(e) => {handleSelect('mail', e, null, 'city')}} searchOptions={searchOptionsCities}>
+                  {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                    <div className="form-group-double mail form-autocomplete-container_3">
+                      <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'City'})} required/>
+                      {/* <input type="text" placeholder="State" value={quizState.state} onChange={ (e) => handleChange('mail', e, null, 'state')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'State'} required/> */}
+                      <div className="form-group-double-dropdown">
+                        <input type="text" placeholder="State" value={quizState.state} onChange={ (e) => handleChange('mail', e, null, 'state')} onFocus={(e) => (e.target.placeholder = '', setStateList(true))} onBlur={(e) => (e.target.placeholder = 'State')} required/>
+                        {state_list && 
+                        <div className="form-group-double-dropdown-list">
+                            {/* TODO: Add state dropdown list */}
+                            <div className="form-group-double-dropdown-list-container">
+                              {usStates.map( (item, idx) => (
+                                <div className="form-group-double-dropdown-list-item" onClick={(e) => (handleChange('mail_item', e.target.innerText, null, 'state'), setStateList(false))} key={idx} >{item.abbreviation}</div>
+                              ))
+                              }
+                          </div>
+                        </div>
+                        }
+                      </div>
+                      {loading ? <div>...loading</div> : null}
+                      {suggestions.map((suggestion, idx) => {
+                        const className = suggestion.active
+                        ? 'form-autocomplete-suggestion-active'
+                        : 'form-autocomplete-suggestion';
+                        const style = suggestion.active ? {backgroundColor: '#003e5f', cursor: 'pointer'} : {backgroundColor: '#fff', cursor: 'pointer'}
+                        return <div  className="form-autocomplete-box" key={idx} {...getSuggestionItemProps(suggestion, {className, style})}>{suggestion.description}</div> 
+                      })}
+                      {/* <input type="text" placeholder="Address Line 1" value={quizState.address_one} onChange={ (e) => handleChange('mail', e, null, 'address_one')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Address Line 1'} required/> */}
+                    </div>
+                  )}
+                </PlacesAutocomplete>
+                  {/* <div className="form-group-double mail">
                     <input type="text" placeholder="City" value={quizState.city} onChange={ (e) => handleChange('mail', e, null, 'city')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'City'} required/>
                     <input type="text" placeholder="State" value={quizState.state} onChange={ (e) => handleChange('mail', e, null, 'state')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'State'} required/>
-                  </div>
+                  </div> */}
                   <div className="form-group-single mail">
-                    <input type="text" placeholder="Zip Code" value={quizState.zip_code} onChange={ (e) => handleChange('mail', e, null, 'zip_code')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Zip Code'} required/>
+                    <input type="text" placeholder="Zip Code" value={quizState.zip_code} onChange={ (e) => (handleChange('mail', e, null, 'zip_code'))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Zip Code'} required/>
                   </div>
-                  <button type="submit" className="form-button mail-button">Add Address</button>
+                  <button onClick={(e) => quizProgressNav(e ,'message')} className="form-button mail-button">Add Address</button>
+                  {message && <div className="form-message-error">{message}</div>}
                 </form>
               </div>
             </div>

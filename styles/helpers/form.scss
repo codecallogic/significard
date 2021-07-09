@@ -12,6 +12,11 @@
     z-index: 1000 !important;
   }
 
+  &-autocomplete-container_3 {
+    position: relative;
+    z-index: 500 !important;
+  }
+
   &-autocomplete-box {
     position: absolute;
     top: 100%;
@@ -156,6 +161,59 @@
       }
     }
 
+    &-dropdown {
+      display: inline-block;
+      width: calc(50% - 0.6rem);
+      position: relative;
+
+      input {
+        padding: 1.5rem 0;
+        width: 100%;
+        font-size: 1.4rem;
+        text-indent: 1rem;
+        border: 0.1rem solid $color-light-gray;
+        transition: all 0.5s;
+
+        &:focus {
+          outline: none;
+          border: 0.1rem solid $color-scheme-1;
+        }
+
+        &:first-child {
+          margin-right: 1.2rem;
+        }
+      }
+
+      &-list {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        overflow-y: scroll;
+        max-height: 20rem !important;
+
+        &::-webkit-scrollbar {
+          width: 0.3rem;
+          background-color: $color-light-gray;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: $color-scheme-3;
+        }
+
+        &-item {
+          font-size: 1.4rem;
+          padding: 1rem 1rem;
+          background-color: white;
+
+          &:hover {
+            background-color: $color-scheme-3;
+            cursor: pointer;
+            color: white;
+          }
+        }
+      }
+    }
+
     &-image {
       label {
         display: block;
@@ -240,6 +298,16 @@
       }
     }
   }
+
+  &-message {
+    &-error {
+      font-size: 1.4rem;
+      width: 100%;
+      color: red;
+      margin: 1rem 0;
+      text-align: center;
+    }
+  }
 }
 
 .mail {
@@ -259,7 +327,7 @@
   &-button {
     width: 300px;
     height: 53px;
-    margin: 3rem 0 !important;
+    margin: 3rem 0 1rem 0 !important;
     font-size: 1.8rem;
     background-color: $color-scheme-3;
     outline: none;

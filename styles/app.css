@@ -1549,7 +1549,8 @@ body {
           padding: 4rem 2rem; } }
       .checkout-container-right-package {
         font-size: 2.4rem;
-        font-weight: 700; }
+        font-weight: 700;
+        text-transform: capitalize; }
       .checkout-container-right-delivery {
         font-size: 1.8rem;
         font-weight: 400;
@@ -1798,6 +1799,9 @@ body {
   .form-autocomplete-container_2 {
     position: relative;
     z-index: 1000 !important; }
+  .form-autocomplete-container_3 {
+    position: relative;
+    z-index: 500 !important; }
   .form-autocomplete-box {
     position: absolute;
     top: 100%;
@@ -1892,6 +1896,41 @@ body {
         border: 0.1rem solid #e84925; }
       .form-group-double input:first-child {
         margin-right: 1.2rem; }
+    .form-group-double-dropdown {
+      display: inline-block;
+      width: calc(50% - 0.6rem);
+      position: relative; }
+      .form-group-double-dropdown input {
+        padding: 1.5rem 0;
+        width: 100%;
+        font-size: 1.4rem;
+        text-indent: 1rem;
+        border: 0.1rem solid #e5e5e5;
+        transition: all 0.5s; }
+        .form-group-double-dropdown input:focus {
+          outline: none;
+          border: 0.1rem solid #e84925; }
+        .form-group-double-dropdown input:first-child {
+          margin-right: 1.2rem; }
+      .form-group-double-dropdown-list {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        overflow-y: scroll;
+        max-height: 20rem !important; }
+        .form-group-double-dropdown-list::-webkit-scrollbar {
+          width: 0.3rem;
+          background-color: #e5e5e5; }
+        .form-group-double-dropdown-list::-webkit-scrollbar-thumb {
+          background-color: #0f2e4c; }
+        .form-group-double-dropdown-list-item {
+          font-size: 1.4rem;
+          padding: 1rem 1rem;
+          background-color: white; }
+          .form-group-double-dropdown-list-item:hover {
+            background-color: #0f2e4c;
+            cursor: pointer;
+            color: white; }
     .form-group-double-image label {
       display: block; }
     .form-group-double-image img {
@@ -1948,6 +1987,12 @@ body {
       .form-tag-container input:focus {
         outline: none;
         border: none; }
+  .form-message-error {
+    font-size: 1.4rem;
+    width: 100%;
+    color: red;
+    margin: 1rem 0;
+    text-align: center; }
 
 .mail {
   width: 300px;
@@ -1962,7 +2007,7 @@ body {
   .mail-button {
     width: 300px;
     height: 53px;
-    margin: 3rem 0 !important;
+    margin: 3rem 0 1rem 0 !important;
     font-size: 1.8rem;
     background-color: #0f2e4c;
     outline: none;
