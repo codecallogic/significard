@@ -20,7 +20,7 @@ const Checkout = ({newUser}) => {
   const [package_price, setPackagePrice] = useState(0)
   const [tax, setTax] = useState(0)
   const [total, setTotal] = useState(0)
-  const [cardholder, setCardholder] = useState('Fabricio')
+  const [cardholder, setCardholder] = useState('')
   const [delivery, setDeliveryDate] = useState('')
 
   const quizProgressNav = (e, next) => {
@@ -59,7 +59,7 @@ const Checkout = ({newUser}) => {
     if(!recipientData.rank) return  (window.localStorage.setItem('quiz_question', 'ranking'), window.location.href = '/quiz')
     if(!recipientData.tags) return  (window.localStorage.setItem('quiz_question', 'tags'), window.location.href = '/quiz')
     if(!recipientData.other) return  (window.localStorage.setItem('quiz_question', 'other'), window.location.href = '/quiz')
-    if(!recipientData.involement) return  (window.localStorage.setItem('quiz_question', 'involvement'), window.location.href = '/quiz')
+    if(!recipientData.involvement) return  (window.localStorage.setItem('quiz_question', 'involvement'), window.location.href = '/quiz')
     if(!recipientData.package_plan) return  (window.localStorage.setItem('quiz_question', 'package'), window.location.href = '/quiz')
     if(!recipientData.mail_to) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
     if(!recipientData.name) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
@@ -89,7 +89,7 @@ const Checkout = ({newUser}) => {
 
     try {
       const responseRecipient = await axios.post(`${API}/recipient/quiz`, {newUser, recipientData})
-      console.log(responseRecipient)
+      // console.log(responseRecipient)
     } catch (error) {
       console.log(error)
     }

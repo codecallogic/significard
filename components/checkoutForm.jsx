@@ -28,6 +28,7 @@ const CheckOutForm = ({user, address_one, city, state, amount, cardholder}) => {
 
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
+  const [success, setSuccess] = useState('')
 
   const handleCardPayment = async (e) => {
     e.preventDefault()
@@ -54,7 +55,7 @@ const CheckOutForm = ({user, address_one, city, state, amount, cardholder}) => {
 
     if(error){
       console.log('error', error)
-      if(error) error.code ? setMessage('Incomplete form') : setMessage('We are having trouble validating your card information')
+      if(error) error.code ? setMessage('Invalid information') : setMessage('We are having trouble validating your card information')
       setLoading(false)
     }else {
       try {
@@ -73,15 +74,18 @@ const CheckOutForm = ({user, address_one, city, state, amount, cardholder}) => {
               }
             })
             setLoading(false)
-            console.log(result)
+            if(result.error) setMessage(`${result.error.message}. For ${result.error.decline_code}`)
+            setSuccess('Payment was made')
           } catch (error) {
             setLoading(false)
+            if(error) setMessage('An error occurred while processing your card. Try again in a little bit.')
             console.log(error)
           }
         }
         
       } catch (error) {
-        console.log(error)
+        console.log(error.response)
+        if(error) error.response ? setMessage(error.response.data) : setMessage('An error occurred while processing your card. Try again in a little bit.')
         setLoading(false)
       }
     }
@@ -97,6 +101,7 @@ const CheckOutForm = ({user, address_one, city, state, amount, cardholder}) => {
         {loading ? <iframe src="https://giphy.com/embed/sSgvbe1m3n93G" width="30" height="30" frameBorder="0" className="giphy-loading" allowFullScreen></iframe> : null }
       </div>
       {message && <span className="checkout-container-left-message">{message}</span>}
+      {success && <span className="checkout-container-left-success"><svg><use xlinkHref="sprite.svg#icon-checkmark"></use></svg>{success}</span>}
     </>
   )
 }

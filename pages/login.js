@@ -16,8 +16,8 @@ initializeFirebase()
 
 const Login = ({user, userUpdate, userMessage, userEmail}) => {
   const router = useRouter()
-  const [email, setEmail] = useState('j.fabricio.au@gmail.com')
-  const [password, setPassword] = useState('Significard95Achiever!')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [placeholderEmail, setPlaceholderEmail] = useState(null)
   const [placeholderPassword, setPlaceholderPassword] = useState(null)

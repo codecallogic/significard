@@ -450,10 +450,10 @@ const quiz = ({quizState}) => {
           <div className="quiz-subtitle">Color, theme, animals, etc.</div>
           <div className="quiz-subtitle-mobile">Color, theme, animals, etc.</div>
           <div className="quiz-recipient-other">
-            <textarea type="text" name="other" cols="100" value={quizState.other} onChange={ (e) => handleChange('other', e)}/>
-            <div className="quiz-recipient-other-checkbox"><input type="checkbox" name="other" onClick={(e) => setTimeout(() => {
+            <textarea type="text" name="other" cols="100" value={quizState.other !== 'blank' ? quizState.other : ''} onChange={ (e) => handleChange('other', e)}/>
+            <div className="quiz-recipient-other-checkbox"><input type="checkbox" name="other" value="blank" onClick={(e) => (handleChange('other', e), setTimeout(() => {
               quizProgressNav(e,'involvement')
-            }, 500)}/><span>Nope</span></div>
+            }, 500))}/><span>Nope</span></div>
           </div>
           <div className="quiz-button-container"><button className="quiz-button" disabled={quizState.other.length < 1 ? true : false} onClick={(e) => quizProgressNav(e,'involvement')}>Next</button><div className="quiz-button-container"></div></div>
           {quizState.other && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'involvement')}>

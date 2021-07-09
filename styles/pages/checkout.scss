@@ -149,6 +149,20 @@
         margin: 2rem 1rem;
         color: red;
       }
+
+      &-success {
+        display: flex;
+        align-items: center;
+        font-size: 1.4rem;
+        margin: 2rem 1rem;
+
+        svg {
+          width: 3.5rem;
+          height: 3.5rem;
+          fill: #3fab34;
+          margin-right: 2rem;
+        }
+      }
     }
 
     &-right {
