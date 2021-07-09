@@ -335,6 +335,10 @@
     color: white;
     border-radius: 1.2rem;
 
+    &:disabled {
+      cursor: default;
+    }
+
     @media only screen and (max-width: $large) {
       width: 90%;
     }

@@ -65,11 +65,10 @@ const quiz = ({quizState}) => {
   }
 
   const quizProgressNav = (e, next) => {
-    console.log(next)
     if(e) e.preventDefault()
     if(next == 'ranking') (window.localStorage.removeItem('rank'), dispatch({type: 'RESET_RANK', name: 'ranking', payload: []}))
-    if(next == 'message') if(!/^\d{5}(-\d{4})?$/.test(quizState.zip_code)) return setMessage('Zip code is invalid')
     window.localStorage.setItem('quiz_question', next)
+    setAddress('')
     setMessage('')
     setQuiz(next)
   }
@@ -285,6 +284,12 @@ const quiz = ({quizState}) => {
       window.localStorage.setItem(type, e)
       return dispatch({type: 'UPDATE_CHANGE', name: type, payload: e})
     }
+  }
+
+  const handleZipCode = (e) => {
+    e.preventDefault()
+    if(!/^\d{5}(-\d{4})?$/.test(quizState.zip_code)) return setMessage('Zip code is invalid');
+    quizProgressNav(e, 'message')
   }
   
   return (
@@ -565,7 +570,7 @@ const quiz = ({quizState}) => {
           <div className="quiz-recipient-mail-address">
             <div className="quiz-recipient-mail-address-container">
               <div className="quiz-recipient-mail-address-heading">Your address:</div>
-              <form onSubmit={(e) => quizProgressNav(e,'message')}>
+              <form>
                 <div className="form-group-single  mail">
                   <input type="text" placeholder="Full Name" value={quizState.name} onChange={ (e) => handleChange('mail', e, null, 'name')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Full Name'} required/>
                 </div>
@@ -637,7 +642,7 @@ const quiz = ({quizState}) => {
                 <div className="form-group-single mail">
                   <input type="text" placeholder="Zip Code" value={quizState.zip_code} onChange={ (e) => (handleChange('mail', e, null, 'zip_code'))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Zip Code'} required/>
                 </div>
-                <button onClick={(e) => quizProgressNav(e, 'message')} className="form-button mail-button">Add Address</button>
+                <button onClick={(e) => handleZipCode(e)} className="form-button mail-button" disabled={ handleFormDisableButtons('mail') ? true : false}>Add Address</button>
                 {message && <div className="form-message-error">{message}</div>}
               </form>
             </div>
@@ -652,7 +657,7 @@ const quiz = ({quizState}) => {
                 <span>I don’t know their address, email them for me to ask for their address</span>
               </div>
               <div className="quiz-recipient-mail-address-container">
-                <form onSubmit={(e) => quizProgressNav(e,'message')}>
+                <form>
                   <div className="form-group-single  mail">
                     <input type="text" placeholder="Full Name" value={quizState.name} onChange={ (e) => handleChange('mail', e, null, 'name')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Full Name'} required/>
                   </div>
@@ -725,14 +730,14 @@ const quiz = ({quizState}) => {
                   <div className="form-group-single mail">
                     <input type="text" placeholder="Zip Code" value={quizState.zip_code} onChange={ (e) => (handleChange('mail', e, null, 'zip_code'))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Zip Code'} required/>
                   </div>
-                  <button onClick={(e) => quizProgressNav(e ,'message')} className="form-button mail-button">Add Address</button>
+                  <button onClick={(e) => handleZipCode(e)} className="form-button mail-button" disabled={ handleFormDisableButtons('mail') ? true : false}>Add Address</button>
                   {message && <div className="form-message-error">{message}</div>}
                 </form>
               </div>
             </div>
           }
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'message')} disabled={ handleFormDisableButtons('mail') ? true : false}>Next</button><div className="quiz-button-container"></div></div>
-          {handleFormProgressButtons('mail') && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'message')}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => (handleZipCode(e))} disabled={ handleFormDisableButtons('mail') ? true : false}>Next</button><div className="quiz-button-container"></div></div>
+          {handleFormProgressButtons('mail') && <div className="quiz-next" onClick={(e) => (handleZipCode(e))}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>}
         </>
