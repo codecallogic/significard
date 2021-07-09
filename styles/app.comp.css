@@ -2024,6 +2024,8 @@ body {
     border: none;
     color: white;
     border-radius: 1.2rem; }
+    .mail-button:disabled {
+      cursor: default; }
     @media only screen and (max-width: 992px) {
       .mail-button {
         width: 90%; } }
