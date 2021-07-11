@@ -9,6 +9,7 @@ const initialState = {
   involvement: '',
   package_plan: '',
   name: '',
+  mail_to: '',
   address_one: '',
   address_two: '',
   city: '',

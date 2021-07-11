@@ -58,7 +58,7 @@ const SignUp = ({newUser, user, userUpdate, userMessage}) => {
       setEmail('')
       setPassword('')
       setTimeout(() => {
-        window.location.href = '/quiz'
+        window.location.href = '/login'
       }, 1500);
     } catch (error) {
       error.response.data ? error.response.data.error ? userMessage(error.response.data.error.msg) : null : console.log(error)
@@ -76,7 +76,7 @@ const SignUp = ({newUser, user, userUpdate, userMessage}) => {
       setEmail('')
       setPassword('')
       setTimeout(() => {
-        window.location.href = '/quiz'
+        window.location.href = '/login'
       }, 1500);
     } catch (error) {
       console.log(error)
