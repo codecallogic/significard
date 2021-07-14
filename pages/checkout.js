@@ -34,6 +34,8 @@ const Checkout = ({newUser}) => {
   const [total, setTotal] = useState(0)
   const [cardholder, setCardholder] = useState('')
   const [address, setAddress] = useState('')
+  const [city, setCity] = useState('')
+  const [zip_code, setZipCode] = useState('')
   const [delivery, setDeliveryDate] = useState('')
 
   const quizProgressNav = (e, next) => {
@@ -118,15 +120,15 @@ const Checkout = ({newUser}) => {
         </div>
         <div className="quiz-title">Payment Method</div>
         <div className="quiz-title-mobile">Payment Method</div>
-        <div className="quiz-subtitle">Select one.</div>
-        <div className="quiz-subtitle-mobile">Select one.</div>
+        {/* <div className="quiz-subtitle">Select one.</div> */}
+        {/* <div className="quiz-subtitle-mobile">Select one.</div> */}
 
         <div className="checkout-container">
           <div className="checkout-container-left">
             <div className="checkout-container-left-title">Payment Method</div>
             <div className="checkout-container-left-subtitle">What's your payment method?</div>
             <div className="checkout-group-container">
-              <span className="form-group-single checkout-group">
+              <span className="form-group-single checkout-group margin-0">
                 <input type="text" placeholder="Cardholder Name" value={cardholder} onChange={(e) => setCardholder(e.target.value)} required/>
               </span>
             </div>
@@ -137,16 +139,34 @@ const Checkout = ({newUser}) => {
                   {loading ? <div>...loading</div> : null}
                   {suggestions.map((suggestion, idx) => {
                     const className = suggestion.active
-                    ? 'form-autocomplete-suggestion-active'
-                    : 'form-autocomplete-suggestion';
+                    ? 'form-autocomplete-suggestion-active_100'
+                    : 'form-autocomplete-suggestion_100';
                     const style = suggestion.active ? {backgroundColor: '#003e5f', cursor: 'pointer'} : {backgroundColor: '#fff', cursor: 'pointer'}
                     return <div  className="form-autocomplete-box" key={idx} {...getSuggestionItemProps(suggestion, {className, style})}>{suggestion.description}</div> 
                   })}
                 </div>
               )}
             </PlacesAutocomplete>
+            <PlacesAutocomplete value={city} onChange={(e) => setCity(e)} onSelect={(e) => setCity(e.split(',')[0])} searchOptions={searchOptionsCities}>
+              {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                <div className="form-group-double mail checkout-group-double form-autocomplete-container_3">
+                  <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'City'})} required/>
+                  {loading ? <div>...loading</div> : null}
+                  {suggestions.map((suggestion, idx) => {
+                    const className = suggestion.active
+                    ? 'form-autocomplete-suggestion-active_100'
+                    : 'form-autocomplete-suggestion_100';
+                    const style = suggestion.active ? {backgroundColor: '#003e5f', cursor: 'pointer'} : {backgroundColor: '#fff', cursor: 'pointer'}
+                    return <div  className="form-autocomplete-box" key={idx} {...getSuggestionItemProps(suggestion, {className, style})}>{suggestion.description}</div> 
+                  })}
+                </div>
+              )}
+            </PlacesAutocomplete>
+            <div className="form-group-double mail checkout-group-double">
+                <input type="text" placeholder="Zip Code" value={zip_code} onChange={ (e) => setZipCode(e.target.value)} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Zip Code'} required/>
+            </div>
             <Elements stripe={stripePromise}>
-              <CheckOutForm user={newUser} address_one={recipient.address_one} city={recipient.city} state={recipient.state} amount={package_price + tax} cardholder={cardholder}></CheckOutForm>
+              <CheckOutForm user={newUser} amount={package_price + tax} cardholder={cardholder} address={address} city={city} zip_code={zip_code}></CheckOutForm>
             </Elements>
           </div>
           <div className="checkout-container-right">

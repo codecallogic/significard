@@ -26,8 +26,15 @@
   &-autocomplete-suggestion {
     font-size: 1.4rem;
     padding: 1rem 1rem;
-    width: 100%;
-    z-index: 200;
+    width: 300px;
+    z-index: 100;
+
+    &_100 {
+      font-size: 1.4rem;
+      padding: 1rem 1rem;
+      width: 100%;
+      z-index: 100;
+    }
   }
 
   &-autocomplete-suggestion-active {
@@ -35,6 +42,14 @@
     padding: 1rem 1rem;
     color: white;
     width: 300px;
+
+    &_100 {
+      font-size: 1.4rem;
+      padding: 1rem 1rem;
+      width: 100%;
+      color: white;
+      z-index: 100;
+    }
   }
 
   &-group-2-3 {
@@ -595,7 +610,6 @@
 
 .checkout-group {
   width: 100%;
-  margin: 1rem 0 0 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -620,10 +634,38 @@
     justify-content: space-between;
     width: 100%;
   }
+
+  &-double {
+    width: 100% !important;
+    margin: 1rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-sizing: border-box;
+
+    @media only screen and (max-width: $large) {
+      width: 90%;
+    }
+
+    input {
+      width: 100%;
+      border-radius: 1.2rem !important;
+      padding: 1.6rem 0 1.6rem 2.3rem;
+
+      &::placeholder {
+        color: #bbc5ce;
+        font-size: 1.6rem;
+      }
+    }
+  }
 }
 
 .StripeElement {
   padding: 2rem 2rem;
   border: 0.1rem solid $color-light-gray;
   border-radius: 1.2rem !important;
+}
+
+.margin-0 {
+  margin: 0;
 }

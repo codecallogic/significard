@@ -22,7 +22,7 @@ const CARD_ELEMENT_OPTIONS = {
 };
 
 
-const CheckOutForm = ({user, address_one, city, state, amount, cardholder}) => {
+const CheckOutForm = ({user, address, city, zip_code, amount, cardholder}) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -42,15 +42,19 @@ const CheckOutForm = ({user, address_one, city, state, amount, cardholder}) => {
     setLoading(true)
     setMessage('')
 
-    if(!cardholder){setMessage('Cardholder name is empty'); setLoading(false); return}
+    if(!cardholder){setMessage('Cardholder field is empty'); setLoading(false); return}
+    if(!address){setMessage('Address field is empty'); setLoading(false); return}
+    if(!city){setMessage('City field is empty'); setLoading(false); return}
+    if(!zip_code){setMessage('Zip code field is empty'); setLoading(false); return}
+    if(!/^\d{5}(-\d{4})?$/.test(zip_code)){setLoading(false); setMessage('Zip code is invalid'); return }
 
     const cardElement = elements.getElement(CardElement)
 
     const {error, paymentMethod} = await stripe.createPaymentMethod({
       type: 'card',
       card: cardElement,
-      billing_details: {email: user.email}
-      // billing_details: {email: user.email, address: {line1: address_one, city: city, state: state}}
+      // billing_details: {email: user.email}
+      billing_details: {email: user.email, address: {line1: address, city: city, postal_code: zip_code}}
     })
 
     if(error){
@@ -68,9 +72,7 @@ const CheckOutForm = ({user, address_one, city, state, amount, cardholder}) => {
             const result = await stripe.confirmCardPayment(client_secret, {
               payment_method: {
                 card: elements.getElement(CardElement),
-                billing_details: {
-                  email: user.email
-                },
+                billing_details: {email: user.email, address: {line1: address, city: city, postal_code: zip_code}}
               }
             })
             setLoading(false)
