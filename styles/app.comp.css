@@ -928,7 +928,6 @@ body {
     align-items: center;
     flex-direction: column;
     flex-wrap: wrap;
-    gap: 4rem;
     margin: 4rem 0 4rem 0; }
     .quiz-recipient-tags-box {
       width: 630px;
@@ -1606,6 +1605,9 @@ body {
       border: 0.2rem solid #0f2e4c;
       font-size: 1.8rem;
       transition: all 0.4s cubic-bezier(0.47, 0, 0.745, 0.715); }
+      @media only screen and (max-width: 992px) {
+        .checkout-container-button {
+          width: 100% !important; } }
       .checkout-container-button-container {
         grid-column: 1/-1;
         display: flex;
@@ -1821,11 +1823,22 @@ body {
     padding: 1rem 1rem;
     width: 300px;
     z-index: 100; }
+    .form-autocomplete-suggestion_100 {
+      font-size: 1.4rem;
+      padding: 1rem 1rem;
+      width: 100%;
+      z-index: 100; }
   .form-autocomplete-suggestion-active {
     font-size: 1.4rem;
     padding: 1rem 1rem;
     color: white;
     width: 300px; }
+    .form-autocomplete-suggestion-active_100 {
+      font-size: 1.4rem;
+      padding: 1rem 1rem;
+      width: 100%;
+      color: white;
+      z-index: 100; }
   .form-group-2-3 {
     padding: 1.5rem 0 0 0;
     width: calc(70% - 0.3rem) !important; }
@@ -1979,7 +1992,9 @@ body {
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
-    width: 630px; }
+    width: 630px;
+    margin: 3rem 0 1rem 0;
+    min-height: 2rem; }
     @media only screen and (max-width: 992px) {
       .form-tag-container {
         width: 100%; } }
@@ -2003,6 +2018,13 @@ body {
     color: red;
     margin: 1rem 0;
     text-align: center; }
+    .form-message-error-tags {
+      font-size: 1.4rem;
+      height: 1.4rem;
+      width: 100%;
+      color: red;
+      margin: 2rem 0;
+      text-align: center; }
 
 .mail {
   width: 300px;
@@ -2214,14 +2236,13 @@ body {
 
 .checkout-group {
   width: 100%;
-  margin: 1rem 0 0 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   box-sizing: border-box; }
   @media only screen and (max-width: 992px) {
     .checkout-group {
-      width: 90%; } }
+      width: 100%; } }
   .checkout-group input {
     border-radius: 1.2rem !important;
     padding: 1.6rem 0 1.6rem 2.3rem; }
@@ -2232,8 +2253,28 @@ body {
     display: flex;
     justify-content: space-between;
     width: 100%; }
+  .checkout-group-double {
+    width: 100% !important;
+    margin: 1rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-sizing: border-box; }
+    @media only screen and (max-width: 992px) {
+      .checkout-group-double {
+        width: 90%; } }
+    .checkout-group-double input {
+      width: 100%;
+      border-radius: 1.2rem !important;
+      padding: 1.6rem 0 1.6rem 2.3rem; }
+      .checkout-group-double input::placeholder {
+        color: #bbc5ce;
+        font-size: 1.6rem; }
 
 .StripeElement {
   padding: 2rem 2rem;
   border: 0.1rem solid #e5e5e5;
   border-radius: 1.2rem !important; }
+
+.margin-0 {
+  margin: 0; }
