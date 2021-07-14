@@ -8,7 +8,7 @@ import {manageTags} from '../helpers/forms'
 import { useDispatch, connect } from 'react-redux'
 import {useRouter} from 'next/router'
 import {nanoid} from 'nanoid'
-import PlacesAutocomplete, {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
+import PlacesAutocomplete from 'react-places-autocomplete'
 import axios from 'axios'
 import {API} from '../config'
 

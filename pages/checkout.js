@@ -5,6 +5,18 @@ import withUser from './withUser'
 import axios from 'axios'
 import {API} from '../config'
 import {useRouter} from 'next/router'
+import PlacesAutocomplete from 'react-places-autocomplete'
+import {connect } from 'react-redux'
+
+const searchOptionsAddress = {
+  componentRestrictions: {country: 'us'},
+  types: ['address']
+}
+
+const searchOptionsCities = {
+  componentRestrictions: {country: 'us'},
+  types: ['(cities)']
+}
 
 // STRIPE
 import {Elements, CardElement} from '@stripe/react-stripe-js';
@@ -21,6 +33,7 @@ const Checkout = ({newUser}) => {
   const [tax, setTax] = useState(0)
   const [total, setTotal] = useState(0)
   const [cardholder, setCardholder] = useState('')
+  const [address, setAddress] = useState('')
   const [delivery, setDeliveryDate] = useState('')
 
   const quizProgressNav = (e, next) => {
@@ -117,6 +130,21 @@ const Checkout = ({newUser}) => {
                 <input type="text" placeholder="Cardholder Name" value={cardholder} onChange={(e) => setCardholder(e.target.value)} required/>
               </span>
             </div>
+            <PlacesAutocomplete value={address} onChange={(e) => setAddress(e)} onSelect={(e) => setAddress(e.split(',')[0])} searchOptions={searchOptionsAddress}>
+              {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                <div className="form-group-single mail checkout-group form-autocomplete-container">
+                  <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'Address'})} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Address'} required/>
+                  {loading ? <div>...loading</div> : null}
+                  {suggestions.map((suggestion, idx) => {
+                    const className = suggestion.active
+                    ? 'form-autocomplete-suggestion-active'
+                    : 'form-autocomplete-suggestion';
+                    const style = suggestion.active ? {backgroundColor: '#003e5f', cursor: 'pointer'} : {backgroundColor: '#fff', cursor: 'pointer'}
+                    return <div  className="form-autocomplete-box" key={idx} {...getSuggestionItemProps(suggestion, {className, style})}>{suggestion.description}</div> 
+                  })}
+                </div>
+              )}
+            </PlacesAutocomplete>
             <Elements stripe={stripePromise}>
               <CheckOutForm user={newUser} address_one={recipient.address_one} city={recipient.city} state={recipient.state} amount={package_price + tax} cardholder={cardholder}></CheckOutForm>
             </Elements>
@@ -136,4 +164,16 @@ const Checkout = ({newUser}) => {
   )
 }
 
-export default withUser(Checkout)
+const mapStateToProps = state => {
+  return {
+
+  }
+}
+
+const mapDispatchToProps = dispath => {
+ return {
+
+ }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withUser(Checkout))

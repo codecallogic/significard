@@ -1818,8 +1818,8 @@ body {
   .form-autocomplete-suggestion {
     font-size: 1.4rem;
     padding: 1rem 1rem;
-    width: 300px;
-    z-index: 100; }
+    width: 100%;
+    z-index: 200; }
   .form-autocomplete-suggestion-active {
     font-size: 1.4rem;
     padding: 1rem 1rem;
