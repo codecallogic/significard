@@ -67,21 +67,33 @@ const SignUp = ({newUser, user, userUpdate, userMessage}) => {
   }
 
   const signUpFirebase = async (user) => {
+
     setLoading(true)
     try {
-      const responseSignUp = await axios.post(`${API}/auth/signup-firebase`, {user})
-      userMessage(responseSignUp.data)
+      const responseLogin = await axios.post(`${API}/auth/login`, {user})
       setLoading(false)
-      setName('')
-      setEmail('')
-      setPassword('')
-      setTimeout(() => {
-        window.location.href = '/login'
-      }, 1500);
+      ///
+      window.location.href = '/quiz'
     } catch (error) {
-      console.log(error)
+      console.log(error.response.data)
+      if(error) error.response ? userMessage(error.response.data) : userMessage(null)
       setLoading(false)
     }
+    // setLoading(true)
+    // try {
+    //   const responseSignUp = await axios.post(`${API}/auth/signup-firebase`, {user})
+    //   userMessage(responseSignUp.data)
+    //   setLoading(false)
+    //   setName('')
+    //   setEmail('')
+    //   setPassword('')
+    //   setTimeout(() => {
+    //   window.location.href = '/login'
+    //   }, 1500);
+    // } catch (error) {
+    //   console.log(error)
+    //   setLoading(false)
+    // }
   }
 
   return (

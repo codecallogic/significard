@@ -195,6 +195,7 @@ const quiz = ({quizState}) => {
     }
 
     if(question == 'mail_item'){
+      console.log(e)
       window.localStorage.setItem(type,  e)
       return dispatch({type: 'UPDATE_CHANGE', name: type, payload: e})
     }
@@ -288,10 +289,16 @@ const quiz = ({quizState}) => {
   }
 
   const handleSelect = async (question, e, idx, type) => {
-    console.log(e.split(','))
     if(question == 'mail'){
       window.localStorage.setItem(type, e.split(',')[0])
-      return dispatch({type: 'UPDATE_CHANGE', name: type, payload: e.split(',')[0]})
+      dispatch({type: 'UPDATE_CHANGE', name: type, payload: e.split(',')[0]});
+
+      if(type == 'address_one'){
+        dispatch({type: 'UPDATE_CHANGE', name: 'city', payload: e.split(',')[1]}) 
+        dispatch({type: 'UPDATE_CHANGE', name: 'state', payload: e.split(',')[2]}) 
+      }
+
+      return
     }
   }
 
@@ -299,6 +306,15 @@ const quiz = ({quizState}) => {
     e.preventDefault()
     if(!/^\d{5}(-\d{4})?$/.test(quizState.zip_code)) return setMessage('Zip code is invalid');
     quizProgressNav(e, 'message')
+  }
+
+  const resetMail = (e) => {
+    window.localStorage.setItem('name', '')
+    window.localStorage.setItem('address_one', '')
+    window.localStorage.setItem('address_two', '')
+    window.localStorage.setItem('city', '')
+    window.localStorage.setItem('state', '')
+    window.localStorage.setItem('zip_code', '')
   }
   
   return (
@@ -620,13 +636,13 @@ const quiz = ({quizState}) => {
                     <div className="form-group-double mail form-autocomplete-container_3">
                       <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'City'})} required/>
                       <div className="form-group-double-dropdown">
-                        <input type="text" placeholder="State" value={quizState.state} onChange={ (e) => handleChange('mail', e, null, 'state')} onFocus={(e) => (e.target.placeholder = '', setStateList(true))} onBlur={(e) => (e.target.placeholder = 'State', setStateList(false))} required/>
+                        <input type="text" placeholder="State" value={quizState.state} onChange={ (e) => handleChange('mail', e, null, 'state')} onFocus={(e) => (e.target.placeholder = '', setStateList(true))} readOnly required/>
                         {state_list && 
                         <div className="form-group-double-dropdown-list">
                             {/* TODO: Add state dropdown list */}
                             <div className="form-group-double-dropdown-list-container">
                               {usStates.map( (item, idx) => (
-                                <div className="form-group-double-dropdown-list-item" onClick={(e) => (handleChange('mail_item', e.target.innerText, null, 'state'), setStateList(false))} key={idx} >{item.abbreviation}</div>
+                                <div className="form-group-double-dropdown-list-item" onClick={(e) => (handleChange('mail_item', item.abbreviation, null, 'state'), setStateList(false))} key={idx} >{item.name}</div>
                               ))
                               }
                           </div>
@@ -661,7 +677,7 @@ const quiz = ({quizState}) => {
           {address == 'recipient' &&
             <div className="quiz-recipient-mail-address">
               <div className="form-group-single checkbox">
-                <input type="checkbox" onClick={ (e) => (dispatch({type: 'UPDATE_CHANGE', name: 'mail_to', payload: 'email recipient to asks for their address'}), setTimeout(() => {
+                <input type="checkbox" onClick={ (e) => (dispatch({type: 'UPDATE_CHANGE', name: 'mail_to', payload: 'email recipient to asks for their address'}), window.localStorage.setItem('mail_to', 'email recipient to asks for their address'), dispatch({type: 'RESET_MAIl'}), resetMail(), setTimeout(() => {
                   quizProgressNav(e,'message')
                 }, 500))}/>
                 <span>I don’t know their address, email them for me to ask for their address</span>
@@ -708,13 +724,13 @@ const quiz = ({quizState}) => {
                       <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'City'})} required/>
                       {/* <input type="text" placeholder="State" value={quizState.state} onChange={ (e) => handleChange('mail', e, null, 'state')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'State'} required/> */}
                       <div className="form-group-double-dropdown">
-                        <input type="text" placeholder="State" value={quizState.state} onChange={ (e) => handleChange('mail', e, null, 'state')} onFocus={(e) => (e.target.placeholder = '', setStateList(true))} onBlur={(e) => (e.target.placeholder = 'State')} required/>
+                        <input type="text" placeholder="State" value={quizState.state} onChange={ (e) => handleChange('mail', e, null, 'state')} onFocus={(e) => (e.target.placeholder = '', setStateList(true))} readOnly required/>
                         {state_list && 
                         <div className="form-group-double-dropdown-list">
                             {/* TODO: Add state dropdown list */}
                             <div className="form-group-double-dropdown-list-container">
                               {usStates.map( (item, idx) => (
-                                <div className="form-group-double-dropdown-list-item" onClick={(e) => (handleChange('mail_item', e.target.innerText, null, 'state'), setStateList(false))} key={idx} >{item.abbreviation}</div>
+                                <div className="form-group-double-dropdown-list-item" onClick={(e) => (handleChange('mail_item', item.abbreviation, null, 'state'), setStateList(false))} key={idx} >{item.name}</div>
                               ))
                               }
                           </div>

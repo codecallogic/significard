@@ -77,11 +77,15 @@ const Checkout = ({newUser}) => {
     if(!recipientData.involvement) return  (window.localStorage.setItem('quiz_question', 'involvement'), window.location.href = '/quiz')
     if(!recipientData.package_plan) return  (window.localStorage.setItem('quiz_question', 'package'), window.location.href = '/quiz')
     if(!recipientData.mail_to) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
-    if(!recipientData.name) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
-    if(!recipientData.address_one) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
-    if(!recipientData.zip_code) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
-    if(!recipientData.state) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
-    if(!recipientData.city) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
+
+    if(recipientData.mail_to == 'user' || recipientData.mail_to == 'recipient'){
+      if(!recipientData.name) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
+      if(!recipientData.address_one) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
+      if(!recipientData.zip_code) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
+      if(!recipientData.state) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
+      if(!recipientData.city) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
+    }
+
     if(!recipientData.nickname) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
     if(!recipientData.message) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
     if(!recipientData.signature) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
@@ -132,7 +136,7 @@ const Checkout = ({newUser}) => {
                 <input type="text" placeholder="Cardholder Name" value={cardholder} onChange={(e) => setCardholder(e.target.value)} required/>
               </span>
             </div>
-            <PlacesAutocomplete value={address} onChange={(e) => setAddress(e)} onSelect={(e) => setAddress(e.split(',')[0])} searchOptions={searchOptionsAddress}>
+            <PlacesAutocomplete value={address} onChange={(e) => setAddress(e)} onSelect={(e) => (setAddress(e.split(',')[0]), setCity(e.split(',')[1]))} searchOptions={searchOptionsAddress}>
               {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                 <div className="form-group-single mail checkout-group form-autocomplete-container">
                   <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'Address'})} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Address'} required/>

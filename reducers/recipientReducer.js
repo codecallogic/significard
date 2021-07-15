@@ -23,6 +23,7 @@ const initialState = {
 }
 
 export const recipientReducer = (state = initialState, action) => {
+  console.log(action)
   switch (action.type) {
     case 'UPDATE_TAGS':
       return {
@@ -34,6 +35,18 @@ export const recipientReducer = (state = initialState, action) => {
       return {
         ...state,
         [action.name]: action.payload
+      }
+      break;
+
+    case 'RESET_MAIL':
+      return {
+        ...state,
+        name: '',
+        address_one: '',
+        address_two: '',
+        city: '',
+        state: '',
+        zip_code: '',
       }
       break;
     
