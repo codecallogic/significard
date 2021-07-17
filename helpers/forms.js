@@ -4,12 +4,11 @@ export const manageTags = (initialize, data) => {
 
   let tags = []
   // LOAD TAGS FROM DATABASE
-  if(initialize === 'interests'){
+  if(initialize == 'preload'){
     if(data){
-      data.map( (item) => {
+      data.forEach( (item) => {
         tags.push(item)
       })
-      console.log(tags)
       addTags()
     }
   }
@@ -26,7 +25,9 @@ export const manageTags = (initialize, data) => {
   function addTags(){
     tags.slice().reverse().forEach( t => {
       let tag = createTag(t)
-      tagContainer.prepend(tag)
+      if(tagContainer){
+        tagContainer.prepend(tag)
+      }
     })
     let tagValues = document.querySelectorAll(".tag > span")
     let postHidden = document.getElementById("tagValue")
@@ -34,7 +35,9 @@ export const manageTags = (initialize, data) => {
     tagValues.forEach( e => {
       values.push(e.innerText)
     })
-    postHidden.setAttribute('value', values)
+    if(postHidden){
+      postHidden.setAttribute('value', values)
+    }
   }
 
   function reset(){

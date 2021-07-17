@@ -2,7 +2,7 @@ import Nav from '../components/nav'
 import Footer from '../components/footer'
 import withUser from './withUser'
 import Slider from '../components/slider/slider'
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useLayoutEffect} from 'react'
 import {eventsList, stylesList, stylesListDrop, packageList, usStates} from '../utils/quiz'
 import {manageTags} from '../helpers/forms'
 import { useDispatch, connect } from 'react-redux'
@@ -34,15 +34,142 @@ const quiz = ({quizState}) => {
   const [tags, setTags] = useState('')
   const [state_list, setStateList] = useState(false)
   const [message, setMessage] = useState('')
+  const [invalid_tag, setInvalidTag] = useState(false)
+  const [message_blank, setMessageBlank] = useState(false)
 
   useEffect(() => {
-    // manageTags('interests', quizState.tags)
     if(window.localStorage.getItem('quiz_question')) window.localStorage.getItem('quiz_question').length > 0 ? window.localStorage.getItem('quiz_question') == 'checkout' ? window.location.href = '/checkout' : setQuiz(window.localStorage.getItem('quiz_question')) : null
   }, [])
 
+
+  // AUTO FILL QUIZ DATA WITH LOCAL STORAGE
+  useEffect( () => {
+    
+    if(window.localStorage.getItem('recipient')){
+      dispatch({type: 'UPDATE_CHANGE', name: 'recipient', payload: window.localStorage.getItem('recipient')})
+      let els = document.querySelectorAll('.quiz-recipient-item')
+      els.forEach( (el) => {el.textContent.toLowerCase() == window.localStorage.getItem('recipient') ? el.classList.add("quiz-recipient-item-active") : null})
+    }
+
+    if(window.localStorage.getItem('age')){
+      dispatch({type: 'UPDATE_CHANGE', name: 'age', payload: window.localStorage.getItem('age')})
+      let els = document.querySelectorAll('.quiz-recipient-age-item')
+      els.forEach( (el) => {el.textContent.toLowerCase() == window.localStorage.getItem('age') ? el.classList.add("quiz-recipient-age-item-active") : null})
+    }
+
+    if(window.localStorage.getItem('event')){
+      dispatch({type: 'UPDATE_CHANGE', name: 'event', payload: window.localStorage.getItem('event')})
+      let els = document.querySelectorAll('.quiz-recipient-event-item')
+      els.forEach( (el) => {el.textContent.toLowerCase() == window.localStorage.getItem('event') ? el.classList.add("quiz-recipient-event-item-active") : null})
+    }
+
+    if(window.localStorage.getItem('description')){
+      dispatch({type: 'UPDATE_CHANGE', name: 'description', payload: window.localStorage.getItem('description')})
+      let els = document.querySelectorAll('.form-group-list-container > label')
+      els.forEach((el) => {el.textContent.toLowerCase() == window.localStorage.getItem('description') ? el.click() : null})
+    }
+
+    if(window.localStorage.getItem('tags')){
+      dispatch({type: 'UPDATE_CHANGE', name: 'tags', payload: JSON.parse(window.localStorage.getItem('tags'))})
+      manageTags('preload', JSON.parse(window.localStorage.getItem('tags')))
+    }
+
+    if(window.localStorage.getItem('other')){
+      if(window.localStorage.getItem('other') !== 'blank') dispatch({type: 'UPDATE_CHANGE', name: 'other', payload: window.localStorage.getItem('other')})
+      if(window.localStorage.getItem('other') == 'blank'){
+        dispatch({type: 'UPDATE_CHANGE', name: 'other', payload: window.localStorage.getItem('other')})
+        let el = document.getElementById('other')
+        if(el) el.checked = true
+      }
+    }
+
+    if(window.localStorage.getItem('involvement')){
+      dispatch({type: 'UPDATE_CHANGE', name: 'involvement', payload: window.localStorage.getItem('involvement')})
+      let els = document.querySelectorAll('.quiz-recipient-involvement-item')
+      els.forEach( (el) => {el.textContent.toLowerCase() == window.localStorage.getItem('involvement') ? el.classList.add("quiz-recipient-involvement-item-active") : null})
+    }
+
+    if(window.localStorage.getItem('mail_to')){
+      if(window.localStorage.getItem('mail_to') == 'user'){
+        let el = document.getElementById('mail_to_user')
+        if(el) el.classList.add("quiz-recipient-mail-item-active")
+        setAddress('me')
+      }
+
+      if(window.localStorage.getItem('mail_to') == 'recipient'){
+        let el = document.getElementById('mail_to_recipient')
+        if(el) el.classList.add("quiz-recipient-mail-item-active")
+        setAddress('recipient')
+      }
+    }
+
+    if(window.localStorage.getItem('name')){
+      dispatch({type: 'UPDATE_CHANGE', name: 'name', payload: window.localStorage.getItem('name')})
+    }
+
+    if(window.localStorage.getItem('address_one')){
+      dispatch({type: 'UPDATE_CHANGE', name: 'address_one', payload: window.localStorage.getItem('address_one')})
+    }
+
+    if(window.localStorage.getItem('address_two')){
+      dispatch({type: 'UPDATE_CHANGE', name: 'address_two', payload: window.localStorage.getItem('address_two')})
+    }
+
+    if(window.localStorage.getItem('city')){
+      dispatch({type: 'UPDATE_CHANGE', name: 'city', payload: window.localStorage.getItem('city')})
+    }
+
+    if(window.localStorage.getItem('state')){
+      dispatch({type: 'UPDATE_CHANGE', name: 'state', payload: window.localStorage.getItem('state')})
+    }
+
+    if(window.localStorage.getItem('zip_code')){
+      dispatch({type: 'UPDATE_CHANGE', name: 'zip_code', payload: window.localStorage.getItem('zip_code')})
+    }
+
+    if(window.localStorage.getItem('nickname')){
+      if(window.localStorage.getItem('nickname') == 'blank'){
+        let el = document.getElementById('nickname')
+        if(el) el.checked = true
+        dispatch({type: 'UPDATE_CHANGE', name: 'nickname', payload: 'blank'})
+      }
+      if(window.localStorage.getItem('nickname') !== 'blank'){
+        dispatch({type: 'UPDATE_CHANGE', name: 'nickname', payload: window.localStorage.getItem('nickname')})
+      }
+    }
+
+    if(window.localStorage.getItem('signature')){
+      dispatch({type: 'UPDATE_CHANGE', name: 'signature', payload: window.localStorage.getItem('signature')})
+    }
+
+    if(window.localStorage.getItem('message_unsure')){
+      resetMessage()
+      let el = document.getElementById('unsure')
+      if(el) el.checked = true
+    }
+    
+  }, [quiz])
+
+
+  useLayoutEffect(() => {
+    if(window.localStorage.getItem('message')){
+      if(window.localStorage.getItem('message') == 'blank'){
+        let el = document.getElementsByName('message_blank')[0]
+        if(el) el.checked = true
+        dispatch({type: 'UPDATE_CHANGE', name: 'message', payload: 'blank'})
+      }
+      if(window.localStorage.getItem('message') == 'message_options'){
+        let el = document.getElementsByName('message_textarea_blank')[0]
+        if(el) el.checked = true
+        dispatch({type: 'UPDATE_CHANGE', name: 'message', payload: 'message_options'})
+      }
+      dispatch({type: 'UPDATE_CHANGE', name: 'message', payload: window.localStorage.getItem('message')})
+    }
+  }, [quiz])
+
   const quizProgress = (e, next) => {
     if(next == 'ranking') (window.localStorage.removeItem('rank'), dispatch({type: 'RESET_RANK', name: 'ranking', payload: []}))
-    window.localStorage.setItem('quiz_question', quiz)
+    window.localStorage.setItem('quiz_question', next)
     let els = document.querySelectorAll('.quiz-recipient-item')
     let els2 = document.querySelectorAll('.quiz-recipient-age-item')
     let els3 = document.querySelectorAll('.quiz-recipient-event-item')
@@ -117,9 +244,9 @@ const quiz = ({quizState}) => {
     if(e.key === 'Enter' || clicked == 'true'){
       try {
         const responseTag = await axios.post(`${API}/recipient/check-word`, {tags})
-        
+        setInvalidTag(false)
       } catch (error) {
-        if(error) return  error.response ? setMessage(error.response.data) : setMessage('Invalid tag')
+        if(error) return  error.response ? setInvalidTag(true) : setInvalidTag(true)
       }
       e.preventDefault();
       manageTags('addTag')
@@ -202,19 +329,25 @@ const quiz = ({quizState}) => {
 
     if(question == 'nickname'){
       window.localStorage.setItem(question, type)
+      let el = document.getElementById('unsure')
+      if(el) el.checked = false
       return dispatch({type: 'UPDATE_CHANGE', name: question, payload: type})
     }
 
     if(question == 'message'){
       window.localStorage.setItem(question, type)
+      let el = document.getElementById('unsure')
+      if(el) el.checked = false
       return dispatch({type: 'UPDATE_TEXTAREA', name: question, payload: type})
     }
 
     if(question == 'signature'){
       window.localStorage.setItem(question, type)
+      let el = document.getElementById('unsure')
+      if(el) el.checked = false
       return dispatch({type: 'UPDATE_CHANGE', name: question, payload: type})
     }
-    console.log(e.target.textContent.toLowerCase())
+
     window.localStorage.setItem(question, e.target.textContent.toLowerCase())
     dispatch({type: 'UPDATE_CHANGE', name: question, payload: e.target.textContent.toLowerCase()})
   }
@@ -279,7 +412,7 @@ const quiz = ({quizState}) => {
   }
 
   useEffect(() => {
-    if(quiz == 'ranking') window.localStorage.setItem('rank', JSON.stringify(quizState.rank))
+    if(quiz == 'ranking') window.localStorage.setItem('rank', JSON.stringify(quizState.rank)) 
     if(quiz == 'tags') window.localStorage.setItem('tags', JSON.stringify(quizState.tags));
     if(address) address == 'me' ? (window.localStorage.setItem('mail_to', 'user'), dispatch({type: 'UPDATE_CHANGE', name: 'mail_to', payload: 'user'})) : (window.localStorage.setItem('mail_to', 'recipient'), dispatch({type: 'UPDATE_CHANGE', name: 'mail_to', payload: 'recipient'}))
   }, [quizState.rank, quizState.tags, address])
@@ -295,7 +428,9 @@ const quiz = ({quizState}) => {
 
       if(type == 'address_one'){
         dispatch({type: 'UPDATE_CHANGE', name: 'city', payload: e.split(',')[1]}) 
-        dispatch({type: 'UPDATE_CHANGE', name: 'state', payload: e.split(',')[2]}) 
+        window.localStorage.setItem('city', e.split(',')[1])
+        dispatch({type: 'UPDATE_CHANGE', name: 'state', payload: e.split(',')[2]})
+        window.localStorage.setItem('state', e.split(',')[2])
       }
 
       return
@@ -310,11 +445,41 @@ const quiz = ({quizState}) => {
 
   const resetMail = (e) => {
     window.localStorage.setItem('name', '')
+    dispatch({type: 'UPDATE_CHANGE', name: 'name', payload: ''})
     window.localStorage.setItem('address_one', '')
+    dispatch({type: 'UPDATE_CHANGE', name: 'address_one', payload: ''})
     window.localStorage.setItem('address_two', '')
+    dispatch({type: 'UPDATE_CHANGE', name: 'address_two', payload: ''})
     window.localStorage.setItem('city', '')
+    dispatch({type: 'UPDATE_CHANGE', name: 'city', payload: ''})
     window.localStorage.setItem('state', '')
+    dispatch({type: 'UPDATE_CHANGE', name: 'state', payload: ''})
     window.localStorage.setItem('zip_code', '')
+    dispatch({type: 'UPDATE_CHANGE', name: 'zip_code', payload: ''})
+  }
+
+  const resetMessage= () => {
+    let el = document.getElementById('nickname')
+    if(el) el.checked = false
+
+    let el2 = document.getElementsByName('message_blank')[0]
+    if(el2) el2.checked = false
+
+    let el3 = document.getElementsByName('message_textarea_blank')[0]
+    if(el3) el3.checked = false
+
+    
+    window.localStorage.setItem('nickname', '')
+    dispatch({type: 'UPDATE_CHANGE', name: 'nickname', payload: 'blank'})
+    window.localStorage.setItem('message', '')
+    dispatch({type: 'UPDATE_CHANGE', name: 'message', payload: 'blank'})
+    window.localStorage.setItem('signature', '')
+    dispatch({type: 'UPDATE_CHANGE', name: 'signature', payload: 'blank'})
+  }
+
+  const uncheckOther = () => {
+    let el = document.getElementById('other')
+    if(el) el.checked = false
   }
   
   return (
@@ -378,22 +543,97 @@ const quiz = ({quizState}) => {
           <div className="quiz-subtitle-mobile">Select the estimated arrival date for the event.</div>
           <div className="quiz-recipient-event">
             {eventsList.slice(0, toggleEvents ? 20 : 8).map( (item, idx) => 
-            <div key={idx} className={`quiz-recipient-event-item`} onClick={(e) => item.subtitle == 'more' ? setToggleEvents(!toggleEvents) : (quizProgress(e,'ranking'), handleChange('event', e))}>
+            <div key={idx} className={`quiz-recipient-event-item`} onClick={(e) => item.subtitle == 'more' ? setToggleEvents(!toggleEvents) : (quizProgress(e,'description'), handleChange('event', e))}>
               {item.imageName ? <img src={`/media/emojis/${item.imageName}`}></img> : null}
               <span className={item.subtitle == 'more' ? 'expand' : null}>{item.subtitle == 'more' ? toggleEvents ? 'less' : 'more' : item.subtitle}</span>
             </div>
             )
             }
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'ranking')} disabled={quizState.event.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
-          {quizState.event && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'ranking')}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'description')} disabled={quizState.event.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
+          {quizState.event && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'description')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>
           }
         </>
         }
-        {quiz == 'ranking' && <>
+        {quiz == 'description' && <>
           <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'events')}>
+            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
+          </div>
+          <div className="quiz-title">What best describes mom?</div>
+          <div className="quiz-title-mobile">What best describes mom?</div>
+          <div className="quiz-subtitle">Select one.</div>
+          <div className="quiz-subtitle-mobile">Select one.</div>
+          <div className="quiz-recipient-description">
+            <div className="quiz-recipient-description-container">
+              <div className="form-group-list">
+                <div className="form-group-list-container">
+                  <input type="checkbox" id="The life of a party" onClick={ (e) => handleCheckboxList(e, 'The life of a party')}/>
+                  <span></span>
+                  <div className="form-group-list-fill"></div>
+                  <label htmlFor="The life of a party">The life of a party</label>
+                </div>
+              </div>
+              <div className="form-group-list">
+                <div className="form-group-list-container">
+                  <input type="checkbox" id="Soft spoken" onClick={ (e) => handleCheckboxList(e, 'Soft spoken')}/>
+                  <span></span>
+                  <div className="form-group-list-fill"></div>
+                  <label htmlFor="Soft spoken">Soft spoken</label>
+                </div>
+              </div>
+              <div className="form-group-list">
+                <div className="form-group-list-container">
+                  <input type="checkbox" id="Thoughful" onClick={ (e) => handleCheckboxList(e, 'Thoughtful')}/>
+                  <span></span>
+                  <div className="form-group-list-fill"></div>
+                  <label htmlFor="Thoughful">Thoughtful</label>
+                </div>
+              </div>
+              <div className="form-group-list">
+                <div className="form-group-list-container">
+                  <input type="checkbox" id="Strong minded" onClick={ (e) => handleCheckboxList(e, 'Strong minded')}/>
+                  <span></span>
+                  <div className="form-group-list-fill"></div>
+                  <label htmlFor="Strong minded">Strong minded</label>
+                </div>
+              </div>
+              <div className="form-group-list">
+                <div className="form-group-list-container">
+                  <input type="checkbox" id="Super chill & down to earth" onClick={ (e) => handleCheckboxList(e, 'Super chill & down to earth')}/>
+                  <span></span>
+                  <div className="form-group-list-fill"></div>
+                  <label htmlFor="Super chill & down to earth">Super chill & down to earth</label>
+                </div>
+              </div>
+              <div className="form-group-list">
+                <div className="form-group-list-container">
+                  <input type="checkbox" id="Other (please specify)" onClick={ (e) => handleCheckboxList(e, 'Other (please specify)')}/>
+                  <span></span>
+                  <div className="form-group-list-fill"></div>
+                  <label htmlFor="Other (please specify)">Other (please specify)</label>
+                </div>
+              </div>
+              <input type="text" className="quiz-recipient-description-other" value={quizState.description_other == 'other (please specify)' ? '' : quizState.description_other} onChange={ (e) => (window.localStorage.setItem('description', e.target.value.toLowerCase()), dispatch({type: 'UPDATE_CHANGE', name: 'description_other', payload: e.target.value.toLowerCase()}))} required={quizState.description == 'other (please specify)' ? true : false}/>
+            </div>
+          </div>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'ranking')} disabled={quizState.description.length < 1 ? true : quizState.description == 'other (please specify)' ? quizState.description_other.length < 1 ? true : false : false}>Next</button><div className="quiz-button-container"></div></div>
+          {quizState.description.length < 1 ?  null : 
+            quizState.description == 'other (please specify)' ? 
+            quizState.description_other.length < 1 ? null : 
+            <div className="quiz-next" onClick={(e) => quizProgressNav(e,'ranking')}>
+              <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
+            </div>
+            :
+            <div className="quiz-next" onClick={(e) => quizProgressNav(e,'ranking')}>
+              <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
+            </div>
+          }
+        </>
+        }
+        {quiz == 'ranking' && <>
+          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'description')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
           <div className="quiz-title">How would you rank the styles that describe your {window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient'}?</div>
@@ -403,7 +643,7 @@ const quiz = ({quizState}) => {
           <div className="quiz-recipient-style">
             {stylesList.map( (item, idx) => 
             <div key={idx} onDragOver={(e)=> onDragOver(e)} onDrop={(e) => onDropBack(e)}  className="quiz-recipient-style-item-container">
-              <div id={`event-${idx}`} draggable onDragStart={(e) => onDragStart(e)}  style={{transform: `rotate(${item.rotate}deg)`}} className="quiz-recipient-style-item">
+              <div id={`styles-${idx}`} draggable onDragStart={(e) => onDragStart(e)}  style={{transform: `rotate(${item.rotate}deg)`}} className="quiz-recipient-style-item">
                 {item.imageName ? <img src={`/media/styles/${item.imageName}`}></img> : null}
                 <span >{item.subtitle}</span>
               </div>
@@ -433,13 +673,12 @@ const quiz = ({quizState}) => {
           <div className="quiz-subtitle">Animals, flowers, foods etc. Add as many words as you'd like!</div>
           <div className="quiz-subtitle-mobile">Animals, flowers, foods etc. Add as many words as you'd like!</div>
           <div className="quiz-recipient-tags">
-            <div className="quiz-recipient-tags-box">
+            <div className={`quiz-recipient-tags-box ` + (invalid_tag ? ` form-message-error-outline` : null)}>
               <input type="hidden" name="tags" id="tagValue" value="" required></input>
               <input type="text" id="researchInterests" name="tags" value={tags} onChange={ (e) => (setTags(e.target.value), setMessage(''))} onKeyPress={(e) => handleKeyPress(e)}/>
               <button onClick={(e) => handleKeyPress(e, 'true')}>Add</button>
             </div>
             <div className="form-tag-container"></div>
-            {message ? <div className="form-message-error-tags">{message}</div> : <div className="form-message-error-tags"></div>}
             <div className="quiz-recipient-tags-checkbox"><input type="checkbox" name="unsure" onClick={(e) => (setTimeout(() => {
               quizProgressNav(e,'other')
             }, 500), dispatch({type: 'UPDATE_TAGS', payload: []})
@@ -452,26 +691,6 @@ const quiz = ({quizState}) => {
           }
         </>
         }
-        {/* {quiz == 'avoid' && <>
-          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'tags')}>
-            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
-          </div>
-          <div className="quiz-title">Anything you want us to avoid?</div>
-          <div className="quiz-title-mobile">Anything you want us to avoid?</div>
-          <div className="quiz-subtitle">Color, theme, animals etc.</div>
-          <div className="quiz-subtitle-mobile">Color, theme, animals etc.</div>
-          <div className="quiz-recipient-avoid">
-            <textarea type="text" name="avoid" cols="100" value={quizState.avoid} onChange={ (e) => handleChange('avoid', e)}/>
-            <div className="quiz-recipient-avoid-checkbox"><input type="checkbox" name="avoid" onClick={(e) => setTimeout(() => {
-              quizProgressNav(e,'other')
-            }, 500)}/><span>Nope</span></div>
-          </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'other')} disabled={quizState.avoid.length < 1 ? true : false}>Next</button></div>
-          {quizState.avoid && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'other')}>
-            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
-          </div>}
-        </>
-        } */}
         {quiz == 'other' && <>
           <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'tags')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
@@ -481,10 +700,20 @@ const quiz = ({quizState}) => {
           <div className="quiz-subtitle">Color, theme, animals, etc.</div>
           <div className="quiz-subtitle-mobile">Color, theme, animals, etc.</div>
           <div className="quiz-recipient-other">
-            <textarea type="text" name="other" cols="100" value={quizState.other !== 'blank' ? quizState.other : ''} onChange={ (e) => handleChange('other', e)}/>
-            <div className="quiz-recipient-other-checkbox"><input type="checkbox" name="other" value="blank" onClick={(e) => (handleChange('other', e), setTimeout(() => {
-              quizProgressNav(e,'involvement')
-            }, 500))}/><span>Nope</span></div>
+            <textarea type="text" name="other" cols="100" value={quizState.other !== 'blank' ? quizState.other : ''} onChange={ (e) => (uncheckOther(), handleChange('other', e))}/>
+            <div className="quiz-recipient-other-checkbox"><input id="other" type="checkbox" name="other" value="blank" onClick={(e) => e.target.checked 
+              ? 
+              (handleChange('other', e),
+                setTimeout(() => {
+                  quizProgressNav(e,'involvement')
+                }, 500)
+              ) 
+            
+              : 
+              (window.localStorage.setItem('other', ''),
+              dispatch({type: 'UPDATE_CHANGE', name: 'other', payload: ''})
+              )
+              }/><span>Nope</span></div>
           </div>
           <div className="quiz-button-container"><button className="quiz-button" disabled={quizState.other.length < 1 ? true : false} onClick={(e) => quizProgressNav(e,'involvement')}>Next</button><div className="quiz-button-container"></div></div>
           {quizState.other && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'involvement')}>
@@ -585,10 +814,10 @@ const quiz = ({quizState}) => {
           <div className="quiz-title">Where should we mail your card?</div>
           <div className="quiz-title-mobile">Where should we mail your card?</div>
           <div className="quiz-recipient-mail">
-            <div className="quiz-recipient-mail-item" onClick={(e) => (setAddress('me'), quizProgress(e))}>
+            <div id="mail_to_user" className="quiz-recipient-mail-item" onClick={(e) => (setAddress('me'), quizProgress(e, 'mail'))}>
               To me
             </div>
-            <div className="quiz-recipient-mail-item" onClick={(e) => (setAddress('recipient'), quizProgress(e))}>
+            <div id="mail_to_recipient" className="quiz-recipient-mail-item" onClick={(e) => (setAddress('recipient'), quizProgress(e, 'mail'))}>
               To {window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : ' the recipient'}
             </div>
           </div>
@@ -783,12 +1012,12 @@ const quiz = ({quizState}) => {
                 <div className="form-group-single message">
                   <label htmlFor="name">Name/Nickname in front of the card:</label>
                   <input type="text" name="name" required value={quizState.nickname == 'blank' ? '' : quizState.nickname} onChange={(e) => (handleChange('nickname', e, null, e.target.value), document.getElementsByName('nickname_blank')[0].checked = false)}/>
-                  <div className="checkbox_2"><input type="checkbox" name="nickname_blank" onClick={(e) => handleChange('nickname', e, null, 'blank')}/><span>Leave it blank</span></div>
+                  <div className="checkbox_2"><input id="nickname" type="checkbox" name="nickname_blank" onClick={(e) => handleChange('nickname', e, null, 'blank')}/><span>Leave it blank</span></div>
                 </div>
                 <div className="form-group-single message p-0">
                   <label htmlFor="message">Handwritten message inside:</label>
                   <textarea className="w-4" cols="100" rows="5" value={quizState.message == 'blank' || quizState.message == 'message_options' ? '' : quizState.message} onChange={(e) => (handleChange('message', e, null, e.target.value), document.getElementsByName('message_blank')[0].checked = false, document.getElementsByName('message_textarea_blank')[0].checked = false)}></textarea>
-                  <div className="checkbox_2"><input type="checkbox" name="message_blank" onClick={(e) => (handleChange('message', e, null, 'blank'), document.getElementsByName('message_textarea_blank')[0].checked = false)}/><span>Leave it blank</span></div>
+                  <div className="checkbox_2"><input type="checkbox" name="message_blank" onChange={(e) => (handleChange('message', e, null, 'blank'), document.getElementsByName('message_textarea_blank')[0].checked = false)}/><span>Leave it blank</span></div>
                   <div className="checkbox_2 w-4 info-popup"><input type="checkbox" name="message_textarea_blank" onClick={(e) => (handleChange('message', e, null, 'message_options'), document.getElementsByName('message_blank')[0].checked = false)}/>
                     <span>Give me message options for $2.00</span>
                     <div className="quiz-recipient-package-description-text-bubble">
@@ -801,85 +1030,18 @@ const quiz = ({quizState}) => {
                 </div>
                 <div className="form-group-single message p-0">
                   <label htmlFor="name">Signature:</label>
-                  <input type="text" name="signature" required value={quizState.signature} onChange={(e) => handleChange('signature', e, null, e.target.value)}/>
+                  <input type="text" name="signature" required value={quizState.signature == 'blank' ? '' : quizState.signature} onChange={(e) => handleChange('signature', e, null, e.target.value)}/>
                 </div>
               </form>
-              <div className="checkbox_2 center show-on-mobile"><input type="checkbox"onClick={ (e) => quizProgressNav(e,'description')} /><span>Not sure yet, ask me later</span></div>
+              <div className="checkbox_2 center show-on-mobile"><input type="checkbox"/><span>Not sure yet, ask me later</span></div>
             </div>
           </div>
-          <div className="checkbox_2 center hide-on-mobile"><input type="checkbox" onClick={ (e) => quizProgressNav(e,'description')}/><span>Not sure yet, ask me later</span></div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'description')} disabled={ handleFormDisableButtons('message') ? true : false}>Next</button><div className="quiz-button-container"></div></div>
-          {handleFormProgressButtons('message') && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'description')}>
+          <div className="checkbox_2 center hide-on-mobile"><input id="unsure" type="checkbox" onClick={(e) => e.target.checked ? (window.localStorage.setItem('message_unsure', 'not_sure'), resetMessage()) : window.localStorage.removeItem('message_unsure')}/><span>Not sure yet, ask me later</span></div>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => window.location.href = '/checkout'} disabled={ handleFormDisableButtons('message') ? true : false}>Submit</button><div className="quiz-button-container"></div></div>
+          {/* {handleFormProgressButtons('message') && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'description')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>
-          }
-        </>
-        }
-        {quiz == 'description' && <>
-          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'message')}>
-            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
-          </div>
-          <div className="quiz-title">What best describes mom?</div>
-          <div className="quiz-title-mobile">What best describes mom?</div>
-          <div className="quiz-subtitle">Select one.</div>
-          <div className="quiz-subtitle-mobile">Select one.</div>
-          <div className="quiz-recipient-description">
-            <div className="quiz-recipient-description-container">
-              <div className="form-group-list">
-                <div className="form-group-list-container">
-                  <input type="checkbox" name="wager" onClick={ (e) => handleCheckboxList(e, 'The life of a party')}/>
-                  <span></span>
-                  <div className="form-group-list-fill"></div>
-                </div>
-                <label>The life of a party</label>
-              </div>
-              <div className="form-group-list">
-                <div className="form-group-list-container">
-                  <input type="checkbox" name="wager" onClick={ (e) => handleCheckboxList(e, 'Soft spoken')}/>
-                  <span></span>
-                  <div className="form-group-list-fill"></div>
-                </div>
-                <label>Soft spoken</label>
-              </div>
-              <div className="form-group-list">
-                <div className="form-group-list-container">
-                  <input type="checkbox" name="wager" onClick={ (e) => handleCheckboxList(e, 'Thoughtful')}/>
-                  <span></span>
-                  <div className="form-group-list-fill"></div>
-                </div>
-                <label>Thoughful</label>
-              </div>
-              <div className="form-group-list">
-                <div className="form-group-list-container">
-                  <input type="checkbox" name="wager" onClick={ (e) => handleCheckboxList(e, 'Strong minded')}/>
-                  <span></span>
-                  <div className="form-group-list-fill"></div>
-                </div>
-                <label>Strong minded</label>
-              </div>
-              <div className="form-group-list">
-                <div className="form-group-list-container">
-                  <input type="checkbox" name="wager" onClick={ (e) => handleCheckboxList(e, 'Super chill & down to earth')}/>
-                  <span></span>
-                  <div className="form-group-list-fill"></div>
-                </div>
-                <label>Super chill & down to earth</label>
-              </div>
-              <div className="form-group-list">
-                <div className="form-group-list-container">
-                  <input type="checkbox" name="wager" onClick={ (e) => handleCheckboxList(e, 'Other (please specify)')}/>
-                  <span></span>
-                  <div className="form-group-list-fill"></div>
-                </div>
-                <label>Other (please specify)</label>
-              </div>
-              <input type="text" className="quiz-recipient-description-other" value={quizState.description_other == 'other (please specify)' ? '' : quizState.description_other} onChange={ (e) => (window.localStorage.setItem('description', e.target.value), dispatch({type: 'UPDATE_CHANGE', name: 'description_other', payload: e.target.value}))}/>
-            </div>
-          </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={() => (window.localStorage.setItem('quiz_question', 'checkout'), handleQuizID(), window.location.href = '/checkout')} disabled={quizState.description.length < 1 ? true : false}>Submit</button><div className="quiz-button-container"></div></div>
-          {/* {quizState.description && <div className="quiz-next" onClick={() => handleRecipient()}>
-            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
-          </div>} */}
+          } */}
         </>
         }
       </div>

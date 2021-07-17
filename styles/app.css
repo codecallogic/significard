@@ -2025,6 +2025,8 @@ body {
       color: red;
       margin: 2rem 0;
       text-align: center; }
+    .form-message-error-outline {
+      border: 0.1rem solid red !important; }
 
 .mail {
   width: 300px;
@@ -2170,7 +2172,7 @@ body {
     position: relative;
     display: flex;
     align-items: center;
-    width: 3rem; }
+    width: 100%; }
     .form-group-list-container input[type='checkbox'] {
       position: absolute;
       left: 0;
@@ -2202,12 +2204,16 @@ body {
       background-color: #0f2e4c;
       border: 0.1rem solid #0f2e4c;
       display: none; }
-  .form-group-list label {
-    font-size: 2.2rem;
-    color: #011722; }
-    @media only screen and (max-width: 350px) {
-      .form-group-list label {
-        font-size: 1.6rem; } }
+    .form-group-list-container label {
+      margin-left: 3.5rem;
+      width: 100%;
+      font-size: 2.2rem;
+      color: #011722; }
+      .form-group-list-container label:hover {
+        cursor: pointer; }
+      @media only screen and (max-width: 350px) {
+        .form-group-list-container label {
+          font-size: 1.6rem; } }
 
 .tag {
   height: 100%;

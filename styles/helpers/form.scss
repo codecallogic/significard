@@ -332,6 +332,10 @@
         margin: 2rem 0;
         text-align: center;
       }
+
+      &-outline {
+        border: 0.1rem solid red !important;
+      }
     }
   }
 }
@@ -528,7 +532,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    width: 3rem;
+    width: 100%;
 
     input[type='checkbox'] {
       position: absolute;
@@ -568,14 +572,20 @@
       border: 0.1rem solid $color-scheme-3;
       display: none;
     }
-  }
 
-  label {
-    font-size: 2.2rem;
-    color: $color-scheme-3-variation-3;
+    label {
+      margin-left: 3.5rem;
+      width: 100%;
+      font-size: 2.2rem;
+      color: $color-scheme-3-variation-3;
 
-    @media only screen and (max-width: $extra-small) {
-      font-size: 1.6rem;
+      &:hover {
+        cursor: pointer;
+      }
+
+      @media only screen and (max-width: $extra-small) {
+        font-size: 1.6rem;
+      }
     }
   }
 }

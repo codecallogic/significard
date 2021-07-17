@@ -23,7 +23,6 @@ const initialState = {
 }
 
 export const recipientReducer = (state = initialState, action) => {
-  console.log(action)
   switch (action.type) {
     case 'UPDATE_TAGS':
       return {
