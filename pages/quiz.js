@@ -36,6 +36,7 @@ const quiz = ({quizState}) => {
   const [message, setMessage] = useState('')
   const [invalid_tag, setInvalidTag] = useState(false)
   const [message_blank, setMessageBlank] = useState(false)
+  const [message_later, setMessageLater] = useState(false)
 
   useEffect(() => {
     if(window.localStorage.getItem('quiz_question')) window.localStorage.getItem('quiz_question').length > 0 ? window.localStorage.getItem('quiz_question') == 'checkout' ? window.location.href = '/checkout' : setQuiz(window.localStorage.getItem('quiz_question')) : null
@@ -44,7 +45,6 @@ const quiz = ({quizState}) => {
 
   // AUTO FILL QUIZ DATA WITH LOCAL STORAGE
   useEffect( () => {
-    
     if(window.localStorage.getItem('recipient')){
       dispatch({type: 'UPDATE_CHANGE', name: 'recipient', payload: window.localStorage.getItem('recipient')})
       let els = document.querySelectorAll('.quiz-recipient-item')
@@ -142,13 +142,17 @@ const quiz = ({quizState}) => {
       dispatch({type: 'UPDATE_CHANGE', name: 'signature', payload: window.localStorage.getItem('signature')})
     }
 
-    if(window.localStorage.getItem('message_unsure')){
+    if(window.localStorage.getItem('message_later')){
       resetMessage()
-      let el = document.getElementById('unsure')
+      let el = document.getElementById('message_unsure')
       if(el) el.checked = true
     }
     
   }, [quiz])
+
+  useEffect(() => {
+    handleFormDisableButtons('message')
+  }, [quizState.nickname, quizState.message, quizState.signature])
 
 
   useLayoutEffect(() => {
@@ -329,22 +333,25 @@ const quiz = ({quizState}) => {
 
     if(question == 'nickname'){
       window.localStorage.setItem(question, type)
-      let el = document.getElementById('unsure')
+      let el = document.getElementById('message_unsure')
       if(el) el.checked = false
+      window.localStorage.removeItem('message_later')
       return dispatch({type: 'UPDATE_CHANGE', name: question, payload: type})
     }
 
     if(question == 'message'){
       window.localStorage.setItem(question, type)
-      let el = document.getElementById('unsure')
+      let el = document.getElementById('message_unsure')
       if(el) el.checked = false
+      window.localStorage.removeItem('message_later')
       return dispatch({type: 'UPDATE_TEXTAREA', name: question, payload: type})
     }
 
     if(question == 'signature'){
       window.localStorage.setItem(question, type)
-      let el = document.getElementById('unsure')
+      let el = document.getElementById('message_unsure')
       if(el) el.checked = false
+      window.localStorage.removeItem('message_later')
       return dispatch({type: 'UPDATE_CHANGE', name: question, payload: type})
     }
 
@@ -366,10 +373,13 @@ const quiz = ({quizState}) => {
 
     if(type == 'message'){
       let inputs = []
-      if(quizState.nickname.length < 1){ inputs.push('true')}
+      if(quizState.nickname.length < 1 ){ inputs.push('true')}
       if(quizState.message.length < 1){ inputs.push('true')}
       if(quizState.signature.length < 1){ inputs.push('true')}
 
+      if(window.localStorage.getItem('message_later')) return setMessageLater(false)
+      if(inputs.length > 0) setMessageLater(true)
+      if(inputs.length < 1) setMessageLater(false)
       if(inputs.length > 0) return true
     }
   }
@@ -382,8 +392,6 @@ const quiz = ({quizState}) => {
       if(quizState.city.length > 1){ inputs.push('true')}
       if(quizState.state.length > 1){ inputs.push('true')}
       if(quizState.zip_code.length > 1){ inputs.push('true')}
-
-      // console.log(/^\d{5}(-\d{4})?$/.test(quizState.zip_code))
       
       if(inputs.length > 4) return true
     }
@@ -470,11 +478,11 @@ const quiz = ({quizState}) => {
 
     
     window.localStorage.setItem('nickname', '')
-    dispatch({type: 'UPDATE_CHANGE', name: 'nickname', payload: 'blank'})
+    dispatch({type: 'UPDATE_CHANGE', name: 'nickname', payload: ''})
     window.localStorage.setItem('message', '')
-    dispatch({type: 'UPDATE_CHANGE', name: 'message', payload: 'blank'})
+    dispatch({type: 'UPDATE_CHANGE', name: 'message', payload: ''})
     window.localStorage.setItem('signature', '')
-    dispatch({type: 'UPDATE_CHANGE', name: 'signature', payload: 'blank'})
+    dispatch({type: 'UPDATE_CHANGE', name: 'signature', payload: ''})
   }
 
   const uncheckOther = () => {
@@ -1036,8 +1044,8 @@ const quiz = ({quizState}) => {
               <div className="checkbox_2 center show-on-mobile"><input type="checkbox"/><span>Not sure yet, ask me later</span></div>
             </div>
           </div>
-          <div className="checkbox_2 center hide-on-mobile"><input id="unsure" type="checkbox" onClick={(e) => e.target.checked ? (window.localStorage.setItem('message_unsure', 'not_sure'), resetMessage()) : window.localStorage.removeItem('message_unsure')}/><span>Not sure yet, ask me later</span></div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => window.location.href = '/checkout'} disabled={ handleFormDisableButtons('message') ? true : false}>Submit</button><div className="quiz-button-container"></div></div>
+          <div className="checkbox_2 center hide-on-mobile"><input id="message_unsure" type="checkbox" onClick={(e) => e.target.checked ? (window.localStorage.setItem('message_later', 'not_sure'), resetMessage(), setMessageLater(false)) : (window.localStorage.removeItem('message_later'), setMessageLater(true))}/><span>Not sure yet, ask me later</span></div>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => window.location.href = '/checkout'} disabled={message_later}>Submit</button><div className="quiz-button-container"></div></div>
           {/* {handleFormProgressButtons('message') && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'description')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>
