@@ -6,6 +6,7 @@ import axios from 'axios'
 import {API} from '../config'
 import {useRouter} from 'next/router'
 import PlacesAutocomplete from 'react-places-autocomplete'
+import {usStates} from '../utils/quiz'
 import {connect } from 'react-redux'
 
 const searchOptionsAddress = {
@@ -35,8 +36,10 @@ const Checkout = ({newUser}) => {
   const [cardholder, setCardholder] = useState('')
   const [address, setAddress] = useState('')
   const [city, setCity] = useState('')
+  const [state, setState] = useState('')
   const [zip_code, setZipCode] = useState('')
   const [delivery, setDeliveryDate] = useState('')
+  const [state_list, setStateList] = useState(false)
 
   const quizProgressNav = (e, next) => {
     window.localStorage.setItem('quiz_question', next)
@@ -114,12 +117,28 @@ const Checkout = ({newUser}) => {
     }
 
   }, [])
+
+  const handleBillingAutoFill = () => {
+    let el = document.getElementById('shipping_address')
+    if(el.checked == false){
+      setAddress(recipient.address_one)
+      setCity(recipient.city)
+      setZipCode(recipient.zip_code)
+      setState(recipient.state)
+    }
+
+    if(el.checked == true){
+      setAddress('')
+      setCity('')
+      setZipCode('')
+    }
+  }
   
   return (
     <>
       <Nav></Nav>
       <div className="checkout">
-        <div className="checkout-back" onClick={(e) => quizProgressNav(e, 'description')}>
+        <div className="checkout-back" onClick={(e) => quizProgressNav(e, 'message')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
         </div>
         <div className="quiz-title">Payment Method</div>
@@ -131,6 +150,13 @@ const Checkout = ({newUser}) => {
           <div className="checkout-container-left">
             <div className="checkout-container-left-title">Payment Method</div>
             <div className="checkout-container-left-subtitle">What's your payment method?</div>
+            {recipient.mail_to == 'user' && 
+            <div className="form-group-checkbox">
+              <input type="checkbox" id="shipping_address"/>
+              <label htmlFor="shipping_address" onClick={() => handleBillingAutoFill()}></label>
+              <div className="form-group-checkbox-text">Same as shipping address</div>
+            </div>
+            }
             <div className="checkout-group-container">
               <span className="form-group-single checkout-group margin-0">
                 <input type="text" placeholder="Cardholder Name" value={cardholder} onChange={(e) => setCardholder(e.target.value)} required/>
@@ -169,12 +195,27 @@ const Checkout = ({newUser}) => {
             <div className="form-group-double mail checkout-group-double">
                 <input type="text" placeholder="Zip Code" value={zip_code} onChange={ (e) => setZipCode(e.target.value)} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Zip Code'} required/>
             </div>
+            <div className="form-group-double mail checkout-group-single">
+              <input type="text" placeholder="State" value={state} onChange={ (e) => setState(e.target.value)} onFocus={(e) => (e.target.placeholder = '', setStateList(true))} readOnly required/>
+              {state_list && 
+              <div className="form-group-single-dropdown-list">
+                  {/* TODO: Add state dropdown list */}
+                  <div className="form-group-double-dropdown-list-container">
+                    {usStates.map( (item, idx) => (
+                      <div className="form-group-double-dropdown-list-item" onClick={(e) => (setState(item.abbreviation), setStateList(false))} key={idx} >{item.name}</div>
+                    ))
+                    }
+                </div>
+              </div>
+              }
+            </div>
             <Elements stripe={stripePromise}>
-              <CheckOutForm user={newUser} amount={package_price + tax} cardholder={cardholder} address={address} city={city} zip_code={zip_code}></CheckOutForm>
+              <CheckOutForm user={newUser} amount={package_price + tax} cardholder={cardholder} address={address} city={city} state={state} zip_code={zip_code} delivery={delivery} package_price={package_price} tax={tax} recipient={recipient}></CheckOutForm>
             </Elements>
           </div>
           <div className="checkout-container-right">
             <div className="checkout-container-right-package">Package: {recipient.package_plan ? recipient.package_plan : ''} </div>
+            {recipient.mail_to == 'recipient' && <div className="checkout-container-right-ship_to">Ship to {recipient.recipient ? `${recipient.recipient}'s address` : ''} </div>}
             <div className="checkout-container-right-delivery">📩 <span>Estimated arrival date: {delivery}</span></div>
             <div className="checkout-container-right-price"><span>{recipient.event ? recipient.event : ''}</span><span>{`$ ` + Math.ceil(package_price * 100) / 100}</span></div>
             <div className="checkout-container-right-tax"><span>Sales Tax</span><span>{`$ ` + Math.ceil(tax * 100) / 100}</span></div>

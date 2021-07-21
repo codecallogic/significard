@@ -22,7 +22,7 @@ const CARD_ELEMENT_OPTIONS = {
 };
 
 
-const CheckOutForm = ({user, address, city, zip_code, amount, cardholder}) => {
+const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, cardholder, package_price, tax, recipient}) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -58,14 +58,14 @@ const CheckOutForm = ({user, address, city, zip_code, amount, cardholder}) => {
     })
 
     if(error){
-      console.log('error', error)
       if(error) error.code ? setMessage('Invalid information') : setMessage('We are having trouble validating your card information')
       setLoading(false)
     }else {
       try {
-        const responsePayment = await axios.post(`${API}/payment/checkout`, {'payment_method': paymentMethod.id, 'email': user.email, 'amount': amount, 'name': user.username})
-
-        const {client_secret, status} = responsePayment.data
+        let orderNumber = Math.floor(100000000 + Math.random() * 900000000)
+        const responsePayment = await axios.post(`${API}/payment/checkout`, {'payment_method': paymentMethod.id, 'email': user.email, 'amount': amount, 'name': user.username, 'order': orderNumber, 'cardholder_name': cardholder, 'billing_address': address, 'billing_city': city, 'billing_state': state, 'billing_zip': zip_code, 'shipping_name': recipient.name, 'shipping_address': recipient.address_one, 'shipping_city': recipient.city, 'shipping_state': recipient.state, 'shipping_zip': recipient.zip_code, 'event': recipient.event, 'amount': amount, 'package_price': package_price, 'tax': tax, 'package_plan': recipient.package_plan, 'delivery_date': delivery})
+        console.log(responsePayment.data)
+        const {client_secret, status, order} = responsePayment.data
 
         if(status === 'requires_payment_method'){
           try {
@@ -75,9 +75,9 @@ const CheckOutForm = ({user, address, city, zip_code, amount, cardholder}) => {
                 billing_details: {email: user.email, address: {line1: address, city: city, postal_code: zip_code}}
               }
             })
-            setLoading(false)
+            
             if(result.error) setMessage(`${result.error.message}. For ${result.error.decline_code}`)
-            setSuccess('Payment was made')
+            window.location.href = `/${order}`
           } catch (error) {
             setLoading(false)
             if(error) setMessage('An error occurred while processing your card. Try again in a little bit.')

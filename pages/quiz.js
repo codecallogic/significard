@@ -546,7 +546,7 @@ const quiz = ({quizState}) => {
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
           <div className="quiz-title">What are the events you'd like to send cards for your {window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient'}?</div>
-          <div className="quiz-title-mobile">Select an event for {quizState.recipient ? quizState.recipient : 'recipient'}.</div>
+          <div className="quiz-title-mobile">Select an event for {window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient'}.</div>
           <div className="quiz-subtitle">Pick one or more events. Select the estimated arrival date for each card. Make sure it's at least 3 weeks away!</div>
           <div className="quiz-subtitle-mobile">Select the estimated arrival date for the event.</div>
           <div className="quiz-recipient-event">
@@ -569,8 +569,8 @@ const quiz = ({quizState}) => {
           <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'events')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
-          <div className="quiz-title">What best describes mom?</div>
-          <div className="quiz-title-mobile">What best describes mom?</div>
+          <div className="quiz-title">What best describes {window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient'}?</div>
+          <div className="quiz-title-mobile">What best describes {window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient'}?</div>
           <div className="quiz-subtitle">Select one.</div>
           <div className="quiz-subtitle-mobile">Select one.</div>
           <div className="quiz-recipient-description">
@@ -1014,7 +1014,7 @@ const quiz = ({quizState}) => {
           <div className="quiz-subtitle">Fill in the blank!</div>
           <div className="quiz-subtitle-mobile">Fill in the blank!</div>
           <div className="quiz-recipient-message">
-            <div className="quiz-recipient-message-heading">Mother's Day</div>
+            <div className="quiz-recipient-message-heading">Card: {window.localStorage.getItem('event') ? window.localStorage.getItem('event') : quizState.event ? quizState.event : 'event'}</div>
             <div className="quiz-recipient-message-container">
               <form>
                 <div className="form-group-single message">
