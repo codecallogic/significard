@@ -14,7 +14,7 @@ import {API} from '../config'
 
 const searchOptionsAddress = {
   componentRestrictions: {country: 'us'},
-  types: ['address']
+  types: ['address', "postal_code"]
 }
 
 const searchOptionsCities = {
@@ -64,6 +64,7 @@ const quiz = ({quizState}) => {
     }
 
     if(window.localStorage.getItem('description')){
+      if(window.localStorage.getItem('event_toggle')) setToggleEvents(window.localStorage.getItem('event_toggle') == 'true' ? true : false)
       dispatch({type: 'UPDATE_CHANGE', name: 'description', payload: window.localStorage.getItem('description')})
       let els = document.querySelectorAll('.form-group-list-container > label')
       els.forEach((el) => {el.textContent.toLowerCase() == window.localStorage.getItem('description') ? el.click() : null})
@@ -221,13 +222,14 @@ const quiz = ({quizState}) => {
   }
 
   const onDragOver = (e) => {
+    if (e.target.childNodes.length > 1) { return; }
     e.preventDefault()
   }
 
   const onDrop = (e, idx) => {
     let id = e.dataTransfer.getData("item");
     let el = document.getElementById(id)
-
+    
     handleChange('ranking', el, idx)
     e.target.appendChild(el)
   }
@@ -551,7 +553,7 @@ const quiz = ({quizState}) => {
           <div className="quiz-subtitle-mobile">Select the estimated arrival date for the event.</div>
           <div className="quiz-recipient-event">
             {eventsList.slice(0, toggleEvents ? 20 : 8).map( (item, idx) => 
-            <div key={idx} className={`quiz-recipient-event-item`} onClick={(e) => item.subtitle == 'more' ? setToggleEvents(!toggleEvents) : (quizProgress(e,'description'), handleChange('event', e))}>
+            <div key={idx} className={`quiz-recipient-event-item`} onClick={(e) => item.subtitle == 'more' ? (setToggleEvents(!toggleEvents), window.localStorage.setItem('event_toggle', !toggleEvents)) : (quizProgress(e,'description'), handleChange('event', e))}>
               {item.imageName ? <img src={`/media/emojis/${item.imageName}`}></img> : null}
               <span className={item.subtitle == 'more' ? 'expand' : null}>{item.subtitle == 'more' ? toggleEvents ? 'less' : 'more' : item.subtitle}</span>
             </div>
@@ -623,7 +625,7 @@ const quiz = ({quizState}) => {
                   <label htmlFor="Other (please specify)">Other (please specify)</label>
                 </div>
               </div>
-              <input type="text" className="quiz-recipient-description-other" value={quizState.description_other == 'other (please specify)' ? '' : quizState.description_other} onChange={ (e) => (window.localStorage.setItem('description', e.target.value.toLowerCase()), dispatch({type: 'UPDATE_CHANGE', name: 'description_other', payload: e.target.value.toLowerCase()}))} required={quizState.description == 'other (please specify)' ? true : false}/>
+              <input type="text" className="quiz-recipient-description-other" value={quizState.description_other} onChange={ (e) => (window.localStorage.setItem('description_other', e.target.value.toLowerCase()), dispatch({type: 'UPDATE_CHANGE', name: 'description_other', payload: e.target.value.toLowerCase()}))} disabled={quizState.description == 'other (please specify)' ? false : true} required={quizState.description == 'other (please specify)' ? true : false}/>
             </div>
           </div>
           <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'ranking')} disabled={quizState.description.length < 1 ? true : quizState.description == 'other (please specify)' ? quizState.description_other.length < 1 ? true : false : false}>Next</button><div className="quiz-button-container"></div></div>

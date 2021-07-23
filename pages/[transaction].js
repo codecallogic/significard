@@ -92,5 +92,5 @@ Confirmation.getInitialProps = async ({query: {transaction}}) => {
   }
 }
 
-export default Confirmation
+export default withUser(Confirmation)
  

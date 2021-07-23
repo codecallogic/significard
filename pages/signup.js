@@ -61,8 +61,9 @@ const SignUp = ({newUser, user, userUpdate, userMessage}) => {
         window.location.href = '/login'
       }, 1500);
     } catch (error) {
-      error.response.data ? error.response.data.error ? userMessage(error.response.data.error.msg) : null : console.log(error)
+      console.log(error.response)
       setLoading(false)
+      if(error) return error.response.data ? error.response.data.error ? userMessage(error.response.data.error.msg) : error.response.data ? userMessage(error.response.data) : userMessage('Error submitting form') : userMessage('Error submitting form')
     }
   }
 
@@ -102,7 +103,7 @@ const SignUp = ({newUser, user, userUpdate, userMessage}) => {
     <div className="signup-container">
     <div className="signup">
       <h1 className="signup-heading">Let's set up your account:</h1>
-      <h2 className="signup-subheading">Select one or more events.</h2>
+      {/* <h2 className="signup-subheading">Select one or more events.</h2> */}
       <form className="signup-form" onSubmit={signUp}>
         <div className="signup-form-group">
           <svg><use xlinkHref="sprite.svg#icon-user"></use></svg>
