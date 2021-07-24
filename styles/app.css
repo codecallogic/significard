@@ -1866,11 +1866,11 @@ body {
     font-size: 1.8rem;
     margin: 1rem 0; }
   .confirmation-order-details-container {
-    grid-row: 4/4;
     display: grid;
     grid-template-columns: repeat(2, 1fr); }
     @media only screen and (max-width: 992px) {
       .confirmation-order-details-container {
+        grid-row: 4/4;
         grid-template-columns: 1fr;
         width: 100%; } }
   .confirmation-order-details-billing {
@@ -1904,12 +1904,12 @@ body {
       font-size: 1.8rem;
       font-weight: 900; }
   .confirmation-order-summary-container {
-    grid-row: 3/4;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     margin: 5rem 0; }
     @media only screen and (max-width: 992px) {
       .confirmation-order-summary-container {
+        grid-row: 3/4;
         grid-template-columns: 1fr;
         width: 100%; } }
   .confirmation-order-summary-billing {
@@ -1943,11 +1943,11 @@ body {
       font-size: 1.8rem;
       font-weight: 900; }
   .confirmation-order-summary-package {
-    grid-row: 1/4;
     margin: 2rem 0 0 5rem;
     font-size: 1.4rem; }
     @media only screen and (max-width: 992px) {
       .confirmation-order-summary-package {
+        grid-row: 1/4;
         margin: 2rem 0 0 0; } }
     .confirmation-order-summary-package-title {
       font-size: 2.4rem;

@@ -3,8 +3,13 @@ import Footer from '../components/footer'
 import withUser from './withUser'
 import {API} from "../config"
 import axios from 'axios'
+import {useEffect} from 'react'
 
 const Confirmation = ({order}) => {
+
+  useEffect(() => {
+    window.localStorage.clear();
+  }, [])
   
   return (
     <>

@@ -32,7 +32,6 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
 
   const handleCardPayment = async (e) => {
     e.preventDefault()
-    // console.log(user)
     if(user){
     if(!stripe || !elements){
       // Stripe.js has not loaded yet. Make sure to disable
@@ -41,6 +40,13 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
     }
 
     setLoading(true)
+
+    try {
+      const responseRecipient = await axios.post(`${API}/recipient/quiz`, {user, recipient})
+      // console.log(responseRecipient)
+    } catch (error) {
+      if(error) error.response ? setMessage(error.response.data) : setMessage('Error submitting your information, please try again later')
+    }
 
     setMessage('')
 

@@ -116,11 +116,11 @@
 
     &-details {
       &-container {
-        grid-row: 4/4;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
 
         @media only screen and (max-width: $large) {
+          grid-row: 4/4;
           grid-template-columns: 1fr;
           width: 100%;
         }
@@ -171,12 +171,12 @@
 
     &-summary {
       &-container {
-        grid-row: 3/4;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         margin: 5rem 0;
 
         @media only screen and (max-width: $large) {
+          grid-row: 3/4;
           grid-template-columns: 1fr;
           width: 100%;
         }
@@ -225,11 +225,11 @@
       }
 
       &-package {
-        grid-row: 1/4;
         margin: 2rem 0 0 5rem;
         font-size: 1.4rem;
 
         @media only screen and (max-width: $large) {
+          grid-row: 1/4;
           margin: 2rem 0 0 0;
         }
 
