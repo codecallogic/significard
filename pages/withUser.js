@@ -1,6 +1,7 @@
 import {API} from '../config'
 import axios from 'axios'
 import {getUser, getToken} from '../helpers/user'
+import absoluteURL from 'next-absolute-url'
 axios.defaults.withCredentials = true
 
 const withUser = Page => {

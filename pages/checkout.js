@@ -5,7 +5,7 @@ import withUser from './withUser'
 import axios from 'axios'
 import {API} from '../config'
 import {useRouter} from 'next/router'
-import PlacesAutocomplete from 'react-places-autocomplete'
+import PlacesAutocomplete, {geocodeByPlaceId} from 'react-places-autocomplete'
 import {usStates} from '../utils/quiz'
 import {connect } from 'react-redux'
 
@@ -109,13 +109,6 @@ const Checkout = ({newUser}) => {
     setDeliveryDate(`${month} ${day}, ${year}`)
     setRecipient(recipientData)
 
-    try {
-      const responseRecipient = await axios.post(`${API}/recipient/quiz`, {newUser, recipientData})
-      // console.log(responseRecipient)
-    } catch (error) {
-      console.log(error)
-    }
-
   }, [])
 
   const handleBillingAutoFill = () => {
@@ -131,6 +124,7 @@ const Checkout = ({newUser}) => {
       setAddress('')
       setCity('')
       setZipCode('')
+      setState('')
     }
   }
   
@@ -162,7 +156,7 @@ const Checkout = ({newUser}) => {
                 <input type="text" placeholder="Cardholder Name" value={cardholder} onChange={(e) => setCardholder(e.target.value)} required/>
               </span>
             </div>
-            <PlacesAutocomplete value={address} onChange={(e) => setAddress(e)} onSelect={(e) => (setAddress(e.split(',')[0]), setCity(e.split(',')[1]))} searchOptions={searchOptionsAddress}>
+            <PlacesAutocomplete value={address} onChange={(e) => setAddress(e)} onSelect={(e) => (console.log(e), setAddress(e.split(',')[0]), setCity(e.split(',')[1]), setState(e.split(',')[2]))} searchOptions={searchOptionsAddress}>
               {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                 <div className="form-group-single mail checkout-group form-autocomplete-container">
                   <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'Address'})} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Address'} required/>
@@ -205,7 +199,7 @@ const Checkout = ({newUser}) => {
                       <div className="form-group-double-dropdown-list-item" onClick={(e) => (setState(item.abbreviation), setStateList(false))} key={idx} >{item.name}</div>
                     ))
                     }
-                </div>
+                  </div>
               </div>
               }
             </div>
@@ -218,7 +212,7 @@ const Checkout = ({newUser}) => {
             {recipient.mail_to == 'recipient' && <div className="checkout-container-right-ship_to">Ship to {recipient.recipient ? `${recipient.recipient}'s address` : ''} </div>}
             <div className="checkout-container-right-delivery">📩 <span>Estimated arrival date: {delivery}</span></div>
             <div className="checkout-container-right-price"><span>{recipient.event ? recipient.event : ''}</span><span>{`$ ` + Math.ceil(package_price * 100) / 100}</span></div>
-            <div className="checkout-container-right-tax"><span>Sales Tax</span><span>{`$ ` + Math.ceil(tax * 100) / 100}</span></div>
+            <div className="checkout-container-right-tax"><span>Sales Tax</span><span>{`$ ` + (Math.ceil(tax * 100) / 100).toFixed(2)}</span></div>
             <div className="checkout-container-right-total"><span>Total</span><span>{`$ ` + Math.ceil(total * 100) / 100}</span></div>
           </div>
         </div>

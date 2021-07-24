@@ -2,7 +2,7 @@ import Nav from '../components/nav'
 import Footer from '../components/footer'
 import withUser from './withUser'
 import Slider from '../components/slider/slider'
-import {useState, useEffect, useLayoutEffect} from 'react'
+import {useState, useEffect, useLayoutEffect, useRef} from 'react'
 import {eventsList, stylesList, stylesListDrop, packageList, usStates} from '../utils/quiz'
 import {manageTags} from '../helpers/forms'
 import { useDispatch, connect } from 'react-redux'
@@ -14,7 +14,7 @@ import {API} from '../config'
 
 const searchOptionsAddress = {
   componentRestrictions: {country: 'us'},
-  types: ['address', "postal_code"]
+  types: ['address']
 }
 
 const searchOptionsCities = {
@@ -25,6 +25,7 @@ const searchOptionsCities = {
 const quiz = ({quizState}) => {
   const dispatch = useDispatch()
   const router = useRouter()
+  const node = useRef();
 
   const [quiz, setQuiz] = useState('recipient')
   const [recipient, setRecipient] = useState('')
@@ -42,6 +43,24 @@ const quiz = ({quizState}) => {
     if(window.localStorage.getItem('quiz_question')) window.localStorage.getItem('quiz_question').length > 0 ? window.localStorage.getItem('quiz_question') == 'checkout' ? window.location.href = '/checkout' : setQuiz(window.localStorage.getItem('quiz_question')) : null
   }, [])
 
+  // HANDLE CLICK OUTSIDE STATE DROPDOWN
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClick);
+  // return function to be called when unmounted
+  return () => {
+    document.removeEventListener("mousedown", handleClick);
+  };
+  }, [])
+
+  const handleClick = e => {
+    if(node.current){
+      // INSIDE CLICK
+      if(node.current.contains(e.target)) return
+    }
+
+    // CLICK OUTSIDE
+    setStateList(false)
+  };
 
   // AUTO FILL QUIZ DATA WITH LOCAL STORAGE
   useEffect( () => {
@@ -72,7 +91,30 @@ const quiz = ({quizState}) => {
 
     if(window.localStorage.getItem('tags')){
       dispatch({type: 'UPDATE_CHANGE', name: 'tags', payload: JSON.parse(window.localStorage.getItem('tags'))})
+
       manageTags('preload', JSON.parse(window.localStorage.getItem('tags')))
+      let closeIcon = document.querySelectorAll('.form-tag')
+      if(closeIcon){
+        closeIcon.forEach( (e) => {
+          e.addEventListener('click', function(e){
+            let parent = e.target.parentNode
+            let parentOfParent = parent.parentNode
+            parentOfParent.remove()
+
+            let tagValues = document.querySelectorAll(".tag > span")
+            let newValues = []
+            
+            tagValues.forEach( e => {
+              newValues.push(e.innerHTML)
+            })
+
+            dispatch({
+              type: 'UPDATE_TAGS',
+              payload: newValues
+            })
+          })
+        })
+      }
     }
 
     if(window.localStorage.getItem('other')){
@@ -328,7 +370,6 @@ const quiz = ({quizState}) => {
     }
 
     if(question == 'mail_item'){
-      console.log(e)
       window.localStorage.setItem(type,  e)
       return dispatch({type: 'UPDATE_CHANGE', name: type, payload: e})
     }
@@ -877,7 +918,7 @@ const quiz = ({quizState}) => {
                       <div className="form-group-double-dropdown">
                         <input type="text" placeholder="State" value={quizState.state} onChange={ (e) => handleChange('mail', e, null, 'state')} onFocus={(e) => (e.target.placeholder = '', setStateList(true))} readOnly required/>
                         {state_list && 
-                        <div className="form-group-double-dropdown-list">
+                        <div className="form-group-double-dropdown-list" ref={node}>
                             {/* TODO: Add state dropdown list */}
                             <div className="form-group-double-dropdown-list-container">
                               {usStates.map( (item, idx) => (
@@ -965,7 +1006,7 @@ const quiz = ({quizState}) => {
                       <div className="form-group-double-dropdown">
                         <input type="text" placeholder="State" value={quizState.state} onChange={ (e) => handleChange('mail', e, null, 'state')} onFocus={(e) => (e.target.placeholder = '', setStateList(true))} readOnly required/>
                         {state_list && 
-                        <div className="form-group-double-dropdown-list">
+                        <div className="form-group-double-dropdown-list" ref={node}>
                             {/* TODO: Add state dropdown list */}
                             <div className="form-group-double-dropdown-list-container">
                               {usStates.map( (item, idx) => (
@@ -1047,7 +1088,7 @@ const quiz = ({quizState}) => {
             </div>
           </div>
           <div className="checkbox_2 center hide-on-mobile"><input id="message_unsure" type="checkbox" onClick={(e) => e.target.checked ? (window.localStorage.setItem('message_later', 'not_sure'), resetMessage(), setMessageLater(false)) : (window.localStorage.removeItem('message_later'), setMessageLater(true))}/><span>Not sure yet, ask me later</span></div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => window.location.href = '/checkout'} disabled={message_later}>Submit</button><div className="quiz-button-container"></div></div>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => window.location.href = '/checkout'} disabled={message_later}>Continue</button><div className="quiz-button-container"></div></div>
           {/* {handleFormProgressButtons('message') && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'description')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>

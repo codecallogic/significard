@@ -32,7 +32,8 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
 
   const handleCardPayment = async (e) => {
     e.preventDefault()
-
+    // console.log(user)
+    if(user){
     if(!stripe || !elements){
       // Stripe.js has not loaded yet. Make sure to disable
       // form submission until Stripe.js has loaded.
@@ -40,6 +41,7 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
     }
 
     setLoading(true)
+
     setMessage('')
 
     if(!cardholder){setMessage('Cardholder field is empty'); setLoading(false); return}
@@ -63,8 +65,9 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
     }else {
       try {
         let orderNumber = Math.floor(100000000 + Math.random() * 900000000)
-        const responsePayment = await axios.post(`${API}/payment/checkout`, {'payment_method': paymentMethod.id, 'email': user.email, 'amount': amount, 'name': user.username, 'order': orderNumber, 'cardholder_name': cardholder, 'billing_address': address, 'billing_city': city, 'billing_state': state, 'billing_zip': zip_code, 'shipping_name': recipient.name, 'shipping_address': recipient.address_one, 'shipping_city': recipient.city, 'shipping_state': recipient.state, 'shipping_zip': recipient.zip_code, 'event': recipient.event, 'amount': amount, 'package_price': package_price, 'tax': tax, 'package_plan': recipient.package_plan, 'delivery_date': delivery})
-        console.log(responsePayment.data)
+        // console.log(paymentMethod)
+        const responsePayment = await axios.post(`${API}/payment/checkout`, {'payment_method': paymentMethod.id, 'email': user.email, 'amount': amount, 'name': user.username, 'order': orderNumber, 'cardholder_name': cardholder, 'billing_address': address, 'billing_city': city, 'billing_state': state, 'billing_zip': zip_code, 'shipping_name': recipient.name, 'shipping_address': recipient.address_one, 'shipping_city': recipient.city, 'shipping_state': recipient.state, 'shipping_zip': recipient.zip_code, 'event': recipient.event, 'amount': amount, 'package_price': package_price, 'tax': tax, 'package_plan': recipient.package_plan, 'delivery_date': delivery, 'last4': paymentMethod.card.last4})
+        // console.log(responsePayment.data)
         const {client_secret, status, order} = responsePayment.data
 
         if(status === 'requires_payment_method'){
@@ -91,8 +94,7 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
         setLoading(false)
       }
     }
-
-    
+    }
   }
 
   return (

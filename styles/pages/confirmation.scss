@@ -11,10 +11,12 @@
     grid-template-columns: 1fr;
     padding: 2rem 0rem;
     align-items: none;
+    padding: 8rem 2rem;
   }
 
   &-title {
     grid-column: 1/-1;
+    text-align: center;
     justify-self: center;
     font-size: 2.2rem;
     color: $color-scheme-3-variation-1;
@@ -46,6 +48,10 @@
     margin: 0 0 3rem 0;
 
     @media only screen and (max-width: $large) {
+      display: none;
+    }
+
+    @media only screen and (max-width: $large) {
       color: $color-scheme-3-variation-3;
     }
 
@@ -54,10 +60,13 @@
       color: $color-scheme-3-variation-3;
       justify-self: flex-start;
       text-align: left;
-      margin-left: 1rem;
-      font-size: 1.4rem;
-      padding: 0.3rem 5rem;
+      font-size: 1.4em;
+      padding: 2rem 0rem;
       display: none;
+
+      @media only screen and (max-width: $large) {
+        display: block;
+      }
     }
 
     span {
@@ -68,11 +77,31 @@
   &-order {
     &-container {
       grid-column: 4/8;
-      width: 85rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      min-width: 85rem;
       height: 100%;
       border: 0.1rem solid $color-light-gray;
-      padding: 2rem 5rem;
+      padding: 2rem 2rem;
       border-radius: 1.2rem;
+
+      @media only screen and (max-width: $wide) {
+        grid-column: 3/8;
+        min-width: 85rem;
+      }
+
+      @media only screen and (max-width: $extra-large) {
+        grid-column: 2/8;
+        min-width: 80rem;
+      }
+
+      @media only screen and (max-width: $large) {
+        grid-column: 1/-1;
+        min-width: 0;
+        width: 100%;
+        border: none;
+      }
     }
 
     &-title {
@@ -87,11 +116,13 @@
 
     &-details {
       &-container {
+        grid-row: 4/4;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
 
         @media only screen and (max-width: $large) {
           grid-template-columns: 1fr;
+          width: 100%;
         }
       }
 
@@ -140,12 +171,14 @@
 
     &-summary {
       &-container {
+        grid-row: 3/4;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         margin: 5rem 0;
 
         @media only screen and (max-width: $large) {
           grid-template-columns: 1fr;
+          width: 100%;
         }
       }
 
@@ -192,6 +225,7 @@
       }
 
       &-package {
+        grid-row: 1/4;
         margin: 2rem 0 0 5rem;
         font-size: 1.4rem;
 

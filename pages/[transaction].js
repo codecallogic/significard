@@ -29,6 +29,7 @@ const Confirmation = ({order}) => {
             <div className="confirmation-order-details-billing-address">{order.billing_address}</div>
             <div className="confirmation-order-details-billing-city">{order.billing_city}, {order.billing_state}</div>
             <div className="confirmation-order-details-billing-address">{order.billing_zip}</div>
+            <div className="confirmation-order-details-billing-card"><strong>Billing to:</strong> CARD XXX-{order.last4}</div>
           </div>
           <div className="confirmation-order-details-billing ship_to">
             <div className="confirmation-order-details-billing-title">
@@ -51,7 +52,7 @@ const Confirmation = ({order}) => {
             </div>
             <div className="confirmation-order-summary-billing-tax">
               <span>Sales Tax</span>
-              <span>${Math.ceil(order.tax * 100) / 100}</span>
+              <span>${(Math.ceil(order.tax * 100) / 100).toFixed(2)}</span>
             </div>
             <div className="confirmation-order-summary-billing-total">
               <span>Total</span>
@@ -67,6 +68,7 @@ const Confirmation = ({order}) => {
             </div>
           </div>
         </div>
+        <div className="confirmation-subtitle-mobile"><span>This is the only time you'll need to complete the quiz. For each additional recipient you can add the details right in your profile.</span></div>
       </div>
     </div>
     <Footer></Footer>
