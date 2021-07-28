@@ -67,6 +67,7 @@ const Checkout = ({newUser}) => {
       recipientData.nickname = window.localStorage.getItem('nickname')
       recipientData.message = window.localStorage.getItem('message')
       recipientData.signature = window.localStorage.getItem('signature')
+      recipientData.message_later = window.localStorage.getItem('message_later')
       recipientData.description = window.localStorage.getItem('description')
       recipientData.quiz_session = window.localStorage.getItem('quiz_session')
     }
@@ -89,9 +90,11 @@ const Checkout = ({newUser}) => {
       if(!recipientData.city) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
     }
 
-    if(!recipientData.nickname) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
-    if(!recipientData.message) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
-    if(!recipientData.signature) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
+    if(!recipientData.message_later){
+      if(!recipientData.nickname) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
+      if(!recipientData.message) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
+      if(!recipientData.signature) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
+    }
     if(!recipientData.description) return  (window.localStorage.setItem('quiz_question', 'description'), window.location.href = '/quiz')
 
     recipientData.package_plan === 'standard' ? (setPackagePrice(8.99), setTax(8.99 * .1)) : recipientData.package_plan == 'plantable' ? (setPackagePrice(10.99), setTax(10.99 * .1)) : null
