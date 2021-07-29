@@ -11,6 +11,7 @@ import {nanoid} from 'nanoid'
 import PlacesAutocomplete from 'react-places-autocomplete'
 import axios from 'axios'
 import {API} from '../config'
+import SVGs from '../files/svgs'
 
 const searchOptionsAddress = {
   componentRestrictions: {country: 'us'},
@@ -38,6 +39,9 @@ const quiz = ({quizState}) => {
   const [invalid_tag, setInvalidTag] = useState(false)
   const [message_blank, setMessageBlank] = useState(false)
   const [message_later, setMessageLater] = useState(false)
+  const [other, setOther] = useState('recipient')
+  const [checkmarkOther, setCheckmarkOther] = useState(false)
+  const [enableCalendar, setEnableCalendar] = useState('')
 
   useEffect(() => {
     if(window.localStorage.getItem('quiz_question')) window.localStorage.getItem('quiz_question').length > 0 ? window.localStorage.getItem('quiz_question') == 'checkout' ? window.location.href = '/checkout' : setQuiz(window.localStorage.getItem('quiz_question')) : null
@@ -195,7 +199,20 @@ const quiz = ({quizState}) => {
 
   useEffect(() => {
     handleFormDisableButtons('message')
-  }, [quizState.nickname, quizState.message, quizState.signature])
+
+    if(quizState.recipient_other.length > 0){
+      let userTyping = setTimeout(() => {
+        setCheckmarkOther(true)
+      }, 500)
+
+      return () => clearTimeout(userTyping);
+    }
+
+    if(quizState.recipient_other.length == 0){
+      setCheckmarkOther(false)
+    }
+    
+  }, [quizState.nickname, quizState.message, quizState.signature, quizState.recipient_other])
 
 
   useLayoutEffect(() => {
@@ -214,8 +231,9 @@ const quiz = ({quizState}) => {
     }
   }, [quiz])
 
-  const quizProgress = (e, next) => {
+  const quizProgress = (e, next, other) => {
     if(next == 'ranking') (window.localStorage.removeItem('rank'), dispatch({type: 'RESET_RANK', name: 'ranking', payload: []}))
+
     window.localStorage.setItem('quiz_question', next)
     let els = document.querySelectorAll('.quiz-recipient-item')
     let els2 = document.querySelectorAll('.quiz-recipient-age-item')
@@ -398,6 +416,18 @@ const quiz = ({quizState}) => {
       return dispatch({type: 'UPDATE_CHANGE', name: question, payload: type})
     }
 
+    if(question == 'recipient'){
+      // TODO: Enable calendar view after user clicks on checkmark
+      // TODO: Don't go to next question until user add expected arrival date
+      if(e.target.textContent.toLowerCase() == 'other ') return setOther('recipient');
+      return setOther('')
+    }
+
+    if(question == 'recipient_other'){
+      dispatch({type: 'UPDATE_CHANGE', name: question, payload: e.target.value})
+      return 
+    }
+
     window.localStorage.setItem(question, e.target.textContent.toLowerCase())
     dispatch({type: 'UPDATE_CHANGE', name: question, payload: e.target.textContent.toLowerCase()})
   }
@@ -544,16 +574,16 @@ const quiz = ({quizState}) => {
           <div className="quiz-subtitle">For now just pick <span>one person</span>. Later, you can finish adding other loved ones in your profile.</div>
           <div className="quiz-subtitle-mobile">For now just pick <span>one person</span>. Later, you can finish adding other loved ones in your profile.</div>
           <div className="quiz-recipient">
-            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), handleChange('recipient', e))}>Friend</div>
-            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), handleChange('recipient', e))}>Partner</div>
-            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), handleChange('recipient', e))}>Mom</div>
-            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), handleChange('recipient', e))}>Dad</div>
-            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), handleChange('recipient', e))}>Sister</div>
-            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), handleChange('recipient', e))}>Brother</div>
-            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), handleChange('recipient', e))}>Grandma</div>
-            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), handleChange('recipient', e))}>Grandpa</div>
-            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), handleChange('recipient', e))}>Daughter</div>
-            <div className="quiz-recipient-item" onClick={(e) => (quizProgress(e,'age'), handleChange('recipient', e))}>Other</div>
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e))}>Friend</div>
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e))}>Partner</div>
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e))}>Mom</div>
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e))}>Dad</div>
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e))}>Sister</div>
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e))}>Brother</div>
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e))}>Grandma</div>
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e))}>Grandpa</div>
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e))}>Daughter</div>
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e))}>Other {other == 'recipient' ? <span className="quiz-recipient-item-other" onClick={(e) => e.stopPropagation()}><div className="quiz-recipient-item-other-input-container"><input className="quiz-recipient-item-other-input" type="text" placeholder="Please specify" onFocus={(e) => (e.stopPropagation(), e.target.placeholder = "")} onBlur={(e) => e.target.placeholder = "Please specify"} value={quizState.recipient_other} onChange={(e) => handleChange('recipient_other', e)}/>{checkmarkOther && <SVGs svg={'checkmark'}></SVGs>}</div></span> : null}</div>
           </div>
           <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e, 'age')} disabled={quizState.recipient.length < 1 ? true : false}>Next</button></div>
           {quizState.recipient && <div className="quiz-next" onClick={(e) => quizProgressNav(e, 'age')}>

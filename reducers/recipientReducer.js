@@ -1,7 +1,9 @@
 const initialState = {
   recipient: '',
+  recipient_other: '',
   age: '',
   event: '',
+  event_other: '',
   rank: [],
   tags: [],
   avoid: '',

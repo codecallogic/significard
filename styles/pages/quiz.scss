@@ -119,6 +119,7 @@
       padding: 2rem 3rem;
       margin: 0 3rem 3rem 0;
       transition: all 0.5s cubic-bezier(0.47, 0, 0.745, 0.715);
+      position: relative;
 
       @media only screen and (max-width: $extra-large) {
         width: 16.2rem;
@@ -158,6 +159,44 @@
           background-color: $color-scheme-3;
           color: white;
           cursor: pointer;
+        }
+      }
+
+      &-other {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 2.5rem 0.5rem;
+        border-top-right-radius: 1.2rem;
+        border-top-left-radius: 1.2rem;
+        border: 0.1rem solid $color-light-gray-alt-2;
+        background-color: white;
+        text-align: center;
+        z-index: 2;
+
+        &-input {
+          border: none;
+          text-indent: 0.5rem;
+          height: 3rem;
+
+          &-container {
+            display: flex;
+            align-items: center;
+            width: auto;
+            border-radius: 1.2rem;
+            border: 0.1rem solid $color-light-gray-alt-2;
+          }
+
+          &:focus {
+            outline: none;
+          }
+        }
+
+        svg {
+          width: 3rem;
+          height: 100%;
+          fill: white;
+          background-color: $color-scheme-3;
         }
       }
     }
