@@ -131,7 +131,7 @@
 
       @media only screen and (max-width: $large) {
         width: 16.2rem;
-        height: 4.8rem;
+        height: 6.8rem;
         padding: 0;
         min-height: 0;
         margin: 1.4rem 1.6rem 0 1.4rem;
@@ -139,7 +139,7 @@
 
       @media only screen and (max-width: $small) {
         width: 12.2rem;
-        height: 4.8rem;
+        height: 6.8rem;
         margin: 1rem 1rem;
         padding: 0;
       }
@@ -176,10 +176,37 @@
         text-align: center;
         z-index: 2;
 
+        @media only screen and (max-width: $small) {
+          position: fixed;
+          bottom: 50%;
+          left: 5%;
+          width: 90%;
+        }
+
+        &-container {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          padding: 2.5rem 0.5rem;
+          border-top-right-radius: 1.2rem;
+          border-top-left-radius: 1.2rem;
+          border-bottom-left-radius: 1.2rem;
+          border-bottom-right-radius: 1.2rem;
+          border: 0.1rem solid $color-light-gray-alt-2;
+          background-color: white;
+          text-align: center;
+          z-index: 2;
+
+          @media only screen and (max-width: $small) {
+            padding: 0.5rem 0.5rem;
+          }
+        }
+
         &-input {
           border: none;
           text-indent: 1rem;
           height: 3rem;
+          flex-grow: 1;
 
           &-container {
             display: flex;
@@ -197,6 +224,10 @@
             width: 100%;
             height: 3rem !important;
 
+            @media only screen and (max-width: $small) {
+              width: 3rem;
+            }
+
             svg {
               width: 100%;
               height: 3rem !important;
@@ -204,6 +235,12 @@
               background-color: $color-scheme-3;
             }
           }
+        }
+
+        &-recipient {
+          font-size: 1.4rem;
+          color: black;
+          text-transform: capitalize;
         }
       }
 
@@ -324,10 +361,6 @@
       margin: 0 3rem 3rem 0;
       position: relative;
 
-      // @media only screen and (max-width: $small) {
-      //   position: initial;
-      // }
-
       // * {
       //   pointer-events: none;
       // }
@@ -413,6 +446,7 @@
         border-bottom-right-radius: 1rem;
         border: 0.1rem solid $color-light-gray-alt-2;
         background-color: white;
+        color: black;
         text-align: center;
 
         @media only screen and (max-width: $small) {
