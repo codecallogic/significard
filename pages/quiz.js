@@ -30,7 +30,7 @@ const quiz = ({quizState}) => {
   const router = useRouter()
   const node = useRef();
   
-  const [quiz, setQuiz] = useState('recipient')
+  const [quiz, setQuiz] = useState('tags')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
@@ -347,6 +347,8 @@ const quiz = ({quizState}) => {
       try {
         const responseTag = await axios.post(`${API}/recipient/check-word`, {tags})
         setInvalidTag(false)
+        let input = document.getElementById('researchInterests')
+        input.value = responseTag.data
       } catch (error) {
         if(error) return  error.response ? setInvalidTag(true) : setInvalidTag(true)
       }
@@ -708,7 +710,7 @@ const quiz = ({quizState}) => {
           <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'age')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
-          <div className="quiz-title">What are the events you'd like to send cards for your {window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient'}?</div>
+          <div className="quiz-title">What are the events you'd like to send cards for your {typeof window !== "undefined" ? window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient' : 'recipient'}?</div>
           <div className="quiz-title-mobile">Select an event for {window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient'}.</div>
           <div className="quiz-subtitle">Pick one or more events. Select the estimated arrival date for each card. Make sure it's at least 3 weeks away!</div>
           <div className="quiz-subtitle-mobile">Select the estimated arrival date for the event.</div>
@@ -777,7 +779,7 @@ const quiz = ({quizState}) => {
           <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'events')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
-          <div className="quiz-title">What best describes {window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient'}?</div>
+          <div className="quiz-title">What best describes {typeof window !== "undefined" ? window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient' : 'recipient'}?</div>
           <div className="quiz-title-mobile">What best describes {window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient'}?</div>
           <div className="quiz-subtitle">Select one.</div>
           <div className="quiz-subtitle-mobile">Select one.</div>
@@ -852,7 +854,7 @@ const quiz = ({quizState}) => {
           <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'description')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
-          <div className="quiz-title">How would you rank the styles that describe your {window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient'}?</div>
+          <div className="quiz-title">How would you rank the styles that describe your {typeof window !== "undefined" ? window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient' : 'recipient'}?</div>
           <div className="quiz-title-mobile">Rate the cards for {recipient ? recipient : 'recipient'}.</div>
           <div className="quiz-subtitle">How would you rank the styles that describe your {recipient ? recipient : 'recipient'}?</div>
           <div className="quiz-subtitle-mobile">What does {recipient ? recipient : 'recipient'} like? Drag and drog from 1 (most important) to 6 (least important).</div>
@@ -884,8 +886,8 @@ const quiz = ({quizState}) => {
           <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'ranking')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
-          <div className="quiz-title">Anything specific your {window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient'} might like?</div>
-          <div className="quiz-title-mobile">Anything specific your {window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient'} might like?</div>
+          <div className="quiz-title">Anything specific your {typeof window !== "undefined" ? window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient' : 'recipient'} might like?</div>
+          <div className="quiz-title-mobile">Anything specific your {typeof window !== "undefined" ? window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient' : 'recipient'} might like?</div>
           <div className="quiz-subtitle">Animals, flowers, foods etc. Add as many words as you'd like!</div>
           <div className="quiz-subtitle-mobile">Animals, flowers, foods etc. Add as many words as you'd like!</div>
           <div className="quiz-recipient-tags">
