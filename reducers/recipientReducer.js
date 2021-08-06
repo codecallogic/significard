@@ -4,6 +4,7 @@ const initialState = {
   age: '',
   event: '',
   event_other: '',
+  card_arrival: '',
   rank: [],
   tags: [],
   avoid: '',

@@ -2,12 +2,14 @@ import Nav from '../components/nav'
 import Footer from '../components/footer'
 import withUser from './withUser'
 import Slider from '../components/slider/slider'
-import {useState, useEffect, useLayoutEffect, useRef} from 'react'
+import React, {useState, useEffect, useLayoutEffect, useRef, Fragment} from 'react'
 import {eventsList, stylesList, stylesListDrop, packageList, usStates} from '../utils/quiz'
 import {manageTags} from '../helpers/forms'
 import { useDispatch, connect } from 'react-redux'
 import {useRouter} from 'next/router'
 import {nanoid} from 'nanoid'
+import Calendar from 'react-calendar'
+import 'react-calendar/dist/Calendar.css';
 import PlacesAutocomplete from 'react-places-autocomplete'
 import axios from 'axios'
 import {API} from '../config'
@@ -28,7 +30,7 @@ const quiz = ({quizState}) => {
   const router = useRouter()
   const node = useRef();
 
-  const [quiz, setQuiz] = useState('recipient')
+  const [quiz, setQuiz] = useState('age')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
@@ -39,9 +41,10 @@ const quiz = ({quizState}) => {
   const [invalid_tag, setInvalidTag] = useState(false)
   const [message_blank, setMessageBlank] = useState(false)
   const [message_later, setMessageLater] = useState(false)
-  const [other, setOther] = useState('recipient')
+  const [other, setOther] = useState('')
   const [checkmarkOther, setCheckmarkOther] = useState(false)
   const [enableCalendar, setEnableCalendar] = useState('')
+  const [calendar, setCalendar] = useState(new Date())
 
   useEffect(() => {
     if(window.localStorage.getItem('quiz_question')) window.localStorage.getItem('quiz_question').length > 0 ? window.localStorage.getItem('quiz_question') == 'checkout' ? window.location.href = '/checkout' : setQuiz(window.localStorage.getItem('quiz_question')) : null
@@ -55,6 +58,13 @@ const quiz = ({quizState}) => {
     document.removeEventListener("mousedown", handleClick);
   };
   }, [])
+
+  useEffect(() => {
+    dispatch({type: 'UPDATE_CHANGE', name: 'card_arrival', payload: formatDate(calendar)})
+    window.localStorage.setItem('card_arrival', formatDate(calendar).trim())
+    setEnableCalendar(``)
+    setOther('')
+  }, [calendar])
 
   const handleClick = e => {
     if(node.current){
@@ -81,13 +91,17 @@ const quiz = ({quizState}) => {
     }
 
     if(window.localStorage.getItem('event')){
+      if(window.localStorage.getItem('event_toggle')) setToggleEvents(window.localStorage.getItem('event_toggle') == 'true' ? true : false)
+
       dispatch({type: 'UPDATE_CHANGE', name: 'event', payload: window.localStorage.getItem('event')})
       let els = document.querySelectorAll('.quiz-recipient-event-item')
-      els.forEach( (el) => {el.textContent.toLowerCase() == window.localStorage.getItem('event') ? el.classList.add("quiz-recipient-event-item-active") : null})
+      
+      els.forEach( (el) => console.log(el.textContent.toLowerCase().split('arrival')[0]))
+      
+      els.forEach( (el) => {el.textContent.toLowerCase().split('arrival')[0] == window.localStorage.getItem('event').trim() ? el.classList.add("quiz-recipient-event-item-active") : null})
     }
 
     if(window.localStorage.getItem('description')){
-      if(window.localStorage.getItem('event_toggle')) setToggleEvents(window.localStorage.getItem('event_toggle') == 'true' ? true : false)
       dispatch({type: 'UPDATE_CHANGE', name: 'description', payload: window.localStorage.getItem('description')})
       let els = document.querySelectorAll('.form-group-list-container > label')
       els.forEach((el) => {el.textContent.toLowerCase() == window.localStorage.getItem('description') ? el.click() : null})
@@ -211,8 +225,20 @@ const quiz = ({quizState}) => {
     if(quizState.recipient_other.length == 0){
       setCheckmarkOther(false)
     }
+
+    if(quizState.event_other.length > 0){
+      let userTyping = setTimeout(() => {
+        setCheckmarkOther(true)
+      }, 500)
+
+      return () => clearTimeout(userTyping);
+    }
+
+    if(quizState.event_other.length == 0){
+      setCheckmarkOther(false)
+    }
     
-  }, [quizState.nickname, quizState.message, quizState.signature, quizState.recipient_other])
+  }, [quizState.nickname, quizState.message, quizState.signature, quizState.recipient_other, quizState.event_other])
 
 
   useLayoutEffect(() => {
@@ -234,7 +260,11 @@ const quiz = ({quizState}) => {
   const quizProgress = (e, next, other) => {
     if(next == 'ranking') (window.localStorage.removeItem('rank'), dispatch({type: 'RESET_RANK', name: 'ranking', payload: []}))
 
-    window.localStorage.setItem('quiz_question', next)
+    if(other == 'card_arrival'){
+      window.localStorage.setItem('event', e.trim())
+      dispatch({type: "UPDATE_CHANGE", name: "event", payload: e} )
+    }
+
     let els = document.querySelectorAll('.quiz-recipient-item')
     let els2 = document.querySelectorAll('.quiz-recipient-age-item')
     let els3 = document.querySelectorAll('.quiz-recipient-event-item')
@@ -243,13 +273,13 @@ const quiz = ({quizState}) => {
 
     els.forEach( (el) => {el.classList.remove("quiz-recipient-item-active")})
     els2.forEach( (el) => {el.classList.remove("quiz-recipient-age-item-active")})
-    els3.forEach( (el) => {el.classList.remove("quiz-recipient-age-event-active")})
+    els3.forEach( (el) => {el.classList.remove("quiz-recipient-event-item-active")})
     els4.forEach( (el) => {el.classList.remove("quiz-recipient-involvement-item-active")})
     els5.forEach( (el) => {el.classList.remove("quiz-recipient-mail-item-active")})
 
-    els.forEach( (el) => {el.textContent == e.target.textContent ? el.classList.add("quiz-recipient-item-active") : null})
+    els.forEach( (el) => {el.textContent.toLowerCase().split(',')[0].trim() == e.trim() ? el.classList.add("quiz-recipient-item-active") : null})
     els2.forEach( (el) => {el.textContent == e.target.textContent ? el.classList.add("quiz-recipient-age-item-active") : null})
-    els3.forEach( (el) => {el.textContent == e.target.textContent ? el.classList.add("quiz-recipient-event-item-active") : null})
+    els3.forEach( (el) => {el.textContent.toLowerCase().split('arrival')[0].trim() == e.trim() ? el.classList.add("quiz-recipient-event-item-active") : null})
     els4.forEach( (el) => {el.textContent == e.target.textContent ? el.classList.add("quiz-recipient-involvement-item-active") : null})
     els5.forEach( (el) => {el.textContent == e.target.textContent ? el.classList.add("quiz-recipient-mail-item-active") : null})
 
@@ -416,14 +446,30 @@ const quiz = ({quizState}) => {
       return dispatch({type: 'UPDATE_CHANGE', name: question, payload: type})
     }
 
+    if(question == 'event'){
+      window.localStorage.setItem('event', e)
+      dispatch({type: 'UPDATE_CHANGE', name: question, payload: e})
+      return 
+    }
+
+    if(question == 'event_other'){
+      window.localStorage.setItem('event_other', e.target.value)
+      dispatch({type: 'UPDATE_CHANGE', name: question, payload: e.target.value})
+      return 
+    }
+
     if(question == 'recipient'){
-      // TODO: Enable calendar view after user clicks on checkmark
-      // TODO: Don't go to next question until user add expected arrival date
-      if(e.target.textContent.toLowerCase() == 'other ') return setOther('recipient');
+      dispatch({type: 'UPDATE_CHANGE', name: question, payload: e.target.textContent.toLowerCase()})
+      setEnableCalendar(`recipient-${e.target.textContent.toLowerCase().trim()}`)
       return setOther('')
     }
 
+    if(question == 'recipient_other_click'){
+      if(e.target.textContent.toLowerCase() == 'other ') return setOther('recipient');
+    }
+
     if(question == 'recipient_other'){
+      window.localStorage.setItem('recipient_other', e.target.value)
       dispatch({type: 'UPDATE_CHANGE', name: question, payload: e.target.value})
       return 
     }
@@ -562,6 +608,19 @@ const quiz = ({quizState}) => {
     let el = document.getElementById('other')
     if(el) el.checked = false
   }
+
+  const handleDate = (date, type) => {
+    setCalendar(date)
+    quizProgress(type, 'description', 'card_arrival')
+  }
+  
+  const formatDate = (e) => {
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var month = monthNames[e.getUTCMonth()]
+    var day = e.getUTCDate()
+    var year = e.getUTCFullYear()
+    return `${month} ${day}, ${year}`
+  }
   
   return (
     
@@ -581,9 +640,44 @@ const quiz = ({quizState}) => {
             <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e))}>Sister</div>
             <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e))}>Brother</div>
             <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e))}>Grandma</div>
-            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e))}>Grandpa</div>
-            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e))}>Daughter</div>
-            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e))}>Other {other == 'recipient' ? <span className="quiz-recipient-item-other" onClick={(e) => e.stopPropagation()}><div className="quiz-recipient-item-other-input-container"><input className="quiz-recipient-item-other-input" type="text" placeholder="Please specify" onFocus={(e) => (e.stopPropagation(), e.target.placeholder = "")} onBlur={(e) => e.target.placeholder = "Please specify"} value={quizState.recipient_other} onChange={(e) => handleChange('recipient_other', e)}/>{checkmarkOther && <SVGs svg={'checkmark'}></SVGs>}</div></span> : null}</div>
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e))}>Grandpa
+            {enableCalendar == 'recipient-grandpa' ? (
+            <span className="quiz-recipient-item-calendar">,
+              <Calendar
+                onClickDay={(date) => handleDate(date, 'grandpa')}
+                value={calendar}
+              />
+            </span>
+            )
+            :
+            null
+            }
+            </div>
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e))}>Daughter
+            {enableCalendar == 'recipient-daughter' ? (
+            <span className="quiz-recipient-item-calendar">,
+              <Calendar
+                onClickDay={(date) => handleDate(date, 'daughter')}
+                value={calendar}
+              />
+            </span>
+            )
+            :
+            null
+            }
+            </div>
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient_other_click', e))}>Other {other == 'recipient' ? <span className="quiz-recipient-item-other" onClick={(e) => e.stopPropagation()}><div className="quiz-recipient-item-other-input-container"><input className="quiz-recipient-item-other-input" type="text" placeholder="Please specify" onFocus={(e) => (e.stopPropagation(), e.target.placeholder = "", setEnableCalendar(''))} onBlur={(e) => e.target.placeholder = "Please specify"} value={quizState.recipient_other} onChange={(e) => (handleChange('recipient_other', e))}/><div className="quiz-recipient-item-other-input-svg" onClick={() => (setOther(false), setEnableCalendar('recipient-other'))}>{checkmarkOther && <SVGs svg={'checkmark'}></SVGs>}</div></div></span> : null}
+            {enableCalendar == 'recipient-other' ?
+            <span className="quiz-recipient-item-calendar">,
+                <Calendar
+                  onClickDay={(date) => handleDate(date, 'other')}
+                  value={calendar}
+                />
+            </span>
+            :
+            null
+            }
+            </div>
           </div>
           <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e, 'age')} disabled={quizState.recipient.length < 1 ? true : false}>Next</button></div>
           {quizState.recipient && <div className="quiz-next" onClick={(e) => quizProgressNav(e, 'age')}>
@@ -624,9 +718,54 @@ const quiz = ({quizState}) => {
           <div className="quiz-subtitle-mobile">Select the estimated arrival date for the event.</div>
           <div className="quiz-recipient-event">
             {eventsList.slice(0, toggleEvents ? 20 : 8).map( (item, idx) => 
-            <div key={idx} className={`quiz-recipient-event-item`} onClick={(e) => item.subtitle == 'more' ? (setToggleEvents(!toggleEvents), window.localStorage.setItem('event_toggle', !toggleEvents)) : (quizProgress(e,'description'), handleChange('event', e))}>
+            <div key={idx} className={`quiz-recipient-event-item`} onClick={(e) => 
+            (item.subtitle == 'more' 
+            ? (setToggleEvents(!toggleEvents), window.localStorage.setItem('event_toggle', !toggleEvents)) 
+            : 
+            (item.subtitle.toLowerCase() == 'other' ? setOther('event') : setEnableCalendar(`event-${item.subtitle.toLowerCase()}`), window.localStorage.setItem('event', item.subtitle.toLowerCase()))
+            )}>
               {item.imageName ? <img src={`/media/emojis/${item.imageName}`}></img> : null}
-              <span className={item.subtitle == 'more' ? 'expand' : null}>{item.subtitle == 'more' ? toggleEvents ? 'less' : 'more' : item.subtitle}</span>
+              <span className={item.subtitle == 'more' ? 'expand' : null}>{item.subtitle == 'more' ? toggleEvents ? 'less' : 'more' : item.subtitle}
+
+              {window.localStorage.getItem('card_arrival') ? window.localStorage.getItem('card_arrival') && item.subtitle.toLowerCase().trim() == window.localStorage.getItem('event')
+              ?
+              <div className="quiz-recipient-event-item-arrival">
+                <span className="quiz-recipient-event-item-arrival-title">Arrival Date</span>
+                <span className="quiz-recipient-event-item-arrival-date">{window.localStorage.getItem('card_arrival')}</span>
+              </div>
+              : 
+              null
+              :
+              null
+              } 
+
+              {other == 'event' && item.subtitle.toLowerCase() == 'other' ? 
+              <span className="quiz-recipient-event-item-other">
+                <div className="quiz-recipient-event-item-other-input-container">
+
+                  <input className="quiz-recipient-event-item-other-input" type="text" placeholder="Please specify" onFocus={(e) => (e.target.placeholder = "", setEnableCalendar(''))} onBlur={(e) => e.target.placeholder = "Please specify"} value={quizState.event_other} onChange={(e) => (handleChange('event_other', e))}/>
+
+                  <div className="quiz-recipient-event-item-other-input-svg" onClick={() => (setOther(false), setEnableCalendar('event-other'))}>
+                    {checkmarkOther && <SVGs svg={'checkmark'}></SVGs>}
+                  </div>
+                </div>
+              </span> 
+              : null
+              }
+              
+              {window.localStorage.getItem('event') ? enableCalendar == `event-${window.localStorage.getItem('event')}` && item.subtitle.toLowerCase().trim() == window.localStorage.getItem('event') ?
+                <span className="quiz-recipient-event-item-calendar">
+                    <Calendar
+                      onClickDay={(date) => handleDate(date, window.localStorage.getItem('event').trim())}
+                      value={calendar}
+                    />
+                </span>
+                :
+                null
+                :
+                null
+                }
+            </span>
             </div>
             )
             }

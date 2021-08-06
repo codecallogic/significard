@@ -169,6 +169,8 @@
         padding: 2.5rem 0.5rem;
         border-top-right-radius: 1.2rem;
         border-top-left-radius: 1.2rem;
+        border-bottom-left-radius: 1.2rem;
+        border-bottom-right-radius: 1.2rem;
         border: 0.1rem solid $color-light-gray-alt-2;
         background-color: white;
         text-align: center;
@@ -176,7 +178,7 @@
 
         &-input {
           border: none;
-          text-indent: 0.5rem;
+          text-indent: 1rem;
           height: 3rem;
 
           &-container {
@@ -190,14 +192,26 @@
           &:focus {
             outline: none;
           }
-        }
 
-        svg {
-          width: 3rem;
-          height: 100%;
-          fill: white;
-          background-color: $color-scheme-3;
+          &-svg {
+            width: 100%;
+            height: 3rem !important;
+
+            svg {
+              width: 100%;
+              height: 3rem !important;
+              fill: white;
+              background-color: $color-scheme-3;
+            }
+          }
         }
+      }
+
+      &-calendar {
+        position: absolute;
+        bottom: 0;
+        left: -50%;
+        width: 100%;
       }
     }
   }
@@ -285,6 +299,7 @@
     align-items: center;
     flex-wrap: wrap;
     margin: 4rem 0 4rem 0;
+    // z-index: 100;
 
     @media only screen and (min-width: $large) {
       padding: 0 10rem;
@@ -307,10 +322,15 @@
       align-items: center;
       flex-direction: column;
       margin: 0 3rem 3rem 0;
+      position: relative;
 
-      * {
-        pointer-events: none;
-      }
+      // @media only screen and (max-width: $small) {
+      //   position: initial;
+      // }
+
+      // * {
+      //   pointer-events: none;
+      // }
 
       @media only screen and (max-width: $extra-large) {
         width: 19rem;
@@ -336,13 +356,13 @@
 
       @media only screen and (max-width: $large) {
         width: 16.2rem;
-        height: 4.8rem;
+        height: 8.8rem;
         padding: 0;
       }
 
       @media only screen and (max-width: $small) {
         width: 12.2rem;
-        height: 4.8rem;
+        height: 8.8rem;
         padding: 0;
       }
 
@@ -378,6 +398,117 @@
           background-color: $color-scheme-3;
           color: white;
           cursor: pointer;
+        }
+      }
+
+      &-other {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 2.5rem 0.5rem;
+        border-top-right-radius: 1.2rem;
+        border-top-left-radius: 1.2rem;
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+        border: 0.1rem solid $color-light-gray-alt-2;
+        background-color: white;
+        text-align: center;
+
+        @media only screen and (max-width: $small) {
+          position: fixed;
+          bottom: 50%;
+          left: 5%;
+          width: 90%;
+        }
+
+        &-input {
+          border: none;
+          text-indent: 1rem;
+          height: 3rem;
+          flex-grow: 1;
+
+          &-container {
+            display: flex;
+            align-items: center;
+            width: auto;
+            border-radius: 1.2rem;
+            outline: none;
+            border: 0.1rem solid $color-light-gray-alt-2;
+          }
+
+          &:focus {
+            outline: none;
+          }
+
+          &-svg {
+            width: 100%;
+            height: 3rem !important;
+
+            @media only screen and (max-width: $small) {
+              width: 3rem;
+            }
+
+            svg {
+              width: 100%;
+              height: 3rem !important;
+              fill: white;
+              background-color: $color-scheme-3;
+            }
+          }
+        }
+      }
+
+      &-calendar {
+        position: absolute;
+        bottom: 0;
+        left: -50%;
+        width: 100%;
+
+        @media only screen and (max-width: $small) {
+          position: fixed;
+          z-index: 2000 !important;
+          bottom: 50%;
+          left: 5%;
+          width: 90%;
+        }
+      }
+
+      &-arrival {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 0rem 0.5rem;
+        border-top-right-radius: 1.2rem;
+        border-top-left-radius: 1.2rem;
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+        border: 0.1rem solid $color-light-gray-alt-2;
+        background-color: white;
+        text-align: center;
+        color: black;
+        display: flex;
+        flex-direction: column;
+
+        &-title {
+          font-size: 1.2rem;
+          color: $color-light-gray-alt-4;
+          margin: 1rem 0 0.5rem 0;
+
+          @media only screen and (max-width: $small) {
+            font-size: 1rem !important;
+            margin: 0.5rem 0 0rem 0;
+          }
+        }
+
+        &-date {
+          margin: 0 0 1rem 0;
+
+          @media only screen and (max-width: $small) {
+            font-size: 1.2rem !important;
+            margin: 0 0 0.5rem 0;
+          }
         }
       }
     }
@@ -1382,5 +1513,29 @@
         cursor: pointer;
       }
     }
+  }
+}
+
+.react-calendar {
+  position: absolute;
+  bottom: -20rem;
+  min-width: 400px !important;
+  border-radius: 1.2rem;
+  background-color: white !important;
+  z-index: 2000 !important;
+
+  @media only screen and (max-width: $small) {
+    min-width: 300px !important;
+    background-color: white !important;
+    z-index: 1000 !important;
+  }
+}
+
+.react-calendar__navigation {
+  border-radius: 1.2rem;
+
+  button {
+    min-width: 20px !important;
+    border-radius: 1.2rem;
   }
 }

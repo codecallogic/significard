@@ -61,7 +61,7 @@ export const eventsList = [
   },
   {
     imageName: '',
-    subtitle: 'Other (Specify)'
+    subtitle: 'Other'
   }
 ]
 
