@@ -31,7 +31,7 @@ const quiz = ({quizState}) => {
   const router = useRouter()
   const node = useRef();
   
-  const [quiz, setQuiz] = useState('mail')
+  const [quiz, setQuiz] = useState('recipient')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
