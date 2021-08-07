@@ -16,6 +16,9 @@ import axios from 'axios'
 import {API} from '../config'
 import SVGs from '../files/svgs'
 
+// TODO: Make all tags lowercase for validation
+// TODO: Disable dates two weeks from present day on calendar
+
 const searchOptionsAddress = {
   componentRestrictions: {country: 'us'},
   types: ['address']
@@ -558,7 +561,6 @@ const quiz = ({quizState}) => {
     if(!window.localStorage.getItem('quiz_session')) window.localStorage.setItem('quiz_session', nanoid())
   }
 
-  // TODO: Get zip code from Google GeoCoder
   const handleSelect = async (question, e, idx, type, id) => {
     // let geocoder = new google.maps.Geocoder()
     // console.log(await geocoder.geocode({ placeId: id }))

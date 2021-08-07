@@ -79,7 +79,7 @@ const Checkout = ({newUser}) => {
     // console.log(recipientData)
 
     if(!recipientData.recipient) return  (window.localStorage.setItem('quiz_question', 'recipient'), window.location.href = '/quiz')
-    if(recipientData.recipient == 'other' && !recipientData.recipient_other) return  (window.localStorage.setItem('quiz_question', 'recipient'), window.location.href = '/quiz')
+    // if(recipientData.recipient.trim() == 'other' && !recipientData.recipient_other) return  (window.localStorage.setItem('quiz_question', 'recipient'), window.location.href = '/quiz')
     if(!recipientData.age) return  (window.localStorage.setItem('quiz_question', 'age'), window.location.href = '/quiz')
     if(!recipientData.event) return  (window.localStorage.setItem('quiz_question', 'events'), window.location.href = '/quiz')
     if(recipientData.event == 'other' && !recipientData.event_other) return  (window.localStorage.setItem('quiz_question', 'events'), window.location.href = '/quiz')
