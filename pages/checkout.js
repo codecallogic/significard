@@ -75,7 +75,7 @@ const Checkout = ({newUser}) => {
       recipientData.description = window.localStorage.getItem('description')
       recipientData.quiz_session = window.localStorage.getItem('quiz_session')
     }
-
+    
     console.log(recipientData)
 
     // if(!recipientData.recipient) return  (window.localStorage.setItem('quiz_question', 'recipient'), window.location.href = '/quiz')
