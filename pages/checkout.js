@@ -51,8 +51,11 @@ const Checkout = ({newUser}) => {
 
     if(window.localStorage.getItem('package_plan')){
       recipientData.recipient = window.localStorage.getItem('recipient')
+      recipientData.recipient_other = window.localStorage.getItem('recipient_other')
       recipientData.age = window.localStorage.getItem('age')
       recipientData.event = window.localStorage.getItem('event')
+      recipientData.event_other = window.localStorage.getItem('event_other')
+      recipientData.card_arrival = window.localStorage.getItem('card_arrival')
       recipientData.rank = JSON.parse(window.localStorage.getItem('rank'))
       recipientData.tags = JSON.parse(window.localStorage.getItem('tags'))
       recipientData.other = window.localStorage.getItem('other')
@@ -61,6 +64,7 @@ const Checkout = ({newUser}) => {
       recipientData.mail_to = window.localStorage.getItem('mail_to')
       recipientData.name = window.localStorage.getItem('name')
       recipientData.address_one = window.localStorage.getItem('address_one')
+      recipientData.address_two = window.localStorage.getItem('address_two')
       recipientData.city = window.localStorage.getItem('city')
       recipientData.state = window.localStorage.getItem('state')
       recipientData.zip_code = window.localStorage.getItem('zip_code')
@@ -72,9 +76,14 @@ const Checkout = ({newUser}) => {
       recipientData.quiz_session = window.localStorage.getItem('quiz_session')
     }
 
+    // console.log(recipientData)
+
     if(!recipientData.recipient) return  (window.localStorage.setItem('quiz_question', 'recipient'), window.location.href = '/quiz')
+    if(recipientData.recipient == 'other' && !recipientData.recipient_other) return  (window.localStorage.setItem('quiz_question', 'recipient'), window.location.href = '/quiz')
     if(!recipientData.age) return  (window.localStorage.setItem('quiz_question', 'age'), window.location.href = '/quiz')
     if(!recipientData.event) return  (window.localStorage.setItem('quiz_question', 'events'), window.location.href = '/quiz')
+    if(recipientData.event == 'other' && !recipientData.event_other) return  (window.localStorage.setItem('quiz_question', 'events'), window.location.href = '/quiz')
+    if(!recipientData.card_arrival) return  (window.localStorage.setItem('quiz_question', 'events'), window.location.href = '/quiz')
     if(!recipientData.rank) return  (window.localStorage.setItem('quiz_question', 'ranking'), window.location.href = '/quiz')
     if(!recipientData.tags) return  (window.localStorage.setItem('quiz_question', 'tags'), window.location.href = '/quiz')
     if(!recipientData.other) return  (window.localStorage.setItem('quiz_question', 'other'), window.location.href = '/quiz')
@@ -130,6 +139,22 @@ const Checkout = ({newUser}) => {
       setState('')
     }
   }
+
+  const handleZipCode = async (id) => {
+    let geo
+    
+    if(id){
+     geo = await geocodeByPlaceId(id)
+    }
+
+    if(geo){
+      geo[0].address_components.forEach((item) => {
+        if(item.types.includes('postal_code')){
+          setZipCode(item.long_name)
+        } 
+      })
+    }
+  }
   
   return (
     <>
@@ -159,7 +184,7 @@ const Checkout = ({newUser}) => {
                 <input type="text" placeholder="Cardholder Name" value={cardholder} onChange={(e) => setCardholder(e.target.value)} required/>
               </span>
             </div>
-            <PlacesAutocomplete value={address} onChange={(e) => setAddress(e)} onSelect={(e) => (console.log(e), setAddress(e.split(',')[0]), setCity(e.split(',')[1]), setState(e.split(',')[2]))} searchOptions={searchOptionsAddress}>
+            <PlacesAutocomplete value={address} onChange={(e) => setAddress(e)} onSelect={(e) => (setAddress(e.split(',')[0]), setCity(e.split(',')[1]), setState(e.split(',')[2], handleZipCode(document.getElementById('address_place_id_checkout').value)))} searchOptions={searchOptionsAddress}>
               {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                 <div className="form-group-single mail checkout-group form-autocomplete-container">
                   <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'Address'})} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Address'} required/>
@@ -169,7 +194,7 @@ const Checkout = ({newUser}) => {
                     ? 'form-autocomplete-suggestion-active_100'
                     : 'form-autocomplete-suggestion_100';
                     const style = suggestion.active ? {backgroundColor: '#003e5f', cursor: 'pointer'} : {backgroundColor: '#fff', cursor: 'pointer'}
-                    return <div  className="form-autocomplete-box" key={idx} {...getSuggestionItemProps(suggestion, {className, style})}>{suggestion.description}</div> 
+                    return <div  className="form-autocomplete-box" key={idx} {...getSuggestionItemProps(suggestion, {className, style})}>{suggestion.description}<input id="address_place_id_checkout" value={suggestion.placeId} readOnly/></div> 
                   })}
                 </div>
               )}
@@ -196,7 +221,6 @@ const Checkout = ({newUser}) => {
               <input type="text" placeholder="State" value={state} onChange={ (e) => setState(e.target.value)} onFocus={(e) => (e.target.placeholder = '', setStateList(true))} readOnly required/>
               {state_list && 
               <div className="form-group-single-dropdown-list">
-                  {/* TODO: Add state dropdown list */}
                   <div className="form-group-double-dropdown-list-container">
                     {usStates.map( (item, idx) => (
                       <div className="form-group-double-dropdown-list-item" onClick={(e) => (setState(item.abbreviation), setStateList(false))} key={idx} >{item.name}</div>
@@ -212,7 +236,7 @@ const Checkout = ({newUser}) => {
           </div>
           <div className="checkout-container-right">
             <div className="checkout-container-right-package">Package: {recipient.package_plan ? recipient.package_plan : ''} </div>
-            {recipient.mail_to == 'recipient' && <div className="checkout-container-right-ship_to">Ship to {recipient.recipient ? `${recipient.recipient}'s address` : ''} </div>}
+            {recipient.mail_to == 'recipient' && <div className="checkout-container-right-ship_to">Ship to {recipient.recipient ? recipient.recipient == 'other' ? `${recipient.recipient_other}'s address`: `${recipient.recipient}'s address` : ''} </div>}
             <div className="checkout-container-right-delivery">📩 <span>Estimated arrival date: {delivery}</span></div>
             <div className="checkout-container-right-price"><span>{recipient.event ? recipient.event : ''}</span><span>{`$ ` + Math.ceil(package_price * 100) / 100}</span></div>
             <div className="checkout-container-right-tax"><span>Sales Tax</span><span>{`$ ` + (Math.ceil(tax * 100) / 100).toFixed(2)}</span></div>

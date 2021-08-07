@@ -2732,3 +2732,9 @@ body {
 
 .margin-0 {
   margin: 0; }
+
+#address_place_id {
+  display: none; }
+
+#address_place_id_checkout {
+  display: none; }
