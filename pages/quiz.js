@@ -18,6 +18,7 @@ import SVGs from '../files/svgs'
 
 // TODO: Make all tags lowercase for validation
 // TODO: Disable dates two weeks from present day on calendar
+// TODO: Auto focus other input and zoom out when done typing
 
 const searchOptionsAddress = {
   componentRestrictions: {country: 'us'},
