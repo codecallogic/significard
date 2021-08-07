@@ -405,11 +405,6 @@ const quiz = ({quizState}) => {
       return 
     }
 
-    if(question == 'avoid'){
-      window.localStorage.setItem(question, e.target.value); 
-      return dispatch({type: 'UPDATE_TEXTAREA', name:'avoid', payload: e.target.value})
-    }
-
     if(question == 'other'){
       window.localStorage.setItem(question, e.target.value); 
       return dispatch({type: 'UPDATE_TEXTAREA', name:'other', payload: e.target.value})

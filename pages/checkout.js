@@ -76,35 +76,35 @@ const Checkout = ({newUser}) => {
       recipientData.quiz_session = window.localStorage.getItem('quiz_session')
     }
 
-    // console.log(recipientData)
+    console.log(recipientData)
 
     // if(!recipientData.recipient) return  (window.localStorage.setItem('quiz_question', 'recipient'), window.location.href = '/quiz')
     // if(recipientData.recipient.trim() == 'other' && !recipientData.recipient_other) return  (window.localStorage.setItem('quiz_question', 'recipient'), window.location.href = '/quiz')
-    if(!recipientData.age) return  (window.localStorage.setItem('quiz_question', 'age'), window.location.href = '/quiz')
-    if(!recipientData.event) return  (window.localStorage.setItem('quiz_question', 'events'), window.location.href = '/quiz')
-    if(recipientData.event == 'other' && !recipientData.event_other) return  (window.localStorage.setItem('quiz_question', 'events'), window.location.href = '/quiz')
-    if(!recipientData.card_arrival) return  (window.localStorage.setItem('quiz_question', 'events'), window.location.href = '/quiz')
-    if(!recipientData.rank) return  (window.localStorage.setItem('quiz_question', 'ranking'), window.location.href = '/quiz')
-    if(!recipientData.tags) return  (window.localStorage.setItem('quiz_question', 'tags'), window.location.href = '/quiz')
-    if(!recipientData.other) return  (window.localStorage.setItem('quiz_question', 'other'), window.location.href = '/quiz')
-    if(!recipientData.involvement) return  (window.localStorage.setItem('quiz_question', 'involvement'), window.location.href = '/quiz')
-    if(!recipientData.package_plan) return  (window.localStorage.setItem('quiz_question', 'package'), window.location.href = '/quiz')
-    if(!recipientData.mail_to) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
+    // if(!recipientData.age) return  (window.localStorage.setItem('quiz_question', 'age'), window.location.href = '/quiz')
+    // if(!recipientData.event) return  (window.localStorage.setItem('quiz_question', 'events'), window.location.href = '/quiz')
+    // if(recipientData.event == 'other' && !recipientData.event_other) return  (window.localStorage.setItem('quiz_question', 'events'), window.location.href = '/quiz')
+    // if(!recipientData.card_arrival) return  (window.localStorage.setItem('quiz_question', 'events'), window.location.href = '/quiz')
+    // if(!recipientData.rank) return  (window.localStorage.setItem('quiz_question', 'ranking'), window.location.href = '/quiz')
+    // if(!recipientData.tags) return  (window.localStorage.setItem('quiz_question', 'tags'), window.location.href = '/quiz')
+    // if(!recipientData.other) return  (window.localStorage.setItem('quiz_question', 'other'), window.location.href = '/quiz')
+    // if(!recipientData.involvement) return  (window.localStorage.setItem('quiz_question', 'involvement'), window.location.href = '/quiz')
+    // if(!recipientData.package_plan) return  (window.localStorage.setItem('quiz_question', 'package'), window.location.href = '/quiz')
+    // if(!recipientData.mail_to) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
 
-    if(recipientData.mail_to == 'user' || recipientData.mail_to == 'recipient'){
-      if(!recipientData.name) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
-      if(!recipientData.address_one) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
-      if(!recipientData.zip_code) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
-      if(!recipientData.state) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
-      if(!recipientData.city) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
-    }
+    // if(recipientData.mail_to == 'user' || recipientData.mail_to == 'recipient'){
+    //   if(!recipientData.name) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
+    //   if(!recipientData.address_one) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
+    //   if(!recipientData.zip_code) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
+    //   if(!recipientData.state) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
+    //   if(!recipientData.city) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
+    // }
 
-    if(!recipientData.message_later){
-      if(!recipientData.nickname) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
-      if(!recipientData.message) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
-      if(!recipientData.signature) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
-    }
-    if(!recipientData.description) return  (window.localStorage.setItem('quiz_question', 'description'), window.location.href = '/quiz')
+    // if(!recipientData.message_later){
+    //   if(!recipientData.nickname) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
+    //   if(!recipientData.message) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
+    //   if(!recipientData.signature) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
+    // }
+    // if(!recipientData.description) return  (window.localStorage.setItem('quiz_question', 'description'), window.location.href = '/quiz')
 
     recipientData.package_plan === 'standard' ? (setPackagePrice(8.99), setTax(8.99 * .1)) : recipientData.package_plan == 'plantable' ? (setPackagePrice(10.99), setTax(10.99 * .1)) : null
 
