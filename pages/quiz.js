@@ -686,7 +686,7 @@ const quiz = ({quizState}) => {
             {other == 'recipient' ? 
             <span className="quiz-recipient-item-other" onClick={(e) => e.stopPropagation()}>
               <div className="quiz-recipient-item-other-input-container">
-                <input className="quiz-recipient-item-other-input" type="text" placeholder="Please specify" onFocus={(e) => (e.stopPropagation(), e.target.placeholder = "")} onBlur={(e) => e.target.placeholder = "Please specify"} value={quizState.recipient_other} onChange={(e) => handleChange('recipient_other', e)}/>
+                <input className="quiz-recipient-item-other-input" type="text" placeholder="Please specify" autoFocus value={quizState.recipient_other} onChange={(e) => handleChange('recipient_other', e)}/>
                 <div className="quiz-recipient-item-other-input-svg" onClick={() => (setOther(false), quizProgress('other', 'age'))}>{checkmarkOther && <SVGs svg={'checkmark'}></SVGs>}</div>
               </div>
               </span> 
@@ -759,7 +759,7 @@ const quiz = ({quizState}) => {
               <span className="quiz-recipient-event-item-other">
                 <div className="quiz-recipient-event-item-other-input-container">
 
-                  <input className="quiz-recipient-event-item-other-input" type="text" placeholder="Please specify" onFocus={(e) => (e.target.placeholder = "", setEnableCalendar(''))} onBlur={(e) => e.target.placeholder = "Please specify"} value={quizState.event_other} onChange={(e) => (handleChange('event_other', e))}/>
+                  <input className="quiz-recipient-event-item-other-input" type="text" placeholder="Please specify" autoFocus value={quizState.event_other} onChange={(e) => (handleChange('event_other', e))}/>
 
                   <div className="quiz-recipient-event-item-other-input-svg" onClick={() => (setOther(false), setEnableCalendar('event-other'))}>
                     {checkmarkOther && <SVGs svg={'checkmark'}></SVGs>}
