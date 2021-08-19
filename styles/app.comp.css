@@ -495,11 +495,11 @@ body {
         color: #011722;
         cursor: pointer; }
       .quiz-recipient-item-active {
-        background-color: #0f2e4c;
+        background-color: #0f2e4c !important;
         color: white;
         cursor: pointer; }
         .quiz-recipient-item-active:hover {
-          background-color: #0f2e4c;
+          background-color: #0f2e4c !important;
           color: white;
           cursor: pointer; }
       .quiz-recipient-item-other {
@@ -538,27 +538,29 @@ body {
             .quiz-recipient-item-other-container {
               padding: 0.5rem 0.5rem; } }
         .quiz-recipient-item-other-input {
+          width: 80%;
           border: none;
           text-indent: 1rem;
           height: 3rem;
+          font-size: 1.8rem;
           flex-grow: 1; }
           .quiz-recipient-item-other-input-container {
             display: flex;
             align-items: center;
             width: auto;
-            border-radius: 1.2rem;
-            border: 0.1rem solid #e5e5e5; }
+            border-radius: 1rem; }
           .quiz-recipient-item-other-input:focus {
             outline: none; }
           .quiz-recipient-item-other-input-svg {
-            width: 100%;
+            width: 20%;
             height: 3rem !important; }
             @media only screen and (max-width: 600px) {
               .quiz-recipient-item-other-input-svg {
                 width: 3rem; } }
             .quiz-recipient-item-other-input-svg svg {
-              width: 100%;
-              height: 3rem !important;
+              width: 2.5rem;
+              height: 2.5rem;
+              border-radius: 50%;
               fill: white;
               background-color: #0f2e4c; }
         .quiz-recipient-item-other-recipient {
@@ -658,6 +660,11 @@ body {
       flex-direction: column;
       margin: 0 3rem 3rem 0;
       position: relative; }
+      .quiz-recipient-event-item-text {
+        font-size: 2rem; }
+        @media only screen and (max-width: 600px) {
+          .quiz-recipient-event-item-text {
+            font-size: 1.5rem; } }
       @media only screen and (max-width: 1200px) {
         .quiz-recipient-event-item {
           width: 19rem;
@@ -696,8 +703,6 @@ body {
             height: auto;
             padding: 0;
             min-height: 0; } }
-      .quiz-recipient-event-item span {
-        font-size: 1.6rem; }
       .quiz-recipient-event-item:hover {
         background-color: #d7dcfe;
         color: #0f2e4c;
@@ -731,28 +736,33 @@ body {
             left: 5%;
             width: 90%; } }
         .quiz-recipient-event-item-other-input {
+          font-size: 2rem;
+          width: 80%;
           border: none;
           text-indent: 1rem;
           height: 3rem;
           flex-grow: 1; }
+          @media only screen and (max-width: 600px) {
+            .quiz-recipient-event-item-other-input {
+              font-size: 1.5rem; } }
           .quiz-recipient-event-item-other-input-container {
             display: flex;
             align-items: center;
-            width: auto;
+            width: 100%;
             border-radius: 1.2rem;
-            outline: none;
-            border: 0.1rem solid #e5e5e5; }
+            outline: none; }
           .quiz-recipient-event-item-other-input:focus {
             outline: none; }
           .quiz-recipient-event-item-other-input-svg {
-            width: 100%;
+            width: 20%;
             height: 3rem !important; }
             @media only screen and (max-width: 600px) {
               .quiz-recipient-event-item-other-input-svg {
                 width: 3rem; } }
             .quiz-recipient-event-item-other-input-svg svg {
-              width: 100%;
-              height: 3rem !important;
+              width: 2.5rem;
+              height: 2.5rem;
+              border-radius: 50%;
               fill: white;
               background-color: #0f2e4c; }
       .quiz-recipient-event-item-calendar {
@@ -792,10 +802,11 @@ body {
               font-size: 1rem !important;
               margin: 0.5rem 0 0rem 0; } }
         .quiz-recipient-event-item-arrival-date {
+          font-size: 1.8rem;
           margin: 0 0 1rem 0; }
           @media only screen and (max-width: 600px) {
             .quiz-recipient-event-item-arrival-date {
-              font-size: 1.2rem !important;
+              font-size: 1rem !important;
               margin: 0 0 0.5rem 0; } }
   .quiz-recipient-style {
     grid-column: 1/-1;
@@ -1592,6 +1603,18 @@ body {
     min-width: 20px !important;
     border-radius: 1.2rem; }
 
+.mb-4 {
+  margin-bottom: 8rem; }
+  @media only screen and (max-width: 600px) {
+    .mb-4 {
+      margin-bottom: 4rem; } }
+
+.pb-4 {
+  padding-bottom: 6rem; }
+  @media only screen and (max-width: 600px) {
+    .pb-4 {
+      padding-bottom: 3rem; } }
+
 .checkout {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
@@ -2307,7 +2330,7 @@ body {
       transition: all 0.5s; }
       .form-group-double input:focus {
         outline: none;
-        border: 0.1rem solid #e84925; }
+        border: 0.1rem solid #e5e5e5; }
       .form-group-double input:first-child {
         margin-right: 1.2rem; }
     .form-group-double-dropdown {
@@ -2323,7 +2346,7 @@ body {
         transition: all 0.5s; }
         .form-group-double-dropdown input:focus {
           outline: none;
-          border: 0.1rem solid #e84925; }
+          border: 0.1rem solid #e5e5e5; }
         .form-group-double-dropdown input:first-child {
           margin-right: 1.2rem; }
       .form-group-double-dropdown-list {
@@ -2369,7 +2392,7 @@ body {
       transition: all 0.5s; }
       .form-group-single input:focus {
         outline: none;
-        border: 0.1rem solid #e84925; }
+        border: 0.1rem solid #e5e5e5; }
     .form-group-single-dropdown {
       display: inline-block;
       width: 100%; }
@@ -2507,7 +2530,7 @@ body {
     font-size: 1.8rem; }
     .message textarea:focus {
       outline: none;
-      border: 0.1rem solid #e84925; }
+      border: 0.1rem solid #e5e5e5; }
 
 .checkbox {
   display: flex;
