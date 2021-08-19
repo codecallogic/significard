@@ -197,7 +197,7 @@
 
       &:focus {
         outline: none;
-        border: 0.1rem solid $color-scheme-1;
+        border: 0.1rem solid $color-light-gray;
       }
 
       &:first-child {
@@ -220,7 +220,7 @@
 
         &:focus {
           outline: none;
-          border: 0.1rem solid $color-scheme-1;
+          border: 0.1rem solid $color-light-gray;
         }
 
         &:first-child {
@@ -293,7 +293,7 @@
 
       &:focus {
         outline: none;
-        border: 0.1rem solid $color-scheme-1;
+        border: 0.1rem solid $color-light-gray;
       }
     }
 
@@ -489,7 +489,7 @@
 
     &:focus {
       outline: none;
-      border: 0.1rem solid $color-scheme-1;
+      border: 0.1rem solid $color-light-gray;
     }
   }
 }

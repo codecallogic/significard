@@ -58,6 +58,7 @@ const quiz = ({quizState}) => {
 
   // HANDLE CLICK OUTSIDE STATE DROPDOWN
   useEffect(() => {
+    console.log(document.querySelectorAll('.recipient-other')[0])
     document.addEventListener("mousedown", handleClick);
   // return function to be called when unmounted
   return () => {
@@ -271,10 +272,10 @@ const quiz = ({quizState}) => {
   const quizProgress = (e, next, other) => {
     if(next == 'ranking') (window.localStorage.removeItem('rank'), dispatch({type: 'RESET_RANK', name: 'ranking', payload: []}))
 
-    if(other == 'card_arrival'){
-      window.localStorage.setItem('event', e.trim())
-      dispatch({type: "UPDATE_CHANGE", name: "event", payload: e} )
-    }
+    // if(other == 'card_arrival'){
+    //   window.localStorage.setItem('event', e.trim())
+    //   dispatch({type: "UPDATE_CHANGE", name: "event", payload: e} )
+    // }
 
     let els = document.querySelectorAll('.quiz-recipient-item')
     let els2 = document.querySelectorAll('.quiz-recipient-age-item')
@@ -288,9 +289,13 @@ const quiz = ({quizState}) => {
     els4.forEach( (el) => {el.classList.remove("quiz-recipient-involvement-item-active")})
     els5.forEach( (el) => {el.classList.remove("quiz-recipient-mail-item-active")})
 
-    els.forEach( (el) => {el.textContent.toLowerCase().split(' ')[0].trim() == e.toLowerCase().trim() ? el.classList.add("quiz-recipient-item-active") : null})
+    // els3.forEach( (el) => {console.log(el.textContent.toLowerCase().split('«'))})
+
+    // els3.forEach( (el) => {el.textContent.toLowerCase().split('arrival')[0].trim() == e.trim() ? el.classList.add("quiz-recipient-event-item-active") : null})
+
+    els.forEach( (el) => {el.textContent.split(' ')[0].toLowerCase().trim() == e.toLowerCase().trim() ? el.classList.add("quiz-recipient-item-active") : null})
     els2.forEach( (el) => {el.textContent == e.target.textContent ? el.classList.add("quiz-recipient-age-item-active") : null})
-    els3.forEach( (el) => {el.textContent.toLowerCase().split('arrival')[0].trim() == e.trim() ? el.classList.add("quiz-recipient-event-item-active") : null})
+    els3.forEach( (el) => {el.textContent.toLowerCase().split('«')[0].trim() == e.trim() ? el.classList.add("quiz-recipient-event-item-active") : null})
     els4.forEach( (el) => {el.textContent == e.target.textContent ? el.classList.add("quiz-recipient-involvement-item-active") : null})
     els5.forEach( (el) => {el.textContent == e.target.textContent ? el.classList.add("quiz-recipient-mail-item-active") : null})
 
@@ -466,6 +471,12 @@ const quiz = ({quizState}) => {
       return 
     }
 
+    if(question == 'event_other_reset'){
+      window.localStorage.setItem('event_other', e)
+      dispatch({type: 'UPDATE_CHANGE', name: 'event_other', payload: e})
+      return 
+    }
+
     if(question == 'recipient'){
       window.localStorage.setItem('recipient', e.target.textContent.toLowerCase().split(' ')[0].trim())
 
@@ -638,7 +649,11 @@ const quiz = ({quizState}) => {
 
   const handleDate = (date, type) => {
     setCalendar(date)
-    quizProgress(type, 'description', 'card_arrival')
+    console.log(type)
+    type !== 'other' ? handleChange('event_other_reset', '') : null
+    window.localStorage.setItem('event', type.trim())
+    dispatch({type: "UPDATE_CHANGE", name: "event", payload: type} )
+    quizProgress(type == 'other' ? quizState.event_other : type)
   }
   
   const formatDate = (e) => {
@@ -671,7 +686,7 @@ const quiz = ({quizState}) => {
             <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), quizProgress(e.target.textContent, 'age'))}>Grandma</div>
             <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), quizProgress(e.target.textContent, 'age'))}>Grandpa</div>
             <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), quizProgress(e.target.textContent, 'age'))}>Daughter</div>
-            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), setOther('recipient'))}>{`Other `}
+            <div className={`quiz-recipient-item recipient-other ` + (other == 'recipient' ? ` pb-4 ` : '') + (typeof window !== "undefined" ? window.localStorage.getItem('recipient_other') ? window.localStorage.getItem('recipient_other').length > 0 ? ` pb-4 ` : '' : '' : '')} onClick={(e) => (handleChange('recipient', e), setOther('recipient'))}>{`Other `}
 
             {quizState.recipient_other ? 
             <span className="quiz-recipient-item-other-container">
@@ -684,10 +699,10 @@ const quiz = ({quizState}) => {
             }
             
             {other == 'recipient' ? 
-            <span className="quiz-recipient-item-other" onClick={(e) => e.stopPropagation()}>
+            <span className="quiz-recipient-item-other mt-4" onClick={(e) => e.stopPropagation()}>
               <div className="quiz-recipient-item-other-input-container">
                 <input className="quiz-recipient-item-other-input" type="text" placeholder="Please specify" autoFocus value={quizState.recipient_other} onChange={(e) => handleChange('recipient_other', e)}/>
-                <div className="quiz-recipient-item-other-input-svg" onClick={() => (setOther(false), quizProgress('other', 'age'))}>{checkmarkOther && <SVGs svg={'checkmark'}></SVGs>}</div>
+                <div className="quiz-recipient-item-other-input-svg" onClick={(e) => (quizProgress('other', 'age'), setOther(false), document.querySelectorAll('.recipient-other')[0].classList.add("active"))}>{checkmarkOther && <SVGs svg={'checkmark'}></SVGs>}</div>
               </div>
               </span> 
             : 
@@ -695,7 +710,7 @@ const quiz = ({quizState}) => {
             }
             </div>
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e, 'age')} disabled={other.length > 0 ? quizState.recipient ? true : fasle : false}>Next</button></div>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e, 'age')} disabled={other.length > 0 ? quizState.recipient ? true : false : false}>Next</button></div>
           {quizState.recipient && !other && <div className="quiz-next" onClick={(e) => quizProgressNav(e, 'age')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>}
@@ -741,7 +756,7 @@ const quiz = ({quizState}) => {
             (item.subtitle.toLowerCase() == 'other' ? (setOther('event'), window.localStorage.removeItem('card_arrival')) : setEnableCalendar(`event-${item.subtitle.toLowerCase()}`), window.localStorage.setItem('event', item.subtitle.toLowerCase()), window.localStorage.removeItem('card_arrival'))
             )}>
               {item.imageName ? <img src={`/media/emojis/${item.imageName}`}></img> : null}
-              <span className={item.subtitle == 'more' ? 'expand' : null}>{item.subtitle == 'more' ? toggleEvents ? 'less' : 'more' : item.subtitle}
+              <span className={`quiz-recipient-event-item-text ` + (item.subtitle.toLowerCase() == 'other' && window.localStorage.getItem('event') == 'other' ? ' mb-4 ' : '') + (item.subtitle == 'more' ? 'expand' : null) + (window.localStorage.getItem('card_arrival') ? window.localStorage.getItem('card_arrival') && item.subtitle.toLowerCase().trim() == window.localStorage.getItem('event') ? ' mb-4' : null : null)}>{item.subtitle == 'more' ? toggleEvents ? 'less' : 'more' : item.subtitle == 'Other' ? quizState.event_other ? quizState.event_other : 'Other': item.subtitle}
 
               {window.localStorage.getItem('card_arrival') ? window.localStorage.getItem('card_arrival') && item.subtitle.toLowerCase().trim() == window.localStorage.getItem('event')
               ?
@@ -761,8 +776,8 @@ const quiz = ({quizState}) => {
 
                   <input className="quiz-recipient-event-item-other-input" type="text" placeholder="Please specify" autoFocus value={quizState.event_other} onChange={(e) => (handleChange('event_other', e))}/>
 
-                  <div className="quiz-recipient-event-item-other-input-svg" onClick={() => (setOther(false), setEnableCalendar('event-other'))}>
-                    {checkmarkOther && <SVGs svg={'checkmark'}></SVGs>}
+                  <div className="quiz-recipient-event-item-other-input-svg" onClick={(e) => (e.stopPropagation(), setOther(false), setEnableCalendar('event-other'))}>
+                    {checkmarkOther && <svg><use xlinkHref="sprite.svg#icon-checkmark"></use></svg>}
                   </div>
                 </div>
               </span> 
@@ -774,6 +789,7 @@ const quiz = ({quizState}) => {
                     <Calendar
                       onClickDay={(date) => handleDate(date, window.localStorage.getItem('event').trim())}
                       value={calendar}
+                      minDate={new Date(Date.now() + 12096e5)}
                     />
                 </span>
                 :
@@ -906,8 +922,8 @@ const quiz = ({quizState}) => {
           </div>
           <div className="quiz-title">Anything specific your {typeof window !== "undefined" ? window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient' : 'recipient'} might like?</div>
           <div className="quiz-title-mobile">Anything specific your {typeof window !== "undefined" ? window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient' : 'recipient'} might like?</div>
-          <div className="quiz-subtitle">Animals, flowers, foods etc. Add as many words as you'd like!</div>
-          <div className="quiz-subtitle-mobile">Animals, flowers, foods etc. Add as many words as you'd like!</div>
+          <div className="quiz-subtitle">Animals, flowers, foods etc. Add as many tags as you'd like! (max 2 words per tag)</div>
+          <div className="quiz-subtitle-mobile">Animals, flowers, foods etc. Add as many tags as you'd like! (max 2 words per tag)</div>
           <div className="quiz-recipient-tags">
             <div className={`quiz-recipient-tags-box ` + (invalid_tag ? ` form-message-error-outline` : null)}>
               <input type="hidden" name="tags" id="tagValue" value="" required></input>
