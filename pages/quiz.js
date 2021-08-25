@@ -35,7 +35,7 @@ const quiz = ({quizState}) => {
   const router = useRouter()
   const node = useRef();
   
-  const [quiz, setQuiz] = useState('recipient')
+  const [quiz, setQuiz] = useState('tags')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
@@ -58,7 +58,7 @@ const quiz = ({quizState}) => {
 
   // HANDLE CLICK OUTSIDE STATE DROPDOWN
   useEffect(() => {
-    console.log(document.querySelectorAll('.recipient-other')[0])
+    console.log(document.querySelectorAll('.recipient-other'))
     document.addEventListener("mousedown", handleClick);
   // return function to be called when unmounted
   return () => {
@@ -360,7 +360,8 @@ const quiz = ({quizState}) => {
         let input = document.getElementById('researchInterests')
         input.value = responseTag.data
       } catch (error) {
-        if(error) return  error.response ? setInvalidTag(true) : setInvalidTag(true)
+        console.log(error.response)
+        if(error) return  error.response ? (setMessage(error.response.data),setInvalidTag(true)) : (setMessage(`Tags cannot be more than two words`), setInvalidTag(true))
       }
       e.preventDefault();
       manageTags('addTag')
@@ -649,7 +650,7 @@ const quiz = ({quizState}) => {
 
   const handleDate = (date, type) => {
     setCalendar(date)
-    console.log(type)
+    // console.log(type)
     type !== 'other' ? handleChange('event_other_reset', '') : null
     window.localStorage.setItem('event', type.trim())
     dispatch({type: "UPDATE_CHANGE", name: "event", payload: type} )
@@ -686,7 +687,7 @@ const quiz = ({quizState}) => {
             <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), quizProgress(e.target.textContent, 'age'))}>Grandma</div>
             <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), quizProgress(e.target.textContent, 'age'))}>Grandpa</div>
             <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), quizProgress(e.target.textContent, 'age'))}>Daughter</div>
-            <div className={`quiz-recipient-item recipient-other ` + (other == 'recipient' ? ` pb-4 ` : '') + (typeof window !== "undefined" ? window.localStorage.getItem('recipient_other') ? window.localStorage.getItem('recipient_other').length > 0 ? ` pb-4 ` : '' : '' : '')} onClick={(e) => (handleChange('recipient', e), setOther('recipient'))}>{`Other `}
+            <div className={`quiz-recipient-item recipient-other ` + (other == 'recipient' ? ` pb-4 ` : '') + (typeof window !== "undefined" ? window.localStorage.getItem('recipient_other') ? window.localStorage.getItem('recipient_other').length > 0 ? ` pb-4 ` : '' : '' : '')} onClick={(e) => (handleChange('recipient', e), setOther('recipient'))}>{quizState.recipient_other ? quizState.recipient_other : 'Other '}
 
             {quizState.recipient_other ? 
             <span className="quiz-recipient-item-other-container">
@@ -702,7 +703,7 @@ const quiz = ({quizState}) => {
             <span className="quiz-recipient-item-other mt-4" onClick={(e) => e.stopPropagation()}>
               <div className="quiz-recipient-item-other-input-container">
                 <input className="quiz-recipient-item-other-input" type="text" placeholder="Please specify" autoFocus value={quizState.recipient_other} onChange={(e) => handleChange('recipient_other', e)}/>
-                <div className="quiz-recipient-item-other-input-svg" onClick={(e) => (quizProgress('other', 'age'), setOther(false), document.querySelectorAll('.recipient-other')[0].classList.add("active"))}>{checkmarkOther && <SVGs svg={'checkmark'}></SVGs>}</div>
+                <div className="quiz-recipient-item-other-input-svg" onClick={(e) => (quizProgress('other'), setOther(false), document.querySelectorAll('.recipient-other')[0].classList.add("active"))}>{checkmarkOther && <SVGs svg={'checkmark'}></SVGs>}</div>
               </div>
               </span> 
             : 
@@ -922,14 +923,15 @@ const quiz = ({quizState}) => {
           </div>
           <div className="quiz-title">Anything specific your {typeof window !== "undefined" ? window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient' : 'recipient'} might like?</div>
           <div className="quiz-title-mobile">Anything specific your {typeof window !== "undefined" ? window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient' : 'recipient'} might like?</div>
-          <div className="quiz-subtitle">Animals, flowers, foods etc. Add as many tags as you'd like! (max 2 words per tag)</div>
-          <div className="quiz-subtitle-mobile">Animals, flowers, foods etc. Add as many tags as you'd like! (max 2 words per tag)</div>
+          <div className="quiz-subtitle">Animals, flowers, foods etc. Add as many tags as you'd like!</div>
+          <div className="quiz-subtitle-mobile">Animals, flowers, foods etc. Add as many tags as you'd like!</div>
           <div className="quiz-recipient-tags">
             <div className={`quiz-recipient-tags-box ` + (invalid_tag ? ` form-message-error-outline` : null)}>
               <input type="hidden" name="tags" id="tagValue" value="" required></input>
               <input type="text" id="researchInterests" name="tags" value={tags} onChange={ (e) => (setTags(e.target.value), setMessage(''))} onKeyPress={(e) => handleKeyPress(e)}/>
               <button onClick={(e) => handleKeyPress(e, 'true')}>Add</button>
             </div>
+            {message ? <div className="form-message-error">{message}</div> : <div className="form-message-error">&nbsp;</div>}
             <div className="form-tag-container"></div>
             <div className="quiz-recipient-tags-checkbox"><input type="checkbox" name="unsure" onClick={(e) => (setTimeout(() => {
               quizProgressNav(e,'other')
