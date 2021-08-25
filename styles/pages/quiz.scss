@@ -1380,7 +1380,7 @@
     padding: 4rem 0 4rem 0;
     margin: 4rem 0 4rem 0;
     width: 630px;
-    height: 673px;
+    height: max-content;
     border: 0.2rem solid $color-light-gray;
     border-radius: 1.2rem;
 
@@ -1402,7 +1402,7 @@
     &-container {
       form {
         margin: 0 0 0 10.1rem;
-        width: 410px;
+        width: max-content;
         display: flex;
         justify-content: flex-start;
         flex-direction: column;

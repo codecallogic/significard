@@ -35,7 +35,7 @@ const quiz = ({quizState}) => {
   const router = useRouter()
   const node = useRef();
   
-  const [quiz, setQuiz] = useState('tags')
+  const [quiz, setQuiz] = useState('message')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
@@ -1258,7 +1258,7 @@ const quiz = ({quizState}) => {
           <div className="quiz-subtitle">Fill in the blank!</div>
           <div className="quiz-subtitle-mobile">Fill in the blank!</div>
           <div className="quiz-recipient-message">
-            <div className="quiz-recipient-message-heading">Card: {window.localStorage.getItem('event') ? window.localStorage.getItem('event') : quizState.event ? quizState.event : 'event'}</div>
+            <div className="quiz-recipient-message-heading">Card: {typeof window !== 'undefined' ? window.localStorage.getItem('event') ? window.localStorage.getItem('event') : quizState.event ? quizState.event : 'event' : null}</div>
             <div className="quiz-recipient-message-container">
               <form>
                 <div className="form-group-single message">
@@ -1268,7 +1268,7 @@ const quiz = ({quizState}) => {
                 </div>
                 <div className="form-group-single message p-0">
                   <label htmlFor="message">Handwritten message inside:</label>
-                  <textarea className="w-4" cols="100" rows="5" value={quizState.message == 'blank' || quizState.message == 'message_options' ? '' : quizState.message} onChange={(e) => (handleChange('message', e, null, e.target.value), document.getElementsByName('message_blank')[0].checked = false, document.getElementsByName('message_textarea_blank')[0].checked = false)}></textarea>
+                  <textarea className="w-4" rows="5" value={quizState.message == 'blank' || quizState.message == 'message_options' ? '' : quizState.message} onChange={(e) => (handleChange('message', e, null, e.target.value), document.getElementsByName('message_blank')[0].checked = false, document.getElementsByName('message_textarea_blank')[0].checked = false)}></textarea>
                   <div className="checkbox_2"><input type="checkbox" name="message_blank" onChange={(e) => (handleChange('message', e, null, 'blank'), document.getElementsByName('message_textarea_blank')[0].checked = false)}/><span>Leave it blank</span></div>
                   <div className="checkbox_2 w-4 info-popup"><input type="checkbox" name="message_textarea_blank" onClick={(e) => (handleChange('message', e, null, 'message_options'), document.getElementsByName('message_blank')[0].checked = false)}/>
                     <span>Give me message options for $2.00</span>
