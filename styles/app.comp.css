@@ -1450,7 +1450,7 @@ body {
     padding: 4rem 0 4rem 0;
     margin: 4rem 0 4rem 0;
     width: 630px;
-    height: 673px;
+    height: max-content;
     border: 0.2rem solid #e5e5e5;
     border-radius: 1.2rem; }
     @media only screen and (max-width: 992px) {
@@ -1466,7 +1466,7 @@ body {
           font-size: 2.2rem; } }
     .quiz-recipient-message-container form {
       margin: 0 0 0 10.1rem;
-      width: 410px;
+      width: max-content;
       display: flex;
       justify-content: flex-start;
       flex-direction: column;
@@ -2507,7 +2507,7 @@ body {
         width: 90%; } }
 
 .message {
-  width: 300px;
+  width: 100%;
   margin: 0 0 1rem 0;
   display: flex;
   flex-direction: column;
@@ -2563,7 +2563,7 @@ body {
         font-size: 1rem; } }
 
 .w-4 {
-  width: 40.1rem !important; }
+  width: 100% !important; }
   @media only screen and (max-width: 992px) {
     .w-4 {
       width: 100% !important; } }
