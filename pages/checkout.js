@@ -79,7 +79,7 @@ const Checkout = ({newUser}) => {
 
     console.log(store.get('user'))
     
-    // console.log(recipientData)
+    console.log(recipientData)
 
     if(!recipientData.recipient) return  (window.localStorage.setItem('quiz_question', 'recipient'), window.location.href = '/quiz')
     if(recipientData.recipient.trim() == 'other' && !recipientData.recipient_other) return  (window.localStorage.setItem('quiz_question', 'recipient'), window.location.href = '/quiz')
