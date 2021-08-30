@@ -15,6 +15,7 @@ import { geocodeByPlaceId } from 'react-places-autocomplete'
 import axios from 'axios'
 import {API} from '../config'
 import SVGs from '../files/svgs'
+import store from 'store-js'
 
 // TODO: Make all tags lowercase for validation
 // TODO: Disable dates two weeks from present day on calendar
@@ -58,6 +59,8 @@ const quiz = ({quizState}) => {
 
   // HANDLE CLICK OUTSIDE STATE DROPDOWN
   useEffect(() => {
+    store.set('user', { name:'Marcus' })
+    
     console.log(document.querySelectorAll('.recipient-other'))
     document.addEventListener("mousedown", handleClick);
   // return function to be called when unmounted
@@ -1080,7 +1083,7 @@ const quiz = ({quizState}) => {
             <div className="quiz-recipient-mail-address-container">
               <div className="quiz-recipient-mail-address-heading">Your address:</div>
               <form>
-                <div className="form-group-single  mail">
+                <div className="form-group-single mail">
                   <input type="text" placeholder="Full Name" value={quizState.name} onChange={ (e) => handleChange('mail', e, null, 'name')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Full Name'} required/>
                 </div>
                 <PlacesAutocomplete value={quizState.address_one} onChange={(e) => handleChange('mail_api', e, null, 'address_one')} onSelect={(e) => (handleSelect('mail', e, null, 'address_one', document.getElementById('address_place_id').value))} searchOptions={searchOptionsAddress}>

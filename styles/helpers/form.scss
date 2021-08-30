@@ -276,6 +276,8 @@
     padding: 1.5rem 0 0 0;
     margin-right: 2rem;
     grid-column: 1/-1;
+    width: 100%;
+    // background-color: red;
 
     label {
       display: block;
@@ -426,7 +428,7 @@
 
 .mail {
   width: 300px;
-  height: 53px;
+  height: 5.3rem;
   margin: 0 0 1rem 0;
 
   @media only screen and (max-width: $large) {

@@ -277,7 +277,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 190px;
+      width: 19rem;
       min-height: 18.2rem;
       font-size: 1.6rem;
       line-height: 2.5rem;
@@ -1221,7 +1221,7 @@
       display: flex;
       flex-direction: column;
       width: 1070px;
-      height: 284px;
+      height: 28.4rem;
       background-color: $color-light-gray-alt-3;
       margin: 0 0 5rem 0;
 
@@ -1348,8 +1348,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 850px;
-      height: 553px;
+      width: 85rem;
+      height: 55.3rem;
       border: 0.2rem solid $color-light-gray;
       box-sizing: border-box;
       border-radius: 1.2rem;
@@ -1379,7 +1379,7 @@
     text-align: center;
     padding: 4rem 0 4rem 0;
     margin: 4rem 0 4rem 0;
-    width: 630px;
+    width: 63rem;
     height: max-content;
     border: 0.2rem solid $color-light-gray;
     border-radius: 1.2rem;
@@ -1401,8 +1401,8 @@
 
     &-container {
       form {
-        margin: 0 0 0 10.1rem;
-        width: max-content;
+        padding: 0 5rem 0 5rem;
+        width: 100%;
         display: flex;
         justify-content: flex-start;
         flex-direction: column;
@@ -1437,8 +1437,8 @@
     justify-content: center;
     padding: 4rem 0 4rem 0;
     margin: 4rem 0 4rem 0;
-    width: 410px;
-    height: 374px;
+    width: 41rem;
+    height: 37.4rem;
     border: 0.2rem solid $color-light-gray;
     border-radius: 1.2rem;
 
