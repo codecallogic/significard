@@ -51,7 +51,7 @@ const SignUp = ({newUser, user, userUpdate, userMessage}) => {
     e.preventDefault()
     try {
       const responseSignUp = await axios.post(`${API}/auth/signup`, {name, email, password})
-      console.log(responseSignUp)
+      // console.log(responseSignUp.data)
       userMessage(responseSignUp.data)
       setLoading(false)
       setName('')
@@ -73,10 +73,17 @@ const SignUp = ({newUser, user, userUpdate, userMessage}) => {
     try {
       const responseLogin = await axios.post(`${API}/auth/login`, {user})
       setLoading(false)
-      ///
-      window.location.href = '/quiz'
+      if(responseLogin.data.recipients){
+        if(responseLogin.data.recipients.length > 0){
+          window.location.href = `account/${responseLogin.data._id}`
+        }else{
+          window.location.href = '/quiz'
+        }
+      }else{
+        window.location.href = '/quiz'
+      }
     } catch (error) {
-      console.log(error.response.data)
+      console.log(error.response)
       if(error) error.response ? userMessage(error.response.data) : userMessage(null)
       setLoading(false)
     }

@@ -7,6 +7,10 @@ axios.defaults.withCredentials = true
 const withUser = Page => {
     const WithAuthUser = props => <Page {...props} />
     WithAuthUser.getInitialProps = async (context)  => {
+      let userID = null
+      if(context.query) userID = context.query.id
+
+      let recipients = null
       const user = getUser(context.req)
       const token = getToken(context.req)
       let newUser = null
@@ -25,19 +29,39 @@ const withUser = Page => {
           })
           newUser = responseUser.data
         } catch (error) {
-          console.log(error) 
+          console.log({'ERROR': error})
+        }
+      }
+
+      if(userID){
+        if(userID !== 'sprite.svg'){
+          if(userID !== 'DragDropTouch.js'){
+            try {
+              const responseRecipients = await axios.post(`${API}/auth/user-recipients`, {id: userID})
+              console.log(responseRecipients)
+              recipients = responseRecipients.data
+            } catch (error) {
+              console.log(error)
+            }
+          }
         }
       }
 
       if(!newUser){
+        // return {
+        //   ...(Page.getInitialProps ? await Page.getInitialProps(context) : {}),
+        //   newUser,
+        //   recipients
+        // }
         context.res.writeHead(302, {
           Location: '/signup'
         });
         context.res.end();
       }else{
         return {
-            ...(Page.getInitialProps ? await Page.getInitialProps(context) : {}),
-            newUser,
+          ...(Page.getInitialProps ? await Page.getInitialProps(context) : {}),
+          newUser,
+          recipients
         }
       }
     }

@@ -61,7 +61,7 @@ const quiz = ({quizState}) => {
   useEffect(() => {
     store.set('user', { name:'Marcus' })
     
-    console.log(document.querySelectorAll('.recipient-other'))
+    // console.log(document.querySelectorAll('.recipient-other'))
     document.addEventListener("mousedown", handleClick);
   // return function to be called when unmounted
   return () => {
@@ -495,6 +495,8 @@ const quiz = ({quizState}) => {
     if(question == 'recipient_other'){
       window.localStorage.setItem('recipient_other', e.target.value)
       dispatch({type: 'UPDATE_CHANGE', name: question, payload: e.target.value})
+      dispatch({type: 'UPDATE_CHANGE', name: 'recipient', payload: ''})
+      window.localStorage.removeItem('recipient')
       return 
     }
 
@@ -669,7 +671,7 @@ const quiz = ({quizState}) => {
     var year = e.getUTCFullYear()
     return `${month} ${day}, ${year}`
   }
-  
+
   return (
     
     <>
@@ -760,7 +762,7 @@ const quiz = ({quizState}) => {
             (item.subtitle.toLowerCase() == 'other' ? (setOther('event'), window.localStorage.removeItem('card_arrival')) : setEnableCalendar(`event-${item.subtitle.toLowerCase()}`), window.localStorage.setItem('event', item.subtitle.toLowerCase()), window.localStorage.removeItem('card_arrival'))
             )}>
               {item.imageName ? <img src={`/media/emojis/${item.imageName}`}></img> : null}
-              <span className={`quiz-recipient-event-item-text ` + (item.subtitle.toLowerCase() == 'other' && window.localStorage.getItem('event') == 'other' ? ' mb-4 ' : '') + (item.subtitle == 'more' ? 'expand' : null) + (window.localStorage.getItem('card_arrival') ? window.localStorage.getItem('card_arrival') && item.subtitle.toLowerCase().trim() == window.localStorage.getItem('event') ? ' mb-4' : null : null)}>{item.subtitle == 'more' ? toggleEvents ? 'less' : 'more' : item.subtitle == 'Other' ? quizState.event_other ? quizState.event_other : 'Other': item.subtitle}
+              <span className={`quiz-recipient-event-item-text ` + (item.subtitle.toLowerCase() == 'other' && window.localStorage.getItem('event') == 'other' ? ' mb-4 ' : '') + (item.subtitle == 'more' ? 'expand' : null) + (window.localStorage.getItem('card_arrival') ? window.localStorage.getItem('card_arrival') && item.subtitle.toLowerCase().trim() == window.localStorage.getItem('event') ? ' mb-4' : null : null)}>{item.subtitle == 'more' ? toggleEvents ? 'less' : 'more' : item.subtitle == 'Other' ? window.localStorage.getItem('event_other') ? window.localStorage.getItem('event_other') : 'Other': item.subtitle}
 
               {window.localStorage.getItem('card_arrival') ? window.localStorage.getItem('card_arrival') && item.subtitle.toLowerCase().trim() == window.localStorage.getItem('event')
               ?
@@ -1075,7 +1077,7 @@ const quiz = ({quizState}) => {
               To me
             </div>
             <div id="mail_to_recipient" className="quiz-recipient-mail-item" onClick={(e) => (setAddress('recipient'), quizProgress(e, 'mail'))}>
-              To {typeof window !== 'undefined' ? window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : ' the recipient' : ' the recipient'}
+              To {typeof window !== 'undefined' ? window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : window.localStorage.getItem('recipient_other') ? window.localStorage.getItem('recipient_other') : ' the recipient' : ' the recipient'}
             </div>
           </div>
           {address == 'me' &&

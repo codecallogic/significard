@@ -77,12 +77,19 @@ const Checkout = ({newUser}) => {
       recipientData.quiz_session = window.localStorage.getItem('quiz_session')
     }
 
-    console.log(store.get('user'))
+    // console.log(store.get('user'))
     
-    console.log(recipientData)
+    // console.log(recipientData)
 
-    if(!recipientData.recipient) return  (window.localStorage.setItem('quiz_question', 'recipient'), window.location.href = '/quiz')
-    if(recipientData.recipient.trim() == 'other' && !recipientData.recipient_other) return  (window.localStorage.setItem('quiz_question', 'recipient'), window.location.href = '/quiz')
+    if(!recipientData.recipient){
+      if(!recipientData.recipient_other){
+        return  (window.localStorage.setItem('quiz_question', 'recipient'), window.location.href = '/quiz')
+      }else{
+        null
+      }
+    }
+
+
     if(!recipientData.age) return  (window.localStorage.setItem('quiz_question', 'age'), window.location.href = '/quiz')
     if(!recipientData.event) return  (window.localStorage.setItem('quiz_question', 'events'), window.location.href = '/quiz')
     if(recipientData.event == 'other' && !recipientData.event_other) return  (window.localStorage.setItem('quiz_question', 'events'), window.location.href = '/quiz')
@@ -239,7 +246,7 @@ const Checkout = ({newUser}) => {
           </div>
           <div className="checkout-container-right">
             <div className="checkout-container-right-package">Package: {recipient.package_plan ? recipient.package_plan : ''} </div>
-            {recipient.mail_to == 'recipient' && <div className="checkout-container-right-ship_to">Ship to {recipient.recipient ? recipient.recipient == 'other' ? `${recipient.recipient_other}'s address`: `${recipient.recipient}'s address` : ''} </div>}
+            {recipient.mail_to == 'recipient' && <div className="checkout-container-right-ship_to">Ship to {recipient.recipient ? `${recipient.recipient}'s address` : recipient.recipient_other ? `${recipient.recipient_other}'s address`: ''} </div>}
             <div className="checkout-container-right-delivery">📩 <span>Estimated arrival date: {delivery}</span></div>
             <div className="checkout-container-right-price"><span>{recipient.event ? recipient.event : ''}</span><span>{`$ ` + Math.ceil(package_price * 100) / 100}</span></div>
             <div className="checkout-container-right-tax"><span>Sales Tax</span><span>{`$ ` + (Math.ceil(tax * 100) / 100).toFixed(2)}</span></div>

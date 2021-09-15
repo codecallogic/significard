@@ -85,6 +85,12 @@ export const recipientReducer = (state = initialState, action) => {
         [action.name]: action.payload
       }
       break;
+
+    case 'EDIT_RECIPIENT':
+      return {
+        ...state,
+        [action.name]: action.value
+      }
   
     default:
       return state
