@@ -172,28 +172,28 @@ const User = ({recipients, recipient, editRecipient}) => {
                   </div>
                 </div>
                 <div className="profile-dashboard-recipients-edit-profile-edit" onClick={() => setEdit('profile')}>Edit</div>
-              </div>
+                </div>
               }
               {edit == 'profile' && 
                 <div className="profile-dashboard-recipients-edit-profile">
                   <div className="profile-dashboard-recipients-edit-profile-container">
                     <div className="profile-dashboard-recipients-edit-profile-personality-edit">
                       <div className="profile-dashboard-recipients-edit-profile-personality-title">Personality:</div>
-                      <div className="form-group-single-dropdown-menu" ref={myRefs}>
-                        <textarea rows="1" wrap="off" onKeyDown={(e) => e.keyCode == 13 ? e.preventDefault() : null} name="description" placeholder="(Other)" onClick={() => setInputDropdown('recipient_description')} value={recipient.description.charAt(0).toUpperCase() + recipient.description.slice(1)} onChange={(e) => editRecipient('description', e.target.value)}></textarea>
+                      <div className="form-group-single-dropdown-menu profile-dashboard-recipients-edit-profile-personality-input">
+                        <textarea rows="1" wrap="off" onKeyDown={(e) => e.keyCode == 13 ? e.preventDefault() : null} name="description" placeholder="(Other)" onClick={() => (console.log('hello'), setInputDropdown('recipient_description'))} value={recipient.description.charAt(0).toUpperCase() + recipient.description.slice(1)} onChange={(e) => editRecipient('description', e.target.value)}></textarea>
                         { input_dropdown == 'recipient_description' &&
-                          <div className="form-group-single-dropdown-menu-list">
-                            <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('description', e.target.innerText), setInputDropdown(''))}>Life of the party</div>
-                            <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('description', e.target.innerText), setInputDropdown(''))}>Soft spoken</div>
-                            <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('description', e.target.innerText), setInputDropdown(''))}>Thoughtful</div>
-                            <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('description', e.target.innerText), setInputDropdown(''))}>Strong minded</div>
+                          <div className="form-group-single-dropdown-menu-list" ref={myRefs}>
+                            <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('description', e.target.innerText.charAt(0).toUpperCase() + e.target.innerText.slice(1).toLowerCase()), setInputDropdown(''))}>Life of the party</div>
+                            <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('description', e.target.innerText.charAt(0).toUpperCase() + e.target.innerText.slice(1).toLowerCase()), setInputDropdown(''))}>Soft spoken</div>
+                            <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('description', e.target.innerText.charAt(0).toUpperCase() + e.target.innerText.slice(1).toLowerCase()), setInputDropdown(''))}>Thoughtful</div>
+                            <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('description', e.target.innerText.charAt(0).toUpperCase() + e.target.innerText.slice(1).toLowerCase()), setInputDropdown(''))}>Strong minded</div>
                           </div>
                         }
                       </div>
                     </div>
                     <div className="profile-dashboard-recipients-edit-profile-address">
                       <div className="profile-dashboard-recipients-edit-profile-address-title">Address</div>
-                      <div className="form-group-single-dropdown-menu">
+                      <div className="form-group-single-dropdown-menu profile-dashboard-recipients-edit-profile-personality-input">
                         <textarea rows="3" wrap="on" onKeyDown={(e) => e.keyCode == 13 ? e.preventDefault() : null} name="description" placeholder="(Edit Address)" value={recipient.address_one ? `${recipient.address_one}, ${item.city}, ${item.state}, ${item.zip_code}`: recipient.address_two} onClick={() => setModal('address')} readOnly></textarea>
                       </div>
                     </div>
@@ -214,14 +214,14 @@ const User = ({recipients, recipient, editRecipient}) => {
                       </div>
                     </div>
                   </div>
-                  <div className="profile-dashboard-recipients-edit-profile-edit" onClick={() => setEdit('profile')}>Edit</div>
+                  <div className="profile-dashboard-recipients-edit-profile-edit" onClick={() => setEdit('')}>Save</div>
                 </div>
               }
               <div className="profile-dashboard-recipients-edit-style">
                 <div className="profile-dashboard-recipients-edit-style-title"><span>Card style</span> (rate it from more important to least important):</div>
                 <div className="profile-dashboard-recipients-edit-style-selection">
                   {item.rank.length > 0 && item.rank.map((item, idx) =>
-                    <div key={idx} className={`profile-dashboard-recipients-edit-style-selection-item-${item.rank}`}>{item.style}</div>
+                    <div key={idx} className={`profile-dashboard-recipients-edit-style-selection-item-${item.rank} profile-dashboard-recipients-edit-style-selection-item`}>{item.style}</div>
                   )}
                 </div>
                 <div className="profile-dashboard-recipients-edit-profile-edit">Edit</div>
@@ -259,10 +259,10 @@ const User = ({recipients, recipient, editRecipient}) => {
           <div className="recipient-modal-box">
             <div className="recipient-modal-box-close" onClick={() => setModal('')}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
             <div className="quiz-recipient-mail-address">
-              <div className="form-group-single checkbox">
+              {/* <div className="form-group-single checkbox">
                 <input type="checkbox"/>
                 <span>I don’t know their address, email them for me to ask for their address</span>
-              </div>
+              </div> */}
               <div className="quiz-recipient-mail-address-container">
                 <form>
                     <PlacesAutocomplete value={recipient.address_one} onChange={(e) => editRecipient('address_one', e)} onSelect={(e) => handleSelect(e, 'address_one', document.getElementById('address_place_id').value)} searchOptions={searchOptionsAddress}>

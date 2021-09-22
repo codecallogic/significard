@@ -1,20 +1,236 @@
 .home {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  height: 100vh;
-  align-items: center;
-  font-size: 2.8rem;
+  &-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 68rem;
+    position: relative;
 
-  a {
-    text-decoration: none;
-    font-size: 1.8rem;
-    color: $color-scheme-1;
+    &-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
 
-    &:hover {
-      color: $color-scheme-3-variation-2;
-      cursor: pointer;
+    &-container {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      padding: 0 10rem;
+    }
+
+    &-title {
+      font-size: 4rem;
+      font-family: Sanchez;
+      line-height: 5.1rem;
+      margin: 1rem 0;
+
+      &-container {
+        width: 80%;
+      }
+    }
+
+    &-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 16rem;
+      height: 5.2rem;
+      font-size: 1.8rem;
+      color: white;
+      background-color: $color-scheme-3;
+      border-radius: 1.2rem;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    &-card {
+      &-container {
+        width: 100%;
+        padding: 0 3rem;
+        display: flex;
+        justify-content: center;
+        position: relative;
+      }
+
+      &-card_1 {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        bottom: -100%;
+        margin-left: 2rem;
+        z-index: 5;
+      }
+
+      &-card_2 {
+        position: absolute;
+        top: 60%;
+        z-index: 2;
+      }
+    }
+  }
+
+  &-section_2 {
+    width: 100%;
+    padding: 5rem 0;
+    height: 68rem;
+
+    &-title {
+      font-size: 3.6rem;
+      line-height: 4.6rem;
+      font-family: Sanchez;
+      text-align: center;
+    }
+
+    &-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 3rem 20rem;
+    }
+
+    &-item {
+      align-self: flex-start;
+      width: 30rem;
+
+      &-image {
+        &-container {
+          display: flex;
+          justify-content: center;
+        }
+      }
+
+      &-description {
+        padding: 1rem 0;
+        text-align: center;
+
+        &-title {
+          font-size: 2.2rem;
+          padding: 1rem 0;
+        }
+
+        span {
+          font-size: 1.8rem;
+        }
+      }
+    }
+
+    &-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30rem;
+      height: 5.2rem;
+      font-size: 1.8rem;
+      color: white;
+      background-color: $color-scheme-3;
+      border-radius: 1.2rem;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+
+  &-section_3 {
+    width: 100%;
+    height: 100%;
+  }
+
+  &-section_4 {
+    width: 100%;
+    height: 100%;
+
+    &-title {
+      width: 100%;
+      text-align: center;
+      font-size: 3.6rem;
+      color: $color-scheme-3-variation-1;
+      font-family: Sanchez;
+      line-height: 4.6rem;
+      margin: 2rem 0;
+    }
+
+    &-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 3rem 15rem;
+
+      @media only screen and (max-width: $wide) {
+        padding: 3rem 10rem;
+      }
+    }
+
+    &-item {
+      align-self: flex-start;
+
+      &-review {
+        display: flex;
+        align-items: center;
+        width: 43rem;
+        height: 32.6rem;
+        font-family: Roboto;
+        font-size: 1.8rem;
+        border-radius: 2.6rem;
+        border: 0.1rem solid #c4c4c4;
+        padding: 8rem 2rem;
+        margin-bottom: 5rem;
+        z-index: 5 !important;
+        position: relative;
+
+        @media only screen and (max-width: $wide) {
+          width: 38rem !important;
+        }
+
+        &-bottom {
+          width: 4.8rem;
+          height: 4.8rem;
+          border: 0.1rem solid #c4c4c4;
+          transform: rotate(-45deg);
+          background-color: white;
+          border-top: none;
+          border-right: none;
+
+          &-container {
+            position: absolute;
+            bottom: -7.5%;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+          }
+        }
+      }
+
+      &-image {
+        display: flex;
+        justify-content: center;
+
+        img {
+          border-radius: 50%;
+        }
+      }
+
+      &-name {
+        text-align: center;
+        margin: 1rem 0;
+        font-family: Roboto;
+        font-size: 2.2rem;
+        line-height: 2.6rem;
+      }
     }
   }
 }

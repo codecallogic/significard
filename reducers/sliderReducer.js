@@ -1,5 +1,5 @@
 const initialState = {
-  translate: 50,
+  translate: 0,
   active: 0
 }
 

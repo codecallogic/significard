@@ -87,6 +87,7 @@ export const recipientReducer = (state = initialState, action) => {
       break;
 
     case 'EDIT_RECIPIENT':
+      console.log(action.value)
       return {
         ...state,
         [action.name]: action.value
