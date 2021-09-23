@@ -1163,12 +1163,12 @@ const quiz = ({quizState}) => {
           }
           {address == 'recipient' &&
             <div className="quiz-recipient-mail-address">
-              <div className="form-group-single checkbox">
+              {/* <div className="form-group-single checkbox">
                 <input type="checkbox" onClick={ (e) => (dispatch({type: 'UPDATE_CHANGE', name: 'mail_to', payload: 'email recipient to asks for their address'}), window.localStorage.setItem('mail_to', 'email recipient to asks for their address'), dispatch({type: 'RESET_MAIl'}), resetMail(), setTimeout(() => {
                   quizProgressNav(e,'message')
                 }, 500))}/>
                 <span>I don’t know their address, email them for me to ask for their address</span>
-              </div>
+              </div> */}
               <div className="quiz-recipient-mail-address-container">
                 <form>
                   <div className="form-group-single  mail">
