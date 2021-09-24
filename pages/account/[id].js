@@ -5,6 +5,8 @@ import SVG from '../../files/svgs'
 import { useState, useEffect, useRef } from 'react'
 import {eventsList} from '../../utils/quiz'
 import {connect} from 'react-redux'
+import {API} from '../../config'
+import axios from 'axios'
 import PlacesAutocomplete from 'react-places-autocomplete'
 import { geocodeByPlaceId } from 'react-places-autocomplete'
 import {usStates} from '../../utils/quiz'
@@ -19,7 +21,7 @@ const searchOptionsCities = {
   types: ['(cities)']
 }
 
-const User = ({recipients, recipient, editRecipient}) => {
+const User = ({newUser, recipients, recipient, editRecipient}) => {
   const myRefs = useRef(null)
   const node = useRef();
   // console.log(recipients)
@@ -31,6 +33,9 @@ const User = ({recipients, recipient, editRecipient}) => {
   const [modal, setModal] = useState('')
   const [state_list, setStateList] = useState(false)
   const [message, setMessage] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState('')
+  const [allRecipients, setAllRecipients] = useState(recipients ? recipients : null)
 
   const handleClickOutside = (event) => {
     if(myRefs.current){
@@ -108,7 +113,41 @@ const User = ({recipients, recipient, editRecipient}) => {
     const regex = /[^0-9|\n\r]/g
     input.value = input.value.split(regex).join('')
   }
+
+  const updateRecipient = async (type) => {
+    setLoading(type)
+    try {
+      const responseRecipient = await axios.post(`${API}/recipient/update-recipient`, {user: newUser, recipient: recipient})
+      setAllRecipients(responseRecipient.data)
+      setLoading('')
+      setEdit('')
+    } catch (error) {
+      setLoading('')
+      console.log(error)
+      if(error) error.response ? setError(error.response.data) : setError('Could not update recipient')
+    }
+  }
   
+  const onDragStart = (e, id, type) => {
+    if(edit !== 'style') return
+    e.dataTransfer.setData("id", id)
+    e.dataTransfer.setData("type", type)
+  }
+
+  const onDragOver = (e) => {
+    // console.log(e)
+    e.preventDefault()
+  }
+
+  const onDrop = (e, id) => {
+    if(edit !== 'style') return
+  
+    let switchText = recipient.rank[id - 1].style
+    recipient.rank[id - 1].style  = e.dataTransfer.getData('type')
+    recipient.rank[e.dataTransfer.getData('id') - 1].style = switchText
+
+    editRecipient(recipient.rank)
+  }
   
   return (
     <>
@@ -144,37 +183,18 @@ const User = ({recipients, recipient, editRecipient}) => {
         <div className="profile-dashboard-recipients">
           <div className="profile-dashboard-recipients-item-add"><SVG svg={'plus'}></SVG><span>Add Recipient</span></div>
           {recipients.map((item, idx) => 
-            <div key={idx} className="profile-dashboard-recipients-item" onClick={() => setRecipient(item._id)}>{item.name}</div>
+            <div key={idx} className="profile-dashboard-recipients-item" onClick={() => (setEdit(''), setRecipient(item._id))}>{item.name}</div>
           )}
         </div>
         }
         {
-          recipientID && recipients.filter((item) => item._id == recipientID).map((item, idx) =>
+          recipientID && allRecipients.filter((item) => item._id == recipientID).map((item, idx) =>
             <div key={idx} className="profile-dashboard-recipients-edit">
               <div className="profile-dashboard-recipients-edit-title">
                 <div className="profile-dashboard-recipients-edit-title-recipient">{item.recipient ? item.recipient : item.recipient_other}</div>
                 <div className="profile-dashboard-recipients-edit-title-name">{item.name}</div>
               </div>
-              {!edit && <div className="profile-dashboard-recipients-edit-profile">
-                <div className="profile-dashboard-recipients-edit-profile-container">
-                  <div className="profile-dashboard-recipients-edit-profile-personality">
-                    <div className="profile-dashboard-recipients-edit-profile-personality-title">Personality:</div>
-                    <span>{item.description.charAt(0).toUpperCase() + item.description.slice(1)}</span>
-                  </div>
-                  <div className="profile-dashboard-recipients-edit-profile-address">
-                    <div className="profile-dashboard-recipients-edit-profile-address-title">Address</div>
-                    <span>{item.address_one ? item.address_one : item.address_two}</span>
-                    <span>{item.city}, {item.state} {item.zip_code}</span>
-                  </div>
-                  <div className="profile-dashboard-recipients-edit-profile-age">
-                    <div className="profile-dashboard-recipients-edit-profile-age-title">Age</div>
-                    <span>{item.age}</span>
-                  </div>
-                </div>
-                <div className="profile-dashboard-recipients-edit-profile-edit" onClick={() => setEdit('profile')}>Edit</div>
-                </div>
-              }
-              {edit == 'profile' && 
+              {edit == 'profile' ?
                 <div className="profile-dashboard-recipients-edit-profile">
                   <div className="profile-dashboard-recipients-edit-profile-container">
                     <div className="profile-dashboard-recipients-edit-profile-personality-edit">
@@ -214,17 +234,49 @@ const User = ({recipients, recipient, editRecipient}) => {
                       </div>
                     </div>
                   </div>
-                  <div className="profile-dashboard-recipients-edit-profile-edit" onClick={() => setEdit('')}>Save</div>
+                  <div className="profile-dashboard-recipients-edit-profile-edit" onClick={() => (updateRecipient('profile'))}>{loading == 'profile' ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : <span>Save</span>}</div>
+                </div>
+
+                :
+
+                <div className="profile-dashboard-recipients-edit-profile">
+                <div className="profile-dashboard-recipients-edit-profile-container">
+                  <div className="profile-dashboard-recipients-edit-profile-personality">
+                    <div className="profile-dashboard-recipients-edit-profile-personality-title">Personality:</div>
+                    <span>{item.description.charAt(0).toUpperCase() + item.description.slice(1)}</span>
+                  </div>
+                  <div className="profile-dashboard-recipients-edit-profile-address">
+                    <div className="profile-dashboard-recipients-edit-profile-address-title">Address</div>
+                    <span>{item.address_one ? item.address_one : item.address_two}</span>
+                    <span>{item.city}, {item.state} {item.zip_code}</span>
+                  </div>
+                  <div className="profile-dashboard-recipients-edit-profile-age">
+                    <div className="profile-dashboard-recipients-edit-profile-age-title">Age</div>
+                    <span>{item.age}</span>
+                  </div>
+                </div>
+                <div className="profile-dashboard-recipients-edit-profile-edit" onClick={() => setEdit('profile')}>Edit</div>
                 </div>
               }
               <div className="profile-dashboard-recipients-edit-style">
                 <div className="profile-dashboard-recipients-edit-style-title"><span>Card style</span> (rate it from more important to least important):</div>
                 <div className="profile-dashboard-recipients-edit-style-selection">
                   {item.rank.length > 0 && item.rank.map((item, idx) =>
-                    <div key={idx} className={`profile-dashboard-recipients-edit-style-selection-item-${item.rank} profile-dashboard-recipients-edit-style-selection-item`}>{item.style}</div>
+                    <div className={`profile-dashboard-recipients-edit-style-selection-item-${item.rank}`} key={idx} onDrop={(e) => onDrop(e, item.rank)} onDragOver={(e) => onDragOver(e)}>
+                    <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${item.rank}`}
+                    draggable onDragStart={(e) => {onDragStart(e, item.rank,item.style)}}
+                    >
+                      {item.style}
+                    </div>
+                    </div>
                   )}
                 </div>
-                <div className="profile-dashboard-recipients-edit-profile-edit">Edit</div>
+                {edit == 'style' ? 
+                   <div className="profile-dashboard-recipients-edit-profile-edit" onClick={() => (updateRecipient('style'))}>{loading == 'style' ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : <span>Save</span>}</div>
+                  :
+                  <div className="profile-dashboard-recipients-edit-profile-edit" onClick={() => setEdit('style')}>Edit</div>
+                }
+                
               </div>
               <div className="profile-dashboard-recipients-edit-event">
                 <div className="profile-dashboard-recipients-edit-event-title">Events:</div>
@@ -233,7 +285,7 @@ const User = ({recipients, recipient, editRecipient}) => {
                       eventsList.map((e, idx) => 
                         e.subtitle.toLowerCase() == item.event ?
                           <div key={idx} className="profile-dashboard-recipients-edit-event-container-card">
-                            <img className="profile-dashboard-recipients-edit-event-container-card-image" src={`/media/emojis/${e.imageName}`} alt="" />
+                            <img className="profile-dashboard-recipients-edit-event-container-card-image" src={`/media/emojis/` + (e.imageName ? e.imageName : 'other.png')} alt="" />
                             <div className="profile-dashboard-recipients-edit-event-container-card-title">{item.event.toLowerCase() == 'other' ? item.event_other : e.subtitle}</div>
                             <div className="profile-dashboard-recipients-edit-event-container-card-subtitle">Themes</div> 
                             <div className="profile-dashboard-recipients-edit-event-container-card-tags">
