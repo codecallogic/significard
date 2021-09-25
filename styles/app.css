@@ -50,8 +50,7 @@ body {
         cursor: pointer; }
       .nav-menu-item svg {
         width: 3.6rem;
-        height: 3.6rem;
-        fill: black; }
+        height: 3.6rem; }
 
 .footer {
   display: flex;
@@ -251,6 +250,7 @@ body {
 
 .recipient-modal {
   position: fixed;
+  top: 5%;
   left: 10%;
   width: 80%;
   min-height: 75rem;
@@ -268,9 +268,14 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 75rem;
-    max-height: 100%;
+    max-height: 75rem;
     border-radius: 1.2rem;
-    position: relative; }
+    position: relative;
+    overflow-y: auto; }
+    .recipient-modal-box::-webkit-scrollbar {
+      width: 0.2rem; }
+    .recipient-modal-box::-webkit-scrollbar-thumb {
+      background-color: #0f2e4c; }
     .recipient-modal-box-close {
       position: absolute;
       top: 2rem;
@@ -282,6 +287,23 @@ body {
         .recipient-modal-box-close-svg:hover {
           cursor: pointer;
           fill: #e84925; }
+    .recipient-modal-box-event {
+      width: 100%;
+      height: 75rem;
+      padding: 10rem 0;
+      overflow-y: scroll; }
+      .recipient-modal-box-event::-webkit-scrollbar {
+        width: 0.2rem; }
+      .recipient-modal-box-event::-webkit-scrollbar-thumb {
+        background-color: #0f2e4c; }
+      .recipient-modal-box-event-title {
+        text-align: center; }
+      .recipient-modal-box-event-button {
+        width: max-content;
+        margin-bottom: 2rem; }
+
+.black {
+  color: black !important; }
 
 .signup {
   text-align: center; }
@@ -2576,9 +2598,11 @@ body {
           display: flex;
           align-items: center;
           margin: 2rem 0; }
-          @media only screen and (max-width: 1800px) {
-            .profile-dashboard-recipients-edit-style-selection-item {
-              min-width: 12rem !important; } }
+          .profile-dashboard-recipients-edit-style-selection-item {
+            text-align: center; }
+            @media only screen and (max-width: 1800px) {
+              .profile-dashboard-recipients-edit-style-selection-item {
+                min-width: 12rem !important; } }
           .profile-dashboard-recipients-edit-style-selection-item-1 {
             display: flex;
             justify-content: center;
@@ -2667,7 +2691,7 @@ body {
             min-width: 15rem;
             position: relative; }
             .profile-dashboard-recipients-edit-style-selection-item-4::before {
-              content: '3';
+              content: '4';
               position: absolute;
               bottom: 75%;
               display: flex;
@@ -2692,7 +2716,7 @@ body {
             min-width: 15rem;
             position: relative; }
             .profile-dashboard-recipients-edit-style-selection-item-5::before {
-              content: '3';
+              content: '5';
               position: absolute;
               bottom: 75%;
               display: flex;
@@ -2717,7 +2741,7 @@ body {
             min-width: 15rem;
             position: relative; }
             .profile-dashboard-recipients-edit-style-selection-item-6::before {
-              content: '3';
+              content: '6';
               position: absolute;
               bottom: 75%;
               display: flex;
@@ -2737,38 +2761,104 @@ body {
         position: relative; }
         .profile-dashboard-recipients-edit-event-title {
           font-size: 1.8rem;
-          font-weight: 700; }
+          font-weight: 700;
+          color: #011722; }
         .profile-dashboard-recipients-edit-event-container {
           margin: 0.5rem 0; }
           .profile-dashboard-recipients-edit-event-container-card {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 2rem 0 1rem 0;
+            padding: 1rem 0 1rem 0;
             box-sizing: border-box;
             width: 15.2rem;
-            height: 18.7rem;
+            height: 20.11rem;
             border: 0.2rem solid #e5e5e5;
-            border-radius: 1.2rem; }
+            border-radius: 1.2rem;
+            position: relative; }
+            .profile-dashboard-recipients-edit-event-container-card-menu {
+              position: absolute;
+              top: 10%;
+              width: 100%;
+              z-index: 5;
+              border-radius: 1.2rem;
+              background-color: white; }
+              .profile-dashboard-recipients-edit-event-container-card-menu-item {
+                width: 100%;
+                font-size: 1.2rem;
+                text-align: center;
+                padding: 1rem 0;
+                color: #778186;
+                border-bottom: 0.1rem solid #e5e5e5; }
+                .profile-dashboard-recipients-edit-event-container-card-menu-item:last-child {
+                  border-top-left-radius: 0 !important;
+                  border-top-right-radius: 0 !important;
+                  border-radius: 1.2rem; }
+                .profile-dashboard-recipients-edit-event-container-card-menu-item:hover {
+                  cursor: pointer; }
+            .profile-dashboard-recipients-edit-event-container-card-dots {
+              position: absolute;
+              top: 3%;
+              right: 5%;
+              display: flex;
+              justify-content: space-between;
+              align-items: center; }
+              .profile-dashboard-recipients-edit-event-container-card-dots span {
+                width: 4px;
+                height: 4px;
+                margin-right: 2px;
+                background-color: #011722;
+                border-radius: 50%; }
+              .profile-dashboard-recipients-edit-event-container-card-dots:hover {
+                cursor: pointer; }
             .profile-dashboard-recipients-edit-event-container-card-image {
               width: 4.5rem;
               height: 4.5rem; }
             .profile-dashboard-recipients-edit-event-container-card-title {
+              text-align: center;
               font-size: 1.8rem;
-              margin: 0.5rem 0;
-              padding: 0.5rem 0;
-              border-bottom: 0.2rem solid #e5e5e5; }
-            .profile-dashboard-recipients-edit-event-container-card-subtitle {
+              padding: 0 0 1rem 0;
+              width: 80%;
+              border-bottom: 0.2rem solid #e5e5e5;
+              color: #011722; }
+            .profile-dashboard-recipients-edit-event-container-card-subtitle-date {
+              margin: 1rem 0 0 0;
+              font-family: Roboto;
+              font-size: 1.4rem;
+              font-weight: 500;
+              line-height: 1.4rem;
+              color: #011722; }
+            .profile-dashboard-recipients-edit-event-container-card-date {
               font-size: 1.2rem;
-              font-weight: 700; }
+              line-height: 1.4rem;
+              color: #778186; }
             .profile-dashboard-recipients-edit-event-container-card-tags {
+              width: 95%;
               display: flex;
+              align-items: center;
               justify-content: center;
               flex-wrap: wrap;
               margin: 0 0 0.5rem 0; }
               .profile-dashboard-recipients-edit-event-container-card-tags-tag {
                 font-size: 1.2rem;
-                margin-right: 0.5rem; }
+                margin-right: 0.5rem;
+                color: #778186; }
+              .profile-dashboard-recipients-edit-event-container-card-tags-dots {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 18px;
+                height: 18px;
+                border: 0.1rem solid #778186;
+                padding: 0.2rem;
+                border-radius: 50%; }
+                .profile-dashboard-recipients-edit-event-container-card-tags-dots span {
+                  width: 2px;
+                  height: 2px;
+                  background-color: #778186;
+                  border-radius: 50%; }
+                .profile-dashboard-recipients-edit-event-container-card-tags-dots:hover {
+                  cursor: pointer; }
             .profile-dashboard-recipients-edit-event-container-card-button {
               width: 1.5rem;
               height: 1.5rem;
@@ -2825,6 +2915,9 @@ body {
   width: 1rem;
   height: 1rem;
   margin: 0; }
+
+.loading-event span {
+  background-color: #0f2e4c; }
 
 @keyframes dots {
   50% {

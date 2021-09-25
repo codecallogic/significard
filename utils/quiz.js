@@ -60,7 +60,7 @@ export const eventsList = [
     subtitle: 'Hannukah'
   },
   {
-    imageName: '',
+    imageName: 'other_2.png',
     subtitle: 'Other'
   }
 ]

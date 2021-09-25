@@ -251,6 +251,7 @@
           margin: 2rem 0;
 
           &-item {
+            text-align: center;
             @media only screen and (max-width: $wide-large) {
               min-width: 12rem !important;
             }
@@ -357,7 +358,7 @@
             position: relative;
 
             &::before {
-              content: '3';
+              content: '4';
               position: absolute;
               bottom: 75%;
               display: flex;
@@ -386,7 +387,7 @@
             position: relative;
 
             &::before {
-              content: '3';
+              content: '5';
               position: absolute;
               bottom: 75%;
               display: flex;
@@ -415,7 +416,7 @@
             position: relative;
 
             &::before {
-              content: '3';
+              content: '6';
               position: absolute;
               bottom: 75%;
               display: flex;
@@ -442,6 +443,7 @@
         &-title {
           font-size: 1.8rem;
           font-weight: 700;
+          color: $color-scheme-3-variation-3;
         }
 
         &-container {
@@ -451,12 +453,63 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 2rem 0 1rem 0;
+            padding: 1rem 0 1rem 0;
             box-sizing: border-box;
             width: 15.2rem;
-            height: 18.7rem;
+            height: 20.11rem;
             border: 0.2rem solid #e5e5e5;
             border-radius: 1.2rem;
+            position: relative;
+
+            &-menu {
+              position: absolute;
+              top: 10%;
+              width: 100%;
+              z-index: 5;
+              border-radius: 1.2rem;
+              background-color: white;
+
+              &-item {
+                width: 100%;
+                font-size: 1.2rem;
+                text-align: center;
+                padding: 1rem 0;
+                color: $color-light-gray-alt-1;
+                border-bottom: 0.1rem solid $color-light-gray-alt-2;
+
+                &:last-child {
+                  border-top-left-radius: 0 !important;
+                  border-top-right-radius: 0 !important;
+                  border-radius: 1.2rem;
+                }
+
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+
+            &-dots {
+              position: absolute;
+              top: 3%;
+              right: 5%;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              // width: 16px;
+
+              span {
+                width: 4px;
+                height: 4px;
+                margin-right: 2px;
+                background-color: $color-scheme-3-variation-3;
+                border-radius: 50%;
+              }
+
+              &:hover {
+                cursor: pointer;
+              }
+            }
 
             &-image {
               width: 4.5rem;
@@ -464,19 +517,35 @@
             }
 
             &-title {
+              text-align: center;
               font-size: 1.8rem;
-              margin: 0.5rem 0;
-              padding: 0.5rem 0;
+              padding: 0 0 1rem 0;
+              width: 80%;
               border-bottom: 0.2rem solid #e5e5e5;
+              color: $color-scheme-3-variation-3;
             }
 
             &-subtitle {
+              &-date {
+                margin: 1rem 0 0 0;
+                font-family: Roboto;
+                font-size: 1.4rem;
+                font-weight: 500;
+                line-height: 1.4rem;
+                color: $color-scheme-3-variation-3;
+              }
+            }
+
+            &-date {
               font-size: 1.2rem;
-              font-weight: 700;
+              line-height: 1.4rem;
+              color: $color-light-gray-alt-1;
             }
 
             &-tags {
+              width: 95%;
               display: flex;
+              align-items: center;
               justify-content: center;
               flex-wrap: wrap;
               margin: 0 0 0.5rem 0;
@@ -484,6 +553,29 @@
               &-tag {
                 font-size: 1.2rem;
                 margin-right: 0.5rem;
+                color: $color-light-gray-alt-1;
+              }
+
+              &-dots {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 18px;
+                height: 18px;
+                border: 0.1rem solid $color-light-gray-alt-1;
+                padding: 0.2rem;
+                border-radius: 50%;
+
+                span {
+                  width: 2px;
+                  height: 2px;
+                  background-color: $color-light-gray-alt-1;
+                  border-radius: 50%;
+                }
+
+                &:hover {
+                  cursor: pointer;
+                }
               }
             }
 

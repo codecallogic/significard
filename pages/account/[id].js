@@ -3,13 +3,14 @@ import Nav from '../../components/nav'
 import Footer from '../../components/footer'
 import SVG from '../../files/svgs'
 import { useState, useEffect, useRef } from 'react'
-import {eventsList} from '../../utils/quiz'
 import {connect} from 'react-redux'
 import {API} from '../../config'
 import axios from 'axios'
 import PlacesAutocomplete from 'react-places-autocomplete'
 import { geocodeByPlaceId } from 'react-places-autocomplete'
-import {usStates} from '../../utils/quiz'
+import {usStates,eventsList} from '../../utils/quiz'
+import Calendar from 'react-calendar'
+import 'react-calendar/dist/Calendar.css';
 
 const searchOptionsAddress = {
   componentRestrictions: {country: 'us'},
@@ -25,7 +26,6 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
   const myRefs = useRef(null)
   const node = useRef();
   // console.log(recipients)
-  // console.log(recipient)
   const [sideNav, setSideNav] = useState('recipients')
   const [recipientID, setRecipient] = useState('')
   const [edit, setEdit] = useState('')
@@ -35,7 +35,13 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState('')
+  const [cardMenu, setCardMenu] = useState('')
   const [allRecipients, setAllRecipients] = useState(recipients ? recipients : null)
+  const [toggleEvents, setToggleEvents] = useState(false)
+  const [other, setOtherEvent] = useState(false)
+  const [enableCalendar, setEnableCalendar] = useState('')
+  const [calendar, setCalendar] = useState(new Date())
+  const [checkmarkOther, setCheckmarkOther] = useState(false)
 
   const handleClickOutside = (event) => {
     if(myRefs.current){
@@ -44,6 +50,11 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
       }
     }
   }
+
+  useEffect(() => {
+    setEnableCalendar(``)
+    setOtherEvent('')
+  }, [calendar])
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside, true);
@@ -121,6 +132,7 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
       setAllRecipients(responseRecipient.data)
       setLoading('')
       setEdit('')
+      setModal('')
     } catch (error) {
       setLoading('')
       console.log(error)
@@ -147,6 +159,31 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
     recipient.rank[e.dataTransfer.getData('id') - 1].style = switchText
 
     editRecipient(recipient.rank)
+  }
+
+  const formatDate = (e) => {
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    
+    var month = monthNames[e.getUTCMonth()]
+    var day = e.getUTCDate()
+    var year = e.getUTCFullYear()
+    return `${month} ${day}, ${year}`
+  }
+
+  const handleDate = (date, type) => {
+    setCardMenu('empty')
+    setCalendar(date)
+    editRecipient('card_arrival', formatDate(date))
+    type !== 'other' ? editRecipient('event_other', '') : null
+    editRecipient('event', type.trim())
+  }
+
+  const delayCheckOther = () => {
+    let userTyping = setTimeout(() => {
+      setCheckmarkOther(true)
+    }, 500)
+
+    return () => clearTimeout(userTyping);
   }
   
   return (
@@ -183,7 +220,7 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
         <div className="profile-dashboard-recipients">
           <div className="profile-dashboard-recipients-item-add"><SVG svg={'plus'}></SVG><span>Add Recipient</span></div>
           {recipients.map((item, idx) => 
-            <div key={idx} className="profile-dashboard-recipients-item" onClick={() => (setEdit(''), setRecipient(item._id))}>{item.name}</div>
+            <div key={idx} className="profile-dashboard-recipients-item" onClick={() => (setEdit(''), setRecipient(item._id), setCardMenu('empty'))}>{item.name}</div>
           )}
         </div>
         }
@@ -200,7 +237,7 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
                     <div className="profile-dashboard-recipients-edit-profile-personality-edit">
                       <div className="profile-dashboard-recipients-edit-profile-personality-title">Personality:</div>
                       <div className="form-group-single-dropdown-menu profile-dashboard-recipients-edit-profile-personality-input">
-                        <textarea rows="1" wrap="off" onKeyDown={(e) => e.keyCode == 13 ? e.preventDefault() : null} name="description" placeholder="(Other)" onClick={() => (console.log('hello'), setInputDropdown('recipient_description'))} value={recipient.description.charAt(0).toUpperCase() + recipient.description.slice(1)} onChange={(e) => editRecipient('description', e.target.value)}></textarea>
+                        <textarea rows="1" wrap="off" onKeyDown={(e) => e.keyCode == 13 ? e.preventDefault() : null} name="description" placeholder="(Other)" onClick={() => (setInputDropdown('recipient_description'))} value={recipient.description.charAt(0).toUpperCase() + recipient.description.slice(1)} onChange={(e) => editRecipient('description', e.target.value)}></textarea>
                         { input_dropdown == 'recipient_description' &&
                           <div className="form-group-single-dropdown-menu-list" ref={myRefs}>
                             <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('description', e.target.innerText.charAt(0).toUpperCase() + e.target.innerText.slice(1).toLowerCase()), setInputDropdown(''))}>Life of the party</div>
@@ -279,23 +316,33 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
                 
               </div>
               <div className="profile-dashboard-recipients-edit-event">
-                <div className="profile-dashboard-recipients-edit-event-title">Events:</div>
+                <div className="profile-dashboard-recipients-edit-event-title">Your cards:</div>
                 <div className="profile-dashboard-recipients-edit-event-container">
                     {item.event && 
                       eventsList.map((e, idx) => 
                         e.subtitle.toLowerCase() == item.event ?
                           <div key={idx} className="profile-dashboard-recipients-edit-event-container-card">
+                            {cardMenu == idx && <div className="profile-dashboard-recipients-edit-event-container-card-menu">
+                              <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setModal('event')}>Edit Event</div>
+                              <div className="profile-dashboard-recipients-edit-event-container-card-menu-item">Change Arrival Date</div>
+                              <div className="profile-dashboard-recipients-edit-event-container-card-menu-item">Edit Message</div>
+                              <div className="profile-dashboard-recipients-edit-event-container-card-menu-item">Edit Card Themes</div>
+                            </div>
+                            }
+                            <div className="profile-dashboard-recipients-edit-event-container-card-dots" onClick={() => cardMenu !== 'empty' ? setCardMenu('empty') :  setCardMenu(idx)}><span></span><span></span><span></span></div>
                             <img className="profile-dashboard-recipients-edit-event-container-card-image" src={`/media/emojis/` + (e.imageName ? e.imageName : 'other.png')} alt="" />
                             <div className="profile-dashboard-recipients-edit-event-container-card-title">{item.event.toLowerCase() == 'other' ? item.event_other : e.subtitle}</div>
-                            <div className="profile-dashboard-recipients-edit-event-container-card-subtitle">Themes</div> 
+                            <div className="profile-dashboard-recipients-edit-event-container-card-subtitle-date">Est. Arrival Date: </div>
+                            <div className="profile-dashboard-recipients-edit-event-container-card-date">{item.card_arrival}</div> 
+                            <div className="profile-dashboard-recipients-edit-event-container-card-subtitle-date">Card themes: </div> 
                             <div className="profile-dashboard-recipients-edit-event-container-card-tags">
                               {
-                                item.tags.length > 0 && item.tags.slice(0, 2).map((tag, idx) => 
-                                  <div key={idx} className="profile-dashboard-recipients-edit-event-container-card-tags-tag">{ idx !== 1 ? `${tag.substring(0, 10)}, ` : `${tag.substring(0, 10)} `}</div>
+                                item.tags.length > 0 && item.tags.slice(0, 3).map((tag, idx) => 
+                                  <div key={idx} className="profile-dashboard-recipients-edit-event-container-card-tags-tag">{ item.tags.length > 1 ? idx == 2 ? `${tag.substring(0, 10)} ` : item.tags.length - 1 == idx ? `${tag.substring(0, 10)} ` : `${tag.substring(0, 10)}, ` : `${tag.substring(0, 10)} `}</div>
                                 )
                               }
+                              <div className="profile-dashboard-recipients-edit-event-container-card-tags-dots"><span></span><span></span><span></span></div>
                             </div>
-                            <SVG svg={'plus'} classprop={'profile-dashboard-recipients-edit-event-container-card-button'}></SVG>
                           </div>
                         :
                         null
@@ -385,6 +432,78 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
             </div>
           </div>
         </div>
+        }
+        {modal == 'event' &&
+          <div className="recipient-modal">
+          <div className="recipient-modal-box">
+            <div className="recipient-modal-box-close" onClick={() => setModal('')}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
+              <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'age')}>
+            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
+            </div>
+            <div className="recipient-modal-box-event">
+            <div className="quiz-title recipient-modal-box-event-title">What are the events you'd like to send cards for your {recipient.firstName ? recipient.firstName : 'recipient'}?</div>
+            <div className="quiz-title-mobile">What are the events you'd like to send cards for your {recipient.firstName ? recipient.firstName : 'recipient'}?</div>
+            <div className="quiz-subtitle">Pick the event and tell us the arrival date.</div>
+            <div className="quiz-subtitle-mobile">Select the estimated arrival date for the event.</div>
+            <div className="quiz-recipient-event">
+              {eventsList.slice(0, toggleEvents ? 20 : 8).map( (item, idx) => 
+              <div key={idx} className={`quiz-recipient-event-item`} onClick={(e) => 
+              (item.subtitle == 'more' 
+              ? (setToggleEvents(!toggleEvents)) 
+              : 
+              (item.subtitle.toLowerCase() == 'other' ? (editRecipient('event', 'other'), setOtherEvent(true)) : (editRecipient('event', item.subtitle.toLowerCase()), setEnableCalendar(`event-${item.subtitle.toLowerCase()}`)))
+              )}>
+                {item.imageName ? <img src={`/media/emojis/${item.imageName}`}></img> : null}
+                <span className={`quiz-recipient-event-item-text ` + (item.subtitle.toLowerCase() == recipient.event ? ' mb-4 ' : item.subtitle.toLowerCase() == 'other' && other ? ' mb-4 ' : '') + (item.subtitle == 'more' ? 'expand' : null) + (recipient.card_arrival ? recipient.card_arrival && item.subtitle.toLowerCase().trim() == recipient ? ' mb-4' : null : null)}>{item.subtitle == 'more' ? toggleEvents ? 'less' : 'more' : item.subtitle == 'Other' ? recipient.event_other ? recipient.event_other : 'Other' : item.subtitle}
+
+                {recipient.card_arrival ? recipient.card_arrival && item.subtitle.toLowerCase().trim() == recipient.event
+                ?
+                <div className="quiz-recipient-event-item-arrival">
+                  <span className="quiz-recipient-event-item-arrival-title">Arrival Date</span>
+                  <span className="quiz-recipient-event-item-arrival-date">{recipient.card_arrival}</span>
+                </div>
+                : 
+                null
+                :
+                null
+                } 
+
+                {other && item.subtitle.toLowerCase() == 'other' ? 
+                <span className="quiz-recipient-event-item-other">
+                  <div className="quiz-recipient-event-item-other-input-container">
+
+                    <input className="quiz-recipient-event-item-other-input" type="text" placeholder="Please specify" autoFocus value={recipient.event_other} onClick={() => setEnableCalendar('')} onChange={(e) => (editRecipient('event_other', e.target.value), delayCheckOther())}/>
+
+                    <div className="quiz-recipient-event-item-other-input-svg" onClick={(e) => (e.stopPropagation(), setOtherEvent(false), setEnableCalendar('event-other'))}>
+                      {checkmarkOther && <SVG svg={'checkmark'}></SVG>}
+                    </div>
+                  </div>
+                </span> 
+                : null
+                }
+                
+                {recipient.event ? enableCalendar == `event-${recipient.event}` && item.subtitle.toLowerCase().trim() == recipient.event ?
+                  <span className="quiz-recipient-event-item-calendar">
+                      <Calendar
+                        onClickDay={(date) => handleDate(date, recipient.event.trim())}
+                        value={calendar}
+                        minDate={new Date(Date.now() + 12096e5)}
+                      />
+                  </span>
+                  :
+                  null
+                  :
+                  null
+                }
+              </span>
+              </div>
+              )
+              }
+            </div>
+            <div className="quiz-button-container recipient-modal-box-event-button"><button className="quiz-button" onClick={(e) => (updateRecipient())} disabled={recipient.card_arrival && recipient.card_arrival ? false : true}>{loading == 'event' ? <div className="loading loading-event"><span></span><span></span><span></span></div> : <span>Done</span>}</button><div className="quiz-button-container"></div></div>
+            </div>
+          </div>
+          </div>
         }
       </div>
       <Footer></Footer>
