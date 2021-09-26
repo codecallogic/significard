@@ -133,6 +133,7 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
       setLoading('')
       setEdit('')
       setModal('')
+      setCardMenu('empty')
     } catch (error) {
       setLoading('')
       console.log(error)
@@ -184,6 +185,31 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
     }, 500)
 
     return () => clearTimeout(userTyping);
+  }
+
+  const showTooltip = (e, type) => {
+    const els = document.querySelectorAll('.quiz-recipient-package-description-text-bubble-tooltip')
+    els[type].classList.add('display')
+  }
+
+  const hideTooltip = (e, type) => {
+    const els = document.querySelectorAll('.quiz-recipient-package-description-text-bubble-tooltip')
+    els[type].classList.remove('display')
+  }
+
+  const resetMessage= () => {
+    let el = document.getElementById('nickname')
+    if(el) el.checked = false
+
+    let el2 = document.getElementsByName('message_blank')[0]
+    if(el2) el2.checked = false
+
+    let el3 = document.getElementsByName('message_textarea_blank')[0]
+    if(el3) el3.checked = false
+
+    editRecipient('nickname', '')
+    editRecipient('message', '')
+    editRecipient('signature', '')
   }
   
   return (
@@ -324,8 +350,7 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
                           <div key={idx} className="profile-dashboard-recipients-edit-event-container-card">
                             {cardMenu == idx && <div className="profile-dashboard-recipients-edit-event-container-card-menu">
                               <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setModal('event')}>Edit Event</div>
-                              <div className="profile-dashboard-recipients-edit-event-container-card-menu-item">Change Arrival Date</div>
-                              <div className="profile-dashboard-recipients-edit-event-container-card-menu-item">Edit Message</div>
+                              <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setModal('message')}>Edit Message</div>
                               <div className="profile-dashboard-recipients-edit-event-container-card-menu-item">Edit Card Themes</div>
                             </div>
                             }
@@ -436,7 +461,7 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
         {modal == 'event' &&
           <div className="recipient-modal">
           <div className="recipient-modal-box">
-            <div className="recipient-modal-box-close" onClick={() => setModal('')}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
+            <div className="recipient-modal-box-close" onClick={() => (setModal(''), setCardMenu('empty'))}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
               <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'age')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
             </div>
@@ -500,8 +525,54 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
               )
               }
             </div>
-            <div className="quiz-button-container recipient-modal-box-event-button"><button className="quiz-button" onClick={(e) => (updateRecipient())} disabled={recipient.card_arrival && recipient.card_arrival ? false : true}>{loading == 'event' ? <div className="loading loading-event"><span></span><span></span><span></span></div> : <span>Done</span>}</button><div className="quiz-button-container"></div></div>
+            <div className="quiz-button-container recipient-modal-box-event-button"><button className="quiz-button" onClick={(e) => (updateRecipient())} disabled={recipient.card_arrival ? false : true}>{loading == 'event' ? <div className="loading loading-event"><span></span><span></span><span></span></div> : <span>Done</span>}</button><div className="quiz-button-container"></div></div>
             </div>
+          </div>
+          </div>
+        }
+        {modal == 'message' &&
+          <div className="recipient-modal">
+          <div className="recipient-modal-box">
+            <div className="recipient-modal-box-close" onClick={() => (setModal(''), setCardMenu('empty'))}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
+            <div className="recipient-modal-box-message">
+            <div className="quiz-title">What would you like the card to say?</div>
+            <div className="quiz-title-mobile">What would you like the card to say?</div>
+            <div className="quiz-subtitle">Fill in the blank!</div>
+            <div className="quiz-subtitle-mobile">Fill in the blank!</div>
+            <div className="quiz-recipient-message">
+              <div className="quiz-recipient-message-heading">Card: {recipient.event}</div>
+              <div className="quiz-recipient-message-container">
+                <form>
+                  <div className="form-group-single message">
+                    <label htmlFor="name">Name/Nickname in front of the card:</label>
+                    <input type="text" name="name" required value={recipient.nickname} onChange={(e) => (editRecipient('nickname', e.target.value), document.getElementsByName('nickname_blank')[0].checked = false)}/>
+                    <div className="checkbox_2"><input id="nickname" type="checkbox" name="nickname_blank" onClick={(e) => editRecipient('nickname', '')}/><span>Leave it blank</span></div>
+                  </div>
+                  <div className="form-group-single message p-0">
+                    <label htmlFor="message">Handwritten message inside:</label>
+                    <textarea className="w-4" rows="5" value={recipient.message == 'blank' || recipient.message == 'message_options' ? '' : recipient.message} onChange={(e) => (editRecipient('message', e.target.value), document.getElementsByName('message_blank')[0].checked = false, document.getElementsByName('message_textarea_blank')[0].checked = false)}></textarea>
+                    <div className="checkbox_2"><input type="checkbox" name="message_blank" onChange={(e) => (editRecipient('message', 'blank'), document.getElementsByName('message_textarea_blank')[0].checked = false)}/><span>Leave it blank</span></div>
+                    <div className="checkbox_2 w-4 info-popup"><input type="checkbox" name="message_textarea_blank" onClick={(e) => (editRecipient('message', 'message_options'), document.getElementsByName('message_blank')[0].checked = false)}/>
+                      <span>Give me message options for $2.00</span>
+                      <div className="quiz-recipient-package-description-text-bubble" onMouseOver={(e) => showTooltip(e, 0)} onMouseLeave={(e) => hideTooltip(e, 0)}>
+                        <SVG svg={'information'}></SVG>
+                        <div className="quiz-recipient-package-description-text-bubble-tooltip">
+                        We got you! We’ll send you different message options for just $2.00 per card once you sign up.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form-group-single message p-0">
+                    <label htmlFor="name">Signature:</label>
+                    <input type="text" name="signature" required value={recipient.signature == 'blank' ? '' : recipient.signature} onChange={(e) => editRecipient('signature', e.target.value)}/>
+                  </div>
+                </form>
+                <div className="checkbox_2 center show-on-mobile"><input type="checkbox"/><span>Not sure yet, ask me later</span></div>
+              </div>
+            </div>
+            <div className="checkbox_2 center hide-on-mobile"><input id="message_unsure" type="checkbox" onClick={() => resetMessage()}/><span>Not sure yet, ask me later</span></div>
+            <div className="quiz-button-container recipient-modal-box-event-button"><button className="quiz-button" onClick={(e) => (updateRecipient())}>{loading == 'message' ? <div className="loading loading-event"><span></span><span></span><span></span></div> : <span>Done</span>}</button><div className="quiz-button-container"></div></div>
+          </div>
           </div>
           </div>
         }

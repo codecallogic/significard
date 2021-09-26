@@ -72,6 +72,33 @@
         margin-bottom: 2rem;
       }
     }
+
+    &-message {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      height: 75rem;
+      padding: 10rem 0;
+      overflow-y: scroll;
+
+      &::-webkit-scrollbar {
+        width: 0.2rem;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $color-scheme-3;
+      }
+
+      &-title {
+        text-align: center;
+      }
+
+      &-button {
+        width: max-content;
+        margin-bottom: 2rem;
+      }
+    }
   }
 }
 
