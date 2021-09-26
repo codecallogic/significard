@@ -30,9 +30,10 @@ export const recipientReducer = (state = initialState, action) => {
     case 'UPDATE_TAGS':
       return {
         ...state,
-        tags: action.payload
+        tags: action.value
       }
       break;
+
     case 'UPDATE_CHANGE':
       return {
         ...state,

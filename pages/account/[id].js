@@ -11,6 +11,7 @@ import { geocodeByPlaceId } from 'react-places-autocomplete'
 import {usStates,eventsList} from '../../utils/quiz'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
+import {manageTags} from '../../helpers/forms'
 
 const searchOptionsAddress = {
   componentRestrictions: {country: 'us'},
@@ -22,7 +23,7 @@ const searchOptionsCities = {
   types: ['(cities)']
 }
 
-const User = ({newUser, recipients, recipient, editRecipient}) => {
+const User = ({newUser, recipients, recipient, editRecipient, updateTags}) => {
   const myRefs = useRef(null)
   const node = useRef();
   // console.log(recipients)
@@ -42,6 +43,8 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
   const [enableCalendar, setEnableCalendar] = useState('')
   const [calendar, setCalendar] = useState(new Date())
   const [checkmarkOther, setCheckmarkOther] = useState(false)
+  const [tags, setTags] = useState('')
+  const [invalid_tag, setInvalidTag] = useState(false)
 
   const handleClickOutside = (event) => {
     if(myRefs.current){
@@ -73,6 +76,31 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
       }
     })
   }, [recipientID])
+
+  useEffect(() => {
+    if(modal == 'tags'){
+      manageTags('preload',  recipient.tags)
+      let closeIcon = document.querySelectorAll('.form-tag')
+      if(closeIcon){
+        closeIcon.forEach( (e) => {
+          e.addEventListener('click', function(e){
+            let parent = e.target.parentNode
+            let parentOfParent = parent.parentNode
+            parentOfParent.remove()
+
+            let tagValues = document.querySelectorAll(".tag > span")
+            let newValues = []
+            
+            tagValues.forEach( e => {
+              newValues.push(e.innerHTML)
+            })
+
+            updateTags(newValues)
+          })
+        })
+      }
+    }
+  }, [modal])
 
   const handleSelect = async (e, type, id) => {
     let geo
@@ -154,12 +182,16 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
 
   const onDrop = (e, id) => {
     if(edit !== 'style') return
-  
-    let switchText = recipient.rank[id - 1].style
-    recipient.rank[id - 1].style  = e.dataTransfer.getData('type')
-    recipient.rank[e.dataTransfer.getData('id') - 1].style = switchText
+    
+    if(recipient.rank[id - 1]){
+      let switchText = recipient.rank[id - 1].style
+      recipient.rank[id - 1].style  = e.dataTransfer.getData('type')
+      recipient.rank[e.dataTransfer.getData('id') - 1].style = switchText
 
-    editRecipient(recipient.rank)
+      editRecipient(recipient.rank)
+    }else{
+      return
+    }
   }
 
   const formatDate = (e) => {
@@ -210,6 +242,45 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
     editRecipient('nickname', '')
     editRecipient('message', '')
     editRecipient('signature', '')
+  }
+
+  const handleKeyPress = async (e, clicked) => {
+    if(e.key === 'Enter' || clicked == 'true'){
+      try {
+        const responseTag = await axios.post(`${API}/recipient/check-word`, {tags})
+        setInvalidTag(false)
+        let input = document.getElementById('researchInterests')
+        input.value = responseTag.data
+      } catch (error) {
+        console.log(error.response)
+        if(error) return  error.response ? (setMessage(error.response.data), setInvalidTag(true)) : (setMessage(`Tags cannot be more than two words`), setInvalidTag(true))
+      }
+      e.preventDefault();
+      manageTags('addTag')
+      let closeIcon = document.querySelectorAll('.form-tag')
+      let postHidden = document.getElementById("tagValue")
+      let values = postHidden.getAttribute('value').split(',')
+
+      closeIcon.forEach( (e) => {
+        e.addEventListener('click', function(e){
+          let parent = e.target.parentNode
+          let parentOfParent = parent.parentNode
+          parentOfParent.remove()
+
+          let tagValues = document.querySelectorAll(".tag > span")
+          let newValues = []
+          
+          tagValues.forEach( e => {
+            newValues.push(e.innerHTML)
+          })
+
+          updateTags(newValues)
+        })
+      })
+
+      updateTags(values)
+      setTags('')
+    }
   }
   
   return (
@@ -325,7 +396,7 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
                 <div className="profile-dashboard-recipients-edit-style-title"><span>Card style</span> (rate it from more important to least important):</div>
                 <div className="profile-dashboard-recipients-edit-style-selection">
                   {item.rank.length > 0 && item.rank.map((item, idx) =>
-                    <div className={`profile-dashboard-recipients-edit-style-selection-item-${item.rank}`} key={idx} onDrop={(e) => onDrop(e, item.rank)} onDragOver={(e) => onDragOver(e)}>
+                    <div className={`profile-dashboard-recipients-edit-style-selection-item-${item.rank} profile-dashboard-recipients-edit-style-selection-item-box`} key={idx} onDrop={(e) => onDrop(e, item.rank)} onDragOver={(e) => onDragOver(e)}>
                     <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${item.rank}`}
                     draggable onDragStart={(e) => {onDragStart(e, item.rank,item.style)}}
                     >
@@ -351,7 +422,7 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
                             {cardMenu == idx && <div className="profile-dashboard-recipients-edit-event-container-card-menu">
                               <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setModal('event')}>Edit Event</div>
                               <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setModal('message')}>Edit Message</div>
-                              <div className="profile-dashboard-recipients-edit-event-container-card-menu-item">Edit Card Themes</div>
+                              <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => (setModal('tags'))}>Edit Card Themes</div>
                             </div>
                             }
                             <div className="profile-dashboard-recipients-edit-event-container-card-dots" onClick={() => cardMenu !== 'empty' ? setCardMenu('empty') :  setCardMenu(idx)}><span></span><span></span><span></span></div>
@@ -366,7 +437,7 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
                                   <div key={idx} className="profile-dashboard-recipients-edit-event-container-card-tags-tag">{ item.tags.length > 1 ? idx == 2 ? `${tag.substring(0, 10)} ` : item.tags.length - 1 == idx ? `${tag.substring(0, 10)} ` : `${tag.substring(0, 10)}, ` : `${tag.substring(0, 10)} `}</div>
                                 )
                               }
-                              <div className="profile-dashboard-recipients-edit-event-container-card-tags-dots"><span></span><span></span><span></span></div>
+                              <div onClick={() => (setModal('tags'))}className="profile-dashboard-recipients-edit-event-container-card-tags-dots"><span></span><span></span><span></span></div>
                             </div>
                           </div>
                         :
@@ -576,6 +647,33 @@ const User = ({newUser, recipients, recipient, editRecipient}) => {
           </div>
           </div>
         }
+        {modal == 'tags' &&
+          <div className="recipient-modal">
+          <div className="recipient-modal-box">
+            <div className="recipient-modal-box-close" onClick={() => (setModal(''), setCardMenu('empty'))}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
+            <div className="recipient-modal-box-message">
+              <div className="quiz-title">Anything specific your {recipient.recipient ? recipient.recipient : 'recipient'} might like?</div>
+              <div className="quiz-title-mobile">Anything specific your {recipient.recipient ? recipient.recipient : 'recipient'} might like?</div>
+              <div className="quiz-subtitle">Animals, flowers, foods etc. Add as many tags as you'd like!</div>
+              <div className="quiz-subtitle-mobile">Animals, flowers, foods etc. Add as many tags as you'd like!</div>
+              <div className="quiz-recipient-tags">
+                <div className={`quiz-recipient-tags-box ` + (invalid_tag ? ` form-message-error-outline` : null)}>
+                  <input type="hidden" name="tags" id="tagValue" value="" required></input>
+                  <input type="text" id="researchInterests" name="tags" value={tags} onChange={ (e) => (setTags(e.target.value), setMessage(''))} onKeyPress={(e) => handleKeyPress(e)}/>
+                  <button onClick={(e) => handleKeyPress(e, 'true')}>Add</button>
+                </div>
+                {message ? <div className="form-message-error">{message}</div> : <div className="form-message-error">&nbsp;</div>}
+                <div className="form-tag-container"></div>
+                {/* <div className="quiz-recipient-tags-checkbox"><input type="checkbox" name="unsure" onClick={(e) => (setTimeout(() => {
+                  quizProgressNav(e,'other')
+                }, 500), dispatch({type: 'UPDATE_TAGS', payload: []})
+                )}/><span>I'm not sure</span></div> */}
+              </div>
+              <div className="quiz-button-container recipient-modal-box-event-button"><button className="quiz-button" onClick={() => (updateRecipient())}>{loading == 'message' ? <div className="loading loading-event"><span></span><span></span><span></span></div> : <span>Done</span>}</button><div className="quiz-button-container"></div></div>
+          </div>
+          </div>
+          </div>
+        }
       </div>
       <Footer></Footer>
     </>
@@ -591,6 +689,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     editRecipient: (name, data) => dispatch({type: 'EDIT_RECIPIENT', name: name, value: data}),
+    updateTags: (data) => dispatch({type: 'UPDATE_TAGS', value: data})
   }
 }
 

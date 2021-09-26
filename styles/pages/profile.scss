@@ -237,6 +237,10 @@
         background-color: $color-light-gray-alt-5;
         position: relative;
 
+        // @media only screen and ($large) {
+        //   background-color: red;
+        // }
+
         &-title {
           font-size: 1.8rem;
 
@@ -250,10 +254,33 @@
           align-items: center;
           margin: 2rem 0;
 
+          @media only screen and (max-width: $large-medium) {
+            flex-wrap: wrap;
+          }
+
           &-item {
             text-align: center;
-            @media only screen and (max-width: $wide-large) {
-              min-width: 12rem !important;
+
+            &-box {
+              @media only screen and (max-width: $wide-large) {
+                min-width: 13rem !important;
+              }
+
+              @media only screen and (max-width: $wide) {
+                min-width: 11rem !important;
+              }
+
+              @media only screen and (max-width: $wide-small) {
+                min-width: 10rem !important;
+              }
+
+              @media only screen and (max-width: $extra-large) {
+                min-width: 9rem !important;
+              }
+
+              @media only screen and (max-width: $large-medium) {
+                margin: 1rem 0;
+              }
             }
           }
 
