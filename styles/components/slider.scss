@@ -133,6 +133,11 @@
       &-image {
         height: 65rem;
         width: 110rem;
+
+        @media only screen and (max-width: $wide-small) {
+          width: 80%;
+          height: 100%;
+        }
       }
     }
 

@@ -474,6 +474,7 @@
         }
 
         &-container {
+          display: flex;
           margin: 0.5rem 0;
 
           &-card {
@@ -485,8 +486,69 @@
             width: 15.2rem;
             height: 20.11rem;
             border: 0.2rem solid #e5e5e5;
+            background-color: white;
             border-radius: 1.2rem;
+            margin-right: 2rem;
             position: relative;
+
+            &-add {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              padding: 1rem 0 1rem 0;
+              box-sizing: border-box;
+              width: 15.2rem;
+              height: 20.11rem;
+              border: 0.2rem solid #e5e5e5;
+              background-color: white;
+              border-radius: 1.2rem;
+              margin-right: 2rem;
+              position: relative;
+
+              svg {
+                width: 2.8rem;
+                height: 2.8rem;
+                margin: 0.5rem 0;
+                fill: $color-scheme-3;
+              }
+
+              span {
+                width: 5.8rem;
+                font-size: 1.4rem;
+                line-height: 1.6rem;
+                text-align: center;
+                font-family: Roboto;
+              }
+            }
+
+            &-plus_button {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              padding: 1rem 0 1rem 0;
+              box-sizing: border-box;
+              width: 10.2rem;
+              height: 20.11rem;
+              margin-right: 2rem;
+
+              span {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 5.6rem;
+                height: 5.6rem;
+                background-color: $color-scheme-3;
+                border-radius: 50%;
+
+                svg {
+                  width: 2.3rem;
+                  height: 2.4rem;
+                  fill: white;
+                }
+              }
+            }
 
             &-menu {
               position: absolute;

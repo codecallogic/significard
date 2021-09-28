@@ -444,6 +444,13 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags}) => {
                         null
                       )
                     }
+                    <div className="profile-dashboard-recipients-edit-event-container-card-add">
+                      <SVG svg={'plus'}></SVG>
+                      <span>Add your next card here</span>
+                    </div>
+                    <div className="profile-dashboard-recipients-edit-event-container-card-plus_button">
+                      <span><SVG svg={'plus'}></SVG></span>
+                    </div>
                 </div>
               </div>
             </div>
