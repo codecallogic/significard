@@ -325,7 +325,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
     }
   }
 
-  const setCardForUpdate = (id) => {
+  const setCardForUpdate = (id, type) => {
     recipient.cards.filter((item) => {
       if(item._id === id){
         for(let key in item){
@@ -334,11 +334,11 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
       }
     })
     setCardUpdate(true)
-    setModal('event_new_card')
+    setModal(type)
   }
 
-  const submitCardUpdate = async () => {
-    setLoading('event')
+  const submitCardUpdate = async (loading) => {
+    setLoading(loading)
     try {
       const responseCard = await axios.post(`${API}/card/update-card`, {id: card._id, card: card, user: newUser})
       setLoading('')
@@ -576,8 +576,8 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
                       e.subtitle.toLowerCase() == cardItem.event ?
                         <div key={idx} className="profile-dashboard-recipients-edit-event-container-card">
                           {cardMenu == idx && <div className="profile-dashboard-recipients-edit-event-container-card-menu">
-                            <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setCardForUpdate(cardItem._id)}>Edit Event</div>
-                            <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setModal('message')}>Edit Message</div>
+                            <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setCardForUpdate(cardItem._id, 'edit_card_event')}>Edit Event</div>
+                            <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setCardForUpdate(cardItem._id, 'edit_card_message')}>Edit Message</div>
                             <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => (setModal('tags'))}>Edit Card Themes</div>
                           </div>
                           }
@@ -603,7 +603,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
                     )
                     )
                     }
-                    <div className="profile-dashboard-recipients-edit-event-container-card-add" onClick={() => setModal('event_new_card')}>
+                    <div className="profile-dashboard-recipients-edit-event-container-card-add" onClick={() => setModal('edit_event_card')}>
                       <SVG svg={'plus'}></SVG>
                       <span>Add your next card here</span>
                     </div>
@@ -1019,7 +1019,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
           </div>
           </div>
         }
-        {modal == 'event_new_card' &&
+        {modal == 'edit_card_event' &&
           <div className="recipient-modal">
           <div className="recipient-modal-box">
             <div className="recipient-modal-box-close" onClick={() => (setModal(''), setCardMenu('empty'))}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
@@ -1083,8 +1083,54 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
               )
               }
             </div>
-            <div className="quiz-button-container recipient-modal-box-event-button"><button className="quiz-button" onClick={(e) => (cardUpdate ? submitCardUpdate() : createCard())} disabled={recipient.card_arrival ? false : true}>{loading == 'event' ? <div className="loading loading-event"><span></span><span></span><span></span></div> : <span>Done</span>}</button><div className="quiz-button-container"></div></div>
+            <div className="quiz-button-container recipient-modal-box-event-button"><button className="quiz-button" onClick={(e) => (cardUpdate ? submitCardUpdate('event') : createCard())} disabled={recipient.card_arrival ? false : true}>{loading == 'event' ? <div className="loading loading-event"><span></span><span></span><span></span></div> : <span>Done</span>}</button><div className="quiz-button-container"></div></div>
             </div>
+          </div>
+          </div>
+        }
+        {modal == 'edit_card_message' &&
+          <div className="recipient-modal">
+          <div className="recipient-modal-box">
+            <div className="recipient-modal-box-close" onClick={() => (setModal(''), setCardMenu('empty'))}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
+            <div className="recipient-modal-box-message">
+            <div className="quiz-title">What would you like the card to say?</div>
+            <div className="quiz-title-mobile">What would you like the card to say?</div>
+            <div className="quiz-subtitle">Fill in the blank!</div>
+            <div className="quiz-subtitle-mobile">Fill in the blank!</div>
+            <div className="quiz-recipient-message">
+              <div className="quiz-recipient-message-heading">Card: {card.event}</div>
+              <div className="quiz-recipient-message-container">
+                <form>
+                  <div className="form-group-single message">
+                    <label htmlFor="name">Name/Nickname in front of the card:</label>
+                    <input type="text" name="name" required value={card.nickname} onChange={(e) => (editCard('nickname', e.target.value), document.getElementsByName('nickname_blank')[0].checked = false)}/>
+                    <div className="checkbox_2"><input id="nickname" type="checkbox" name="nickname_blank" onClick={(e) => editCard('nickname', '')}/><span>Leave it blank</span></div>
+                  </div>
+                  <div className="form-group-single message p-0">
+                    <label htmlFor="message">Handwritten message inside:</label>
+                    <textarea className="w-4" rows="5" value={card.message == 'blank' || card.message == 'message_options' ? '' : card.message} onChange={(e) => (editCard('message', e.target.value), document.getElementsByName('message_blank')[0].checked = false, document.getElementsByName('message_textarea_blank')[0].checked = false)}></textarea>
+                    <div className="checkbox_2"><input type="checkbox" name="message_blank" onChange={(e) => (editCard('message', 'blank'), document.getElementsByName('message_textarea_blank')[0].checked = false)}/><span>Leave it blank</span></div>
+                    <div className="checkbox_2 w-4 info-popup"><input type="checkbox" name="message_textarea_blank" onClick={(e) => (editCard('message', 'message_options'), document.getElementsByName('message_blank')[0].checked = false)}/>
+                      <span>Give me message options for $2.00</span>
+                      <div className="quiz-recipient-package-description-text-bubble" onMouseOver={(e) => showTooltip(e, 0)} onMouseLeave={(e) => hideTooltip(e, 0)}>
+                        <SVG svg={'information'}></SVG>
+                        <div className="quiz-recipient-package-description-text-bubble-tooltip">
+                        We got you! We’ll send you different message options for just $2.00 per card once you sign up.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form-group-single message p-0">
+                    <label htmlFor="name">Signature:</label>
+                    <input type="text" name="signature" required value={card.signature == 'blank' ? '' : card.signature} onChange={(e) => editCard('signature', e.target.value)}/>
+                  </div>
+                </form>
+                {/* <div className="checkbox_2 center show-on-mobile"><input type="checkbox"/><span>Not sure yet, ask me later</span></div> */}
+              </div>
+            </div>
+            {/* <div className="checkbox_2 center hide-on-mobile"><input id="message_unsure" type="checkbox" onClick={() => resetMessage()}/><span>Not sure yet, ask me later</span></div> */}
+            <div className="quiz-button-container recipient-modal-box-event-button"><button className="quiz-button" onClick={(e) => (submitCardUpdate('message'))}>{loading == 'message' ? <div className="loading loading-event"><span></span><span></span><span></span></div> : <span>Done</span>}</button><div className="quiz-button-container"></div></div>
+          </div>
           </div>
           </div>
         }
