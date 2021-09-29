@@ -2686,6 +2686,8 @@ body {
           text-decoration: underline; }
           .profile-dashboard-recipients-edit-profile-edit:hover {
             cursor: pointer; }
+          .profile-dashboard-recipients-edit-profile-edit span:last-child {
+            margin-left: 1rem; }
       .profile-dashboard-recipients-edit-style {
         width: 100%;
         margin: 2rem 0;
@@ -2921,6 +2923,8 @@ body {
                 line-height: 1.6rem;
                 text-align: center;
                 font-family: Roboto; }
+              .profile-dashboard-recipients-edit-event-container-card-add:hover {
+                cursor: pointer; }
             .profile-dashboard-recipients-edit-event-container-card-plus_button {
               display: flex;
               flex-direction: column;
@@ -2928,9 +2932,11 @@ body {
               justify-content: center;
               padding: 1rem 0 1rem 0;
               box-sizing: border-box;
-              width: 10.2rem;
+              width: 9.2rem;
               height: 20.11rem;
               margin-right: 2rem; }
+              .profile-dashboard-recipients-edit-event-container-card-plus_button:hover {
+                cursor: pointer; }
               .profile-dashboard-recipients-edit-event-container-card-plus_button span {
                 display: flex;
                 align-items: center;
@@ -3086,6 +3092,9 @@ body {
 .loading-event span {
   background-color: #0f2e4c; }
 
+.slideFromRight {
+  animation: slideFromRight 1s ease-in-out; }
+
 @keyframes dots {
   50% {
     opacity: 0;
@@ -3097,6 +3106,14 @@ body {
   100% {
     opacity: 1; } }
 
+@keyframes slideFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0; }
+  100% {
+    transform: translateX(0);
+    opacity: 1; } }
+
 .expand {
   text-decoration: underline; }
 
@@ -3105,6 +3122,14 @@ body {
 
 .hide {
   opacity: 0; }
+
+.disable {
+  border: 0.2rem solid #e5e5e5;
+  background-color: #e5e5e5;
+  color: black; }
+  .disable::before {
+    background-color: #e5e5e5;
+    color: black; }
 
 .form {
   display: grid;

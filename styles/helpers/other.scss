@@ -9,3 +9,14 @@
 .hide {
   opacity: 0;
 }
+
+.disable {
+  border: 0.2rem solid $color-light-gray-alt-2;
+  background-color: $color-light-gray-alt-2;
+  color: black;
+
+  &::before {
+    background-color: $color-light-gray-alt-2;
+    color: black;
+  }
+}

@@ -63,7 +63,7 @@ export const recipientReducer = (state = initialState, action) => {
     case 'RESET_RANK':
       return {
         ...state,
-        rank: [...action.payload]
+        rank: []
       }
       break;
 
@@ -80,6 +80,17 @@ export const recipientReducer = (state = initialState, action) => {
       }
       break;
     
+    case 'SORT_RANK':
+      let sortRank = [...state.rank]
+
+      let newSortedRanking = sortRank.sort((a, b) => a.rank > b.rank)
+      
+      return {
+        ...state,
+        rank: [...newSortedRanking]
+      }
+        break;
+    
     case 'UPDATE_TEXTAREA':
       return {
         ...state,
@@ -92,6 +103,9 @@ export const recipientReducer = (state = initialState, action) => {
         ...state,
         [action.name]: action.value
       }
+    
+    case 'INITIAL_STATE':
+      return initialState
   
     default:
       return state

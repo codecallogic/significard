@@ -23,7 +23,7 @@ const searchOptionsCities = {
   types: ['(cities)']
 }
 
-const User = ({newUser, recipients, recipient, editRecipient, updateTags}) => {
+const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetState, resetRank, updateRank, removeRank, sortRank, card, editCard}) => {
   const myRefs = useRef(null)
   const node = useRef();
   // console.log(recipients)
@@ -45,6 +45,8 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags}) => {
   const [checkmarkOther, setCheckmarkOther] = useState(false)
   const [tags, setTags] = useState('')
   const [invalid_tag, setInvalidTag] = useState(false)
+  const [addNew, setAddNew] = useState(false)
+  const [cardUpdate, setCardUpdate] = useState(false)
 
   const handleClickOutside = (event) => {
     if(myRefs.current){
@@ -68,7 +70,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags}) => {
   }, [])
 
   useEffect(() => {
-    recipients.filter((item) => {
+    allRecipients.filter((item) => {
       if(item._id == recipientID){
         for(let key in item){
           editRecipient(key, item[key])
@@ -182,16 +184,39 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags}) => {
 
   const onDrop = (e, id) => {
     if(edit !== 'style') return
-    
     if(recipient.rank[id - 1]){
       let switchText = recipient.rank[id - 1].style
       recipient.rank[id - 1].style  = e.dataTransfer.getData('type')
       recipient.rank[e.dataTransfer.getData('id') - 1].style = switchText
 
-      editRecipient(recipient.rank)
+      editRecipient('rank', recipient.rank)
     }else{
       return
     }
+  }
+
+  const onDropNew = (e, id) => {
+    // console.log(id)
+    // console.log(e.dataTransfer.getData('id'))
+    
+    let el = document.getElementsByClassName(`profile-dashboard-recipients-edit-style-selection-item rank-content-${e.dataTransfer.getData('id')}`)
+    let el2 = document.getElementsByClassName(`profile-dashboard-recipients-edit-style-selection-item rank-content-${id}`)
+    let itemEl = el[0].innerText
+
+    if(recipient.rank.some(item => item.rank == id)) removeRank(el2[0].innerText.toLowerCase());
+    if(recipient.rank.some(item => item.rank == e.dataTransfer.getData('id'))) removeRank(el[0].innerText.toLowerCase());
+
+    updateRank({style: el[0].innerText.toLowerCase(), rank: id})
+    updateRank({style: el2[0].innerText.toLowerCase(), rank: parseInt(e.dataTransfer.getData('id'))})
+
+    el[0].innerText = el2[0].innerText
+    el2[0].innerText = itemEl
+
+
+    sortRank()
+    // console.log(el[0].innerText)
+    // setRecipient(item._id)
+    // updateRank({style: e.dataTransfer.getData('type'), rank: id})
   }
 
   const formatDate = (e) => {
@@ -209,6 +234,14 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags}) => {
     editRecipient('card_arrival', formatDate(date))
     type !== 'other' ? editRecipient('event_other', '') : null
     editRecipient('event', type.trim())
+  }
+
+  const handleDateCard = (date, type) => {
+    setCardMenu('empty')
+    setCalendar(date)
+    editCard('card_arrival', formatDate(date))
+    type !== 'other' ? editCard('event_other', '') : null
+    editCard('event', type.trim())
   }
 
   const delayCheckOther = () => {
@@ -282,6 +315,50 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags}) => {
       setTags('')
     }
   }
+
+  const createCard = async () => {
+    try {
+      const responseCard = await axios.post(`${API}/card/create`, {id: recipientID, card: card})
+      console.log(responseCard)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const setCardForUpdate = (id) => {
+    recipient.cards.filter((item) => {
+      if(item._id === id){
+        for(let key in item){
+          editCard(key, item[key])
+        }
+      }
+    })
+    setCardUpdate(true)
+    setModal('event_new_card')
+  }
+
+  const submitCardUpdate = async () => {
+    setLoading('event')
+    try {
+      const responseCard = await axios.post(`${API}/card/update-card`, {id: card._id, card: card, user: newUser})
+      setLoading('')
+      setEdit('')
+      setModal('')
+      setCardMenu('empty')
+      setAllRecipients(responseCard.data)
+      responseCard.data.filter((item) => {
+        if(item._id == recipientID){
+          for(let key in item){
+            editRecipient(key, item[key])
+          }
+        }
+      })
+    } catch (error) {
+      setLoading('')
+      console.log(error)
+      if(error) error.response ? setError(error.response.data) : setError('Could not update card')
+    }
+  }
   
   return (
     <>
@@ -322,7 +399,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags}) => {
         </div>
         }
         {
-          recipientID && allRecipients.filter((item) => item._id == recipientID).map((item, idx) =>
+          !addNew && recipientID && allRecipients.filter((item) => item._id == recipientID).map((item, idx) =>
             <div key={idx} className="profile-dashboard-recipients-edit">
               <div className="profile-dashboard-recipients-edit-title">
                 <div className="profile-dashboard-recipients-edit-title-recipient">{item.recipient ? item.recipient : item.recipient_other}</div>
@@ -395,20 +472,69 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags}) => {
               <div className="profile-dashboard-recipients-edit-style">
                 <div className="profile-dashboard-recipients-edit-style-title"><span>Card style</span> (rate it from more important to least important):</div>
                 <div className="profile-dashboard-recipients-edit-style-selection">
-                  {item.rank.length > 0 && item.rank.map((item, idx) =>
-                    <div className={`profile-dashboard-recipients-edit-style-selection-item-${item.rank} profile-dashboard-recipients-edit-style-selection-item-box`} key={idx} onDrop={(e) => onDrop(e, item.rank)} onDragOver={(e) => onDragOver(e)}>
-                    <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${item.rank}`}
-                    draggable onDragStart={(e) => {onDragStart(e, item.rank,item.style)}}
-                    >
-                      {item.style}
-                    </div>
-                    </div>
-                  )}
+                  {edit == 'style'
+
+                    ?
+                    (<>
+                      <div className={`profile-dashboard-recipients-edit-style-selection-item-${1} profile-dashboard-recipients-edit-style-selection-item-box slideFromRight ` + (recipient.rank.some(e => e.rank == 1) ? null : ' disable')} onDrop={(e) => onDropNew(e, 1)} onDragOver={(e) => onDragOver(e)}>
+                      <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${1}`}
+                      draggable onDragStart={(e) => {onDragStart(e, 1, 'humorous')}}
+                      >
+                        Humorous
+                      </div>
+                      </div>
+                      <div className={`profile-dashboard-recipients-edit-style-selection-item-${2} profile-dashboard-recipients-edit-style-selection-item-box slideFromRight ` + (recipient.rank.some(e => e.rank == 2) ? null : ' disable')} onDrop={(e) => onDropNew(e, 2)} onDragOver={(e) => onDragOver(e)}>
+                      <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${2}`}
+                      draggable onDragStart={(e) => {onDragStart(e, 2, 'simple')}}
+                      >
+                        Simple
+                      </div>
+                      </div>
+                      <div className={`profile-dashboard-recipients-edit-style-selection-item-${3} profile-dashboard-recipients-edit-style-selection-item-box slideFromRight ` + (recipient.rank.some(e => e.rank == 3) ? null : ' disable')} onDrop={(e) => onDropNew(e, 3)} onDragOver={(e) => onDragOver(e)}>
+                      <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${3}`}
+                      draggable onDragStart={(e) => {onDragStart(e, 3, 'cute')}}
+                      >
+                        Cute
+                      </div>
+                      </div>
+                      <div className={`profile-dashboard-recipients-edit-style-selection-item-${4} profile-dashboard-recipients-edit-style-selection-item-box slideFromRight ` + (recipient.rank.some(e => e.rank == 4) ? null : ' disable')} onDrop={(e) => onDropNew(e, 4)} onDragOver={(e) => onDragOver(e)}>
+                      <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${4}`}
+                      draggable onDragStart={(e) => {onDragStart(e, 4, 'modern')}}
+                      >
+                        Modern
+                      </div>
+                      </div>
+                      <div className={`profile-dashboard-recipients-edit-style-selection-item-${5} profile-dashboard-recipients-edit-style-selection-item-box slideFromRight ` + (recipient.rank.some(e => e.rank == 5) ? null : ' disable')} onDrop={(e) => onDropNew(e, 5)} onDragOver={(e) => onDragOver(e)}>
+                      <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${5}`}
+                      draggable onDragStart={(e) => {onDragStart(e, 5, 'colorful')}}
+                      >
+                        Colorful
+                      </div>
+                      </div>
+                      <div className={`profile-dashboard-recipients-edit-style-selection-item-${6} profile-dashboard-recipients-edit-style-selection-item-box slideFromRight ` + (recipient.rank.some(e => e.rank == 6) ? null : ' disable')} onDrop={(e) => onDropNew(e, 6)} onDragOver={(e) => onDragOver(e)}>
+                      <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${6}`}
+                      draggable onDragStart={(e) => {onDragStart(e, 6, 'traditional')}}
+                      >
+                        Traditional
+                      </div>
+                      </div>
+                    </>)
+                    :
+                    (item.rank.length > 0 && item.rank.map((item, idx) =>
+                      <div className={`profile-dashboard-recipients-edit-style-selection-item-${item.rank} profile-dashboard-recipients-edit-style-selection-item-box`} key={idx} onDrop={(e) => onDropNew(e, item.rank)} onDragOver={(e) => onDragOver(e)}>
+                      <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${item.rank}`}
+                      draggable onDragStart={(e) => {onDragStart(e, item.rank,item.style)}}
+                      >
+                        {item.style}
+                      </div>
+                      </div>
+                    ))
+                  }
                 </div>
                 {edit == 'style' ? 
-                   <div className="profile-dashboard-recipients-edit-profile-edit" onClick={() => (updateRecipient('style'))}>{loading == 'style' ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : <span>Save</span>}</div>
+                   <div className="profile-dashboard-recipients-edit-profile-edit">{loading == 'style' ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : <><span onClick={() => (setRecipient(recipientID), setEdit(''))}>Cancel</span><span onClick={() => (updateRecipient('style'))}>Save</span></>}</div>
                   :
-                  <div className="profile-dashboard-recipients-edit-profile-edit" onClick={() => setEdit('style')}>Edit</div>
+                  <div className="profile-dashboard-recipients-edit-profile-edit" onClick={() => (setEdit('style'), resetRank())}>Edit</div>
                 }
                 
               </div>
@@ -444,7 +570,40 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags}) => {
                         null
                       )
                     }
-                    <div className="profile-dashboard-recipients-edit-event-container-card-add">
+                    {recipient.cards && recipient.cards.map((cardItem) => 
+                    (
+                    eventsList.map((e, idx) => 
+                      e.subtitle.toLowerCase() == cardItem.event ?
+                        <div key={idx} className="profile-dashboard-recipients-edit-event-container-card">
+                          {cardMenu == idx && <div className="profile-dashboard-recipients-edit-event-container-card-menu">
+                            <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setCardForUpdate(cardItem._id)}>Edit Event</div>
+                            <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setModal('message')}>Edit Message</div>
+                            <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => (setModal('tags'))}>Edit Card Themes</div>
+                          </div>
+                          }
+                          <div className="profile-dashboard-recipients-edit-event-container-card-dots" onClick={() => cardMenu !== 'empty' ? setCardMenu('empty') :  setCardMenu(idx)}><span></span><span></span><span></span></div>
+                          <img className="profile-dashboard-recipients-edit-event-container-card-image" src={`/media/emojis/` + (e.imageName ? e.imageName : 'other.png')} alt="" />
+                          <div className="profile-dashboard-recipients-edit-event-container-card-title">{cardItem.event.toLowerCase() == 'other' ? cardItem.event_other : e.subtitle}</div>
+                          <div className="profile-dashboard-recipients-edit-event-container-card-subtitle-date">Est. Arrival Date: </div>
+                          <div className="profile-dashboard-recipients-edit-event-container-card-date">{cardItem.card_arrival}</div> 
+                          <div className="profile-dashboard-recipients-edit-event-container-card-subtitle-date">Card themes: </div> 
+                          <div className="profile-dashboard-recipients-edit-event-container-card-tags">
+                            {
+                              cardItem.tags.length > 0 && cardItem.tags.slice(0, 3).map((tag, idx) => 
+                                <div key={idx} className="profile-dashboard-recipients-edit-event-container-card-tags-tag">{ cardItem.tags.length > 1 ? idx == 2 ? `${tag.substring(0, 10)} ` : cardItem.tags.length - 1 == idx ? `${tag.substring(0, 10)} ` : `${tag.substring(0, 10)}, ` : `${tag.substring(0, 10)} `}</div>
+                              )
+                            }
+                            <div onClick={() => (setModal('tags'))}className="profile-dashboard-recipients-edit-event-container-card-tags-dots"><span></span><span></span><span></span></div>
+                          </div>
+                        </div>
+                      
+                      :
+                      null
+                    )
+                    )
+                    )
+                    }
+                    <div className="profile-dashboard-recipients-edit-event-container-card-add" onClick={() => setModal('event_new_card')}>
                       <SVG svg={'plus'}></SVG>
                       <span>Add your next card here</span>
                     </div>
@@ -455,6 +614,188 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags}) => {
               </div>
             </div>
           )
+        }
+        {
+          addNew && <div className="profile-dashboard-recipients-edit">
+            <div className="profile-dashboard-recipients-edit-title">
+              <div className="profile-dashboard-recipients-edit-title-recipient">Name</div>
+            </div>
+            {edit == 'profile' ?
+              <div className="profile-dashboard-recipients-edit-profile">
+                <div className="profile-dashboard-recipients-edit-profile-container">
+                  <div className="profile-dashboard-recipients-edit-profile-personality-edit">
+                    <div className="profile-dashboard-recipients-edit-profile-personality-title">Personality:</div>
+                    <div className="form-group-single-dropdown-menu profile-dashboard-recipients-edit-profile-personality-input">
+                      <textarea rows="1" wrap="off" onKeyDown={(e) => e.keyCode == 13 ? e.preventDefault() : null} name="description" placeholder="(Other)" onClick={() => (setInputDropdown('recipient_description'))} value={recipient.description.charAt(0).toUpperCase() + recipient.description.slice(1)} onChange={(e) => editRecipient('description', e.target.value)}></textarea>
+                      { input_dropdown == 'recipient_description' &&
+                        <div className="form-group-single-dropdown-menu-list" ref={myRefs}>
+                          <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('description', e.target.innerText.charAt(0).toUpperCase() + e.target.innerText.slice(1).toLowerCase()), setInputDropdown(''))}>Life of the party</div>
+                          <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('description', e.target.innerText.charAt(0).toUpperCase() + e.target.innerText.slice(1).toLowerCase()), setInputDropdown(''))}>Soft spoken</div>
+                          <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('description', e.target.innerText.charAt(0).toUpperCase() + e.target.innerText.slice(1).toLowerCase()), setInputDropdown(''))}>Thoughtful</div>
+                          <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('description', e.target.innerText.charAt(0).toUpperCase() + e.target.innerText.slice(1).toLowerCase()), setInputDropdown(''))}>Strong minded</div>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                  <div className="profile-dashboard-recipients-edit-profile-address">
+                    <div className="profile-dashboard-recipients-edit-profile-address-title">Address</div>
+                    <div className="form-group-single-dropdown-menu profile-dashboard-recipients-edit-profile-personality-input">
+                      <textarea rows="3" wrap="on" onKeyDown={(e) => e.keyCode == 13 ? e.preventDefault() : null} name="description" placeholder="(Edit Address)" value={recipient.address_one ? `${recipient.address_one}, ${item.city}, ${item.state}, ${item.zip_code}`: recipient.address_two} onClick={() => setModal('address')} readOnly></textarea>
+                    </div>
+                  </div>
+                  <div className="profile-dashboard-recipients-edit-profile-age">
+                    <div className="profile-dashboard-recipients-edit-profile-age-title">Age</div>
+                    <div className="form-group-single-dropdown-menu" ref={myRefs}>
+                      <textarea rows="1" wrap="off" onKeyDown={(e) => e.keyCode == 13 ? e.preventDefault() : null} name="age" placeholder="(Other)" onClick={() => setInputDropdown('recipient_age')} value={recipient.age} readOnly></textarea>
+                      { input_dropdown == 'recipient_age' &&
+                        <div className="form-group-single-dropdown-menu-list">
+                          <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('age', e.target.innerText), setInputDropdown(''))}>18-24</div>
+                          <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('age', e.target.innerText), setInputDropdown(''))}>25-34</div>
+                          <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('age', e.target.innerText), setInputDropdown(''))}>35-44</div>
+                          <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('age', e.target.innerText), setInputDropdown(''))}>45-54</div>
+                          <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('age', e.target.innerText), setInputDropdown(''))}>55-64</div>
+                          <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('age', e.target.innerText), setInputDropdown(''))}>65 or Above</div>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                </div>
+                <div className="profile-dashboard-recipients-edit-profile-edit" onClick={() => setEdit('')}>{loading == 'profile' ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : <span>Save</span>}</div>
+              </div>
+
+              :
+
+              <div className="profile-dashboard-recipients-edit-profile">
+              <div className="profile-dashboard-recipients-edit-profile-container">
+                <div className="profile-dashboard-recipients-edit-profile-personality">
+                  <div className="profile-dashboard-recipients-edit-profile-personality-title">Personality:</div>
+                  <span>{recipient.description.charAt(0).toUpperCase() + recipient.description.slice(1)}</span>
+                </div>
+                <div className="profile-dashboard-recipients-edit-profile-address">
+                  <div className="profile-dashboard-recipients-edit-profile-address-title">Address</div>
+                  <span>{recipient.address_one ? recipient.address_one : recipient.address_two}</span>
+                  <span>{recipient.city}, {recipient.state} {recipient.zip_code}</span>
+                </div>
+                <div className="profile-dashboard-recipients-edit-profile-age">
+                  <div className="profile-dashboard-recipients-edit-profile-age-title">Age</div>
+                  <span>{recipient.age}</span>
+                </div>
+              </div>
+              <div className="profile-dashboard-recipients-edit-profile-edit" onClick={() => setEdit('profile')}>Edit</div>
+              </div>
+            }
+            <div className="profile-dashboard-recipients-edit-style">
+              <div className="profile-dashboard-recipients-edit-style-title"><span>Card style</span> (rate it from more important to least important):</div>
+              <div className="profile-dashboard-recipients-edit-style-selection">
+                {edit == 'style'
+
+                  ?
+                  (<>
+                    <div className={`profile-dashboard-recipients-edit-style-selection-item-${1} profile-dashboard-recipients-edit-style-selection-item-box slideFromRight ` + (recipient.rank.some(e => e.rank == 1) ? null : ' disable')} onDrop={(e) => onDropNew(e, 1)} onDragOver={(e) => onDragOver(e)}>
+                    <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${1}`}
+                    draggable onDragStart={(e) => {onDragStart(e, 1, 'humorous')}}
+                    >
+                      Humorous
+                    </div>
+                    </div>
+                    <div className={`profile-dashboard-recipients-edit-style-selection-item-${2} profile-dashboard-recipients-edit-style-selection-item-box slideFromRight ` + (recipient.rank.some(e => e.rank == 2) ? null : ' disable')} onDrop={(e) => onDropNew(e, 2)} onDragOver={(e) => onDragOver(e)}>
+                    <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${2}`}
+                    draggable onDragStart={(e) => {onDragStart(e, 2, 'simple')}}
+                    >
+                      Simple
+                    </div>
+                    </div>
+                    <div className={`profile-dashboard-recipients-edit-style-selection-item-${3} profile-dashboard-recipients-edit-style-selection-item-box slideFromRight ` + (recipient.rank.some(e => e.rank == 3) ? null : ' disable')} onDrop={(e) => onDropNew(e, 3)} onDragOver={(e) => onDragOver(e)}>
+                    <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${3}`}
+                    draggable onDragStart={(e) => {onDragStart(e, 3, 'cute')}}
+                    >
+                      Cute
+                    </div>
+                    </div>
+                    <div className={`profile-dashboard-recipients-edit-style-selection-item-${4} profile-dashboard-recipients-edit-style-selection-item-box slideFromRight ` + (recipient.rank.some(e => e.rank == 4) ? null : ' disable')} onDrop={(e) => onDropNew(e, 4)} onDragOver={(e) => onDragOver(e)}>
+                    <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${4}`}
+                    draggable onDragStart={(e) => {onDragStart(e, 4, 'modern')}}
+                    >
+                      Modern
+                    </div>
+                    </div>
+                    <div className={`profile-dashboard-recipients-edit-style-selection-item-${5} profile-dashboard-recipients-edit-style-selection-item-box slideFromRight ` + (recipient.rank.some(e => e.rank == 5) ? null : ' disable')} onDrop={(e) => onDropNew(e, 5)} onDragOver={(e) => onDragOver(e)}>
+                    <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${5}`}
+                    draggable onDragStart={(e) => {onDragStart(e, 5, 'colorful')}}
+                    >
+                      Colorful
+                    </div>
+                    </div>
+                    <div className={`profile-dashboard-recipients-edit-style-selection-item-${6} profile-dashboard-recipients-edit-style-selection-item-box slideFromRight ` + (recipient.rank.some(e => e.rank == 6) ? null : ' disable')} onDrop={(e) => onDropNew(e, 6)} onDragOver={(e) => onDragOver(e)}>
+                    <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${6}`}
+                    draggable onDragStart={(e) => {onDragStart(e, 6, 'traditional')}}
+                    >
+                      Traditional
+                    </div>
+                    </div>
+                  </>)
+                  :
+                  (recipient.rank.length > 0 && item.rank.map((item, idx) =>
+                    <div className={`profile-dashboard-recipients-edit-style-selection-item-${item.rank} profile-dashboard-recipients-edit-style-selection-item-box`} key={idx} onDrop={(e) => onDropNew(e, item.rank)} onDragOver={(e) => onDragOver(e)}>
+                    <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${item.rank}`}
+                    draggable onDragStart={(e) => {onDragStart(e, item.rank,item.style)}}
+                    >
+                      {item.style}
+                    </div>
+                    </div>
+                  ))
+                }
+              </div>
+              {edit == 'style' ? 
+                  <div className="profile-dashboard-recipients-edit-profile-edit">{loading == 'style' ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : <><span onClick={() => (setRecipient(recipientID), setEdit(''))}>Cancel</span><span onClick={() => (updateRecipient('style'))}>Save</span></>}</div>
+                :
+                <div className="profile-dashboard-recipients-edit-profile-edit" onClick={() => (setEdit('style'), resetRank())}>Edit</div>
+              }
+              
+            </div>
+            <div className="profile-dashboard-recipients-edit-event">
+                <div className="profile-dashboard-recipients-edit-event-title">Your cards:</div>
+                <div className="profile-dashboard-recipients-edit-event-container">
+                  {recipient.event && 
+                    eventsList.map((e, idx) => 
+                      e.subtitle.toLowerCase() == item.event ?
+                        <div key={idx} className="profile-dashboard-recipients-edit-event-container-card">
+                          {cardMenu == idx && <div className="profile-dashboard-recipients-edit-event-container-card-menu">
+                            <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setModal('event')}>Edit Event</div>
+                            <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setModal('message')}>Edit Message</div>
+                            <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => (setModal('tags'))}>Edit Card Themes</div>
+                          </div>
+                          }
+                          <div className="profile-dashboard-recipients-edit-event-container-card-dots" onClick={() => cardMenu !== 'empty' ? setCardMenu('empty') :  setCardMenu(idx)}><span></span><span></span><span></span></div>
+                          <img className="profile-dashboard-recipients-edit-event-container-card-image" src={`/media/emojis/` + (e.imageName ? e.imageName : 'other.png')} alt="" />
+                          <div className="profile-dashboard-recipients-edit-event-container-card-title">{item.event.toLowerCase() == 'other' ? item.event_other : e.subtitle}</div>
+                          <div className="profile-dashboard-recipients-edit-event-container-card-subtitle-date">Est. Arrival Date: </div>
+                          <div className="profile-dashboard-recipients-edit-event-container-card-date">{item.card_arrival}</div> 
+                          <div className="profile-dashboard-recipients-edit-event-container-card-subtitle-date">Card themes: </div> 
+                          <div className="profile-dashboard-recipients-edit-event-container-card-tags">
+                            {
+                              item.tags.length > 0 && item.tags.slice(0, 3).map((tag, idx) => 
+                                <div key={idx} className="profile-dashboard-recipients-edit-event-container-card-tags-tag">{ item.tags.length > 1 ? idx == 2 ? `${tag.substring(0, 10)} ` : item.tags.length - 1 == idx ? `${tag.substring(0, 10)} ` : `${tag.substring(0, 10)}, ` : `${tag.substring(0, 10)} `}</div>
+                              )
+                            }
+                            <div onClick={() => (setModal('tags'))}className="profile-dashboard-recipients-edit-event-container-card-tags-dots"><span></span><span></span><span></span></div>
+                          </div>
+                        </div>
+                      :
+                      null
+                    )
+                  }
+                  <div className="profile-dashboard-recipients-edit-event-title">Your cards:</div>
+                  <div className="profile-dashboard-recipients-edit-event-container-card-add">
+                    <SVG svg={'plus'}></SVG>
+                    <span>Add your next card here</span>
+                  </div>
+                  <div className="profile-dashboard-recipients-edit-event-container-card-plus_button">
+                    <span><SVG svg={'plus'}></SVG></span>
+                  </div>
+              </div>
+            </div>
+          </div>
         }
         {modal == 'address' && 
         <div className="recipient-modal">
@@ -540,11 +881,8 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags}) => {
           <div className="recipient-modal">
           <div className="recipient-modal-box">
             <div className="recipient-modal-box-close" onClick={() => (setModal(''), setCardMenu('empty'))}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
-              <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'age')}>
-            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
-            </div>
             <div className="recipient-modal-box-event">
-            <div className="quiz-title recipient-modal-box-event-title">What are the events you'd like to send cards for your {recipient.firstName ? recipient.firstName : 'recipient'}?</div>
+            <div className="quiz-title recipient-modal-box-event-title">What are the events you'd like to send cards for your {recipient.recipient ? recipient.recipient : recipient.recipient_other ? recipient.recipient_other : 'recipient'}?</div>
             <div className="quiz-title-mobile">What are the events you'd like to send cards for your {recipient.firstName ? recipient.firstName : 'recipient'}?</div>
             <div className="quiz-subtitle">Pick the event and tell us the arrival date.</div>
             <div className="quiz-subtitle-mobile">Select the estimated arrival date for the event.</div>
@@ -681,6 +1019,75 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags}) => {
           </div>
           </div>
         }
+        {modal == 'event_new_card' &&
+          <div className="recipient-modal">
+          <div className="recipient-modal-box">
+            <div className="recipient-modal-box-close" onClick={() => (setModal(''), setCardMenu('empty'))}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
+            <div className="recipient-modal-box-event">
+            <div className="quiz-title recipient-modal-box-event-title">What are the events you'd like to send cards for your {recipient.recipient ? recipient.recipient : recipient.recipient_other ? recipient.recipient_other : 'recipient'}?</div>
+            <div className="quiz-title-mobile">What are the events you'd like to send cards for your {recipient.firstName ? recipient.firstName : 'recipient'}?</div>
+            <div className="quiz-subtitle">Pick the event and tell us the arrival date.</div>
+            <div className="quiz-subtitle-mobile">Select the estimated arrival date for the event.</div>
+            <div className="quiz-recipient-event">
+              {eventsList.slice(0, toggleEvents ? 20 : 8).map( (item, idx) => 
+              <div key={idx} className={`quiz-recipient-event-item`} onClick={(e) => 
+              (item.subtitle == 'more' 
+              ? (setToggleEvents(!toggleEvents)) 
+              : 
+              (item.subtitle.toLowerCase() == 'other' ? (editCard('event', 'other'), setOtherEvent(true)) : (editCard('event', item.subtitle.toLowerCase()), setEnableCalendar(`event-${item.subtitle.toLowerCase()}`)))
+              )}>
+                {item.imageName ? <img src={`/media/emojis/${item.imageName}`}></img> : null}
+                <span className={`quiz-recipient-event-item-text ` + (item.subtitle.toLowerCase() == card.event ? ' mb-4 ' : item.subtitle.toLowerCase() == 'other' && other ? ' mb-4 ' : '') + (item.subtitle == 'more' ? 'expand' : null) + (card.card_arrival ? card.card_arrival && item.subtitle.toLowerCase().trim() == recipient ? ' mb-4' : null : null)}>{item.subtitle == 'more' ? toggleEvents ? 'less' : 'more' : item.subtitle == 'Other' ? card.event_other ? card.event_other : 'Other' : item.subtitle}
+
+                {card.card_arrival ? card.card_arrival && item.subtitle.toLowerCase().trim() == card.event
+                ?
+                <div className="quiz-recipient-event-item-arrival">
+                  <span className="quiz-recipient-event-item-arrival-title">Arrival Date</span>
+                  <span className="quiz-recipient-event-item-arrival-date">{card.card_arrival}</span>
+                </div>
+                : 
+                null
+                :
+                null
+                } 
+
+                {other && item.subtitle.toLowerCase() == 'other' ? 
+                <span className="quiz-recipient-event-item-other">
+                  <div className="quiz-recipient-event-item-other-input-container">
+
+                    <input className="quiz-recipient-event-item-other-input" type="text" placeholder="Please specify" autoFocus value={card.event_other} onClick={() => setEnableCalendar('')} onChange={(e) => (editCard('event_other', e.target.value), delayCheckOther())}/>
+
+                    <div className="quiz-recipient-event-item-other-input-svg" onClick={(e) => (e.stopPropagation(), setOtherEvent(false), setEnableCalendar('event-other'))}>
+                      {checkmarkOther && <SVG svg={'checkmark'}></SVG>}
+                    </div>
+                  </div>
+                </span> 
+                : null
+                }
+                
+                {card.event ? enableCalendar == `event-${card.event}` && item.subtitle.toLowerCase().trim() == card.event ?
+                  <span className="quiz-recipient-event-item-calendar">
+                      <Calendar
+                        onClickDay={(date) => handleDateCard(date, card.event.trim())}
+                        value={calendar}
+                        minDate={new Date(Date.now() + 12096e5)}
+                      />
+                  </span>
+                  :
+                  null
+                  :
+                  null
+                }
+              </span>
+              </div>
+              )
+              }
+            </div>
+            <div className="quiz-button-container recipient-modal-box-event-button"><button className="quiz-button" onClick={(e) => (cardUpdate ? submitCardUpdate() : createCard())} disabled={recipient.card_arrival ? false : true}>{loading == 'event' ? <div className="loading loading-event"><span></span><span></span><span></span></div> : <span>Done</span>}</button><div className="quiz-button-container"></div></div>
+            </div>
+          </div>
+          </div>
+        }
       </div>
       <Footer></Footer>
     </>
@@ -689,14 +1096,21 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags}) => {
 
 const mapStateToProps = (state) => {
   return {
-    recipient: state.recipient
+    recipient: state.recipient,
+    card: state.card
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     editRecipient: (name, data) => dispatch({type: 'EDIT_RECIPIENT', name: name, value: data}),
-    updateTags: (data) => dispatch({type: 'UPDATE_TAGS', value: data})
+    updateTags: (data) => dispatch({type: 'UPDATE_TAGS', value: data}),
+    updateRank: (data) => dispatch({type: 'UPDATE_RANK', payload: data}),
+    removeRank: (data) => dispatch({type: 'REMOVE_RANK', payload: data}),
+    resetState: () => dispatch({type: 'INITIAL_STATE'}),
+    resetRank: () => dispatch({type: 'RESET_RANK'}),
+    sortRank: () => dispatch({type: 'SORT_RANK'}),
+    editCard: (name, data) => dispatch({type: 'EDIT_CARD', name: name, value: data})
   }
 }
 
