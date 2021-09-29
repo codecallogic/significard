@@ -2884,6 +2884,7 @@ body {
           color: #011722; }
         .profile-dashboard-recipients-edit-event-container {
           display: flex;
+          flex-wrap: wrap;
           margin: 0.5rem 0; }
           .profile-dashboard-recipients-edit-event-container-card {
             display: flex;
@@ -2897,6 +2898,7 @@ body {
             background-color: white;
             border-radius: 1.2rem;
             margin-right: 2rem;
+            margin-bottom: 1rem;
             position: relative; }
             .profile-dashboard-recipients-edit-event-container-card-add {
               display: flex;
@@ -3445,6 +3447,32 @@ body {
       padding: 0.5rem;
       font-size: 1.4rem; }
       .form-tag-container input:focus {
+        outline: none;
+        border: none; }
+  .form-tag-container-card {
+    border-radius: 3px;
+    background: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    width: 630px;
+    margin: 2rem 0 1rem 0;
+    min-height: 2rem; }
+    @media only screen and (max-width: 992px) {
+      .form-tag-container-card {
+        width: 100%; } }
+    @media only screen and (max-width: 600px) {
+      .form-tag-container-card {
+        width: 90%; } }
+    .form-tag-container-card input {
+      flex: 1;
+      width: auto;
+      border: 0;
+      outline: none;
+      color: black;
+      padding: 0.5rem;
+      font-size: 1.4rem; }
+      .form-tag-container-card input:focus {
         outline: none;
         border: none; }
   .form-message-error {

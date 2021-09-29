@@ -11,7 +11,7 @@ import { geocodeByPlaceId } from 'react-places-autocomplete'
 import {usStates,eventsList} from '../../utils/quiz'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
-import {manageTags} from '../../helpers/forms'
+import {manageTags, manageCardTags} from '../../helpers/forms'
 
 const searchOptionsAddress = {
   componentRestrictions: {country: 'us'},
@@ -23,7 +23,7 @@ const searchOptionsCities = {
   types: ['(cities)']
 }
 
-const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetState, resetRank, updateRank, removeRank, sortRank, card, editCard}) => {
+const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetState, resetRank, updateRank, removeRank, sortRank, card, editCard, updateCardTags}) => {
   const myRefs = useRef(null)
   const node = useRef();
   // console.log(recipients)
@@ -47,6 +47,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
   const [invalid_tag, setInvalidTag] = useState(false)
   const [addNew, setAddNew] = useState(false)
   const [cardUpdate, setCardUpdate] = useState(false)
+  const [cardTagsItem, setCardTagsItem] = useState(null)
 
   const handleClickOutside = (event) => {
     if(myRefs.current){
@@ -80,6 +81,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
   }, [recipientID])
 
   useEffect(() => {
+    // console.log(recipient)
     if(modal == 'tags'){
       manageTags('preload',  recipient.tags)
       let closeIcon = document.querySelectorAll('.form-tag')
@@ -102,6 +104,31 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
         })
       }
     }
+
+    if(modal == 'edit_card_tags'){
+      manageCardTags('preload',  cardTagsItem.tags)
+      let closeIcon = document.querySelectorAll('.form-tag')
+      if(closeIcon){
+        closeIcon.forEach( (e) => {
+          e.addEventListener('click', function(e){
+            let parent = e.target.parentNode
+            let parentOfParent = parent.parentNode
+            parentOfParent.remove()
+
+            let tagValues = document.querySelectorAll(".tag > span")
+            let newValues = []
+            
+            tagValues.forEach( e => {
+              newValues.push(e.innerHTML)
+            })
+
+            updateCardTags(newValues)
+          })
+        })
+      }
+    }
+
+    //TODO: UPDATE TAGS FOR CARD UPDATE SIMILAR TO ABOVE
   }, [modal])
 
   const handleSelect = async (e, type, id) => {
@@ -316,12 +343,65 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
     }
   }
 
-  const createCard = async () => {
+  const handleKeyPressCards = async (e, clicked) => {
+    if(e.key === 'Enter' || clicked == 'true'){
+      try {
+        const responseTag = await axios.post(`${API}/recipient/check-word`, {tags})
+        setInvalidTag(false)
+        let input = document.getElementById('researchInterests-card')
+        input.value = responseTag.data
+      } catch (error) {
+        console.log(error.response)
+        if(error) return  error.response ? (setMessage(error.response.data), setInvalidTag(true)) : (setMessage(`Tags cannot be more than two words`), setInvalidTag(true))
+      }
+      e.preventDefault();
+      manageCardTags('addTag')
+      let closeIcon = document.querySelectorAll('.form-tag')
+      let postHidden = document.getElementById("tagValue")
+      let values = postHidden.getAttribute('value').split(',')
+
+      closeIcon.forEach( (e) => {
+        e.addEventListener('click', function(e){
+          let parent = e.target.parentNode
+          let parentOfParent = parent.parentNode
+          parentOfParent.remove()
+
+          let tagValues = document.querySelectorAll(".tag > span")
+          let newValues = []
+          
+          tagValues.forEach( e => {
+            newValues.push(e.innerHTML)
+          })
+
+          updateCardTags(newValues)
+        })
+      })
+
+      updateCardTags(values)
+      setTags('')
+    }
+  }
+
+  const createCard = async (loading) => {
+    setLoading(loading)
     try {
-      const responseCard = await axios.post(`${API}/card/create`, {id: recipientID, card: card})
-      console.log(responseCard)
+      const responseCard = await axios.post(`${API}/card/create`, {id: recipientID, card: card, user: newUser})
+      setLoading('')
+      setEdit('')
+      setModal('')
+      setCardMenu('empty')
+      setAllRecipients(responseCard.data)
+      responseCard.data.filter((item) => {
+        if(item._id == recipientID){
+          for(let key in item){
+            editRecipient(key, item[key])
+          }
+        }
+      })
     } catch (error) {
+      setLoading('')
       console.log(error)
+      if(error) error.response ? setError(error.response.data) : setError('Could not create card')
     }
   }
 
@@ -578,7 +658,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
                           {cardMenu == idx && <div className="profile-dashboard-recipients-edit-event-container-card-menu">
                             <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setCardForUpdate(cardItem._id, 'edit_card_event')}>Edit Event</div>
                             <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setCardForUpdate(cardItem._id, 'edit_card_message')}>Edit Message</div>
-                            <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => (setModal('tags'))}>Edit Card Themes</div>
+                            <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setCardForUpdate(cardItem._id, 'edit_card_tags', setCardTagsItem(cardItem))}>Edit Card Themes</div>
                           </div>
                           }
                           <div className="profile-dashboard-recipients-edit-event-container-card-dots" onClick={() => cardMenu !== 'empty' ? setCardMenu('empty') :  setCardMenu(idx)}><span></span><span></span><span></span></div>
@@ -593,7 +673,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
                                 <div key={idx} className="profile-dashboard-recipients-edit-event-container-card-tags-tag">{ cardItem.tags.length > 1 ? idx == 2 ? `${tag.substring(0, 10)} ` : cardItem.tags.length - 1 == idx ? `${tag.substring(0, 10)} ` : `${tag.substring(0, 10)}, ` : `${tag.substring(0, 10)} `}</div>
                               )
                             }
-                            <div onClick={() => (setModal('tags'))}className="profile-dashboard-recipients-edit-event-container-card-tags-dots"><span></span><span></span><span></span></div>
+                            <div onClick={() => (setCardForUpdate(cardItem._id, 'edit_card_tags', setCardTagsItem(cardItem)))}className="profile-dashboard-recipients-edit-event-container-card-tags-dots"><span></span><span></span><span></span></div>
                           </div>
                         </div>
                       
@@ -603,7 +683,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
                     )
                     )
                     }
-                    <div className="profile-dashboard-recipients-edit-event-container-card-add" onClick={() => setModal('edit_event_card')}>
+                    <div className="profile-dashboard-recipients-edit-event-container-card-add" onClick={() => (setModal('edit_card_event'))}>
                       <SVG svg={'plus'}></SVG>
                       <span>Add your next card here</span>
                     </div>
@@ -1025,7 +1105,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
             <div className="recipient-modal-box-close" onClick={() => (setModal(''), setCardMenu('empty'))}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
             <div className="recipient-modal-box-event">
             <div className="quiz-title recipient-modal-box-event-title">What are the events you'd like to send cards for your {recipient.recipient ? recipient.recipient : recipient.recipient_other ? recipient.recipient_other : 'recipient'}?</div>
-            <div className="quiz-title-mobile">What are the events you'd like to send cards for your {recipient.firstName ? recipient.firstName : 'recipient'}?</div>
+            <div className="quiz-title-mobile">What are the events you'd like to send cards for your {recipient.recipient ? recipient.recipient : recipient.recipient_other ? recipient.recipient_other : 'recipient'}?</div>
             <div className="quiz-subtitle">Pick the event and tell us the arrival date.</div>
             <div className="quiz-subtitle-mobile">Select the estimated arrival date for the event.</div>
             <div className="quiz-recipient-event">
@@ -1083,7 +1163,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
               )
               }
             </div>
-            <div className="quiz-button-container recipient-modal-box-event-button"><button className="quiz-button" onClick={(e) => (cardUpdate ? submitCardUpdate('event') : createCard())} disabled={recipient.card_arrival ? false : true}>{loading == 'event' ? <div className="loading loading-event"><span></span><span></span><span></span></div> : <span>Done</span>}</button><div className="quiz-button-container"></div></div>
+            <div className="quiz-button-container recipient-modal-box-event-button"><button className="quiz-button" onClick={(e) => (cardUpdate ? submitCardUpdate('event') : createCard('event'))} disabled={recipient.card_arrival ? false : true}>{loading == 'event' ? <div className="loading loading-event"><span></span><span></span><span></span></div> : <span>Done</span>}</button><div className="quiz-button-container"></div></div>
             </div>
           </div>
           </div>
@@ -1134,6 +1214,33 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
           </div>
           </div>
         }
+        {modal == 'edit_card_tags' &&
+          <div className="recipient-modal">
+          <div className="recipient-modal-box">
+            <div className="recipient-modal-box-close" onClick={() => (setModal(''), setCardMenu('empty'))}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
+            <div className="recipient-modal-box-message">
+              <div className="quiz-title">Anything specific your {recipient.recipient ? recipient.recipient : 'recipient'} might like?</div>
+              <div className="quiz-title-mobile">Anything specific your {recipient.recipient ? recipient.recipient : 'recipient'} might like?</div>
+              <div className="quiz-subtitle">Animals, flowers, foods etc. Add as many tags as you'd like!</div>
+              <div className="quiz-subtitle-mobile">Animals, flowers, foods etc. Add as many tags as you'd like!</div>
+              <div className="quiz-recipient-tags">
+                <div className={`quiz-recipient-tags-box ` + (invalid_tag ? ` form-message-error-outline` : null)}>
+                  <input type="hidden" name="tags" id="tagValue" value="" required></input>
+                  <input type="text" id="researchInterests-card" name="tags" value={tags} onChange={ (e) => (setTags(e.target.value), setMessage(''))} onKeyPress={(e) => handleKeyPressCards(e)}/>
+                  <button onClick={(e) => handleKeyPressCards(e, 'true')}>Add</button>
+                </div>
+                {message ? <div className="form-message-error">{message}</div> : <div className="form-message-error">&nbsp;</div>}
+                <div className="form-tag-container-card"></div>
+                {/* <div className="quiz-recipient-tags-checkbox"><input type="checkbox" name="unsure" onClick={(e) => (setTimeout(() => {
+                  quizProgressNav(e,'other')
+                }, 500), dispatch({type: 'UPDATE_TAGS', payload: []})
+                )}/><span>I'm not sure</span></div> */}
+              </div>
+              <div className="quiz-button-container recipient-modal-box-event-button"><button className="quiz-button" onClick={() => (submitCardUpdate('tags'))}>{loading == 'tags' ? <div className="loading loading-event"><span></span><span></span><span></span></div> : <span>Done</span>}</button><div className="quiz-button-container"></div></div>
+          </div>
+          </div>
+          </div>
+        }
       </div>
       <Footer></Footer>
     </>
@@ -1156,7 +1263,8 @@ const mapDispatchToProps = dispatch => {
     resetState: () => dispatch({type: 'INITIAL_STATE'}),
     resetRank: () => dispatch({type: 'RESET_RANK'}),
     sortRank: () => dispatch({type: 'SORT_RANK'}),
-    editCard: (name, data) => dispatch({type: 'EDIT_CARD', name: name, value: data})
+    editCard: (name, data) => dispatch({type: 'EDIT_CARD', name: name, value: data}),
+    updateCardTags: (data) => dispatch({type: 'UPDATE_CARD_TAGS', value: data})
   }
 }
 

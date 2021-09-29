@@ -473,6 +473,40 @@
     }
   }
 
+  &-tag-container-card {
+    border-radius: 3px;
+    background: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    width: 630px;
+    margin: 2rem 0 1rem 0;
+    min-height: 2rem;
+
+    @media only screen and (max-width: $large) {
+      width: 100%;
+    }
+
+    @media only screen and (max-width: $small) {
+      width: 90%;
+    }
+
+    input {
+      flex: 1;
+      width: auto;
+      border: 0;
+      outline: none;
+      color: black;
+      padding: 0.5rem;
+      font-size: 1.4rem;
+
+      &:focus {
+        outline: none;
+        border: none;
+      }
+    }
+  }
+
   &-message {
     &-error {
       font-size: 1.4rem;
