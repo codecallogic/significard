@@ -38,7 +38,7 @@ const Confirmation = ({order}) => {
           </div>
           <div className="confirmation-order-details-billing ship_to">
             <div className="confirmation-order-details-billing-title">
-              Shit to:
+              Ship to:
             </div>
             <div className="confirmation-order-details-billing-name">{order.shipping_name}</div>
             <div className="confirmation-order-details-billing-address">{order.shipping_address}</div>
