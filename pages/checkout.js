@@ -62,6 +62,7 @@ const Checkout = ({newUser}) => {
       recipientData.other = window.localStorage.getItem('other')
       recipientData.involvement = window.localStorage.getItem('involvement')
       recipientData.package_plan = window.localStorage.getItem('package_plan')
+      recipientData.package_quantity = window.localStorage.getItem('package_quantity')
       recipientData.mail_to = window.localStorage.getItem('mail_to')
       recipientData.name = window.localStorage.getItem('name')
       recipientData.address_one = window.localStorage.getItem('address_one')
@@ -99,6 +100,7 @@ const Checkout = ({newUser}) => {
     if(!recipientData.other) return  (window.localStorage.setItem('quiz_question', 'other'), window.location.href = '/quiz')
     if(!recipientData.involvement) return  (window.localStorage.setItem('quiz_question', 'involvement'), window.location.href = '/quiz')
     if(!recipientData.package_plan) return  (window.localStorage.setItem('quiz_question', 'package'), window.location.href = '/quiz')
+    if(!recipientData.package_quantity) return  (window.localStorage.setItem('quiz_question', 'package'), window.location.href = '/quiz')
     if(!recipientData.mail_to) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
 
     if(recipientData.mail_to == 'user' || recipientData.mail_to == 'recipient'){
@@ -116,7 +118,13 @@ const Checkout = ({newUser}) => {
     }
     if(!recipientData.description) return  (window.localStorage.setItem('quiz_question', 'description'), window.location.href = '/quiz')
 
-    recipientData.package_plan === 'standard' ? (setPackagePrice(8.99), setTax(8.99 * .1)) : recipientData.package_plan == 'plantable' ? (setPackagePrice(10.99), setTax(10.99 * .1)) : null
+
+    if(recipientData.package_plan === 'best_deal')(setPackagePrice(6.99), setTax(6.99 * .1))
+
+    if(recipientData.package_plan == 'better_deal')(setPackagePrice(9.99), setTax(9.99 * .1))
+
+    if(recipientData.package_plan == 'good_deal')(setPackagePrice(11.99), setTax(11.99 * .1))
+    
 
     recipientData.package_plan === 'standard' ? setTotal(8.99 + 8.99 * .1) : recipientData.package_plan == 'plantable' ? setTotal(10.99 + 10.99 * .1): null
 

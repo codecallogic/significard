@@ -11,6 +11,7 @@ const initialState = {
   other: '',
   involvement: '',
   package_plan: '',
+  package_quantity: '',
   name: '',
   mail_to: '',
   address_one: '',

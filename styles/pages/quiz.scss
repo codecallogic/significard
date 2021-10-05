@@ -1177,8 +1177,24 @@
         }
       }
 
+      &-input {
+        input {
+          margin: 4rem 0 2rem 0;
+          width: 100%;
+          padding: 1rem 2rem;
+          border: none;
+          text-align: center;
+          font-family: Roboto;
+          font-size: 1.8rem;
+          line-height: 2.1rem;
+          outline: none;
+        }
+      }
+
       &-price {
-        font-size: 3rem;
+        font-weight: 400;
+        font-size: 3rem !important;
+        line-height: 3.8rem;
         color: $color-scheme-3-variation-3;
       }
 
@@ -1592,6 +1608,14 @@
 
   @media only screen and (max-width: $small) {
     margin-bottom: 4rem;
+  }
+}
+
+.mb-2 {
+  margin-bottom: 4rem;
+
+  @media only screen and (max-width: $small) {
+    margin-bottom: 2rem;
   }
 }
 

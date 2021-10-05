@@ -32,7 +32,7 @@ const quiz = ({quizState}) => {
   const router = useRouter()
   const node = useRef();
   
-  const [quiz, setQuiz] = useState('recipient')
+  const [quiz, setQuiz] = useState('package')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
@@ -47,6 +47,7 @@ const quiz = ({quizState}) => {
   const [checkmarkOther, setCheckmarkOther] = useState(false)
   const [enableCalendar, setEnableCalendar] = useState('')
   const [calendar, setCalendar] = useState(new Date())
+  const [result, setResult] = useState('')
 
   useEffect(() => {
     if(window.localStorage.getItem('quiz_question')) window.localStorage.getItem('quiz_question').length > 0 ? window.localStorage.getItem('quiz_question') == 'checkout' ? window.location.href = '/checkout' : setQuiz(window.localStorage.getItem('quiz_question')) : null
@@ -248,8 +249,12 @@ const quiz = ({quizState}) => {
     if(quizState.event_other.length == 0){
       setCheckmarkOther(false)
     }
+
+    if(quizState.package_quantity.length == 0){
+      setResult('')
+    }
     
-  }, [quizState.nickname, quizState.message, quizState.signature, quizState.recipient_other, quizState.event_other])
+  }, [quizState.nickname, quizState.message, quizState.signature, quizState.recipient_other, quizState.event_other, quizState.package_quantity])
 
 
   useLayoutEffect(() => {
@@ -397,7 +402,7 @@ const quiz = ({quizState}) => {
   }
 
   // HANDLE CHANGE
-  const handleChange = (question, e, idx, type) => {
+  const handleChange = (question, e, idx, type, quantity) => {
     if(question == 'ranking'){
       let span = e.querySelectorAll('span')
       let ranking = new Object()
@@ -417,6 +422,8 @@ const quiz = ({quizState}) => {
 
     if(question == 'package_plan'){
       window.localStorage.setItem(question, type)
+      window.localStorage.setItem('package_quantity', quantity)
+      dispatch({type: 'UPDATE_CHANGE', name: 'package_quantity', payload: quantity})
       return dispatch({type: 'UPDATE_CHANGE', name: question, payload: type})
     }
 
@@ -610,6 +617,12 @@ const quiz = ({quizState}) => {
     quizProgressNav(e, 'message')
   }
 
+  const validateIsNumber = (type) => {
+    const input = document.getElementById(type)
+    const regex = /[^0-9|\n\r]/g
+    input.value = input.value.split(regex).join('')
+  }
+
   const resetMail = (e) => {
     window.localStorage.setItem('name', '')
     dispatch({type: 'UPDATE_CHANGE', name: 'name', payload: ''})
@@ -666,6 +679,13 @@ const quiz = ({quizState}) => {
     var day = e.getUTCDate()
     var year = e.getUTCFullYear()
     return `${month} ${day}, ${year}`
+  }
+
+  const calculate = () => {
+    if(quizState.package_quantity <= 4) setResult(13.99)
+    if(quizState.package_quantity > 4 ) setResult(11.99)
+    if(quizState.package_quantity > 9) setResult(9.99)
+    if(quizState.package_quantity > 19) setResult(6.99)
   }
 
   return (
@@ -999,36 +1019,59 @@ const quiz = ({quizState}) => {
           <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'involvement')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
-          <div className="quiz-title">Choose a package</div>
-          <div className="quiz-title-mobile">Choose a package</div>
+          <div className="quiz-title">Choose a plan</div>
+          <div className="quiz-title-mobile">Choose a plan</div>
           <div className="quiz-recipient-package">
             <div className="quiz-recipient-package-item">
-              <div className="quiz-recipient-package-item-title">Standard</div>
-              <div className="quiz-recipient-package-item-subtitle">Cards that you can recycle</div>
+              <div className="quiz-recipient-package-item-title">Best Deal</div>
+              <div className="quiz-recipient-package-item-subtitle">You get 20 cards</div>
               <div className="quiz-recipient-package-item-image-container">
                 <img src={`/media/package/standard.png`} alt="" />
-                {/* {packageList.slice(0, 3).map((item, idx) =>
-                  <img key={idx} style={{transform: `rotate(${item.rotate}deg)`}} src={`/media/package/${item.image}`} alt="" />
-                )} */}
               </div>
-              <div className="quiz-recipient-package-item-price">$8.99 /card</div>
-              <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div>
-              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package_plan', e, null, 'standard'))}>Select</button>
+              <div className="quiz-recipient-package-item-price">$6.99 per card</div>
+              {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
+              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package_plan', e, null, 'best_deal', 20))}>Select</button>
               <div>Free Shipping</div>
             </div>
             <div className="quiz-recipient-package-item">
-              <div className="quiz-recipient-package-item-title">Plantable</div>
-              <div className="quiz-recipient-package-item-subtitle">Cards that you can plant</div>
+              <div className="quiz-recipient-package-item-title">Better Deal</div>
+              <div className="quiz-recipient-package-item-subtitle">You get 10 cards</div>
+              <div className="quiz-recipient-package-item-image-container">
+                <img src={`/media/package/standard.png`} alt="" />
+              </div>
+              <div className="quiz-recipient-package-item-price">$9.99 per card</div>
+              {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
+              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package_plan', e, null, 'better_deal'), 10)}>Select</button>
+              <div>Free Shipping</div>
+            </div>
+            <div className="quiz-recipient-package-item">
+              <div className="quiz-recipient-package-item-title">Good Deal</div>
+              <div className="quiz-recipient-package-item-subtitle">You get 5 cards</div>
               <div className="quiz-recipient-package-item-image-container">
                 {/* {packageList.slice(3, 6).map((item, idx) =>
                   <img key={idx} style={{transform: `rotate(${item.rotate}deg)`}} src={`/media/package/${item.image}`} alt="" />
                 )} */}
-                <img src={`/media/package/plantable.png`} alt="" />
+                <img src={`/media/package/standard.png`} alt="" />
               </div>
-              <div className="quiz-recipient-package-item-price">$10.99 /card</div>
-              <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div>
-              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package_plan', e, null, 'plantable'))}>Select</button>
+              <div className="quiz-recipient-package-item-price">$11.99 per card</div>
+              {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
+              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package_plan', e, null, 'good_deal', 5))}>Select</button>
               <div>Free Shipping</div>
+            </div>
+            <div className="quiz-recipient-package-item">
+            <div className="quiz-recipient-package-item-title">Customize It</div>
+              <div className="quiz-recipient-package-item-subtitle">Enter the number of cards you want</div>
+              <div className="quiz-recipient-package-item-input">
+                <input id="custom_quantity" type="text" value={quizState.package_quantity} placeholder="Number of Cards" onChange={(e) => (setResult(''), validateIsNumber('custom_quantity'),handleChange('package_plan', e, null, 'custom', e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Number of Cards'}/>
+              </div>
+              {!result && <button className="quiz-recipient-package-item-button mb-2" onClick={ () => (calculate())}>Calculate</button>
+              }
+              {result && <button className="quiz-recipient-package-item-button mb-2" onClick={ (e) => (quizProgressNav(e,'mail'))}>Select & Continue</button>
+              }
+              {result && <>
+              <div className="quiz-recipient-package-item-price">${result} per card</div>
+              <div>Free Shipping</div>
+              </>}
             </div>
           </div>
           <Slider quizProgressNav={quizProgressNav} handleChange={handleChange}></Slider>
