@@ -31,6 +31,7 @@ const quiz = ({quizState}) => {
   const dispatch = useDispatch()
   const router = useRouter()
   const node = useRef();
+  console.log(quizState)
   
   const [quiz, setQuiz] = useState('package')
   const [recipient, setRecipient] = useState('')
@@ -956,7 +957,7 @@ const quiz = ({quizState}) => {
             <div className="form-tag-container"></div>
             <div className="quiz-recipient-tags-checkbox"><input type="checkbox" name="unsure" onClick={(e) => (setTimeout(() => {
               quizProgressNav(e,'other')
-            }, 500), dispatch({type: 'UPDATE_TAGS', payload: []})
+            }, 500), dispatch({type: 'UPDATE_TAGS', value: []})
             )}/><span>I'm not sure</span></div>
           </div>
           <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'other')} disabled={quizState.tags.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
@@ -1030,7 +1031,7 @@ const quiz = ({quizState}) => {
               </div>
               <div className="quiz-recipient-package-item-price">$6.99 per card</div>
               {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package_plan', e, null, 'best_deal', 20))}>Select</button>
+              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package_plan', e, null, 'best deal', 20))}>Select</button>
               <div>Free Shipping</div>
             </div>
             <div className="quiz-recipient-package-item">
@@ -1041,7 +1042,7 @@ const quiz = ({quizState}) => {
               </div>
               <div className="quiz-recipient-package-item-price">$9.99 per card</div>
               {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package_plan', e, null, 'better_deal'), 10)}>Select</button>
+              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package_plan', e, null, 'better deal', 10))}>Select</button>
               <div>Free Shipping</div>
             </div>
             <div className="quiz-recipient-package-item">
@@ -1055,7 +1056,7 @@ const quiz = ({quizState}) => {
               </div>
               <div className="quiz-recipient-package-item-price">$11.99 per card</div>
               {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package_plan', e, null, 'good_deal', 5))}>Select</button>
+              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package_plan', e, null, 'good deal', 5))}>Select</button>
               <div>Free Shipping</div>
             </div>
             <div className="quiz-recipient-package-item">

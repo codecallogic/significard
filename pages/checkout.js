@@ -47,6 +47,10 @@ const Checkout = ({newUser}) => {
     window.location.href = '/quiz'
   }
 
+  useEffect(() => {
+    console.log(total)
+  }, [total])
+
   useEffect( async () => {
     let recipientData = new Object()
 
@@ -119,14 +123,25 @@ const Checkout = ({newUser}) => {
     if(!recipientData.description) return  (window.localStorage.setItem('quiz_question', 'description'), window.location.href = '/quiz')
 
 
-    if(recipientData.package_plan === 'best_deal')(setPackagePrice(6.99), setTax(6.99 * .1))
+    if(recipientData.package_plan === 'best deal')(setPackagePrice(6.99), setTax(6.99 * .1))
 
-    if(recipientData.package_plan == 'better_deal')(setPackagePrice(9.99), setTax(9.99 * .1))
+    if(recipientData.package_plan == 'better deal')(setPackagePrice(9.99), setTax(9.99 * .1))
 
-    if(recipientData.package_plan == 'good_deal')(setPackagePrice(11.99), setTax(11.99 * .1))
+    if(recipientData.package_plan == 'good deal')(setPackagePrice(11.99), setTax(11.99 * .1))
+
+    recipientData.package_plan === 'best deal' ? setTotal((6.99 * recipientData.package_quantity) + (6.99 * recipientData.package_quantity * .1)) : null
+    recipientData.package_plan === 'better deal' ? setTotal((9.99 * recipientData.package_quantity) + (9.99 * recipientData.package_quantity * .1)) : null
+    recipientData.package_plan === 'good deal' ? setTotal((11.99 * recipientData.package_quantity) + (11.99 * recipientData.package_quantity * .1)) : null
+
+    let result = null
+    if(recipientData.package_quantity <= 4) result = 13.99
+    if(recipientData.package_quantity > 4 ) result = 11.99
+    if(recipientData.package_quantity > 9) result = 9.99
+    if(recipientData.package_quantity > 19) result = 6.99
     
+    if(recipientData.package_plan == 'custom')(setPackagePrice(result), setTax(result * .1))
+    recipientData.package_plan === 'custom' ? setTotal((result * recipientData.package_quantity) + (result * recipientData.package_quantity * .1)) : null
 
-    recipientData.package_plan === 'standard' ? setTotal(8.99 + 8.99 * .1) : recipientData.package_plan == 'plantable' ? setTotal(10.99 + 10.99 * .1): null
 
     let delivery = new Date(Date.now() + 12096e5)
 
@@ -249,14 +264,14 @@ const Checkout = ({newUser}) => {
               }
             </div>
             <Elements stripe={stripePromise}>
-              <CheckOutForm user={newUser} amount={package_price + tax} cardholder={cardholder} address={address} city={city} state={state} zip_code={zip_code} delivery={delivery} package_price={package_price} tax={tax} recipient={recipient}></CheckOutForm>
+              <CheckOutForm user={newUser} amount={total} cardholder={cardholder} address={address} city={city} state={state} zip_code={zip_code} delivery={delivery} package_price={package_price} tax={tax} recipient={recipient}></CheckOutForm>
             </Elements>
           </div>
           <div className="checkout-container-right">
             <div className="checkout-container-right-package">Package: {recipient.package_plan ? recipient.package_plan : ''} </div>
             {recipient.mail_to == 'recipient' && <div className="checkout-container-right-ship_to">Ship to {recipient.recipient ? `${recipient.recipient}'s address` : recipient.recipient_other ? `${recipient.recipient_other}'s address`: ''} </div>}
             <div className="checkout-container-right-delivery">📩 <span>Estimated arrival date: {delivery}</span></div>
-            <div className="checkout-container-right-price"><span>{recipient.event ? recipient.event : ''}</span><span>{`$ ` + Math.ceil(package_price * 100) / 100}</span></div>
+            <div className="checkout-container-right-price"><span>{recipient.event ? `${recipient.event} (${recipient.package_quantity}x)` : ''}</span><span>{`$ ` + Math.ceil(package_price * 100) / 100}</span></div>
             <div className="checkout-container-right-tax"><span>Sales Tax</span><span>{`$ ` + (Math.ceil(tax * 100) / 100).toFixed(2)}</span></div>
             <div className="checkout-container-right-total"><span>Total</span><span>{`$ ` + Math.ceil(total * 100) / 100}</span></div>
           </div>
