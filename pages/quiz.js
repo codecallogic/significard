@@ -1059,10 +1059,14 @@ const quiz = ({quizState}) => {
               <div>Free Shipping</div>
             </div>
             <div className="quiz-recipient-package-item">
-            <div className="quiz-recipient-package-item-title">Customize It</div>
+              <div className="quiz-recipient-package-item-title">Customize It</div>
               <div className="quiz-recipient-package-item-subtitle">Enter the number of cards you want</div>
               <div className="quiz-recipient-package-item-input">
-                <input id="custom_quantity" type="text" value={quizState.package_quantity} placeholder="Number of Cards" onChange={(e) => (setResult(''), validateIsNumber('custom_quantity'),handleChange('package_plan', e, null, 'custom', e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Number of Cards'}/>
+                <input id="custom_quantity" type="text" value={quizState.package_quantity} placeholder="Number of Cards" onChange={(e) => (setResult(''), validateIsNumber('custom_quantity'),handleChange('package_plan', e, null, 'custom', e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Number of Cards'} onKeyDown={(e) => {
+                  if (e.code === "Enter") {
+                    calculate()
+                  }
+                }}/>
               </div>
               {!result && <button className="quiz-recipient-package-item-button mb-2" onClick={ () => (calculate())}>Calculate</button>
               }
@@ -1074,7 +1078,7 @@ const quiz = ({quizState}) => {
               </>}
             </div>
           </div>
-          <Slider quizProgressNav={quizProgressNav} handleChange={handleChange}></Slider>
+          <Slider result={result} setresult={setResult} calculate={calculate} quizProgressNav={quizProgressNav} handleChange={handleChange} validateisnumber={validateIsNumber} quizstate={quizState}></Slider>
           <div className="quiz-recipient-package-bulk">For bulk orders <a href="">click here</a></div>
           <div className="quiz-recipient-package-description">
               <div className="quiz-recipient-package-description-title">All cards are 5 x 7 (A7 Folded) and include: </div>

@@ -7,8 +7,7 @@ const SVGs = ({svg, classprop}) => {
       case 'partying-face':
         return <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
         <title>pacman</title>
-        <g transform="translate(0.000000,45.000000) scale(0.100000,-0.100000)"
-        fill="#000000" stroke="none">
+        <g transform="translate(0.000000,45.000000) scale(0.100000,-0.100000)">
         <path d="M10 429 c0 -6 7 -35 16 -65 l16 -55 29 41 c16 23 36 43 44 47 8 3 12
         9 9 15 -3 5 -16 3 -30 -6 -28 -19 -43 -21 -26 -4 20 20 14 31 -14 24 -17 -5
         -23 -3 -19 4 3 5 -1 10 -9 10 -9 0 -16 -5 -16 -11z"/>
