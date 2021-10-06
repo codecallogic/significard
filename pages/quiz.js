@@ -1079,8 +1079,20 @@ const quiz = ({quizState}) => {
             </div>
           </div>
           <Slider result={result} setresult={setResult} calculate={calculate} quizProgressNav={quizProgressNav} handleChange={handleChange} validateisnumber={validateIsNumber} quizstate={quizState}></Slider>
-          <div className="quiz-recipient-package-bulk">For bulk orders <a href="">click here</a></div>
-          <div className="quiz-recipient-package-description">
+          <div className="quiz-recipient-package-bulk">For more than 20 cards, please <a href="">contact us</a></div>
+          <div className="quiz-recipient-package-footer">All packages come with the following items <span>at no extra cost</span></div>
+          <div className="quiz-recipient-package-footer-2">
+            <div className="quiz-recipient-package-footer-2-item">
+              USPS Forever First Class Stamps
+            </div>
+            <div className="quiz-recipient-package-footer-2-item">
+              Envelope
+            </div>
+            <div className="quiz-recipient-package-footer-2-item">
+              Blank or preselected message inside the card
+            </div>
+          </div>
+          {/* <div className="quiz-recipient-package-description">
               <div className="quiz-recipient-package-description-title">All cards are 5 x 7 (A7 Folded) and include: </div>
                 <div className="quiz-recipient-package-description-text">• Handwritten address on the envelope.</div>
                 <div className="quiz-recipient-package-description-text">• Recipients name in front of card.</div>
@@ -1102,8 +1114,8 @@ const quiz = ({quizState}) => {
                   </div>
                 </div>
               </div>
-          </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'mail')} disabled={quizState.package_plan.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
+          </div> */}
+          {/* <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'mail')} disabled={quizState.package_plan.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div> */}
           {quizState.package_plan && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'mail')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>}
