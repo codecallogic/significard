@@ -81,18 +81,24 @@ const Confirmation = ({order}) => {
   )
 }
 
-Confirmation.getInitialProps = async ({query: {transaction}}) => {
-  
+Confirmation.getInitialProps = async ({query}) => {
+  try {
+    const responseSaveCard = await axios.post(`${API}/payment/save-card`, {future_use: query.id, id: query.transaction})
+  } catch (error) {
+    console.log(error)
+    if(error) console.log(error)
+  }
+
   let orderData = new Object()
   
   try {
-    const responseTransaction = await axios.post(`${API}/payment/get-transaction`, {'id': transaction})
+    const responseTransaction = await axios.post(`${API}/payment/get-transaction`, {'id': query.transaction})
     orderData = responseTransaction.data
   } catch (error) {
     console.log(error)
   }
 
-  console.log(orderData)
+  // console.log(orderData)
   
   return {
     order: orderData

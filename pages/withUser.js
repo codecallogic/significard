@@ -8,7 +8,7 @@ const withUser = Page => {
     const WithAuthUser = props => <Page {...props} />
     WithAuthUser.getInitialProps = async (context)  => {
       let userID = null
-      if(context.query) userID = context.query.id
+      if(!context.query.transaction) userID = context.query.id
 
       let recipients = null
       const user = getUser(context.req)

@@ -41,12 +41,12 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
 
     setLoading(true)
 
-    try {
-      const responseRecipient = await axios.post(`${API}/recipient/quiz`, {user, recipient})
-      console.log(responseRecipient)
-    } catch (error) {
-      if(error) return error.response ? setMessage(error.response.data) : setMessage('Error submitting your information, please try again later')
-    }
+    // try {
+    //   const responseRecipient = await axios.post(`${API}/recipient/quiz`, {user, recipient})
+    //   console.log(responseRecipient)
+    // } catch (error) {
+    //   if(error) return error.response ? setMessage(error.response.data) : setMessage('Error submitting your information, please try again later')
+    // }
 
     setMessage('')
 
@@ -62,7 +62,7 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
       type: 'card',
       card: cardElement,
       // billing_details: {email: user.email}
-      billing_details: {email: user.email, address: {line1: address, city: city, postal_code: zip_code}}
+      billing_details: {name: cardholder, email: user.email, address: {line1: address, city: city, postal_code: zip_code}}
     })
 
     if(error){
@@ -81,15 +81,16 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
             const result = await stripe.confirmCardPayment(client_secret, {
               payment_method: {
                 card: elements.getElement(CardElement),
-                billing_details: {email: user.email, address: {line1: address, city: city, postal_code: zip_code}}
-              }
+                billing_details: {name: cardholder, email: user.email, address: {line1: address, city: city, postal_code: zip_code}}
+              },
+              setup_future_usage: 'off_session'
             })
-            
             if(result.error) setMessage(`${result.error.message}. For ${result.error.decline_code}`)
-            window.location.href = `/${order}`
+            window.location.href = `/${order}?id=${result.paymentIntent.id}`
           } catch (error) {
             setLoading(false)
-            if(error) setMessage('An error occurred while processing your card. Try again in a little bit.')
+            console.log(error)
+            if(error) setMessage('An error occurred while processing your card. Please try again in a little bit.')
             console.log(error)
           }
         }
