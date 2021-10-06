@@ -5,26 +5,30 @@ import { useSwipeable } from 'react-swipeable';
 
 const Slider = ({slider, quizProgressNav, handleChange, result, setresult, calculate, validateisnumber, quizstate, moveSlide}) => {
   const dispatch = useDispatch()
+  const [swipe, setSwipe] = useState(0)
 
   const goToSlide = (e, i) => {
     let el = document.querySelectorAll('.slider-slides-item')
-    if(i == 0) moveSlide(el[i].offsetWidth - 60, i)
+    if(i == 0) moveSlide(el[i].offsetWidth - 140, i)
     if(i == 1) moveSlide(-el[i].offsetWidth, i)
     if(i == 2) moveSlide(-el[i].offsetWidth*i, i)
     if(i == 3) moveSlide(-el[i].offsetWidth*i, i)
-    // i == 2 ? dispatch({type: "NEXT", width: (-el.offsetWidth + (el.offsetWidth/1)), active: i}) : null
-    // i == 1 ? dispatch({type: "NEXT", width: (-el.offsetWidth + (el.offsetWidth/8)), active: i}) : null
-    // i == 0 ? dispatch({type: "NEXT", width: (el.offsetWidth - (el.offsetWidth/1.5)), active: i}) : null
   }
 
   const handlers = useSwipeable({
     onSwipedLeft: () => {
-      let el = document.querySelector('.slider-slides-item')
-      dispatch({type: "NEXT", width: (-el.offsetWidth + (el.offsetWidth/8)), active: 1})
+      setSwipe(swipe == 3 ? swipe : swipe + 1)
+      let el = document.querySelectorAll('.slider-slides-item')
+      if(swipe + 1 == 1) moveSlide(-el[swipe + 1].offsetWidth, swipe + 1)
+      if(swipe + 1 == 2) moveSlide(-el[swipe + 1].offsetWidth*2, swipe + 1)
+      if(swipe + 1 == 3) moveSlide(-el[swipe + 1].offsetWidth*3, swipe + 1)
     },
     onSwipedRight: () => {
-      let el = document.querySelector('.slider-slides-item')
-      dispatch({type: "NEXT", width: (el.offsetWidth - (el.offsetWidth/1.5)), active: 0})
+      setSwipe(swipe == 0 ? swipe : swipe - 1)
+      let el = document.querySelectorAll('.slider-slides-item')
+      if(swipe - 1 == 0) moveSlide(el[0].offsetWidth - 140, 0)
+      if(swipe - 1 == 1) moveSlide(-el[swipe - 1].offsetWidth, swipe - 1)
+      if(swipe - 1 == 2) moveSlide(-el[swipe - 1].offsetWidth*2, swipe -1)
     }
   });
   
