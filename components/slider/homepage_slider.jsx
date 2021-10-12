@@ -28,7 +28,7 @@ const Slider = ({slider}) => {
   return (
     <div className="homepage_slider">
       <div className="homepage_slider-slides-main">
-        <img src="/media/homepage/slider_main_1.png" alt="" className="homepage_slider-slides-main-image" />
+        <img src="/media/homepage/carousel_1.jpeg" alt="" className="homepage_slider-slides-main-image" />
       </div>
       <div className="homepage_slider-slides">
         <div className="homepage_slider-slides-container"
@@ -38,40 +38,40 @@ const Slider = ({slider}) => {
          {...handlers}
         >
           <div className="homepage_slider-slides-item">
-            <img className="homepage_slider-slides-item-image" src="/media/homepage/slider_1.png" alt="" />
+            <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_1.jpeg" alt="" />
           </div>
           <div className="homepage_slider-slides-item">
-            <img className="homepage_slider-slides-item-image" src="/media/homepage/slider_2.png" alt="" />
+            <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_2.jpeg" alt="" />
           </div>
           <div className="homepage_slider-slides-item">
-            <img className="homepage_slider-slides-item-image" src="/media/homepage/slider_3.png" alt="" />
+            <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_3.jpeg" alt="" />
           </div>
           <div className="homepage_slider-slides-item">
-            <img className="homepage_slider-slides-item-image" src="/media/homepage/slider_4.png" alt="" />
+            <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_4.jpeg" alt="" />
           </div>
           <div className="homepage_slider-slides-item">
-            <img className="homepage_slider-slides-item-image" src="/media/homepage/slider_5.png" alt="" />
+            <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_5.png" alt="" />
           </div>
           <div className="homepage_slider-slides-item">
-            <img className="homepage_slider-slides-item-image" src="/media/homepage/slider_6.png" alt="" />
+            <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_6.png" alt="" />
           </div>
           <div className="homepage_slider-slides-item">
-            <img className="homepage_slider-slides-item-image" src="/media/homepage/slider_7.png" alt="" />
+            <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_7.jpeg" alt="" />
           </div>
           <div className="homepage_slider-slides-item">
-            <img className="homepage_slider-slides-item-image" src="/media/homepage/slider_8.png" alt="" />
+            <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_8.jpeg" alt="" />
           </div>
           <div className="homepage_slider-slides-item">
-            <img className="homepage_slider-slides-item-image" src="/media/homepage/slider_9.png" alt="" />
+            <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_9.jpeg" alt="" />
           </div>
           <div className="homepage_slider-slides-item">
-            <img className="homepage_slider-slides-item-image" src="/media/homepage/slider_10.png" alt="" />
+            <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_10.jpeg" alt="" />
           </div>
           <div className="homepage_slider-slides-item">
-            <img className="homepage_slider-slides-item-image" src="/media/homepage/slider_11.png" alt="" />
+            <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_11.jpeg" alt="" />
           </div>
           <div className="homepage_slider-slides-item">
-            <img className="homepage_slider-slides-item-image" src="/media/homepage/slider_12.png" alt="" />
+            <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_12.png" alt="" />
           </div>
         </div>
         {/* <div className="homepage_slider-slides-dots">

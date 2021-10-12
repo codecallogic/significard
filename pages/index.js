@@ -11,7 +11,7 @@ import Footer from '../components/footer'
 initializeFirebase()
 
 const Home = ({user, userUpdate}) => {
-  console.log(user)
+  
   const signOut = async () => {
     try {
       const responseSignOut = await axios.post(`${API}/auth/logout`)

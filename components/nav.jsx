@@ -4,7 +4,7 @@ const Nav = ({}) => {
   
   return (
     <div className="nav">
-      <div className="nav-logo"><svg><use xlinkHref="sprite.svg#icon-logo"></use></svg><span>Significard</span></div>
+      <div className="nav-logo" onClick={() => window.location.href = '/'}><svg><use xlinkHref="sprite.svg#icon-logo"></use></svg><span>Significard</span></div>
       <div className="nav-menu">
         <a className="nav-menu-item">Pricing</a>
         <a className="nav-menu-item">About</a>

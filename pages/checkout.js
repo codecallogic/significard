@@ -48,7 +48,7 @@ const Checkout = ({newUser}) => {
   }
 
   useEffect(() => {
-    console.log(total)
+
   }, [total])
 
   useEffect( async () => {
@@ -66,6 +66,7 @@ const Checkout = ({newUser}) => {
       recipientData.other = window.localStorage.getItem('other')
       recipientData.involvement = window.localStorage.getItem('involvement')
       recipientData.package_plan = window.localStorage.getItem('package_plan')
+      recipientData.subscription = window.localStorage.getItem('subscription')
       recipientData.package_quantity = window.localStorage.getItem('package_quantity')
       recipientData.mail_to = window.localStorage.getItem('mail_to')
       recipientData.name = window.localStorage.getItem('name')
@@ -264,7 +265,7 @@ const Checkout = ({newUser}) => {
               }
             </div>
             <Elements stripe={stripePromise}>
-              <CheckOutForm user={newUser} amount={total} cardholder={cardholder} address={address} city={city} state={state} zip_code={zip_code} delivery={delivery} package_price={package_price} tax={tax} recipient={recipient}></CheckOutForm>
+              <CheckOutForm user={newUser} amount={total} cardholder={cardholder} address={address} city={city} state={state} zip_code={zip_code} delivery={delivery} package_price={package_price} tax={tax} recipient={recipient} subscription={recipient.subscription}></CheckOutForm>
             </Elements>
           </div>
           <div className="checkout-container-right">

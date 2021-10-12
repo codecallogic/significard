@@ -105,7 +105,7 @@ export const recipientReducer = (state = initialState, action) => {
         [action.name]: action.value
       }
     
-    case 'INITIAL_STATE':
+    case 'INITIAL_STATE_RECIPIENT':
       return initialState
   
     default:

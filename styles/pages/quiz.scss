@@ -253,6 +253,21 @@
         width: 100%;
       }
     }
+
+    &-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+    }
   }
 
   &-recipient-age {
@@ -1684,4 +1699,8 @@
   @media only screen and (max-width: $small) {
     padding-bottom: 3rem;
   }
+}
+
+.left {
+  text-align: left !important;
 }

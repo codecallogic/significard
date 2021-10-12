@@ -422,6 +422,10 @@ const quiz = ({quizState}) => {
     }
 
     if(question == 'package_plan'){
+      if(type == 'good deal') window.localStorage.setItem('subscription', 'price_1JhemBAFcPAVZmVL98ks6pIR')
+      if(type == 'better deal') window.localStorage.setItem('subscription', 'price_1JhetaAFcPAVZmVLvlXGYHwb')
+      if(type == 'best deal') window.localStorage.setItem('subscription', 'price_1JhevMAFcPAVZmVLhGQP6QGE')
+
       window.localStorage.setItem(question, type)
       window.localStorage.setItem('package_quantity', quantity)
       dispatch({type: 'UPDATE_CHANGE', name: 'package_quantity', payload: quantity})

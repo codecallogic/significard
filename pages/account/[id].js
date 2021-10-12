@@ -23,7 +23,7 @@ const searchOptionsCities = {
   types: ['(cities)']
 }
 
-const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetState, resetRank, updateRank, removeRank, sortRank, card, editCard, updateCardTags}) => {
+const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetRecipient, resetState, resetRank, updateRank, removeRank, sortRank, card, editCard, updateCardTags}) => {
   const myRefs = useRef(null)
   const node = useRef();
   // console.log(recipients)
@@ -45,7 +45,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
   const [checkmarkOther, setCheckmarkOther] = useState(false)
   const [tags, setTags] = useState('')
   const [invalid_tag, setInvalidTag] = useState(false)
-  const [addNew, setAddNew] = useState(false)
+  const [addNew, setAddNew] = useState(true)
   const [cardUpdate, setCardUpdate] = useState(false)
   const [cardTagsItem, setCardTagsItem] = useState(null)
 
@@ -53,6 +53,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
     if(myRefs.current){
       if(!myRefs.current.contains(event.target)){
         setInputDropdown('')
+        setCardMenu('')
       }
     }
   }
@@ -439,6 +440,21 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
       if(error) error.response ? setError(error.response.data) : setError('Could not update card')
     }
   }
+
+  const createRecipient = async (type) => {
+    setLoading(type)
+    try {
+      const recipientResponse = await axios.post(`${API}/recipient/create-recipient`, {recipient: recipient, user: newUser})
+      setMessage('')
+      setLoading('')
+      setAddNew(false)
+      setAllRecipients(recipientResponse.data)
+    } catch (error) {
+      console.log(error)
+      setLoading('')
+      if(error) error.response ? setMessage(error.response.data) : setMessage('Error occurred creating recipient')
+    }
+  }
   
   return (
     <>
@@ -472,9 +488,9 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
         </div>
         { sideNav == 'recipients' &&
         <div className="profile-dashboard-recipients">
-          <div className="profile-dashboard-recipients-item-add"><SVG svg={'plus'}></SVG><span>Add Recipient</span></div>
-          {recipients.map((item, idx) => 
-            <div key={idx} className="profile-dashboard-recipients-item" onClick={() => (setEdit(''), setRecipient(item._id), setCardMenu('empty'))}>{item.name}</div>
+          <div className="profile-dashboard-recipients-item-add" onClick={() => (resetRecipient(), setAddNew(true))}><SVG svg={'plus'}></SVG><span>Add Recipient</span></div>
+          {allRecipients.map((item, idx) => 
+            <div key={idx} className="profile-dashboard-recipients-item" onClick={() => (setEdit(''), setRecipient(item._id), setCardMenu('empty'), setAddNew(false))}>{item.name}</div>
           )}
         </div>
         }
@@ -683,11 +699,11 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
                     )
                     )
                     }
-                    <div className="profile-dashboard-recipients-edit-event-container-card-add" onClick={() => (setModal('edit_card_event'))}>
+                    <div className="profile-dashboard-recipients-edit-event-container-card-add" onClick={() => (setModal('edit_card_event'), resetState())}>
                       <SVG svg={'plus'}></SVG>
                       <span>Add your next card here</span>
                     </div>
-                    <div className="profile-dashboard-recipients-edit-event-container-card-plus_button">
+                    <div className="profile-dashboard-recipients-edit-event-container-card-plus_button" onClick={() => (setModal('edit_card_event'), resetState())}>
                       <span><SVG svg={'plus'}></SVG></span>
                     </div>
                 </div>
@@ -698,7 +714,17 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
         {
           addNew && <div className="profile-dashboard-recipients-edit">
             <div className="profile-dashboard-recipients-edit-title">
-              <div className="profile-dashboard-recipients-edit-title-recipient">Name</div>
+              <div className="profile-dashboard-recipients-edit-title-recipient">{recipient.recipient ? recipient.recipient : recipient.recipient_other ? item.recipient_other : 'Recipient'}</div>
+              <div className="profile-dashboard-recipients-edit-title-name">{recipient.name ? recipient.name : 'Name'}</div>
+              <div className="profile-dashboard-recipients-edit-title-edit">
+                <span onClick={() => cardMenu === 'recipient' ? setCardMenu(''): setCardMenu('recipient')}><SVG svg={'arrow-down'}></SVG></span>
+                {cardMenu == 'recipient' && 
+                <div className="profile-dashboard-recipients-edit-title-edit-menu" ref={myRefs}>
+                  <div className="profile-dashboard-recipients-edit-title-edit-menu-item" onClick={() => setModal('title')}>Edit Recipient</div>
+                  <div className="profile-dashboard-recipients-edit-title-edit-menu-item" onClick={() => null}>Delete</div>
+                </div>
+                }
+              </div>
             </div>
             {edit == 'profile' ?
               <div className="profile-dashboard-recipients-edit-profile">
@@ -720,7 +746,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
                   <div className="profile-dashboard-recipients-edit-profile-address">
                     <div className="profile-dashboard-recipients-edit-profile-address-title">Address</div>
                     <div className="form-group-single-dropdown-menu profile-dashboard-recipients-edit-profile-personality-input">
-                      <textarea rows="3" wrap="on" onKeyDown={(e) => e.keyCode == 13 ? e.preventDefault() : null} name="description" placeholder="(Edit Address)" value={recipient.address_one ? `${recipient.address_one}, ${item.city}, ${item.state}, ${item.zip_code}`: recipient.address_two} onClick={() => setModal('address')} readOnly></textarea>
+                      <textarea rows="3" wrap="on" onKeyDown={(e) => e.keyCode == 13 ? e.preventDefault() : null} name="description" placeholder="(Edit Address)" value={recipient.address_one ? `${recipient.address_one}, ${recipient.city}, ${recipient.state}, ${recipient.zip_code}`: recipient.address_two} onClick={() => setModal('address')} readOnly></textarea>
                     </div>
                   </div>
                   <div className="profile-dashboard-recipients-edit-profile-age">
@@ -815,7 +841,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
                     </div>
                   </>)
                   :
-                  (recipient.rank.length > 0 && item.rank.map((item, idx) =>
+                  (recipient.rank.length > 0 && recipient.rank.map((item, idx) =>
                     <div className={`profile-dashboard-recipients-edit-style-selection-item-${item.rank} profile-dashboard-recipients-edit-style-selection-item-box`} key={idx} onDrop={(e) => onDropNew(e, item.rank)} onDragOver={(e) => onDragOver(e)}>
                     <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${item.rank}`}
                     draggable onDragStart={(e) => {onDragStart(e, item.rank,item.style)}}
@@ -834,11 +860,11 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
               
             </div>
             <div className="profile-dashboard-recipients-edit-event">
-                <div className="profile-dashboard-recipients-edit-event-title">Your cards:</div>
+                <div className="profile-dashboard-recipients-edit-event-title">Your card:</div>
                 <div className="profile-dashboard-recipients-edit-event-container">
                   {recipient.event && 
                     eventsList.map((e, idx) => 
-                      e.subtitle.toLowerCase() == item.event ?
+                      e.subtitle.toLowerCase() == recipient.event ?
                         <div key={idx} className="profile-dashboard-recipients-edit-event-container-card">
                           {cardMenu == idx && <div className="profile-dashboard-recipients-edit-event-container-card-menu">
                             <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setModal('event')}>Edit Event</div>
@@ -848,14 +874,14 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
                           }
                           <div className="profile-dashboard-recipients-edit-event-container-card-dots" onClick={() => cardMenu !== 'empty' ? setCardMenu('empty') :  setCardMenu(idx)}><span></span><span></span><span></span></div>
                           <img className="profile-dashboard-recipients-edit-event-container-card-image" src={`/media/emojis/` + (e.imageName ? e.imageName : 'other.png')} alt="" />
-                          <div className="profile-dashboard-recipients-edit-event-container-card-title">{item.event.toLowerCase() == 'other' ? item.event_other : e.subtitle}</div>
+                          <div className="profile-dashboard-recipients-edit-event-container-card-title">{recipient.event.toLowerCase() == 'other' ? recipient.event_other : e.subtitle}</div>
                           <div className="profile-dashboard-recipients-edit-event-container-card-subtitle-date">Est. Arrival Date: </div>
-                          <div className="profile-dashboard-recipients-edit-event-container-card-date">{item.card_arrival}</div> 
+                          <div className="profile-dashboard-recipients-edit-event-container-card-date">{recipient.card_arrival}</div> 
                           <div className="profile-dashboard-recipients-edit-event-container-card-subtitle-date">Card themes: </div> 
                           <div className="profile-dashboard-recipients-edit-event-container-card-tags">
                             {
-                              item.tags.length > 0 && item.tags.slice(0, 3).map((tag, idx) => 
-                                <div key={idx} className="profile-dashboard-recipients-edit-event-container-card-tags-tag">{ item.tags.length > 1 ? idx == 2 ? `${tag.substring(0, 10)} ` : item.tags.length - 1 == idx ? `${tag.substring(0, 10)} ` : `${tag.substring(0, 10)}, ` : `${tag.substring(0, 10)} `}</div>
+                              recipient.tags.length > 0 && recipient.tags.slice(0, 3).map((tag, idx) => 
+                                <div key={idx} className="profile-dashboard-recipients-edit-event-container-card-tags-tag">{ recipient.tags.length > 1 ? idx == 2 ? `${tag.substring(0, 10)} ` : recipient.tags.length - 1 == idx ? `${tag.substring(0, 10)} ` : `${tag.substring(0, 10)}, ` : `${tag.substring(0, 10)} `}</div>
                               )
                             }
                             <div onClick={() => (setModal('tags'))}className="profile-dashboard-recipients-edit-event-container-card-tags-dots"><span></span><span></span><span></span></div>
@@ -865,17 +891,40 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
                       null
                     )
                   }
-                  <div className="profile-dashboard-recipients-edit-event-title">Your cards:</div>
-                  <div className="profile-dashboard-recipients-edit-event-container-card-add">
-                    <SVG svg={'plus'}></SVG>
-                    <span>Add your next card here</span>
-                  </div>
-                  <div className="profile-dashboard-recipients-edit-event-container-card-plus_button">
-                    <span><SVG svg={'plus'}></SVG></span>
-                  </div>
+                  {!recipient.card_arrival && <>
+                    <div className="profile-dashboard-recipients-edit-event-container-card-add" onClick={() => setModal('event')}>
+                      <SVG svg={'plus'}></SVG>
+                      <span>Add your next card here</span>
+                    </div>
+                    <div className="profile-dashboard-recipients-edit-event-container-card-plus_button" onClick={() => setModal('event')}>
+                      <span><SVG svg={'plus'}></SVG></span>
+                    </div>
+                  </>
+                  }
               </div>
             </div>
+            <button className="form-button mail-button" onClick={() => createRecipient('recipient')}>{loading == 'recipient' ? <div className="loading"><span></span><span></span><span></span></div> : <span>Save Recipient</span>}</button>
+            {message && <div className="form-message-error left">{message}</div>}
           </div>
+        }
+        {modal == 'title' && 
+        <div className="recipient-modal">
+          <div className="recipient-modal-box">
+            <div className="recipient-modal-box-close" onClick={() => setModal('')}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
+            <div className="quiz-recipient-title">
+              <form>
+                <div className="form-group-single mail">
+                  <input id='recipient' type="text" placeholder="Recipient" value={recipient.recipient} onChange={ (e) => (editRecipient('recipient', e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Recipient'} required/>
+                </div>
+                <div className="form-group-single mail">
+                  <input id='name' type="text" placeholder="Name" value={recipient.name} onChange={ (e) => (editRecipient('name', e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Name'} required/>
+                </div>
+                <button onClick={(e) => (setModal(''))}className="form-button mail-button">Save</button>
+                {message && <div className="form-message-error">{message}</div>}
+              </form>
+            </div>
+          </div>
+        </div>
         }
         {modal == 'address' && 
         <div className="recipient-modal">
@@ -1163,7 +1212,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetS
               )
               }
             </div>
-            <div className="quiz-button-container recipient-modal-box-event-button"><button className="quiz-button" onClick={(e) => (cardUpdate ? submitCardUpdate('event') : createCard('event'))} disabled={recipient.card_arrival ? false : true}>{loading == 'event' ? <div className="loading loading-event"><span></span><span></span><span></span></div> : <span>Done</span>}</button><div className="quiz-button-container"></div></div>
+            <div className="quiz-button-container recipient-modal-box-event-button"><button className="quiz-button" onClick={(e) => (cardUpdate ? submitCardUpdate('event') : createCard('event'))} disabled={card.card_arrival ? false : true}>{loading == 'event' ? <div className="loading loading-event"><span></span><span></span><span></span></div> : <span>Done</span>}</button><div className="quiz-button-container"></div></div>
             </div>
           </div>
           </div>
@@ -1262,6 +1311,7 @@ const mapDispatchToProps = dispatch => {
     removeRank: (data) => dispatch({type: 'REMOVE_RANK', payload: data}),
     resetState: () => dispatch({type: 'INITIAL_STATE'}),
     resetRank: () => dispatch({type: 'RESET_RANK'}),
+    resetRecipient: () => dispatch({type: 'INITIAL_STATE_RECIPIENT'}),
     sortRank: () => dispatch({type: 'SORT_RANK'}),
     editCard: (name, data) => dispatch({type: 'EDIT_CARD', name: name, value: data}),
     updateCardTags: (data) => dispatch({type: 'UPDATE_CARD_TAGS', value: data})

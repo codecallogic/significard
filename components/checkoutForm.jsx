@@ -22,7 +22,7 @@ const CARD_ELEMENT_OPTIONS = {
 };
 
 
-const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, cardholder, package_price, tax, recipient}) => {
+const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, cardholder, package_price, tax, recipient, subscription}) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -72,10 +72,10 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
       try {
         let orderNumber = Math.floor(100000000 + Math.random() * 900000000)
         // console.log(paymentMethod)
-        const responsePayment = await axios.post(`${API}/payment/checkout`, {'payment_method': paymentMethod.id, 'email': user.email, 'amount': amount, 'name': user.username, 'order': orderNumber, 'cardholder_name': cardholder, 'billing_address': address, 'billing_city': city, 'billing_state': state, 'billing_zip': zip_code, 'shipping_name': recipient.name, 'shipping_address': recipient.address_one, 'shipping_city': recipient.city, 'shipping_state': recipient.state, 'shipping_zip': recipient.zip_code, 'event': recipient.event, 'amount': amount, 'package_price': package_price, 'tax': tax, 'package_plan': recipient.package_plan, 'delivery_date': delivery, 'last4': paymentMethod.card.last4, 'user': user})
+        const responsePayment = await axios.post(`${API}/payment/checkout`, {'payment_method': paymentMethod.id, 'email': user.email, 'amount': amount, 'name': user.username, 'order': orderNumber, 'cardholder_name': cardholder, 'billing_address': address, 'billing_city': city, 'billing_state': state, 'billing_zip': zip_code, 'shipping_name': recipient.name, 'shipping_address': recipient.address_one, 'shipping_city': recipient.city, 'shipping_state': recipient.state, 'shipping_zip': recipient.zip_code, 'event': recipient.event, 'amount': amount, 'package_price': package_price, 'tax': tax, 'package_plan': recipient.package_plan, 'delivery_date': delivery, 'last4': paymentMethod.card.last4, 'user': user, 'subscription': subscription})
         // console.log(responsePayment.data)
-        const {client_secret, status, order} = responsePayment.data
-
+        const {client_secret, status, payment_id, order} = responsePayment.data
+        // console.log(status)
         if(status === 'requires_payment_method'){
           try {
             const result = await stripe.confirmCardPayment(client_secret, {
@@ -86,6 +86,7 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
               setup_future_usage: 'off_session'
             })
             if(result.error) setMessage(`${result.error.message}. For ${result.error.decline_code}`)
+            console.log(result)
             window.location.href = `/${order}?id=${result.paymentIntent.id}`
           } catch (error) {
             setLoading(false)
@@ -93,6 +94,17 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
             if(error) setMessage('An error occurred while processing your card. Please try again in a little bit.')
             console.log(error)
           }
+        }
+
+        if(status === 'requires_action'){
+          stripe.confirmCardPayment(client_secret).then( (result) => {
+            if(result.error) setMessage(`${result.error.message}. For ${result.error.decline_code}`)
+            window.location.href = `/${order}?id=${result.paymentIntent.id}`
+          })
+        }
+
+        if(status === 'succeeded'){
+          window.location.href = `/${order}?id=${payment_id}`
         }
         
       } catch (error) {

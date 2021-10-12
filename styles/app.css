@@ -223,7 +223,8 @@ body {
       overflow: hidden; }
       .homepage_slider-slides-main-image {
         height: 65rem;
-        width: 110rem; }
+        width: 110rem;
+        object-fit: cover; }
         @media only screen and (max-width: 1350px) {
           .homepage_slider-slides-main-image {
             width: 80%;
@@ -247,6 +248,8 @@ body {
       padding: 1.7rem 2rem;
       transition: all 1s; }
       .homepage_slider-slides-item-image {
+        width: 8rem;
+        height: 8rem;
         border-radius: 1.2rem;
         object-fit: cover; }
       .homepage_slider-slides-item:hover {
@@ -956,6 +959,17 @@ body {
         position: absolute;
         bottom: 0;
         left: -50%;
+        width: 100%; }
+    .quiz-recipient-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%; }
+      .quiz-recipient-title form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         width: 100%; }
   .quiz-recipient-age {
     grid-column: 4/8;
@@ -2062,6 +2076,9 @@ body {
     .pb-4 {
       padding-bottom: 3rem; } }
 
+.left {
+  text-align: left !important; }
+
 .checkout {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
@@ -2704,6 +2721,7 @@ body {
       width: 70%; }
       .profile-dashboard-recipients-edit-title {
         display: flex;
+        align-items: center;
         font-size: 2.2rem;
         box-sizing: content-box;
         padding: 1rem 4rem;
@@ -2721,6 +2739,39 @@ body {
             width: 0.2rem;
             height: 60%;
             border-left: 0.2rem solid black; }
+        .profile-dashboard-recipients-edit-title-edit {
+          display: flex;
+          align-items: center;
+          font-size: 1.4rem;
+          text-decoration: underline;
+          position: relative; }
+          .profile-dashboard-recipients-edit-title-edit span svg {
+            margin-top: 0.5rem;
+            width: 3rem;
+            height: 3rem;
+            fill: #0f2e4c; }
+          .profile-dashboard-recipients-edit-title-edit span:hover {
+            cursor: pointer; }
+          .profile-dashboard-recipients-edit-title-edit-menu {
+            position: absolute;
+            top: 100%;
+            width: max-content;
+            z-index: 5;
+            border-radius: 1.2rem; }
+            .profile-dashboard-recipients-edit-title-edit-menu-item {
+              width: 100%;
+              font-size: 1.2rem;
+              text-align: center;
+              padding: 1rem 1rem;
+              background-color: white;
+              color: #778186;
+              border-bottom: 0.1rem solid #e5e5e5; }
+              .profile-dashboard-recipients-edit-title-edit-menu-item:last-child {
+                border-top-left-radius: 0 !important;
+                border-top-right-radius: 0 !important;
+                border-radius: 1.2rem; }
+              .profile-dashboard-recipients-edit-title-edit-menu-item:hover {
+                cursor: pointer; }
       .profile-dashboard-recipients-edit-profile {
         display: flex;
         width: 100%;
