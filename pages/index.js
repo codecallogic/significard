@@ -38,7 +38,7 @@ const Home = ({user, userUpdate}) => {
           </div>
         </div>
         <div className="home-header-card-container">
-          <img className="home-header-card-card_1"src="/media/homepage/header_card_1.png" alt="" />
+          <img className="home-header-card-card_1"src="/media/homepage/header_card_3.png" alt="" />
           <img className="home-header-card-card_2"src="/media/homepage/header_card_2.png" alt="" />
         </div>
       </div>
