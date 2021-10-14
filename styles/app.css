@@ -3329,6 +3329,9 @@ body {
 .loading-event span {
   background-color: #0f2e4c; }
 
+.loading-event-2 span {
+  background-color: white; }
+
 .slideFromRight {
   animation: slideFromRight 1s ease-in-out; }
 

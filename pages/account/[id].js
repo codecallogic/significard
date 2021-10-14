@@ -404,7 +404,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
       })
     } catch (error) {
       setLoading('')
-      console.log(error)
+      console.log(error.response)
       if(error) error.response ? setError(error.response.data) : setError('Could not create card')
     }
   }
@@ -1188,7 +1188,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
           <div className="recipient-modal-box">
             <div className="recipient-modal-box-close" onClick={() => (setModal(''), setCardMenu('empty'))}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
             <div className="recipient-modal-box-event">
-            <div className="quiz-title recipient-modal-box-event-title">What are the events you'd like to send cards for your {recipient.recipient ? recipient.recipient : recipient.recipient_other ? recipient.recipient_other : 'recipient'}?</div>
+            <div className="quiz-title recipient-modal-box-event-title">Test that are the events you'd like to send cards for your {recipient.recipient ? recipient.recipient : recipient.recipient_other ? recipient.recipient_other : 'recipient'}?</div>
             <div className="quiz-title-mobile">What are the events you'd like to send cards for your {recipient.recipient ? recipient.recipient : recipient.recipient_other ? recipient.recipient_other : 'recipient'}?</div>
             <div className="quiz-subtitle">Pick the event and tell us the arrival date.</div>
             <div className="quiz-subtitle-mobile">Select the estimated arrival date for the event.</div>
@@ -1247,7 +1247,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
               )
               }
             </div>
-            <div className="quiz-button-container recipient-modal-box-event-button"><button className="quiz-button" onClick={(e) => (cardUpdate ? submitCardUpdate('event') : createCard('event'))} disabled={card.card_arrival ? false : true}>{loading == 'event' ? <div className="loading loading-event"><span></span><span></span><span></span></div> : <span>Done</span>}</button><div className="quiz-button-container"></div></div>
+            <div className="quiz-button-container recipient-modal-box-event-button"><button className="quiz-button" onClick={(e) => (cardUpdate ? submitCardUpdate('event') : createCard('event'))} disabled={card.card_arrival ? false : true}>{loading == 'event' ? <div className="loading loading-event-2"><span></span><span></span><span></span></div> : <span>Done</span>}</button><div className="quiz-button-container"></div></div>
             </div>
           </div>
           </div>
