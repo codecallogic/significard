@@ -224,7 +224,7 @@ body {
       .homepage_slider-slides-main-image {
         height: 65rem;
         width: 110rem;
-        object-fit: cover; }
+        object-fit: contain; }
         @media only screen and (max-width: 1350px) {
           .homepage_slider-slides-main-image {
             width: 80%;
@@ -247,8 +247,11 @@ body {
       color: #011722;
       padding: 1.7rem 2rem;
       transition: all 1s; }
+      @media only screen and (max-width: 1350px) {
+        .homepage_slider-slides-item {
+          padding: 1.7rem 0.5rem; } }
       .homepage_slider-slides-item-image {
-        width: 8rem;
+        width: 10rem;
         height: 8rem;
         border-radius: 1.2rem;
         object-fit: cover; }

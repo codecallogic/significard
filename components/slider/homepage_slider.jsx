@@ -4,31 +4,25 @@ import { useDispatch } from 'react-redux';
 import { useSwipeable } from 'react-swipeable';
 
 const Slider = ({slider}) => {
+  console.log(slider.translate)
   const dispatch = useDispatch()
-
-  const goToSlide = (e, i) => {
-    let el = document.querySelector('.homepage_slider-slides-item')
-    i == 1 ? dispatch({type: "NEXT", width: (-el.offsetWidth + (el.offsetWidth/8)), active: i}) : null
-    i == 0 ? dispatch({type: "NEXT", width: (el.offsetWidth - (el.offsetWidth/1.5)), active: i}) : null
-  }
+  const [currentImage, setCurrentImage] = useState('carousel_1.jpeg')
 
   const handlers = useSwipeable({
     onSwipedLeft: () => {
       let el = document.querySelector('.homepage_slider-slides-item')
-      dispatch({type: "NEXT", width: (-el.offsetWidth + (el.offsetWidth/8)), active: 1})
+      dispatch({type: "NEXT_HOMEPAGE_SLIDER", width: slider.translate - 120})
     },
     onSwipedRight: () => {
       let el = document.querySelector('.homepage_slider-slides-item')
-      console.log(el.offsetWidth)
-      console.log(el.offsetWidth/1.5)
-      dispatch({type: "NEXT", width: slider.translate + 50, active: 0})
+      dispatch({type: "NEXT_HOMEPAGE_SLIDER", width: slider.translate + 120})
     }
   });
   
   return (
     <div className="homepage_slider">
       <div className="homepage_slider-slides-main">
-        <img src="/media/homepage/carousel_1.jpeg" alt="" className="homepage_slider-slides-main-image" />
+        <img src={`/media/homepage/${currentImage}`} alt="" className="homepage_slider-slides-main-image" />
       </div>
       <div className="homepage_slider-slides">
         <div className="homepage_slider-slides-container"
@@ -37,59 +31,43 @@ const Slider = ({slider}) => {
           }}
          {...handlers}
         >
-          <div className="homepage_slider-slides-item">
-            <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_1.jpeg" alt="" />
+          <div className="homepage_slider-slides-item" onClick={() => setCurrentImage('carousel_1.jpeg')}>
+            <img className="homepage_slider-slides-item-image" src={`/media/homepage/carousel_1.jpeg`} alt="" />
           </div>
-          <div className="homepage_slider-slides-item">
+          <div className="homepage_slider-slides-item" onClick={() => setCurrentImage('carousel_2.jpeg')}>
             <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_2.jpeg" alt="" />
           </div>
-          <div className="homepage_slider-slides-item">
+          <div className="homepage_slider-slides-item" onClick={() => setCurrentImage('carousel_3.jpeg')}>
             <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_3.jpeg" alt="" />
           </div>
-          <div className="homepage_slider-slides-item">
+          <div className="homepage_slider-slides-item" onClick={() => setCurrentImage('carousel_4.jpeg')}>
             <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_4.jpeg" alt="" />
           </div>
-          <div className="homepage_slider-slides-item">
+          <div className="homepage_slider-slides-item" onClick={() => setCurrentImage('carousel_5.png')}>
             <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_5.png" alt="" />
           </div>
-          <div className="homepage_slider-slides-item">
+          <div className="homepage_slider-slides-item" onClick={() => setCurrentImage('carousel_6.png')}>
             <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_6.png" alt="" />
           </div>
-          <div className="homepage_slider-slides-item">
+          <div className="homepage_slider-slides-item" onClick={() => setCurrentImage('carousel_7.jpeg')}>
             <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_7.jpeg" alt="" />
           </div>
-          <div className="homepage_slider-slides-item">
+          <div className="homepage_slider-slides-item" onClick={() => setCurrentImage('carousel_8.jpeg')}>
             <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_8.jpeg" alt="" />
           </div>
-          <div className="homepage_slider-slides-item">
+          <div className="homepage_slider-slides-item" onClick={() => setCurrentImage('carousel_9.jpeg')}>
             <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_9.jpeg" alt="" />
           </div>
-          <div className="homepage_slider-slides-item">
+          <div className="homepage_slider-slides-item" onClick={() => setCurrentImage('carousel_10.jpeg')}>
             <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_10.jpeg" alt="" />
           </div>
-          <div className="homepage_slider-slides-item">
+          <div className="homepage_slider-slides-item" onClick={() => setCurrentImage('carousel_11.jpeg')}>
             <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_11.jpeg" alt="" />
           </div>
-          <div className="homepage_slider-slides-item">
+          <div className="homepage_slider-slides-item" onClick={() => setCurrentImage('carousel_12.png')}>
             <img className="homepage_slider-slides-item-image" src="/media/homepage/carousel_12.png" alt="" />
           </div>
         </div>
-        {/* <div className="homepage_slider-slides-dots">
-          <div
-          onClick={ (e) => goToSlide(e, 0) }
-          className="homepage_slider-slides-dots-dot" 
-          style={{
-            background: slider.active == 0 ? '#003e5f' : '#E5E5E5',
-          }}
-          />
-          <div
-          onClick={ (e) => goToSlide(e, 1) }
-          className="homepage_slider-slides-dots-dot" 
-          style={{
-            background: slider.active == 1 ? '#003e5f' : '#E5E5E5',
-          }}
-          />
-        </div> */}
       </div>
     </div>
   )

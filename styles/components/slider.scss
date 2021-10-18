@@ -150,7 +150,7 @@
       &-image {
         height: 65rem;
         width: 110rem;
-        object-fit: cover;
+        object-fit: contain;
 
         @media only screen and (max-width: $wide-small) {
           width: 80%;
@@ -180,8 +180,12 @@
       padding: 1.7rem 2rem;
       transition: all 1s;
 
+      @media only screen and (max-width: $wide-small) {
+        padding: 1.7rem 0.5rem;
+      }
+
       &-image {
-        width: 8rem;
+        width: 10rem;
         height: 8rem;
         border-radius: 1.2rem;
         object-fit: cover;
