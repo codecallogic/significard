@@ -41,12 +41,12 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
 
     setLoading(true)
 
-    // try {
-    //   const responseRecipient = await axios.post(`${API}/recipient/quiz`, {user, recipient})
-    //   console.log(responseRecipient)
-    // } catch (error) {
-    //   if(error) return error.response ? setMessage(error.response.data) : setMessage('Error submitting your information, please try again later')
-    // }
+    try {
+      const responseRecipient = await axios.post(`${API}/recipient/quiz`, {user, recipient})
+      console.log(responseRecipient)
+    } catch (error) {
+      if(error) return error.response ? setMessage(error.response.data) : setMessage('Error submitting your information, please try again later')
+    }
 
     setMessage('')
 
@@ -72,7 +72,7 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
       try {
         let orderNumber = Math.floor(100000000 + Math.random() * 900000000)
         // console.log(paymentMethod)
-        const responsePayment = await axios.post(`${API}/payment/checkout`, {'payment_method': paymentMethod.id, 'email': user.email, 'amount': amount, 'name': user.username, 'order': orderNumber, 'cardholder_name': cardholder, 'billing_address': address, 'billing_city': city, 'billing_state': state, 'billing_zip': zip_code, 'shipping_name': recipient.name, 'shipping_address': recipient.address_one, 'shipping_city': recipient.city, 'shipping_state': recipient.state, 'shipping_zip': recipient.zip_code, 'event': recipient.event, 'amount': amount, 'package_price': package_price, 'tax': tax, 'package_plan': recipient.package_plan, 'delivery_date': delivery, 'last4': paymentMethod.card.last4, 'user': user, 'subscription': subscription})
+        const responsePayment = await axios.post(`${API}/payment/checkout`, {'payment_method': paymentMethod.id, 'email': user.email, 'amount': amount, 'name': user.username, 'order': orderNumber, 'cardholder_name': cardholder, 'billing_address': address, 'billing_city': city, 'billing_state': state, 'billing_zip': zip_code, 'shipping_name': recipient.name, 'shipping_address': recipient.address_one, 'shipping_city': recipient.city, 'shipping_state': recipient.state, 'shipping_zip': recipient.zip_code, 'event': recipient.event, 'amount': amount, 'package_price': package_price, 'tax': tax, 'package_plan': recipient.package_plan, 'package_quantity': recipient.package_quantity, 'delivery_date': delivery, 'last4': paymentMethod.card.last4, 'user': user, 'subscription': subscription})
         // console.log(responsePayment.data)
         const {client_secret, status, payment_id, order} = responsePayment.data
         // console.log(status)

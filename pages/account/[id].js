@@ -13,6 +13,7 @@ import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
 import {manageTags, manageCardTags} from '../../helpers/forms'
 import Orders from '../../components/admin/orders'
+import Info from '../../components/admin/info'
 
 const searchOptionsAddress = {
   componentRestrictions: {country: 'us'},
@@ -49,7 +50,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
   const [addNew, setAddNew] = useState(false)
   const [cardUpdate, setCardUpdate] = useState(false)
   const [cardTagsItem, setCardTagsItem] = useState(null)
-  const [dashboard, setDashboard] = useState('orders')
+  const [dashboard, setDashboard] = useState('info')
 
   const handleClickOutside = (event) => {
     if(myRefs.current){
@@ -486,7 +487,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
               <div className="profile-dashboard-sidenav-item-arrow-container"><SVG svg={'arrow-right'} classprop={'profile-dashboard-sidenav-item-arrow'}></SVG></div>
             </div>
           </div>
-          <div className="profile-dashboard-sidenav-item-container">
+          <div className="profile-dashboard-sidenav-item-container" onClick={() => setDashboard('info')}>
             <div className="profile-dashboard-sidenav-item">
               <SVG svg={'user'} classprop={'profile-dashboard-sidenav-item-icon'}></SVG>
               <span>My Info</span>
@@ -510,6 +511,9 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
         </div>
         { dashboard == 'orders' &&
           <Orders></Orders>
+        }
+        {dashboard == 'info' && 
+          <Info user={newUser}></Info>
         }
         { dashboard == 'profile' && sideNav == 'recipients' &&
         <div className="profile-dashboard-recipients">

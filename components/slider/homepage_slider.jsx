@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useSwipeable } from 'react-swipeable';
 
 const Slider = ({slider}) => {
-  console.log(slider.translate)
+  // console.log(slider.translate)
   const dispatch = useDispatch()
   const [currentImage, setCurrentImage] = useState('carousel_1.jpeg')
 

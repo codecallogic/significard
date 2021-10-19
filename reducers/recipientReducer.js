@@ -35,6 +35,13 @@ export const recipientReducer = (state = initialState, action) => {
       }
       break;
 
+    case 'UPDATE_TAGS_QUIZ':
+      return {
+        ...state,
+        tags: action.payload
+      }
+      break;
+
     case 'UPDATE_CHANGE':
       return {
         ...state,

@@ -79,7 +79,7 @@ export const stylesList = [
   },
   {
     imageName: 'traditional.png',
-    subtitle: 'tranditional',
+    subtitle: 'traditional',
     rotate: -8.54
   },
   {

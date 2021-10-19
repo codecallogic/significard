@@ -31,7 +31,7 @@ const quiz = ({quizState}) => {
   const dispatch = useDispatch()
   const router = useRouter()
   const node = useRef();
-  console.log(quizState)
+  // console.log(quizState)
   
   const [quiz, setQuiz] = useState('package')
   const [recipient, setRecipient] = useState('')
@@ -140,7 +140,7 @@ const quiz = ({quizState}) => {
             })
 
             dispatch({
-              type: 'UPDATE_TAGS',
+              type: 'UPDATE_TAGS_QUIZ',
               payload: newValues
             })
           })
@@ -359,7 +359,9 @@ const quiz = ({quizState}) => {
   // HANDLE KEY PRESS
   const handleKeyPress = async (e, clicked) => {
     if(e.key === 'Enter' || clicked == 'true'){
+      e.preventDefault();
       try {
+        console.log(tags)
         const responseTag = await axios.post(`${API}/recipient/check-word`, {tags})
         setInvalidTag(false)
         let input = document.getElementById('researchInterests')
@@ -368,15 +370,14 @@ const quiz = ({quizState}) => {
         console.log(error.response)
         if(error) return  error.response ? (setMessage(error.response.data),setInvalidTag(true)) : (setMessage(`Tags cannot be more than two words`), setInvalidTag(true))
       }
-      e.preventDefault();
       manageTags('addTag')
       let closeIcon = document.querySelectorAll('.form-tag')
       let postHidden = document.getElementById("tagValue")
       let values = postHidden.getAttribute('value').split(',')
-
+      
       closeIcon.forEach( (e) => {
-        e.addEventListener('click', function(e){
-          let parent = e.target.parentNode
+        e.addEventListener('click', function(item){
+          let parent = item.target.parentNode
           let parentOfParent = parent.parentNode
           parentOfParent.remove()
 
@@ -388,14 +389,14 @@ const quiz = ({quizState}) => {
           })
 
           dispatch({
-            type: 'UPDATE_TAGS',
+            type: 'UPDATE_TAGS_QUIZ',
             payload: newValues
           })
         })
       })
 
       dispatch({
-        type: 'UPDATE_TAGS',
+        type: 'UPDATE_TAGS_QUIZ',
         payload: values
       })
       setTags('')
@@ -961,11 +962,11 @@ const quiz = ({quizState}) => {
             <div className="form-tag-container"></div>
             <div className="quiz-recipient-tags-checkbox"><input type="checkbox" name="unsure" onClick={(e) => (setTimeout(() => {
               quizProgressNav(e,'other')
-            }, 500), dispatch({type: 'UPDATE_TAGS', value: []})
+            }, 500), dispatch({type: 'UPDATE_TAGS_QUIZ', value: []})
             )}/><span>I'm not sure</span></div>
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'other')} disabled={quizState.tags.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
-          {quizState.tags.length >= 1 && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'other')}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'other')} disabled={quizState.tags ? quizState.tags.length < 1 ? true : false : null}>Next</button><div className="quiz-button-container"></div></div>
+          {quizState.tags && quizState.tags.length >= 1 && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'other')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>
           }

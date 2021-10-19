@@ -7,6 +7,8 @@
 @import './components/activate.scss';
 @import './components/slider.scss';
 @import './components/modals.scss';
+@import './components/admin/orders.scss';
+@import './components/admin/info.scss';
 
 // PAGES
 @import './pages/signup.scss';
@@ -17,7 +19,6 @@
 @import './pages/resetPassword.scss';
 @import './pages/confirmation.scss';
 @import './pages/profile.scss';
-@import './pages/orders.scss';
 
 // HELPERS
 @import './helpers/giphys.scss';
