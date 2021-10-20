@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import { useDispatch } from 'react-redux';
 import { useSwipeable } from 'react-swipeable';
 
-const Slider = ({slider, quizProgressNav, handleChange, result, setresult, calculate, validateisnumber, quizstate, moveSlide}) => {
+const Slider = ({slider, quizProgressNav, handleChange, result, setresult, calculate, validateisnumber, quizstate, moveSlide, message, setMessage}) => {
   const dispatch = useDispatch()
   const [swipe, setSwipe] = useState(0)
 
@@ -86,6 +86,7 @@ const Slider = ({slider, quizProgressNav, handleChange, result, setresult, calcu
             <div className="slider-slides-item-price">${result} per card</div>
             <div>Free Shipping</div>
             </>}
+            {message && <div className="form-message-error">{message}</div>}
           </div>
         </div>
         <div className="slider-slides-dots">

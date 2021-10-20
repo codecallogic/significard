@@ -1266,7 +1266,7 @@
       grid-column: 1/-1;
       justify-self: center;
       font-size: 1.8rem;
-      margin: 0 0 6rem 0;
+      margin: 2rem 0 6rem 0;
     }
 
     &-footer {
@@ -1276,6 +1276,10 @@
       line-height: 2.5rem;
       font-family: Roboto;
       margin-bottom: 8rem;
+
+      @media only screen and (max-width: $large-medium) {
+        padding: 0 2rem;
+      }
 
       span {
         font-weight: 700;
@@ -1288,11 +1292,19 @@
         display: flex;
         justify-content: space-between;
 
+        @media only screen and (max-width: $large-medium) {
+          flex-direction: column;
+        }
+
         &-item {
           max-width: 17rem;
           font-family: Roboto;
           font-size: 1.8rem;
           line-height: 2rem;
+
+          @media only screen and (max-width: $large-medium) {
+            margin-bottom: 2rem;
+          }
         }
       }
     }

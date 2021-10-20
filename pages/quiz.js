@@ -688,10 +688,12 @@ const quiz = ({quizState}) => {
   }
 
   const calculate = () => {
-    if(quizState.package_quantity <= 4) setResult(13.99)
-    if(quizState.package_quantity > 4 ) setResult(11.99)
-    if(quizState.package_quantity > 9) setResult(9.99)
-    if(quizState.package_quantity > 19) setResult(6.99)
+    setMessage('')
+    if(+quizState.package_quantity <= 4) setResult(13.99)
+    if(+quizState.package_quantity > 4 ) setResult(11.99)
+    if(+quizState.package_quantity > 9) setResult(9.99)
+    if(+quizState.package_quantity > 19) setResult(6.99)
+    if(+quizState.package_quantity > 50){setMessage('For 50+ cards, please contact us.'), setResult('')}
   }
 
   return (
@@ -1082,10 +1084,11 @@ const quiz = ({quizState}) => {
               <div className="quiz-recipient-package-item-price">${result} per card</div>
               <div>Free Shipping</div>
               </>}
+              {message && <div className="form-message-error">{message}</div>}
             </div>
           </div>
-          <Slider result={result} setresult={setResult} calculate={calculate} quizProgressNav={quizProgressNav} handleChange={handleChange} validateisnumber={validateIsNumber} quizstate={quizState}></Slider>
-          <div className="quiz-recipient-package-bulk">For more than 20 cards, please <a href="">contact us</a></div>
+          <Slider result={result} setresult={setResult} calculate={calculate} quizProgressNav={quizProgressNav} handleChange={handleChange} validateisnumber={validateIsNumber} quizstate={quizState} message={message} setMessage={setMessage}></Slider>
+          <div className="quiz-recipient-package-bulk">For more than 50 cards, please <a href="">contact us</a></div>
           <div className="quiz-recipient-package-footer">All packages come with the following items <span>at no extra cost</span></div>
           <div className="quiz-recipient-package-footer-2">
             <div className="quiz-recipient-package-footer-2-item">
