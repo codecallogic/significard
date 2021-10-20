@@ -436,13 +436,40 @@ body {
   flex-grow: 1;
   padding: 2rem 3rem;
   position: relative; }
+  @media only screen and (max-width: 1100px) {
+    .profile-dashboard-info {
+      padding: 0;
+      margin: 0;
+      color: white; } }
+  .profile-dashboard-info-mobile {
+    color: black;
+    display: block !important;
+    background-image: linear-gradient(#fafafa, #fafafa) !important;
+    padding: 2.1rem 2.3rem !important;
+    margin: 0 1.5rem !important; }
+    @media only screen and (max-width: 1100px) {
+      .profile-dashboard-info-mobile-box {
+        background-image: linear-gradient(#fafafa, #fafafa) !important;
+        color: black;
+        display: block !important;
+        padding: 2.1rem 2.3rem !important;
+        margin: 0 1.5rem !important; } }
+    @media only screen and (max-width: 1100px) {
+      .profile-dashboard-info-mobile-cards {
+        margin: -4rem 0 !important; } }
   .profile-dashboard-info-credits {
     position: absolute;
+    top: 1rem;
     right: 5rem;
     display: flex;
     align-items: center;
     font-size: 1.4rem;
-    line-height: 1.6rem; }
+    line-height: 1.6rem;
+    z-index: 1; }
+    @media only screen and (max-width: 1100px) {
+      .profile-dashboard-info-credits {
+        left: 2rem;
+        top: 2rem; } }
     .profile-dashboard-info-credits span {
       display: block;
       width: 1rem;
@@ -455,12 +482,22 @@ body {
     font-weight: normal;
     font-family: Sanchez;
     line-height: 2.8rem; }
+    @media only screen and (max-width: 1100px) {
+      .profile-dashboard-info-title {
+        display: none;
+        background-image: linear-gradient(#18405d 99%, #18405d 80%); } }
   .profile-dashboard-info-box {
     padding: 1.8rem 3.1rem;
     background-color: #fafafa;
     border-radius: 1.2rem;
     margin: 1.5rem 0 6rem 0;
     position: relative; }
+    @media only screen and (max-width: 1100px) {
+      .profile-dashboard-info-box {
+        background-image: linear-gradient(#18405d 99%, #18405d 80%);
+        margin: -0.5rem 0 2rem 0;
+        padding: 8rem 0;
+        border-radius: 0; } }
     .profile-dashboard-info-box-edit {
       position: absolute;
       right: 2%;
@@ -471,6 +508,9 @@ body {
         cursor: pointer; }
       .profile-dashboard-info-box-edit span:last-child {
         margin-left: 1rem; }
+      @media only screen and (max-width: 1100px) {
+        .profile-dashboard-info-box-edit {
+          top: 2rem; } }
     .profile-dashboard-info-box-add {
       position: absolute;
       right: 2%;
@@ -487,9 +527,25 @@ body {
       width: 70%;
       display: flex;
       justify-content: space-between; }
+      @media only screen and (max-width: 1100px) {
+        .profile-dashboard-info-box-container {
+          flex-direction: column;
+          align-items: center;
+          width: 100%; }
+          .profile-dashboard-info-box-container > div {
+            margin: 0 0 3rem 0;
+            width: 100%; } }
     .profile-dashboard-info-box-address {
       font-size: 1.8rem;
       font-weight: 300; }
+      @media only screen and (max-width: 1100px) {
+        .profile-dashboard-info-box-address {
+          text-align: left;
+          width: 40%; } }
+      @media only screen and (max-width: 1100px) {
+        .profile-dashboard-info-box-address-container {
+          display: flex;
+          justify-content: center; } }
       .profile-dashboard-info-box-address textarea {
         font-family: inherit;
         width: 100%;
@@ -505,6 +561,17 @@ body {
         font-size: 1.8rem;
         font-weight: 700;
         line-height: 2.1rem; }
+        @media only screen and (max-width: 1100px) {
+          .profile-dashboard-info-box-address-title {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 16px;
+            letter-spacing: 0.075em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+            width: 100%; } }
       .profile-dashboard-info-box-address-subtitle {
         font-size: 1.8rem;
         font-weight: 700;
@@ -512,7 +579,7 @@ body {
         .profile-dashboard-info-box-address-subtitle span {
           font-size: 1.8rem;
           font-weight: 300; }
-      .profile-dashboard-info-box-address-container {
+      .profile-dashboard-info-box-address-box {
         font-size: 1.8rem;
         line-height: 2.1rem; }
     .profile-dashboard-info-box-plan-title {
@@ -587,6 +654,8 @@ body {
     width: 2rem;
     height: 2rem;
     fill: white; }
+    .nav-user-arrow svg:hover {
+      cursor: pointer; }
   .nav-user-current {
     font-size: 1.8rem;
     line-height: 2.1rem;

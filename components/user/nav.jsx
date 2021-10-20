@@ -1,11 +1,11 @@
 import SVG from '../../files/svgs'
 
-const NavUser = ({}) => {
+const NavUser = ({dashboard, setDashboard}) => {
   
   return (
     <div className="nav-user-container">
       <nav className="nav-user">
-        <div className="nav-user-arrow"><SVG svg={'arrow-left-thin'}></SVG></div>
+        {dashboard !== '' && <div className="nav-user-arrow" onClick={() => setDashboard('')}><SVG svg={'arrow-left-thin'}></SVG></div>}
         <div className="nav-user-current">Profile</div>
         <div className="nav-user-menu">
           <input type="checkbox" name="nav-toggle" id="nav-toggle" className="nav-user-menu-checkbox"/>

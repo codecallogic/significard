@@ -18,6 +18,10 @@
       width: 2rem;
       height: 2rem;
       fill: white;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 

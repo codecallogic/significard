@@ -78,31 +78,37 @@ const Info = ({user, dashboard}) => {
   
   return (
     <div className={`profile-dashboard-info ` + (dashboard == 'info' ? '' : 'hide-on-mobile')}>
-      <div className="profile-dashboard-info-credits"><span>&nbsp;</span> You have {user.credits ? user.credits : 'no'} credits</div>
       <div className="profile-dashboard-info-title">My Info</div>
+      <div className="profile-dashboard-info-credits"><span>&nbsp;</span> You have {user.credits ? user.credits : 'no'} credits</div>
       {edit == 'info' ?
         <div className="profile-dashboard-info-box">
           <div className="profile-dashboard-info-box-edit" onClick={() => (setEdit(''), setModal(''))}>Save</div>
           <div className="profile-dashboard-info-box-container">
-          <div className="profile-dashboard-info-box-address">
-            <div className="profile-dashboard-info-box-address-title">Address</div>
-            <textarea rows="3" wrap="on" onKeyDown={(e) => e.keyCode == 13 ? e.preventDefault() : null} name="address" placeholder="(Edit Address)" value={address ? `${address}, ${city}, ${state}, ${zip}`: address_two} onClick={() => setModal('address')} readOnly></textarea>
+          <div className="profile-dashboard-info-box-address-container">
+            <div className="profile-dashboard-info-box-address">
+              <div className="profile-dashboard-info-box-address-title">Address</div>
+              <textarea rows="3" wrap="on" onKeyDown={(e) => e.keyCode == 13 ? e.preventDefault() : null} name="address" placeholder="(Edit Address)" value={address ? `${address}, ${city}, ${state}, ${zip}`: address_two} onClick={() => setModal('address')} readOnly></textarea>
+            </div>
           </div>
-          <div className="profile-dashboard-info-box-address">
-            <div className="profile-dashboard-info-box-address-title">Payment Info</div>
-            <div className="profile-dashboard-info-box-address-subtitle">Billing to: {
-              user.transactions.map((item, i) => 
-                user.transactions.length - 1 === i ? 
-                  <span key={i}>VISA XXX-{user.last4 ? user.last4 : item.last4} </span>
-                : 
-                null
-              )
-            }</div>
+          <div className="profile-dashboard-info-box-address-container">
+            <div className="profile-dashboard-info-box-address">
+              <div className="profile-dashboard-info-box-address-title">Payment Info</div>
+              <div className="profile-dashboard-info-box-address-subtitle">Billing to: {
+                user.transactions.map((item, i) => 
+                  user.transactions.length - 1 === i ? 
+                    <span key={i}>VISA XXX-{user.last4 ? user.last4 : item.last4} </span>
+                  : 
+                  null
+                )
+              }</div>
+            </div>
           </div>
-          <div className="profile-dashboard-info-box-address">
-            <div className="profile-dashboard-info-box-address-title">Mobile Phone Number</div>
-            <div className="form-group-single">
-              <input id='phone' type="text" placeholder="Phone #" value={phone} onChange={ (e) => (validateIsNumber('phone'), setPhone(e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Phone #'} required/>
+          <div className="profile-dashboard-info-box-address-container">
+            <div className="profile-dashboard-info-box-address">
+              <div className="profile-dashboard-info-box-address-title">Mobile Phone Number</div>
+              <div className="form-group-single">
+                <input id='phone' type="text" placeholder="Phone #" value={phone} onChange={ (e) => (validateIsNumber('phone'), setPhone(e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Phone #'} required/>
+              </div>
             </div>
           </div>
           </div>
@@ -112,50 +118,56 @@ const Info = ({user, dashboard}) => {
         <div className="profile-dashboard-info-box">
           <div className="profile-dashboard-info-box-edit" onClick={() => (setEdit('info'))}>Edit</div>
           <div className="profile-dashboard-info-box-container">
-          <div className="profile-dashboard-info-box-address">
-            <div className="profile-dashboard-info-box-address-title">Address</div>
-            {
-              user.transactions.map((item, i) => 
-                user.transactions.length - 1 === i ? 
-                  <div key={i} className="profile-dashboard-info-box-address-container">
-                    <div>{user.billing_address ? user.billing_address : address ? address : item.billing_address}</div>
-                    <span>{user.city ? user.city : city ? city : item.billing_city}, </span>
-                    <span>{user.state ? user.state : state ? state : item.billing_state} </span>
-                    <span>{user.zip_code ? user.zip_code : zip ? zip : item.billing_zip}</span>
-                  </div>
-                : 
-                null
-              )
-            }
+          <div className="profile-dashboard-info-box-address-container">
+            <div className="profile-dashboard-info-box-address">
+              <div className="profile-dashboard-info-box-address-title">Address</div>
+              {
+                user.transactions.map((item, i) => 
+                  user.transactions.length - 1 === i ? 
+                    <div key={i} className="profile-dashboard-info-box-address-box">
+                      <div>{user.billing_address ? user.billing_address : address ? address : item.billing_address}</div>
+                      <span>{user.city ? user.city : city ? city : item.billing_city}, </span>
+                      <span>{user.state ? user.state : state ? state : item.billing_state} </span>
+                      <span>{user.zip_code ? user.zip_code : zip ? zip : item.billing_zip}</span>
+                    </div>
+                  : 
+                  null
+                )
+              }
+            </div>
           </div>
-          <div className="profile-dashboard-info-box-address">
-            <div className="profile-dashboard-info-box-address-title">Payment Info</div>
-            <div className="profile-dashboard-info-box-address-subtitle">Billing to: {
-              user.transactions.map((item, i) => 
-                user.transactions.length - 1 === i ? 
-                  <span key={i}>VISA XXX-{user.last4 ? user.last4 : item.last4} </span>
-                : 
-                null
-              )
-            }</div>
+          <div className="profile-dashboard-info-box-address-container">
+            <div className="profile-dashboard-info-box-address">
+              <div className="profile-dashboard-info-box-address-title">Payment Info</div>
+              <div className="profile-dashboard-info-box-address-subtitle">Billing to: {
+                user.transactions.map((item, i) => 
+                  user.transactions.length - 1 === i ? 
+                    <span key={i}>VISA XXX-{user.last4 ? user.last4 : item.last4} </span>
+                  : 
+                  null
+                )
+              }</div>
+            </div>
           </div>
-          <div className="profile-dashboard-info-box-address">
-            <div className="profile-dashboard-info-box-address-title">Mobile Phone Number</div>
-            {
-              user.transactions.map((item, i) => 
-                user.transactions.length - 1 === i ? 
-                  <span key={i}>{user.phone ? user.phone : phone ? phone : item.phone} </span>
-                : 
-                null
-              )
-            }
+          <div className="profile-dashboard-info-box-address-container">
+            <div className="profile-dashboard-info-box-address">
+              <div className="profile-dashboard-info-box-address-title">Mobile Phone Number</div>
+              {
+                user.transactions.map((item, i) => 
+                  user.transactions.length - 1 === i ? 
+                    <span key={i}>{user.phone ? user.phone : phone ? phone : item.phone} </span>
+                  : 
+                  null
+                )
+              }
+            </div>
           </div>
           </div>
         </div>
       }
-      <div className="profile-dashboard-info-title">Plan</div>
-      <div className="profile-dashboard-info-box">
-        <div className="profile-dashboard-info-box-add">Add More Cards</div>
+      <div className="profile-dashboard-info-title profile-dashboard-info-mobile">Plan</div>
+      <div className="profile-dashboard-info-box profile-dashboard-info-mobile-box">
+        <div className="profile-dashboard-info-box-add profile-dashboard-info-mobile-cards">Add More Cards</div>
         <div className="profile-dashboard-info-box-plan">
           <div className="profile-dashboard-info-box-plan-title">
             {
