@@ -1,11 +1,11 @@
 .nav {
-  display: flex;
-  align-items: center;
+  display: none;
   padding: 1.5rem 3rem;
   justify-content: space-between;
 
-  @media only screen and (max-width: $large) {
-    display: none;
+  @media only screen and (min-width: $large-medium) {
+    display: flex;
+    align-items: center;
   }
 
   &-logo {

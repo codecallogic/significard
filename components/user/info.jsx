@@ -14,7 +14,7 @@ const searchOptionsCities = {
   types: ['(cities)']
 }
 
-const Info = ({user}) => {
+const Info = ({user, dashboard}) => {
   console.log(user)
   const node = useRef();
   const [edit, setEdit] = useState('')
@@ -77,7 +77,7 @@ const Info = ({user}) => {
   }
   
   return (
-    <div className="profile-dashboard-info">
+    <div className={`profile-dashboard-info ` + (dashboard == 'info' ? '' : 'hide-on-mobile')}>
       <div className="profile-dashboard-info-credits"><span>&nbsp;</span> You have {user.credits ? user.credits : 'no'} credits</div>
       <div className="profile-dashboard-info-title">My Info</div>
       {edit == 'info' ?

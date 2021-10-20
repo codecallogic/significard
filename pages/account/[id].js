@@ -1,5 +1,6 @@
 import withUser from '../withUser'
-import Nav from '../../components/nav'
+import NavMobile from '../../components/user/nav'
+import NavDesktop from '../../components/nav'
 import Footer from '../../components/footer'
 import SVG from '../../files/svgs'
 import { useState, useEffect, useRef } from 'react'
@@ -12,8 +13,8 @@ import {usStates,eventsList} from '../../utils/quiz'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
 import {manageTags, manageCardTags} from '../../helpers/forms'
-import Orders from '../../components/admin/orders'
-import Info from '../../components/admin/info'
+import Orders from '../../components/user/orders'
+import Info from '../../components/user/info'
 
 const searchOptionsAddress = {
   componentRestrictions: {country: 'us'},
@@ -50,7 +51,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
   const [addNew, setAddNew] = useState(false)
   const [cardUpdate, setCardUpdate] = useState(false)
   const [cardTagsItem, setCardTagsItem] = useState(null)
-  const [dashboard, setDashboard] = useState('info')
+  const [dashboard, setDashboard] = useState('')
 
   const handleClickOutside = (event) => {
     if(myRefs.current){
@@ -477,33 +478,42 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
   
   return (
     <>
-      <Nav></Nav>
+      <NavMobile></NavMobile>
+      <NavDesktop></NavDesktop>
       <div className="profile-dashboard">
-        <div className="profile-dashboard-sidenav-container">
+        <div className={`profile-dashboard-sidenav-container ` + (dashboard !== '' ? 'hide-on-mobile' : '')}>
           <div className="profile-dashboard-sidenav-item-container">
             <div className="profile-dashboard-sidenav-item" onClick={() => (setDashboard('orders'), setAddNew(false))}>
-              <SVG svg={'envelope'} classprop={'profile-dashboard-sidenav-item-icon'}></SVG>
+              <div className="profile-dashboard-sidenav-item-icon-container">
+                <SVG svg={'envelope'} classprop={'profile-dashboard-sidenav-item-icon'}></SVG>
+              </div>
               <span>Orders</span>
               <div className="profile-dashboard-sidenav-item-arrow-container"><SVG svg={'arrow-right'} classprop={'profile-dashboard-sidenav-item-arrow'}></SVG></div>
             </div>
           </div>
           <div className="profile-dashboard-sidenav-item-container" onClick={() => setDashboard('info')}>
             <div className="profile-dashboard-sidenav-item">
-              <SVG svg={'user'} classprop={'profile-dashboard-sidenav-item-icon'}></SVG>
+              <div className="profile-dashboard-sidenav-item-icon-container">
+                <SVG svg={'user'} classprop={'profile-dashboard-sidenav-item-icon'}></SVG>
+              </div>
               <span>My Info</span>
               <div className="profile-dashboard-sidenav-item-arrow-container"><SVG svg={'arrow-right'} classprop={'profile-dashboard-sidenav-item-arrow'}></SVG></div>
             </div>
           </div>
           <div className="profile-dashboard-sidenav-item-container">
             <div className="profile-dashboard-sidenav-item" onClick={() => setDashboard('profile')}>
-              <SVG svg={'users'} classprop={'profile-dashboard-sidenav-item-icon'}></SVG>
+              <div className="profile-dashboard-sidenav-item-icon-container">
+                <SVG svg={'users'} classprop={'profile-dashboard-sidenav-item-icon'}></SVG>
+              </div>
               <span>Contacts</span>
               <div className="profile-dashboard-sidenav-item-arrow-container"><SVG svg={'arrow-right'} classprop={'profile-dashboard-sidenav-item-arrow'}></SVG></div>
             </div>
           </div>
           <div className="profile-dashboard-sidenav-item-container">
             <div className="profile-dashboard-sidenav-item">
-              <SVG svg={'calendar'} classprop={'profile-dashboard-sidenav-item-icon'}></SVG>
+              <div className="profile-dashboard-sidenav-item-icon-container">
+                <SVG svg={'calendar'} classprop={'profile-dashboard-sidenav-item-icon'}></SVG>
+              </div>
               <span>Calendar</span>
               <div className="profile-dashboard-sidenav-item-arrow-container"><SVG svg={'arrow-right'} classprop={'profile-dashboard-sidenav-item-arrow'}></SVG></div>
             </div>
@@ -513,7 +523,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
           <Orders></Orders>
         }
         {dashboard == 'info' && 
-          <Info user={newUser}></Info>
+          <Info user={newUser} dashboard={dashboard}></Info>
         }
         { dashboard == 'profile' && sideNav == 'recipients' &&
         <div className="profile-dashboard-recipients">
