@@ -115,6 +115,9 @@ body {
   @media only screen and (max-width: 1200px) {
     .slider {
       display: block; } }
+  .slider-title {
+    color: black !important;
+    font-size: 2.8rem; }
   .slider-slides-container {
     width: 100%;
     display: flex;
@@ -271,6 +274,102 @@ body {
         .homepage_slider-slides-dots-dot:hover {
           cursor: pointer; }
 
+.slider-profile {
+  grid-column: 1/-1;
+  display: none;
+  margin: 10rem 0 0 0; }
+  @media only screen and (max-width: 1200px) {
+    .slider-profile {
+      display: block;
+      margin: 2rem 0 4rem 0; } }
+  .slider-profile-title {
+    color: black !important;
+    font-size: 2.8rem; }
+  .slider-profile-slides-container {
+    width: 100%;
+    display: flex;
+    transition: all 0.5s cubic-bezier(0.47, 0, 0.745, 0.715); }
+    @media only screen and (max-width: 992px) {
+      .slider-profile-slides-container {
+        margin-left: 16rem; } }
+    @media only screen and (max-width: 600px) {
+      .slider-profile-slides-container {
+        margin-left: -1rem; } }
+  .slider-profile-slides-item {
+    width: 240px !important;
+    height: 34rem !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 0.2rem solid #e5e5e5;
+    border-radius: 1.2rem;
+    box-sizing: border-box;
+    color: #011722;
+    padding: 1.7rem 1.7rem;
+    margin-left: 1.2rem; }
+    .slider-profile-slides-item-title {
+      font-family: Sanchez;
+      font-size: 2.2rem;
+      text-align: center;
+      margin-bottom: 0.3rem; }
+    .slider-profile-slides-item-subtitle {
+      font-size: 1.4rem;
+      color: #011722;
+      margin-bottom: 0.7rem;
+      text-align: center; }
+    .slider-profile-slides-item-image {
+      width: 200px;
+      height: 111.3px;
+      margin-bottom: 0.7rem; }
+    .slider-profile-slides-item-input {
+      width: 20rem; }
+      .slider-profile-slides-item-input input {
+        margin: 4rem 0 2rem 0;
+        width: 100%;
+        padding: 1rem 2rem;
+        border: none;
+        text-align: center;
+        font-family: Roboto;
+        font-size: 1.8rem;
+        line-height: 2.1rem;
+        outline: none; }
+    .slider-profile-slides-item-price {
+      font-family: Sanchez;
+      font-size: 2.2rem;
+      color: #011722;
+      margin-bottom: 0.3rem; }
+    .slider-profile-slides-item-discount {
+      font-size: 1.4rem;
+      color: #011722;
+      margin-bottom: 0.7rem; }
+    .slider-profile-slides-item-button {
+      width: 120px;
+      height: 45px;
+      background-color: #0f2e4c;
+      border-radius: 1.2rem;
+      outline: none;
+      border: none;
+      color: white;
+      font-size: 1.6rem;
+      margin-bottom: 0.7rem; }
+    .slider-profile-slides-item-shipping {
+      font-size: 1.4rem;
+      color: #011722;
+      text-align: center; }
+  .slider-profile-slides-dots {
+    display: flex;
+    justify-content: center; }
+    .slider-profile-slides-dots-dot {
+      width: 8px;
+      height: 8px;
+      margin: 2rem 0 0 0;
+      margin-right: 0.5rem;
+      cursor: pointer;
+      border-radius: 50%; }
+      .slider-profile-slides-dots-dot:hover {
+        cursor: pointer; }
+
 .recipient-modal {
   position: fixed;
   top: 5%;
@@ -362,6 +461,84 @@ body {
 .black {
   color: black !important; }
 
+.recipient-modal-plan {
+  position: fixed;
+  top: 5%;
+  left: 2.5%;
+  width: 95%;
+  min-height: 75rem;
+  display: flex;
+  background-color: white;
+  border: 0.2rem solid #e5e5e5;
+  border-radius: 1.2rem;
+  box-shadow: 0.2rem 0.1rem 0rem 0rem rgba(0, 0, 0, 0.2);
+  align-items: center;
+  z-index: 200;
+  justify-content: center; }
+  .recipient-modal-plan-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 80rem;
+    max-height: 80rem;
+    border-radius: 1.2rem;
+    position: relative;
+    overflow-y: auto; }
+    .recipient-modal-plan-box-mobile {
+      display: none; }
+      @media only screen and (max-width: 1100px) {
+        .recipient-modal-plan-box-mobile {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 0;
+          width: 80%;
+          color: #18405d !important; } }
+      .recipient-modal-plan-box-mobile-title {
+        width: 100%;
+        font-size: 1.8rem;
+        line-height: 2.1rem;
+        text-align: center;
+        font-weight: 700;
+        margin: 20rem 0 0 0;
+        color: #18405d;
+        font-family: Roboto; }
+      .recipient-modal-plan-box-mobile-subtitle {
+        font-family: Roboto;
+        font-size: 1.6rem;
+        line-height: 1.9rem;
+        font-weight: 400;
+        padding: 0.2rem 0;
+        color: #011722 !important; }
+      .recipient-modal-plan-box-mobile-bulk {
+        font-size: 1.4rem;
+        color: #011722 !important; }
+    .recipient-modal-plan-box::-webkit-scrollbar {
+      width: 0.2rem; }
+    .recipient-modal-plan-box::-webkit-scrollbar-thumb {
+      background-color: #0f2e4c; }
+    @media only screen and (max-width: 1100px) {
+      .recipient-modal-plan-box {
+        overflow-y: hidden !important;
+        overflow: hidden; }
+        .recipient-modal-plan-box::-webkit-scrollbar {
+          width: 0.2rem; }
+        .recipient-modal-plan-box::-webkit-scrollbar-thumb {
+          background-color: #0f2e4c; } }
+    .recipient-modal-plan-box-close {
+      position: absolute;
+      top: 2rem;
+      right: 2rem; }
+      .recipient-modal-plan-box-close-svg {
+        width: 3rem;
+        height: 3rem;
+        fill: #0f2e4c; }
+        .recipient-modal-plan-box-close-svg:hover {
+          cursor: pointer;
+          fill: #e84925; }
+
 .profile-dashboard-orders {
   flex-grow: 1;
   padding: 2rem 3rem; }
@@ -443,10 +620,12 @@ body {
       color: white; } }
   .profile-dashboard-info-mobile {
     color: black;
-    display: block !important;
-    background-image: linear-gradient(#fafafa, #fafafa) !important;
-    padding: 2.1rem 2.3rem !important;
-    margin: 0 1.5rem !important; }
+    display: block !important; }
+    @media only screen and (max-width: 1100px) {
+      .profile-dashboard-info-mobile {
+        background-image: linear-gradient(#fafafa, #fafafa) !important;
+        padding: 2.1rem 2.3rem !important;
+        margin: 0 1.5rem !important; } }
     @media only screen and (max-width: 1100px) {
       .profile-dashboard-info-mobile-box {
         background-image: linear-gradient(#fafafa, #fafafa) !important;
@@ -715,6 +894,9 @@ body {
     z-index: -1 !important;
     background-image: radial-gradient(#0f2e4c, #0f2e4c);
     transition: all 0.5s ease-in-out; }
+    @media only screen and (max-width: 1100px) {
+      .nav-user-menu-background {
+        position: absolute; } }
   .nav-user-menu-checkbox:checked ~ .nav-user-menu-background {
     transform: scale(80);
     z-index: 50 !important; }
@@ -2086,12 +2268,12 @@ body {
     align-items: center;
     flex-wrap: wrap;
     margin: 4rem 0 2rem 0; }
-    @media only screen and (max-width: 1200px) {
+    @media only screen and (max-width: 1100px) {
       .quiz-recipient-package {
         display: none; } }
     .quiz-recipient-package-item {
-      width: 35rem;
-      height: 49.3rem;
+      width: 32rem;
+      height: 46.3rem;
       border: 0.2rem solid #e5e5e5;
       border-radius: 1.2rem;
       padding: 5.8rem 3.8rem;
@@ -2105,6 +2287,16 @@ body {
         .quiz-recipient-package-item {
           width: 25rem;
           height: 39.3rem; } }
+      @media only screen and (max-width: 1350px) {
+        .quiz-recipient-package-item {
+          padding: 2rem 1rem;
+          width: 22rem;
+          height: 37.3rem; } }
+      @media only screen and (max-width: 1200px) {
+        .quiz-recipient-package-item {
+          padding: 2rem 1rem;
+          width: 20rem;
+          height: 35.3rem; } }
       .quiz-recipient-package-item-title {
         font-family: 'Sanchez';
         font-size: 2.4rem !important;
@@ -2174,6 +2366,9 @@ body {
       justify-self: center;
       font-size: 1.8rem;
       margin: 2rem 0 6rem 0; }
+      @media only screen and (max-width: 1500px) {
+        .quiz-recipient-package-bulk a {
+          display: none; } }
     .quiz-recipient-package-footer {
       grid-column: 1/-1;
       justify-self: center;
@@ -3065,6 +3260,9 @@ body {
   max-height: 100%;
   display: flex;
   position: relative; }
+  @media only screen and (max-width: 1100px) {
+    .profile-dashboard {
+      display: block; } }
   .profile-dashboard-sidenav-container {
     width: 15%; }
     @media only screen and (max-width: 1100px) {
@@ -3110,6 +3308,10 @@ body {
   .profile-dashboard-recipients {
     width: 15%;
     padding: 0 3rem; }
+    @media only screen and (max-width: 1100px) {
+      .profile-dashboard-recipients {
+        width: 100%;
+        padding: 0; } }
     .profile-dashboard-recipients:hover {
       cursor: pointer; }
     .profile-dashboard-recipients-item {
@@ -3125,6 +3327,10 @@ body {
       @media only screen and (max-width: 1500px) {
         .profile-dashboard-recipients-item {
           font-size: 1.4rem; } }
+      @media only screen and (max-width: 1100px) {
+        .profile-dashboard-recipients-item {
+          justify-content: flex-start;
+          padding: 2rem 6rem; } }
       .profile-dashboard-recipients-item:hover {
         background-color: #0f2e4c;
         color: white; }
@@ -3145,6 +3351,11 @@ body {
           .profile-dashboard-recipients-item-add {
             flex-direction: column;
             font-size: 1.4rem; } }
+        @media only screen and (max-width: 1100px) {
+          .profile-dashboard-recipients-item-add {
+            flex-direction: row;
+            justify-content: flex-start;
+            padding: 2rem 6rem; } }
         .profile-dashboard-recipients-item-add svg {
           width: 3rem;
           height: 3rem;
@@ -3159,6 +3370,9 @@ body {
           @media only screen and (max-width: 1500px) {
             .profile-dashboard-recipients-item-add span {
               margin: 0; } }
+          @media only screen and (max-width: 1100px) {
+            .profile-dashboard-recipients-item-add span {
+              margin-left: 2rem; } }
         .profile-dashboard-recipients-item-add:hover {
           cursor: pointer;
           background-color: #0f2e4c;
@@ -3170,6 +3384,12 @@ body {
     .profile-dashboard-recipients-edit {
       padding: 3rem 5rem;
       width: 70%; }
+      @media only screen and (max-width: 1100px) {
+        .profile-dashboard-recipients-edit {
+          width: 100%;
+          color: white;
+          padding: 0;
+          margin: -1rem 0; } }
       .profile-dashboard-recipients-edit-title {
         display: flex;
         align-items: center;
@@ -3177,7 +3397,33 @@ body {
         box-sizing: content-box;
         padding: 1rem 4rem;
         margin: 0;
-        text-transform: capitalize; }
+        text-transform: capitalize;
+        position: relative; }
+        .profile-dashboard-recipients-edit-title-credits {
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          font-size: 1.4rem;
+          line-height: 1.6rem;
+          z-index: 1; }
+          @media only screen and (max-width: 1100px) {
+            .profile-dashboard-recipients-edit-title-credits {
+              left: 2rem;
+              top: 2rem; } }
+          .profile-dashboard-recipients-edit-title-credits span {
+            display: block;
+            width: 1rem;
+            height: 1rem;
+            margin-right: 1rem;
+            background-color: #f3c623;
+            border-radius: 50%; }
+        @media only screen and (max-width: 1100px) {
+          .profile-dashboard-recipients-edit-title {
+            background-image: linear-gradient(#18405d 99%, #18405d 80%);
+            color: white; } }
         .profile-dashboard-recipients-edit-title-name {
           padding: 0 1rem;
           margin-left: 1rem;
@@ -3190,6 +3436,9 @@ body {
             width: 0.2rem;
             height: 60%;
             border-left: 0.2rem solid black; }
+            @media only screen and (max-width: 1100px) {
+              .profile-dashboard-recipients-edit-title-name::before {
+                border-left: 0.2rem solid rgba(255, 255, 255, 0.6); } }
         .profile-dashboard-recipients-edit-title-edit {
           display: flex;
           align-items: center;
@@ -3201,6 +3450,9 @@ body {
             width: 3rem;
             height: 3rem;
             fill: #0f2e4c; }
+            @media only screen and (max-width: 1100px) {
+              .profile-dashboard-recipients-edit-title-edit span svg {
+                fill: rgba(255, 255, 255, 0.6); } }
           .profile-dashboard-recipients-edit-title-edit span:hover {
             cursor: pointer; }
           .profile-dashboard-recipients-edit-title-edit-menu {
@@ -3230,28 +3482,54 @@ body {
         padding: 2rem 4rem;
         background-color: #fafafa;
         position: relative; }
+        @media only screen and (max-width: 1100px) {
+          .profile-dashboard-recipients-edit-profile {
+            background-image: linear-gradient(#18405d 99%, #18405d 80%);
+            margin: 0; } }
         .profile-dashboard-recipients-edit-profile-container {
           display: flex;
           justify-content: space-between;
           width: 80%; }
+          @media only screen and (max-width: 1100px) {
+            .profile-dashboard-recipients-edit-profile-container {
+              flex-direction: column;
+              padding: 0 5rem; } }
+        @media only screen and (max-width: 1100px) {
+          .profile-dashboard-recipients-edit-profile-personality {
+            margin-bottom: 3rem; } }
         .profile-dashboard-recipients-edit-profile-personality-title {
           font-size: 1.8rem;
           font-weight: 700; }
+          @media only screen and (max-width: 1100px) {
+            .profile-dashboard-recipients-edit-profile-personality-title {
+              color: rgba(255, 255, 255, 0.6); } }
         .profile-dashboard-recipients-edit-profile-personality-input textarea {
           font-family: inherit;
           width: 90% !important; }
         .profile-dashboard-recipients-edit-profile-personality span {
           display: block;
           font-size: 1.8rem; }
+        @media only screen and (max-width: 1100px) {
+          .profile-dashboard-recipients-edit-profile-address {
+            margin-bottom: 3rem; } }
         .profile-dashboard-recipients-edit-profile-address-title {
           font-size: 1.8rem;
           font-weight: 700; }
+          @media only screen and (max-width: 1100px) {
+            .profile-dashboard-recipients-edit-profile-address-title {
+              color: rgba(255, 255, 255, 0.6); } }
         .profile-dashboard-recipients-edit-profile-address span {
           display: block;
           font-size: 1.8rem; }
+        @media only screen and (max-width: 1100px) {
+          .profile-dashboard-recipients-edit-profile-age {
+            margin-bottom: 3rem; } }
         .profile-dashboard-recipients-edit-profile-age-title {
           font-size: 1.8rem;
           font-weight: 700; }
+          @media only screen and (max-width: 1100px) {
+            .profile-dashboard-recipients-edit-profile-age-title {
+              color: rgba(255, 255, 255, 0.6); } }
         .profile-dashboard-recipients-edit-profile-age span {
           display: block;
           font-size: 1.8rem; }
@@ -3271,6 +3549,13 @@ body {
         padding: 2rem 4rem;
         background-color: #fafafa;
         position: relative; }
+        @media only screen and (max-width: 1100px) {
+          .profile-dashboard-recipients-edit-style {
+            width: 90%;
+            color: black;
+            margin: 0 auto;
+            margin-top: 2rem;
+            padding: 4rem 4rem; } }
         .profile-dashboard-recipients-edit-style-title {
           font-size: 1.8rem; }
           .profile-dashboard-recipients-edit-style-title span {
@@ -3281,6 +3566,7 @@ body {
           margin: 2rem 0; }
           @media only screen and (max-width: 1100px) {
             .profile-dashboard-recipients-edit-style-selection {
+              min-width: 100% !important;
               flex-wrap: wrap; } }
           .profile-dashboard-recipients-edit-style-selection-item {
             text-align: center; }
@@ -3298,7 +3584,10 @@ body {
                 min-width: 9rem !important; } }
             @media only screen and (max-width: 1100px) {
               .profile-dashboard-recipients-edit-style-selection-item-box {
-                margin: 1rem 0; } }
+                margin: 1rem 0;
+                width: 100%;
+                color: black;
+                border-radius: 3.4rem !important; } }
           .profile-dashboard-recipients-edit-style-selection-item-1 {
             display: flex;
             justify-content: center;
@@ -3324,6 +3613,10 @@ body {
               border-radius: 50%;
               padding: 1rem;
               color: white; }
+              @media only screen and (max-width: 1100px) {
+                .profile-dashboard-recipients-edit-style-selection-item-1::before {
+                  left: 5%;
+                  bottom: 25%; } }
           .profile-dashboard-recipients-edit-style-selection-item-2 {
             display: flex;
             justify-content: center;
@@ -3349,6 +3642,10 @@ body {
               border-radius: 50%;
               padding: 1rem;
               color: white; }
+              @media only screen and (max-width: 1100px) {
+                .profile-dashboard-recipients-edit-style-selection-item-2::before {
+                  left: 5%;
+                  bottom: 25%; } }
           .profile-dashboard-recipients-edit-style-selection-item-3 {
             display: flex;
             justify-content: center;
@@ -3374,6 +3671,10 @@ body {
               border-radius: 50%;
               padding: 1rem;
               color: white; }
+              @media only screen and (max-width: 1100px) {
+                .profile-dashboard-recipients-edit-style-selection-item-3::before {
+                  left: 5%;
+                  bottom: 25%; } }
           .profile-dashboard-recipients-edit-style-selection-item-4 {
             display: flex;
             justify-content: center;
@@ -3399,6 +3700,10 @@ body {
               border-radius: 50%;
               padding: 1rem;
               color: white; }
+              @media only screen and (max-width: 1100px) {
+                .profile-dashboard-recipients-edit-style-selection-item-4::before {
+                  left: 5%;
+                  bottom: 25%; } }
           .profile-dashboard-recipients-edit-style-selection-item-5 {
             display: flex;
             justify-content: center;
@@ -3424,6 +3729,10 @@ body {
               border-radius: 50%;
               padding: 1rem;
               color: white; }
+              @media only screen and (max-width: 1100px) {
+                .profile-dashboard-recipients-edit-style-selection-item-5::before {
+                  left: 5%;
+                  bottom: 25%; } }
           .profile-dashboard-recipients-edit-style-selection-item-6 {
             display: flex;
             justify-content: center;
@@ -3449,6 +3758,10 @@ body {
               border-radius: 50%;
               padding: 1rem;
               color: white; }
+              @media only screen and (max-width: 1100px) {
+                .profile-dashboard-recipients-edit-style-selection-item-6::before {
+                  left: 5%;
+                  bottom: 25%; } }
       .profile-dashboard-recipients-edit-event {
         width: 100%;
         margin: 2rem 0;
@@ -3502,6 +3815,9 @@ body {
                 line-height: 1.6rem;
                 text-align: center;
                 font-family: Roboto; }
+                @media only screen and (max-width: 1100px) {
+                  .profile-dashboard-recipients-edit-event-container-card-add span {
+                    color: #0f2e4c; } }
               .profile-dashboard-recipients-edit-event-container-card-add:hover {
                 cursor: pointer; }
             .profile-dashboard-recipients-edit-event-container-card-plus_button {
@@ -3528,6 +3844,9 @@ body {
                   width: 2.3rem;
                   height: 2.4rem;
                   fill: white; }
+              @media only screen and (max-width: 1100px) {
+                .profile-dashboard-recipients-edit-event-container-card-plus_button {
+                  display: none; } }
             .profile-dashboard-recipients-edit-event-container-card-menu {
               position: absolute;
               top: 10%;
