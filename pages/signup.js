@@ -34,7 +34,10 @@ const SignUp = ({newUser, user, userUpdate, userMessage}) => {
       },
       {
         provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        fullLabel: 'Google'
+        fullLabel: 'Google',
+        customParameters: {
+          prompt: 'select_account'
+        }
       }
     ],
     callbacks: {

@@ -478,7 +478,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
   
   return (
     <>
-      <NavMobile dashboard={dashboard} setDashboard={setDashboard}></NavMobile>
+      <NavMobile dashboard={dashboard} setDashboard={setDashboard} setRecipient={setRecipient} setAddNew={setAddNew}></NavMobile>
       <NavDesktop></NavDesktop>
       <div className="profile-dashboard">
         <div className={`profile-dashboard-sidenav-container ` + (dashboard !== '' ? 'hide-on-mobile' : '')}>
@@ -527,9 +527,9 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
         }
         { dashboard == 'profile' && sideNav == 'recipients' &&
         <div className="profile-dashboard-recipients">
-          <div className="profile-dashboard-recipients-item-add" onClick={() => (resetRecipient(), setAddNew(true))}><SVG svg={'plus'}></SVG><span>Add Recipient</span></div>
+          <div className="profile-dashboard-recipients-item-add" onClick={() => (resetRecipient(), setAddNew(true), document.querySelector('.profile-dashboard-recipients').classList.add('hide-on-mobile'))}><SVG svg={'plus'}></SVG><span>Add Recipient</span></div>
           {allRecipients.map((item, idx) => 
-            <div key={idx} className="profile-dashboard-recipients-item" onClick={() => (setEdit(''), setRecipient(item._id), setCardMenu('empty'), setAddNew(false))}>{item.name}</div>
+            <div key={idx} className="profile-dashboard-recipients-item" onClick={() => (setEdit(''), setRecipient(item._id), setCardMenu('empty'), setAddNew(false), document.querySelector('.profile-dashboard-recipients').classList.add('hide-on-mobile'))}>{item.name}</div>
           )}
         </div>
         }
@@ -537,6 +537,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
           dashboard == 'profile' && !addNew && recipientID && allRecipients.filter((item) => item._id == recipientID).map((item, idx) =>
             <div key={idx} className="profile-dashboard-recipients-edit">
               <div className="profile-dashboard-recipients-edit-title">
+                <div className="profile-dashboard-recipients-edit-title-credits"><span>&nbsp;</span> You have {newUser.credits ? newUser.credits : 'no'} credits</div>
                 <div className="profile-dashboard-recipients-edit-title-recipient">{item.recipient ? item.recipient : item.recipient_other}</div>
                 <div className="profile-dashboard-recipients-edit-title-name">{item.name}</div>
                 <div className="profile-dashboard-recipients-edit-title-edit">
@@ -669,7 +670,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
                     (item.rank.length > 0 && item.rank.map((item, idx) =>
                       <div className={`profile-dashboard-recipients-edit-style-selection-item-${item.rank} profile-dashboard-recipients-edit-style-selection-item-box`} key={idx} onDrop={(e) => onDropNew(e, item.rank)} onDragOver={(e) => onDragOver(e)}>
                       <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${item.rank}`}
-                      draggable onDragStart={(e) => {onDragStart(e, item.rank,item.style)}}
+                       onDragStart={(e) => {onDragStart(e, item.rank,item.style)}}
                       >
                         {item.style}
                       </div>

@@ -7,6 +7,10 @@
   display: flex;
   position: relative;
 
+  @media only screen and (max-width: $large-medium) {
+    display: block;
+  }
+
   &-sidenav {
     &-container {
       width: 15%;
@@ -75,6 +79,11 @@
     width: 15%;
     padding: 0 3rem;
 
+    @media only screen and (max-width: $large-medium) {
+      width: 100%;
+      padding: 0;
+    }
+
     &:hover {
       cursor: pointer;
     }
@@ -92,6 +101,11 @@
 
       @media only screen and (max-width: $wide) {
         font-size: 1.4rem;
+      }
+
+      @media only screen and (max-width: $large-medium) {
+        justify-content: flex-start;
+        padding: 2rem 6rem;
       }
 
       &:hover {
@@ -120,6 +134,12 @@
           font-size: 1.4rem;
         }
 
+        @media only screen and (max-width: $large-medium) {
+          flex-direction: row;
+          justify-content: flex-start;
+          padding: 2rem 6rem;
+        }
+
         svg {
           width: 3rem;
           height: 3rem;
@@ -136,6 +156,10 @@
 
           @media only screen and (max-width: $wide) {
             margin: 0;
+          }
+
+          @media only screen and (max-width: $large-medium) {
+            margin-left: 2rem;
           }
         }
 
@@ -157,6 +181,13 @@
       padding: 3rem 5rem;
       width: 70%;
 
+      @media only screen and (max-width: $large-medium) {
+        width: 100%;
+        color: white;
+        padding: 0;
+        margin: -1rem 0;
+      }
+
       &-title {
         display: flex;
         align-items: center;
@@ -165,6 +196,41 @@
         padding: 1rem 4rem;
         margin: 0;
         text-transform: capitalize;
+        position: relative;
+
+        &-credits {
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          font-size: 1.4rem;
+          line-height: 1.6rem;
+          z-index: 1;
+
+          @media only screen and (max-width: $large-medium) {
+            left: 2rem;
+            top: 2rem;
+          }
+
+          span {
+            display: block;
+            width: 1rem;
+            height: 1rem;
+            margin-right: 1rem;
+            background-color: #f3c623;
+            border-radius: 50%;
+          }
+        }
+
+        @media only screen and (max-width: $large-medium) {
+          background-image: linear-gradient(
+            $color-scheme-3-variation-4 99%,
+            $color-scheme-3-variation-4 80%
+          );
+          color: white;
+        }
 
         &-name {
           padding: 0 1rem;
@@ -179,6 +245,10 @@
             width: 0.2rem;
             height: 60%;
             border-left: 0.2rem solid black;
+
+            @media only screen and (max-width: $large-medium) {
+              border-left: 0.2rem solid rgba(255, 255, 255, 0.6);
+            }
           }
         }
 
@@ -195,6 +265,10 @@
               width: 3rem;
               height: 3rem;
               fill: $color-scheme-3;
+
+              @media only screen and (max-width: $large-medium) {
+                fill: rgba(255, 255, 255, 0.6);
+              }
             }
 
             &:hover {
@@ -240,16 +314,37 @@
         background-color: $color-light-gray-alt-5;
         position: relative;
 
+        @media only screen and (max-width: $large-medium) {
+          background-image: linear-gradient(
+            $color-scheme-3-variation-4 99%,
+            $color-scheme-3-variation-4 80%
+          );
+          margin: 0;
+        }
+
         &-container {
           display: flex;
           justify-content: space-between;
           width: 80%;
+
+          @media only screen and (max-width: $large-medium) {
+            flex-direction: column;
+            padding: 0 5rem;
+          }
         }
 
         &-personality {
+          @media only screen and (max-width: $large-medium) {
+            margin-bottom: 3rem;
+          }
+
           &-title {
             font-size: 1.8rem;
             font-weight: 700;
+
+            @media only screen and (max-width: $large-medium) {
+              color: rgba(255, 255, 255, 0.6);
+            }
           }
 
           &-input {
@@ -267,10 +362,17 @@
 
         &-address {
           // width: 50%;
+          @media only screen and (max-width: $large-medium) {
+            margin-bottom: 3rem;
+          }
 
           &-title {
             font-size: 1.8rem;
             font-weight: 700;
+
+            @media only screen and (max-width: $large-medium) {
+              color: rgba(255, 255, 255, 0.6);
+            }
           }
 
           span {
@@ -280,9 +382,17 @@
         }
 
         &-age {
+          @media only screen and (max-width: $large-medium) {
+            margin-bottom: 3rem;
+          }
+
           &-title {
             font-size: 1.8rem;
             font-weight: 700;
+
+            @media only screen and (max-width: $large-medium) {
+              color: rgba(255, 255, 255, 0.6);
+            }
           }
 
           span {
@@ -315,9 +425,13 @@
         background-color: $color-light-gray-alt-5;
         position: relative;
 
-        // @media only screen and ($large) {
-        //   background-color: red;
-        // }
+        @media only screen and (max-width: $large-medium) {
+          width: 90%;
+          color: black;
+          margin: 0 auto;
+          margin-top: 2rem;
+          padding: 4rem 4rem;
+        }
 
         &-title {
           font-size: 1.8rem;
@@ -333,6 +447,7 @@
           margin: 2rem 0;
 
           @media only screen and (max-width: $large-medium) {
+            min-width: 100% !important;
             flex-wrap: wrap;
           }
 
@@ -358,6 +473,9 @@
 
               @media only screen and (max-width: $large-medium) {
                 margin: 1rem 0;
+                width: 100%;
+                color: black;
+                border-radius: 3.4rem !important;
               }
             }
           }
@@ -388,6 +506,11 @@
               border-radius: 50%;
               padding: 1rem;
               color: white;
+
+              @media only screen and (max-width: $large-medium) {
+                left: 5%;
+                bottom: 25%;
+              }
             }
           }
 
@@ -417,6 +540,11 @@
               border-radius: 50%;
               padding: 1rem;
               color: white;
+
+              @media only screen and (max-width: $large-medium) {
+                left: 5%;
+                bottom: 25%;
+              }
             }
           }
 
@@ -446,6 +574,11 @@
               border-radius: 50%;
               padding: 1rem;
               color: white;
+
+              @media only screen and (max-width: $large-medium) {
+                left: 5%;
+                bottom: 25%;
+              }
             }
           }
 
@@ -475,6 +608,11 @@
               border-radius: 50%;
               padding: 1rem;
               color: white;
+
+              @media only screen and (max-width: $large-medium) {
+                left: 5%;
+                bottom: 25%;
+              }
             }
           }
 
@@ -504,6 +642,11 @@
               border-radius: 50%;
               padding: 1rem;
               color: white;
+
+              @media only screen and (max-width: $large-medium) {
+                left: 5%;
+                bottom: 25%;
+              }
             }
           }
 
@@ -533,6 +676,11 @@
               border-radius: 50%;
               padding: 1rem;
               color: white;
+
+              @media only screen and (max-width: $large-medium) {
+                left: 5%;
+                bottom: 25%;
+              }
             }
           }
         }
@@ -599,6 +747,10 @@
                 line-height: 1.6rem;
                 text-align: center;
                 font-family: Roboto;
+
+                @media only screen and (max-width: $large-medium) {
+                  color: $color-scheme-3;
+                }
               }
 
               &:hover {
@@ -635,6 +787,10 @@
                   height: 2.4rem;
                   fill: white;
                 }
+              }
+
+              @media only screen and (max-width: $large-medium) {
+                display: none;
               }
             }
 

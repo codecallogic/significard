@@ -132,3 +132,108 @@
 .black {
   color: black !important;
 }
+
+.recipient-modal-plan {
+  position: fixed;
+  top: 5%;
+  left: 2.5%;
+  width: 95%;
+  min-height: 75rem;
+  display: flex;
+  background-color: white;
+  border: 0.2rem solid $color-light-gray-alt-2;
+  border-radius: 1.2rem;
+  box-shadow: 0.2rem 0.1rem 0rem 0rem rgba(0, 0, 0, 0.2);
+  align-items: center;
+  z-index: 200;
+  justify-content: center;
+
+  &-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 80rem;
+    max-height: 80rem;
+    border-radius: 1.2rem;
+    position: relative;
+    overflow-y: auto;
+
+    &-mobile {
+      display: none;
+
+      @media only screen and (max-width: $large-medium) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+        width: 80%;
+        color: $color-scheme-3-variation-4 !important;
+      }
+
+      &-title {
+        width: 100%;
+        font-size: 1.8rem;
+        line-height: 2.1rem;
+        text-align: center;
+        font-weight: 700;
+        margin: 20rem 0 0 0;
+        color: $color-scheme-3-variation-4;
+        font-family: Roboto;
+      }
+
+      &-subtitle {
+        font-family: Roboto;
+        font-size: 1.6rem;
+        line-height: 1.9rem;
+        font-weight: 400;
+        padding: 0.2rem 0;
+        color: #011722 !important;
+      }
+
+      &-bulk {
+        font-size: 1.4rem;
+        color: #011722 !important;
+      }
+    }
+
+    &::-webkit-scrollbar {
+      width: 0.2rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $color-scheme-3;
+    }
+
+    @media only screen and (max-width: $large-medium) {
+      overflow-y: hidden !important;
+      overflow: hidden;
+
+      &::-webkit-scrollbar {
+        width: 0.2rem;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $color-scheme-3;
+      }
+    }
+
+    &-close {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+
+      &-svg {
+        width: 3rem;
+        height: 3rem;
+        fill: $color-scheme-3;
+
+        &:hover {
+          cursor: pointer;
+          fill: $color-scheme-1;
+        }
+      }
+    }
+  }
+}

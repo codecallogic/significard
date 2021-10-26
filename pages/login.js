@@ -32,7 +32,10 @@ const Login = ({user, userUpdate, userMessage, userEmail}) => {
       },
       {
         provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        fullLabel: 'Google'
+        fullLabel: 'Google',
+        customParameters: {
+          prompt: 'select_account'
+        }
       }
     ],
     callbacks: {

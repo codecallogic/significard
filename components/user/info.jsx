@@ -3,6 +3,7 @@ import SVG from '../../files/svgs'
 import PlacesAutocomplete from 'react-places-autocomplete'
 import { geocodeByPlaceId } from 'react-places-autocomplete'
 import {usStates, eventsList} from '../../utils/quiz'
+import SliderProfile from '../../components/slider/sliderProfile'
 
 const searchOptionsAddress = {
   componentRestrictions: {country: 'us'},
@@ -15,7 +16,7 @@ const searchOptionsCities = {
 }
 
 const Info = ({user, dashboard}) => {
-  console.log(user)
+  // console.log(user)
   const node = useRef();
   const [edit, setEdit] = useState('')
   const [modal, setModal] = useState('')
@@ -29,6 +30,8 @@ const Info = ({user, dashboard}) => {
   const [phone, setPhone] = useState('')
   const [plan, setPlan] = useState('')
   const [history, setHistory] = useState(false)
+  const [quantity, setQuantity] = useState('')
+  const [result, setResult] = useState('')
 
   const validateIsNumber = (type) => {
     const input = document.getElementById(type)
@@ -74,6 +77,19 @@ const Info = ({user, dashboard}) => {
       let now = new Date(data)
       data = now.toISOString().slice(0,10)
       return data
+  }
+
+  const calculate = () => {
+    setMessage('')
+    if(+quantity <= 4) setResult(13.99)
+    if(+quantity > 4 ) setResult(11.99)
+    if(+quantity > 9) setResult(9.99)
+    if(+quantity > 19) setResult(6.99)
+    if(+quantity > 50){setMessage('For 50+ cards, please contact us.'), setResult('')}
+  }
+
+  const updatePlan = () => {
+
   }
   
   return (
@@ -167,7 +183,7 @@ const Info = ({user, dashboard}) => {
       }
       <div className="profile-dashboard-info-title profile-dashboard-info-mobile">Plan</div>
       <div className="profile-dashboard-info-box profile-dashboard-info-mobile-box">
-        <div className="profile-dashboard-info-box-add profile-dashboard-info-mobile-cards">Add More Cards</div>
+        <div className="profile-dashboard-info-box-add profile-dashboard-info-mobile-cards" onClick={() => setModal('package_plan')}>Add More Cards</div>
         <div className="profile-dashboard-info-box-plan">
           <div className="profile-dashboard-info-box-plan-title">
             {
@@ -292,6 +308,97 @@ const Info = ({user, dashboard}) => {
             </div>
           </div>
         </div>
+        }
+        { modal == 'package_plan' &&
+          <div className="recipient-modal-plan">
+            <div className="recipient-modal-plan-box">
+              <div className="recipient-modal-plan-box-close" onClick={() => setModal('')}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
+              <div className="quiz-title">Choose a plan</div>
+              <div className="recipient-modal-plan-box-mobile">
+                <div className="recipient-modal-plan-box-mobile-title">
+                  Change Plan
+                </div>
+                <div className="recipient-modal-plan-box-mobile-subtitle">
+                  <span>{user.username},</span> find a plan that's right for you
+                </div>
+                <SliderProfile result={result} setresult={setResult} calculate={calculate} quantity={quantity} setQuantity={setQuantity}validateisnumber={validateIsNumber} message={message} setMessage={setMessage} updatePlan={updatePlan}></SliderProfile>
+                <div className="recipient-modal-plan-box-mobile-bulk">
+                  For bulk orders <a href="#">Click here</a>
+                </div>
+              </div>
+              <div className="quiz-recipient-package">
+                <div className="quiz-recipient-package-item">
+                  <div className="quiz-recipient-package-item-title">Best Deal</div>
+                  <div className="quiz-recipient-package-item-subtitle">You get 20 cards</div>
+                  <div className="quiz-recipient-package-item-image-container">
+                    <img src={`/media/package/standard.png`} alt="" />
+                  </div>
+                  <div className="quiz-recipient-package-item-price">$6.99 per card</div>
+                  {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
+                  <button className="quiz-recipient-package-item-button" onClick={ (e) => (updatePlan('best deal', 20))}>Select</button>
+                  <div>Free Shipping</div>
+                </div>
+                <div className="quiz-recipient-package-item">
+                  <div className="quiz-recipient-package-item-title">Better Deal</div>
+                  <div className="quiz-recipient-package-item-subtitle">You get 10 cards</div>
+                  <div className="quiz-recipient-package-item-image-container">
+                    <img src={`/media/package/standard.png`} alt="" />
+                  </div>
+                  <div className="quiz-recipient-package-item-price">$9.99 per card</div>
+                  {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
+                  <button className="quiz-recipient-package-item-button" onClick={ (e) => (updatePlan('better deal', 10))}>Select</button>
+                  <div>Free Shipping</div>
+                </div>
+                <div className="quiz-recipient-package-item">
+                  <div className="quiz-recipient-package-item-title">Good Deal</div>
+                  <div className="quiz-recipient-package-item-subtitle">You get 5 cards</div>
+                  <div className="quiz-recipient-package-item-image-container">
+                    {/* {packageList.slice(3, 6).map((item, idx) =>
+                      <img key={idx} style={{transform: `rotate(${item.rotate}deg)`}} src={`/media/package/${item.image}`} alt="" />
+                    )} */}
+                    <img src={`/media/package/standard.png`} alt="" />
+                  </div>
+                  <div className="quiz-recipient-package-item-price">$11.99 per card</div>
+                  {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
+                  <button className="quiz-recipient-package-item-button" onClick={ (e) => (updatePlan('good deal', 5))}>Select</button>
+                  <div>Free Shipping</div>
+                </div>
+                <div className="quiz-recipient-package-item">
+                  <div className="quiz-recipient-package-item-title">Customize It</div>
+                  <div className="quiz-recipient-package-item-subtitle">Enter the number of cards you want</div>
+                  <div className="quiz-recipient-package-item-input">
+                    <input id="custom_quantity" type="text" value={quantity} placeholder="Number of Cards" onChange={(e) => (setResult(''), validateIsNumber('custom_quantity'), setQuantity(e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Number of Cards'} onKeyDown={(e) => {
+                      if (e.code === "Enter") {
+                        calculate()
+                      }
+                    }}/>
+                  </div>
+                  {!result && <button className="quiz-recipient-package-item-button mb-2" onClick={ () => (calculate())}>Calculate</button>
+                  }
+                  {result && <button className="quiz-recipient-package-item-button mb-2" onClick={ (e) => (quizProgressNav(e,'mail'))}>Select & Continue</button>
+                  }
+                  {result && <>
+                  <div className="quiz-recipient-package-item-price">${result} per card</div>
+                  <div>Free Shipping</div>
+                  </>}
+                  {message && <div className="form-message-error">{message}</div>}
+                </div>
+              </div>             
+              <div className="quiz-recipient-package-bulk">For more than 50 cards, please <a href="">contact us</a></div>
+              <div className="quiz-recipient-package-footer">All packages come with the following items <span>at no extra cost</span></div>
+              <div className="quiz-recipient-package-footer-2">
+                <div className="quiz-recipient-package-footer-2-item">
+                  USPS Forever First Class Stamps
+                </div>
+                <div className="quiz-recipient-package-footer-2-item">
+                  Envelope
+                </div>
+                <div className="quiz-recipient-package-footer-2-item">
+                  Blank or preselected message inside the card
+                </div>
+              </div>
+            </div>
+          </div>
         }
     </div>
   )

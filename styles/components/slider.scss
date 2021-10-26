@@ -7,6 +7,11 @@
     display: block;
   }
 
+  &-title {
+    color: black !important;
+    font-size: 2.8rem;
+  }
+
   &-slides {
     &-container {
       width: 100%;
@@ -197,6 +202,137 @@
       }
     }
 
+    &-dots {
+      display: flex;
+      justify-content: center;
+
+      &-dot {
+        width: 8px;
+        height: 8px;
+        margin: 2rem 0 0 0;
+        margin-right: 0.5rem;
+        cursor: pointer;
+        border-radius: 50%;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.slider-profile {
+  grid-column: 1/-1;
+  display: none;
+  margin: 10rem 0 0 0;
+
+  @media only screen and (max-width: $extra-large) {
+    display: block;
+    margin: 2rem 0 4rem 0;
+  }
+
+  &-title {
+    color: black !important;
+    font-size: 2.8rem;
+  }
+
+  &-slides {
+    &-container {
+      width: 100%;
+      display: flex;
+      transition: all 0.5s cubic-bezier(0.47, 0, 0.745, 0.715);
+
+      @media only screen and (max-width: $large) {
+        margin-left: 16rem;
+      }
+
+      @media only screen and (max-width: $small) {
+        margin-left: -1rem;
+      }
+    }
+
+    &-item {
+      width: 240px !important;
+      height: 34rem !important;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 0.2rem solid $color-light-gray;
+      border-radius: 1.2rem;
+      box-sizing: border-box;
+      color: $color-scheme-3-variation-3;
+      padding: 1.7rem 1.7rem;
+      margin-left: 1.2rem;
+
+      &-title {
+        font-family: Sanchez;
+        font-size: 2.2rem;
+        text-align: center;
+        margin-bottom: 0.3rem;
+      }
+
+      &-subtitle {
+        font-size: 1.4rem;
+        color: $color-scheme-3-variation-3;
+        margin-bottom: 0.7rem;
+        text-align: center;
+      }
+
+      &-image {
+        width: 200px;
+        height: 111.3px;
+        margin-bottom: 0.7rem;
+      }
+
+      &-input {
+        width: 20rem;
+
+        input {
+          margin: 4rem 0 2rem 0;
+          width: 100%;
+          padding: 1rem 2rem;
+          border: none;
+          text-align: center;
+          font-family: Roboto;
+          font-size: 1.8rem;
+          line-height: 2.1rem;
+          outline: none;
+        }
+      }
+
+      &-price {
+        font-family: Sanchez;
+        font-size: 2.2rem;
+        color: $color-scheme-3-variation-3;
+        margin-bottom: 0.3rem;
+      }
+
+      &-discount {
+        font-size: 1.4rem;
+        color: $color-scheme-3-variation-3;
+        margin-bottom: 0.7rem;
+      }
+
+      &-button {
+        width: 120px;
+        height: 45px;
+        background-color: $color-scheme-3;
+        border-radius: 1.2rem;
+        outline: none;
+        border: none;
+        color: white;
+        font-size: 1.6rem;
+        margin-bottom: 0.7rem;
+      }
+
+      &-shipping {
+        font-size: 1.4rem;
+        color: $color-scheme-3-variation-3;
+        text-align: center;
+      }
+    }
     &-dots {
       display: flex;
       justify-content: center;

@@ -12,9 +12,12 @@
   &-mobile {
     color: black;
     display: block !important;
-    background-image: linear-gradient(#fafafa, #fafafa) !important;
-    padding: 2.1rem 2.3rem !important;
-    margin: 0 1.5rem !important;
+
+    @media only screen and (max-width: $large-medium) {
+      background-image: linear-gradient(#fafafa, #fafafa) !important;
+      padding: 2.1rem 2.3rem !important;
+      margin: 0 1.5rem !important;
+    }
 
     &-box {
       @media only screen and (max-width: $large-medium) {
