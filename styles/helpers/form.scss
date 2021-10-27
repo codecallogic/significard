@@ -358,7 +358,6 @@
       width: 100%;
       height: min-content;
       position: relative;
-      z-index: 100;
 
       textarea {
         width: 100%;
@@ -383,8 +382,12 @@
         border-bottom-left-radius: 1rem;
         box-shadow: 0rem 1rem 0.5rem 0.2rem rgba(0, 0, 0, 0.2);
         max-height: 30rem;
-        z-index: 100;
+        z-index: 500 !important;
         overflow-y: scroll;
+
+        @media only screen and (max-width: $large-medium) {
+          color: black;
+        }
 
         &::-webkit-scrollbar {
           width: 0.3rem;
@@ -905,4 +908,13 @@
 
 #address_place_id_checkout {
   display: none;
+}
+
+.center-button {
+  margin: 0 auto;
+  margin-bottom: 2rem !important;
+}
+
+.z1000 {
+  z-index: 500 !important;
 }

@@ -4,6 +4,8 @@ import PlacesAutocomplete from 'react-places-autocomplete'
 import { geocodeByPlaceId } from 'react-places-autocomplete'
 import {usStates, eventsList} from '../../utils/quiz'
 import SliderProfile from '../../components/slider/sliderProfile'
+import axios from 'axios'
+import {API} from '../../config'
 
 const searchOptionsAddress = {
   componentRestrictions: {country: 'us'},
@@ -15,7 +17,7 @@ const searchOptionsCities = {
   types: ['(cities)']
 }
 
-const Info = ({user, dashboard}) => {
+const Info = ({user, dashboard, credits}) => {
   // console.log(user)
   const node = useRef();
   const [edit, setEdit] = useState('')
@@ -88,17 +90,24 @@ const Info = ({user, dashboard}) => {
     if(+quantity > 50){setMessage('For 50+ cards, please contact us.'), setResult('')}
   }
 
-  const updatePlan = () => {
-
+  const updateInfo = async () => {
+    let billing_info = user.transactions[user.transactions.length - 1]
+    try {
+      const transactionResponse = await axios.post(`${API}/payment/update-transaction`, {address: address, address_two: address_two, city: city, state: state, zip: zip, phone: phone, billing_info: billing_info, user: user})
+      window.location.href = `/account/${user.id}?view=info`
+    } catch (error) {
+      console.log(error)
+      if(error) error.response ? setMessage(error.response.date) : setMessage('Error occurred updating info')
+    }
   }
   
   return (
     <div className={`profile-dashboard-info ` + (dashboard == 'info' ? '' : 'hide-on-mobile')}>
       <div className="profile-dashboard-info-title">My Info</div>
-      <div className="profile-dashboard-info-credits"><span>&nbsp;</span> You have {user.credits ? user.credits : 'no'} credits</div>
+      <div className="profile-dashboard-info-credits"><span>&nbsp;</span> You have {credits ? credits : '0'} credits</div>
       {edit == 'info' ?
         <div className="profile-dashboard-info-box">
-          <div className="profile-dashboard-info-box-edit" onClick={() => (setEdit(''), setModal(''))}>Save</div>
+          <div className="profile-dashboard-info-box-edit" onClick={() => (updateInfo(), setEdit(''), setModal(''))}>Save</div>
           <div className="profile-dashboard-info-box-container">
           <div className="profile-dashboard-info-box-address-container">
             <div className="profile-dashboard-info-box-address">

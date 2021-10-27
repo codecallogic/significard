@@ -33,7 +33,7 @@ const Home = ({user, userUpdate}) => {
           <div className="home-header-title">
             Celebrate the moments worth holding on to.
           </div>
-          <div className="home-header-button">
+          <div className="home-header-button" onClick={() => window.location.href = '/account/'}>
             Get Started
           </div>
         </div>

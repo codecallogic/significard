@@ -33,6 +33,7 @@ const Checkout = ({newUser}) => {
   const [recipient, setRecipient] = useState([])
   const [package_price, setPackagePrice] = useState(0)
   const [tax, setTax] = useState(0)
+  const [taxID, setTaxID] = useState('')
   const [total, setTotal] = useState(0)
   const [cardholder, setCardholder] = useState('')
   const [address, setAddress] = useState('')
@@ -124,15 +125,15 @@ const Checkout = ({newUser}) => {
     if(!recipientData.description) return  (window.localStorage.setItem('quiz_question', 'description'), window.location.href = '/quiz')
 
 
-    if(recipientData.package_plan === 'best deal')(setPackagePrice(6.99), setTax(6.99 * .1))
+    if(recipientData.package_plan === 'best deal')(setPackagePrice(6.99))
 
-    if(recipientData.package_plan == 'better deal')(setPackagePrice(9.99), setTax(9.99 * .1))
+    if(recipientData.package_plan == 'better deal')(setPackagePrice(9.99))
 
-    if(recipientData.package_plan == 'good deal')(setPackagePrice(11.99), setTax(11.99 * .1))
+    if(recipientData.package_plan == 'good deal')(setPackagePrice(11.99))
 
-    recipientData.package_plan === 'best deal' ? setTotal((6.99 * recipientData.package_quantity) + (6.99 * recipientData.package_quantity * .1)) : null
-    recipientData.package_plan === 'better deal' ? setTotal((9.99 * recipientData.package_quantity) + (9.99 * recipientData.package_quantity * .1)) : null
-    recipientData.package_plan === 'good deal' ? setTotal((11.99 * recipientData.package_quantity) + (11.99 * recipientData.package_quantity * .1)) : null
+    recipientData.package_plan === 'best deal' ? setTotal((6.99 * recipientData.package_quantity)) : null
+    recipientData.package_plan === 'better deal' ? setTotal((9.99 * recipientData.package_quantity)) : null
+    recipientData.package_plan === 'good deal' ? setTotal((11.99 * recipientData.package_quantity)) : null
 
     let result = null
     if(recipientData.package_quantity <= 4) result = 13.99
@@ -140,8 +141,8 @@ const Checkout = ({newUser}) => {
     if(recipientData.package_quantity > 9) result = 9.99
     if(recipientData.package_quantity > 19) result = 6.99
     
-    if(recipientData.package_plan == 'custom')(setPackagePrice(result), setTax(result * .1))
-    recipientData.package_plan === 'custom' ? setTotal((result * recipientData.package_quantity) + (result * recipientData.package_quantity * .1)) : null
+    if(recipientData.package_plan == 'custom')(setPackagePrice(result))
+    recipientData.package_plan === 'custom' ? setTotal((result * recipientData.package_quantity)): null
 
 
     let delivery = new Date(Date.now() + 12096e5)
@@ -257,7 +258,7 @@ const Checkout = ({newUser}) => {
               <div className="form-group-single-dropdown-list">
                   <div className="form-group-double-dropdown-list-container">
                     {usStates.map( (item, idx) => (
-                      <div className="form-group-double-dropdown-list-item" onClick={(e) => (setState(item.abbreviation), setStateList(false))} key={idx} >{item.name}</div>
+                      <div className="form-group-double-dropdown-list-item" onClick={(e) => (setState(item.abbreviation), setStateList(false), setTax(item.taxRate), setTaxID(item.id))} key={idx} >{item.name}</div>
                     ))
                     }
                   </div>
@@ -265,7 +266,7 @@ const Checkout = ({newUser}) => {
               }
             </div>
             <Elements stripe={stripePromise}>
-              <CheckOutForm user={newUser} amount={total} cardholder={cardholder} address={address} city={city} state={state} zip_code={zip_code} delivery={delivery} package_price={package_price} tax={tax} recipient={recipient} subscription={recipient.subscription}></CheckOutForm>
+              <CheckOutForm user={newUser} amount={(total + (total * tax)).toFixed(2)} cardholder={cardholder} address={address} city={city} state={state} zip_code={zip_code} delivery={delivery} package_price={package_price} tax={tax} recipient={recipient} taxID={taxID} subscription={recipient.subscription}></CheckOutForm>
             </Elements>
           </div>
           <div className="checkout-container-right">
@@ -273,8 +274,8 @@ const Checkout = ({newUser}) => {
             {recipient.mail_to == 'recipient' && <div className="checkout-container-right-ship_to">Ship to {recipient.recipient ? `${recipient.recipient}'s address` : recipient.recipient_other ? `${recipient.recipient_other}'s address`: ''} </div>}
             <div className="checkout-container-right-delivery">📩 <span>Estimated arrival date: {delivery}</span></div>
             <div className="checkout-container-right-price"><span>{recipient.event ? `${recipient.event} (${recipient.package_quantity}x)` : ''}</span><span>{`$ ` + Math.ceil(package_price * 100) / 100}</span></div>
-            <div className="checkout-container-right-tax"><span>Sales Tax</span><span>{`$ ` + (Math.ceil(tax * 100) / 100).toFixed(2)}</span></div>
-            <div className="checkout-container-right-total"><span>Total</span><span>{`$ ` + Math.ceil(total * 100) / 100}</span></div>
+            <div className="checkout-container-right-tax"><span>Sales Tax</span><span>{`% ` + ((tax * 100 / 100).toFixed(4) * 100).toFixed(4)}</span></div>
+            <div className="checkout-container-right-total"><span>Total</span><span>{`$ ` + (total + (total * tax)).toFixed(2)}</span></div>
           </div>
         </div>
         

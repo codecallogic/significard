@@ -964,7 +964,7 @@ const quiz = ({quizState}) => {
             <div className="form-tag-container"></div>
             <div className="quiz-recipient-tags-checkbox"><input type="checkbox" name="unsure" onClick={(e) => (setTimeout(() => {
               quizProgressNav(e,'other')
-            }, 500), dispatch({type: 'UPDATE_TAGS_QUIZ', value: []})
+            }, 500), dispatch({type: 'UPDATE_TAGS_QUIZ', payload: []})
             )}/><span>I'm not sure</span></div>
           </div>
           <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'other')} disabled={quizState.tags ? quizState.tags.length < 1 ? true : false : null}>Next</button><div className="quiz-button-container"></div></div>

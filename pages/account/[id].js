@@ -15,6 +15,7 @@ import 'react-calendar/dist/Calendar.css';
 import {manageTags, manageCardTags} from '../../helpers/forms'
 import Orders from '../../components/user/orders'
 import Info from '../../components/user/info'
+import {useRouter} from 'next/router'
 
 const searchOptionsAddress = {
   componentRestrictions: {country: 'us'},
@@ -26,10 +27,11 @@ const searchOptionsCities = {
   types: ['(cities)']
 }
 
-const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetRecipient, resetState, resetRank, updateRank, removeRank, sortRank, card, editCard, updateCardTags}) => {
+const User = ({params, newUser, recipients, recipient, editRecipient, updateTags, resetRecipient, resetState, resetRank, updateRank, removeRank, sortRank, card, editCard, updateCardTags}) => {
   const myRefs = useRef(null)
   const node = useRef();
   // console.log(recipients)
+  const router = useRouter()
   const [sideNav, setSideNav] = useState('recipients')
   const [recipientID, setRecipient] = useState('')
   const [edit, setEdit] = useState('')
@@ -52,6 +54,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
   const [cardUpdate, setCardUpdate] = useState(false)
   const [cardTagsItem, setCardTagsItem] = useState(null)
   const [dashboard, setDashboard] = useState('')
+  const [credits, setCredits] = useState(newUser.credits)
 
   const handleClickOutside = (event) => {
     if(myRefs.current){
@@ -68,12 +71,13 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
   }, [calendar])
 
   useEffect(() => {
+    if(params) params.view ? setDashboard(params.view) : null
     document.addEventListener("click", handleClickOutside, true);
 
     return () => {
       document.removeEventListener("click", handleClickOutside, true);
     };
-  }, [])
+  }, [router.query.change])
 
   useEffect(() => {
     allRecipients.filter((item) => {
@@ -396,8 +400,9 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
       setEdit('')
       setModal('')
       setCardMenu('empty')
-      setAllRecipients(responseCard.data)
-      responseCard.data.filter((item) => {
+      setCredits(responseCard.data.user.credits)
+      setAllRecipients(responseCard.data.recipients)
+      responseCard.data.recipients.filter((item) => {
         if(item._id == recipientID){
           for(let key in item){
             editRecipient(key, item[key])
@@ -523,7 +528,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
           <Orders></Orders>
         }
         {dashboard == 'info' && 
-          <Info user={newUser} dashboard={dashboard}></Info>
+          <Info user={newUser} dashboard={dashboard} credits={credits}></Info>
         }
         { dashboard == 'profile' && sideNav == 'recipients' &&
         <div className="profile-dashboard-recipients">
@@ -537,7 +542,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
           dashboard == 'profile' && !addNew && recipientID && allRecipients.filter((item) => item._id == recipientID).map((item, idx) =>
             <div key={idx} className="profile-dashboard-recipients-edit">
               <div className="profile-dashboard-recipients-edit-title">
-                <div className="profile-dashboard-recipients-edit-title-credits"><span>&nbsp;</span> You have {newUser.credits ? newUser.credits : 'no'} credits</div>
+                <div className="profile-dashboard-recipients-edit-title-credits"><span>&nbsp;</span> You have {credits ? credits : '0'} credits</div>
                 <div className="profile-dashboard-recipients-edit-title-recipient">{item.recipient ? item.recipient : item.recipient_other}</div>
                 <div className="profile-dashboard-recipients-edit-title-name">{item.name}</div>
                 <div className="profile-dashboard-recipients-edit-title-edit">
@@ -560,7 +565,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
                       <div className="form-group-single-dropdown-menu profile-dashboard-recipients-edit-profile-personality-input">
                         <textarea rows="1" wrap="off" onKeyDown={(e) => e.keyCode == 13 ? e.preventDefault() : null} name="description" placeholder="(Other)" onClick={() => (setInputDropdown('recipient_description'))} value={recipient.description.charAt(0).toUpperCase() + recipient.description.slice(1)} onChange={(e) => editRecipient('description', e.target.value)}></textarea>
                         { input_dropdown == 'recipient_description' &&
-                          <div className="form-group-single-dropdown-menu-list" ref={myRefs}>
+                          <div className="form-group-single-dropdown-menu-list z1000" ref={myRefs}>
                             <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('description', e.target.innerText.charAt(0).toUpperCase() + e.target.innerText.slice(1).toLowerCase()), setInputDropdown(''))}>Life of the party</div>
                             <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('description', e.target.innerText.charAt(0).toUpperCase() + e.target.innerText.slice(1).toLowerCase()), setInputDropdown(''))}>Soft spoken</div>
                             <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('description', e.target.innerText.charAt(0).toUpperCase() + e.target.innerText.slice(1).toLowerCase()), setInputDropdown(''))}>Thoughtful</div>
@@ -580,7 +585,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
                       <div className="form-group-single-dropdown-menu" ref={myRefs}>
                         <textarea rows="1" wrap="off" onKeyDown={(e) => e.keyCode == 13 ? e.preventDefault() : null} name="age" placeholder="(Other)" onClick={() => setInputDropdown('recipient_age')} value={recipient.age} readOnly></textarea>
                         { input_dropdown == 'recipient_age' &&
-                          <div className="form-group-single-dropdown-menu-list">
+                          <div className="form-group-single-dropdown-menu-list" ref={myRefs}>
                             <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('age', e.target.innerText), setInputDropdown(''))}>18-24</div>
                             <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('age', e.target.innerText), setInputDropdown(''))}>25-34</div>
                             <div className="form-group-single-dropdown-menu-list-item" onClick={(e) => (editRecipient('age', e.target.innerText), setInputDropdown(''))}>35-44</div>
@@ -750,13 +755,15 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
                     )
                     )
                     }
-                    <div className="profile-dashboard-recipients-edit-event-container-card-add" onClick={() => (setModal('edit_card_event'), resetState())}>
+                    <div className="profile-dashboard-recipients-edit-event-container-card-add" onClick={() => credits == 0 ? null : (setModal('edit_card_event'), resetState())}>
                       <SVG svg={'plus'}></SVG>
-                      <span>Add your next card here</span>
+                      <span style={{color: credits == 0 ? 'red' : ''}}>{credits == 0 ? 'You do not have enough credits' : 'Add your next card here'}</span>
                     </div>
+                    {credits !== 0 &&
                     <div className="profile-dashboard-recipients-edit-event-container-card-plus_button" onClick={() => (setModal('edit_card_event'), resetState())}>
                       <span><SVG svg={'plus'}></SVG></span>
                     </div>
+                    }
                 </div>
               </div>
             </div>
@@ -765,6 +772,7 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
         {
           addNew && <div className="profile-dashboard-recipients-edit">
             <div className="profile-dashboard-recipients-edit-title">
+              <div className="profile-dashboard-recipients-edit-title-credits"><span>&nbsp;</span> You have {credits ? credits : '0'} credits</div>
               <div className="profile-dashboard-recipients-edit-title-recipient">{recipient.recipient ? recipient.recipient : recipient.recipient_other ? item.recipient_other : 'Recipient'}</div>
               <div className="profile-dashboard-recipients-edit-title-name">{recipient.name ? recipient.name : 'Name'}</div>
               <div className="profile-dashboard-recipients-edit-title-edit">
@@ -946,14 +954,14 @@ const User = ({newUser, recipients, recipient, editRecipient, updateTags, resetR
                       <SVG svg={'plus'}></SVG>
                       <span>Add your next card here</span>
                     </div>
-                    <div className="profile-dashboard-recipients-edit-event-container-card-plus_button" onClick={() => setModal('event')}>
+                    {/* <div className="profile-dashboard-recipients-edit-event-container-card-plus_button" onClick={() => setModal('event')}>
                       <span><SVG svg={'plus'}></SVG></span>
-                    </div>
+                    </div> */}
                   </>
                   }
               </div>
             </div>
-            <button className="form-button mail-button" onClick={() => createRecipient('recipient')}>{loading == 'recipient' ? <div className="loading"><span></span><span></span><span></span></div> : <span>Save Recipient</span>}</button>
+            <button className="form-button mail-button center-button" style={{background: credits == 0 ? 'red' : ''}} onClick={() => credits == 0 ? null : createRecipient('recipient')}>{loading == 'recipient' ? <div className="loading"><span></span><span></span><span></span></div> : <span>{credits == 0 ? 'Not enough credits' : 'Save Recipient'}</span>}</button>
             {message && <div className="form-message-error left">{message}</div>}
           </div>
         }
@@ -1365,6 +1373,12 @@ const mapDispatchToProps = dispatch => {
     sortRank: () => dispatch({type: 'SORT_RANK'}),
     editCard: (name, data) => dispatch({type: 'EDIT_CARD', name: name, value: data}),
     updateCardTags: (data) => dispatch({type: 'UPDATE_CARD_TAGS', value: data})
+  }
+}
+
+User.getInitialProps = ({query}) => {
+  return {
+    params: query
   }
 }
 

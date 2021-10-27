@@ -9,6 +9,7 @@
 
   @media only screen and (max-width: $large-medium) {
     display: block;
+    border-top: 0;
   }
 
   &-sidenav {
@@ -185,15 +186,18 @@
         width: 100%;
         color: white;
         padding: 0;
-        margin: -1rem 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
 
       &-title {
         display: flex;
         align-items: center;
         font-size: 2.2rem;
-        box-sizing: content-box;
-        padding: 1rem 4rem;
+        // box-sizing: content-box;
+        padding: 1rem 3rem;
+        width: 100%;
         margin: 0;
         text-transform: capitalize;
         position: relative;
@@ -329,6 +333,7 @@
 
           @media only screen and (max-width: $large-medium) {
             flex-direction: column;
+            width: 100%;
             padding: 0 5rem;
           }
         }
@@ -351,6 +356,11 @@
             textarea {
               font-family: inherit;
               width: 90% !important;
+
+              @media only screen and (max-width: $large-medium) {
+                width: 100% !important;
+                z-index: 200;
+              }
             }
           }
 
@@ -692,6 +702,14 @@
         padding: 2rem 4rem;
         background-color: $color-light-gray-alt-5;
         position: relative;
+
+        @media only screen and (max-width: $large-medium) {
+          margin: 0 auto;
+          margin-top: 2rem;
+          margin-bottom: 2rem;
+          padding: 2rem 4rem;
+          width: 90%;
+        }
 
         &-title {
           font-size: 1.8rem;
