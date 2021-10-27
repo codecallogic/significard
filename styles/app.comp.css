@@ -382,7 +382,7 @@ body {
   border-radius: 1.2rem;
   box-shadow: 0.2rem 0.1rem 0rem 0rem rgba(0, 0, 0, 0.2);
   align-items: center;
-  z-index: 200;
+  z-index: 2000;
   justify-content: center; }
   .recipient-modal-box {
     width: 100%;
@@ -3262,7 +3262,8 @@ body {
   position: relative; }
   @media only screen and (max-width: 1100px) {
     .profile-dashboard {
-      display: block; } }
+      display: block;
+      border-top: 0; } }
   .profile-dashboard-sidenav-container {
     width: 15%; }
     @media only screen and (max-width: 1100px) {
@@ -3389,13 +3390,15 @@ body {
           width: 100%;
           color: white;
           padding: 0;
-          margin: -1rem 0; } }
+          display: flex;
+          flex-direction: column;
+          align-items: center; } }
       .profile-dashboard-recipients-edit-title {
         display: flex;
         align-items: center;
         font-size: 2.2rem;
-        box-sizing: content-box;
-        padding: 1rem 4rem;
+        padding: 1rem 3rem;
+        width: 100%;
         margin: 0;
         text-transform: capitalize;
         position: relative; }
@@ -3493,6 +3496,7 @@ body {
           @media only screen and (max-width: 1100px) {
             .profile-dashboard-recipients-edit-profile-container {
               flex-direction: column;
+              width: 100%;
               padding: 0 5rem; } }
         @media only screen and (max-width: 1100px) {
           .profile-dashboard-recipients-edit-profile-personality {
@@ -3506,6 +3510,10 @@ body {
         .profile-dashboard-recipients-edit-profile-personality-input textarea {
           font-family: inherit;
           width: 90% !important; }
+          @media only screen and (max-width: 1100px) {
+            .profile-dashboard-recipients-edit-profile-personality-input textarea {
+              width: 100% !important;
+              z-index: 200; } }
         .profile-dashboard-recipients-edit-profile-personality span {
           display: block;
           font-size: 1.8rem; }
@@ -3768,6 +3776,13 @@ body {
         padding: 2rem 4rem;
         background-color: #fafafa;
         position: relative; }
+        @media only screen and (max-width: 1100px) {
+          .profile-dashboard-recipients-edit-event {
+            margin: 0 auto;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            padding: 2rem 4rem;
+            width: 90%; } }
         .profile-dashboard-recipients-edit-event-title {
           font-size: 1.8rem;
           font-weight: 700;
@@ -4267,8 +4282,7 @@ body {
     .form-group-single-dropdown-menu {
       width: 100%;
       height: min-content;
-      position: relative;
-      z-index: 100; }
+      position: relative; }
       .form-group-single-dropdown-menu textarea {
         width: 100%;
         border: none;
@@ -4288,8 +4302,11 @@ body {
         border-bottom-left-radius: 1rem;
         box-shadow: 0rem 1rem 0.5rem 0.2rem rgba(0, 0, 0, 0.2);
         max-height: 30rem;
-        z-index: 100;
+        z-index: 500 !important;
         overflow-y: scroll; }
+        @media only screen and (max-width: 1100px) {
+          .form-group-single-dropdown-menu-list {
+            color: black; } }
         .form-group-single-dropdown-menu-list::-webkit-scrollbar {
           width: 0.3rem;
           height: 0.3rem; }
@@ -4673,3 +4690,10 @@ body {
 
 #address_place_id_checkout {
   display: none; }
+
+.center-button {
+  margin: 0 auto;
+  margin-bottom: 2rem !important; }
+
+.z1000 {
+  z-index: 500 !important; }
