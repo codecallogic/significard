@@ -18,7 +18,7 @@ const searchOptionsCities = {
 }
 
 const Info = ({user, dashboard, credits}) => {
-  console.log(user)
+  // console.log(user)
   const node = useRef();
   const [edit, setEdit] = useState('')
   const [modal, setModal] = useState('')
@@ -120,15 +120,6 @@ const Info = ({user, dashboard, credits}) => {
     setLoading(true)
     try {
       const responseCredits = await axios.post(`${API}/payment/add-credits`, {payment: user.transactions[user.transactions.length - 1], order: {package_plan: updatePlan, subscription: subscription, quantity: planQuantity, price: planPrice}, user: user})
-      setLoading(false)
-      // setQuantity('')
-      // setResult('')
-      // setPlanQuantity('')
-      // setUpdatePlan('')
-      // setPlanPrice('')
-      // setSubscription('')
-      // setModal('')
-      // setError('')
       window.location.href = `/account/${user.id}?view=info`
     } catch (error) {
       console.log(error)
@@ -471,7 +462,7 @@ const Info = ({user, dashboard, credits}) => {
                 </div>
                 <div className="recipient-modal-plan-box-checkout-tax">
                   <span>Sales Tax</span>
-                  <span>{((+user.transactions[user.transactions.length - 1].tax * 10)).toFixed(2)} %</span>
+                  <span>{(((+user.transactions[user.transactions.length - 1].tax).toFixed(4) * 100)).toFixed(2)} %</span>
                 </div>
                 <div className="recipient-modal-plan-box-checkout-total">
                   <span>Total</span>

@@ -1,6 +1,6 @@
 .confirmation {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -76,10 +76,10 @@
 
   &-order {
     &-container {
-      grid-column: 4/8;
-      display: grid;
-      grid-template-columns: 1fr;
-      grid-template-rows: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 0 auto;
       min-width: 85rem;
       height: 100%;
       border: 0.1rem solid $color-light-gray;
@@ -87,17 +87,15 @@
       border-radius: 1.2rem;
 
       @media only screen and (max-width: $wide) {
-        grid-column: 3/8;
+        margin: 0 auto;
         min-width: 85rem;
       }
 
       @media only screen and (max-width: $extra-large) {
-        grid-column: 2/8;
         min-width: 80rem;
       }
 
       @media only screen and (max-width: $large) {
-        grid-column: 1/-1;
         min-width: 0;
         width: 100%;
         border: none;

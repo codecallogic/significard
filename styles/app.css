@@ -3188,8 +3188,8 @@ body {
     color: #0f2e4c; }
 
 .confirmation {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -3248,10 +3248,10 @@ body {
     .confirmation-subtitle span {
       font-weight: 700; }
   .confirmation-order-container {
-    grid-column: 4/8;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
     min-width: 85rem;
     height: 100%;
     border: 0.1rem solid #e5e5e5;
@@ -3259,15 +3259,13 @@ body {
     border-radius: 1.2rem; }
     @media only screen and (max-width: 1500px) {
       .confirmation-order-container {
-        grid-column: 3/8;
+        margin: 0 auto;
         min-width: 85rem; } }
     @media only screen and (max-width: 1200px) {
       .confirmation-order-container {
-        grid-column: 2/8;
         min-width: 80rem; } }
     @media only screen and (max-width: 992px) {
       .confirmation-order-container {
-        grid-column: 1/-1;
         min-width: 0;
         width: 100%;
         border: none; } }
@@ -4834,4 +4832,5 @@ body {
 .w-50 {
   width: 40% !important;
   justify-self: center;
+  align-self: center;
   margin-bottom: 3rem; }
