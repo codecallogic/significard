@@ -30,7 +30,7 @@ const searchOptionsCities = {
 const User = ({params, newUser, recipients, recipient, editRecipient, updateTags, resetRecipient, resetState, resetRank, updateRank, removeRank, sortRank, card, editCard, updateCardTags}) => {
   const myRefs = useRef(null)
   const node = useRef();
-  // console.log(recipients)
+  // console.log(newUser)
   const router = useRouter()
   const [sideNav, setSideNav] = useState('recipients')
   const [recipientID, setRecipient] = useState('')
@@ -525,7 +525,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
           </div>
         </div>
         { dashboard == 'orders' &&
-          <Orders></Orders>
+          <Orders credits={credits}></Orders>
         }
         {dashboard == 'info' && 
           <Info user={newUser} dashboard={dashboard} credits={credits}></Info>

@@ -11,6 +11,22 @@
       align-items: center;
       margin-right: 2rem;
       font-size: 2.2rem;
+      white-space: nowrap;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      @media only screen and (max-width: $large-medium) {
+        margin-top: 3rem;
+        font-size: 1.6rem;
+      }
+
+      &-selected {
+        background-color: rgba(24, 64, 93, 0.1);
+        border-radius: 3.3rem;
+        padding: 0.2rem 2rem;
+      }
 
       img {
         margin-left: 1rem;
@@ -25,7 +41,7 @@
 
     &-item {
       width: 30rem;
-      height: 33rem;
+      height: 35.8rem;
       border: 0.2rem solid #e5e5e5;
       border-radius: 1.2rem;
       padding: 3.6rem 1.9rem;
@@ -39,11 +55,31 @@
         font-family: Sanchez;
       }
 
+      &-event {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 21px;
+        color: #011722;
+        margin-bottom: 1rem;
+      }
+
+      &-delivery {
+        font-size: 2.4rem;
+        line-height: 3.6rem;
+        font-weight: 400;
+        font-family: Sanchez;
+      }
+
       &-date {
         font-family: Roboto;
-        font-weight: 400;
-        font-size: 1.6rem;
-        line-height: 2.1rem;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 21px;
+        color: #011722;
+        margin-bottom: 1rem;
       }
 
       &-image {
@@ -56,12 +92,16 @@
           width: 13.172rem;
           height: 12rem;
           border: 0.2rem solid #e5e5e5;
+          outline: none;
+          object-fit: cover;
         }
 
         &-inside {
           width: 13.172rem;
           height: 12rem;
           border: 0.2rem solid #e5e5e5;
+          outline: none;
+          object-fit: cover;
         }
       }
 

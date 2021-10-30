@@ -6,7 +6,12 @@ const NavUser = ({dashboard, setDashboard, setRecipient, setAddNew}) => {
     <div className="nav-user-container">
       <nav className="nav-user">
         {dashboard !== '' && <div className="nav-user-arrow" onClick={() => (setDashboard(''), document.querySelector('.profile-dashboard-recipients') ? document.querySelector('.profile-dashboard-recipients').classList.remove('hide-on-mobile') : null, setRecipient(''), setAddNew(false))}><SVG svg={'arrow-left-thin'}></SVG></div>}
-        <div className="nav-user-current">Profile</div>
+        <div className="nav-user-current">
+          {dashboard == '' ? 'Profile' : ''}
+          {dashboard == 'profile' ? 'Contacts' : ''}
+          {dashboard == 'info' ? 'My Info' : ''}
+          {dashboard == 'orders' ? 'Orders' : ''}
+        </div>
         <div className="nav-user-menu">
           <input type="checkbox" name="nav-toggle" id="nav-toggle" className="nav-user-menu-checkbox"/>
           <label htmlFor="nav-toggle" className="nav-user-menu-burger"><span className="nav-user-menu-icon"></span></label>

@@ -120,8 +120,7 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
     <>
       <CardElement className="checkout-container-left-form" options={CARD_ELEMENT_OPTIONS} />
       <div className="checkout-container-button-container">
-        <button className="checkout-container-button" disabled={!stripe} onClick={handleCardPayment}>Confirm</button>
-        {loading ? <iframe src="https://giphy.com/embed/sSgvbe1m3n93G" width="30" height="30" frameBorder="0" className="giphy-loading" allowFullScreen></iframe> : null }
+        <button className="checkout-container-button" disabled={!stripe} onClick={handleCardPayment}>{loading ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : 'Confirm'}</button>
       </div>
       {message && <span className="checkout-container-left-message">{message}</span>}
       {success && <span className="checkout-container-left-success"><svg><use xlinkHref="sprite.svg#icon-checkmark"></use></svg>{success}</span>}

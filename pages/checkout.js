@@ -1,7 +1,7 @@
 import Nav from '../components/nav'
 import Footer from '../components/footer'
 import {useEffect, useState} from 'react'
-import withUser from './withUser'
+import withUserQuiz from './withUserQuiz'
 import axios from 'axios'
 import {API} from '../config'
 import {useRouter} from 'next/router'
@@ -106,6 +106,7 @@ const Checkout = ({newUser}) => {
     if(!recipientData.other) return  (window.localStorage.setItem('quiz_question', 'other'), window.location.href = '/quiz')
     if(!recipientData.involvement) return  (window.localStorage.setItem('quiz_question', 'involvement'), window.location.href = '/quiz')
     if(!recipientData.package_plan) return  (window.localStorage.setItem('quiz_question', 'package'), window.location.href = '/quiz')
+    if(!recipientData.subscription) return  (window.localStorage.setItem('quiz_question', 'package'), window.location.href = '/quiz')
     if(!recipientData.package_quantity) return  (window.localStorage.setItem('quiz_question', 'package'), window.location.href = '/quiz')
     if(!recipientData.mail_to) return  (window.localStorage.setItem('quiz_question', 'mail'), window.location.href = '/quiz')
 
@@ -124,16 +125,20 @@ const Checkout = ({newUser}) => {
     }
     if(!recipientData.description) return  (window.localStorage.setItem('quiz_question', 'description'), window.location.href = '/quiz')
 
+    if(recipientData.package_plan == 'best deal')setPackagePrice(6.99)
+    if(recipientData.package_plan == 'best_deal')setPackagePrice(6.99)
+    if(recipientData.package_plan == 'better deal')setPackagePrice(9.99)
+    if(recipientData.package_plan == 'better_deal')setPackagePrice(9.99)
+    if(recipientData.package_plan == 'good deal')setPackagePrice(11.99)
+    if(recipientData.package_plan == 'good_deal')setPackagePrice(11.99)
 
-    if(recipientData.package_plan === 'best deal')(setPackagePrice(6.99))
+    if(recipientData.package_plan === 'best deal')setTotal((6.99 * recipientData.package_quantity))
+    if(recipientData.package_plan === 'best_deal')setTotal((6.99 * recipientData.package_quantity))
 
-    if(recipientData.package_plan == 'better deal')(setPackagePrice(9.99))
-
-    if(recipientData.package_plan == 'good deal')(setPackagePrice(11.99))
-
-    recipientData.package_plan === 'best deal' ? setTotal((6.99 * recipientData.package_quantity)) : null
-    recipientData.package_plan === 'better deal' ? setTotal((9.99 * recipientData.package_quantity)) : null
-    recipientData.package_plan === 'good deal' ? setTotal((11.99 * recipientData.package_quantity)) : null
+    if(recipientData.package_plan === 'better deal')setTotal((9.99 * recipientData.package_quantity))
+    if(recipientData.package_plan === 'better_deal')setTotal((9.99 * recipientData.package_quantity))
+    if(recipientData.package_plan === 'good deal')setTotal((11.99 * recipientData.package_quantity))
+    if(recipientData.package_plan === 'good_deal')setTotal((11.99 * recipientData.package_quantity))
 
     let result = null
     if(recipientData.package_quantity <= 4) result = 13.99
@@ -155,7 +160,7 @@ const Checkout = ({newUser}) => {
 
     setDeliveryDate(`${month} ${day}, ${year}`)
     setRecipient(recipientData)
-
+    console.log(recipientData.subscription)
   }, [])
 
   const handleBillingAutoFill = () => {
@@ -191,6 +196,15 @@ const Checkout = ({newUser}) => {
     }
   }
   
+  const handleTax = (abbr) => {
+    usStates.forEach((item) => {
+      if(item.abbreviation.trim() === abbr.trim()){
+        setTaxID(item.id)
+        setTax(item.taxRate)
+      }
+    })
+  }
+  
   return (
     <>
       <Nav></Nav>
@@ -219,7 +233,7 @@ const Checkout = ({newUser}) => {
                 <input type="text" placeholder="Cardholder Name" value={cardholder} onChange={(e) => setCardholder(e.target.value)} required/>
               </span>
             </div>
-            <PlacesAutocomplete value={address} onChange={(e) => setAddress(e)} onSelect={(e) => (setAddress(e.split(',')[0]), setCity(e.split(',')[1]), setState(e.split(',')[2], handleZipCode(document.getElementById('address_place_id_checkout').value)))} searchOptions={searchOptionsAddress}>
+            <PlacesAutocomplete value={address} onChange={(e) => setAddress(e)} onSelect={(e) => (setAddress(e.split(',')[0]), setCity(e.split(',')[1]), setState(e.split(',')[2], handleZipCode(document.getElementById('address_place_id_checkout').value), handleTax(e.split(',')[2])))} searchOptions={searchOptionsAddress}>
               {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                 <div className="form-group-single mail checkout-group form-autocomplete-container">
                   <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'Address'})} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Address'} required/>
@@ -274,7 +288,7 @@ const Checkout = ({newUser}) => {
             {recipient.mail_to == 'recipient' && <div className="checkout-container-right-ship_to">Ship to {recipient.recipient ? `${recipient.recipient}'s address` : recipient.recipient_other ? `${recipient.recipient_other}'s address`: ''} </div>}
             <div className="checkout-container-right-delivery">📩 <span>Estimated arrival date: {delivery}</span></div>
             <div className="checkout-container-right-price"><span>{recipient.event ? `${recipient.event} (${recipient.package_quantity}x)` : ''}</span><span>{`$ ` + Math.ceil(package_price * 100) / 100}</span></div>
-            <div className="checkout-container-right-tax"><span>Sales Tax</span><span>{`% ` + ((tax * 100 / 100).toFixed(4) * 100).toFixed(4)}</span></div>
+            <div className="checkout-container-right-tax"><span>Sales Tax</span><span>{((tax * 100 / 100).toFixed(4) * 100).toFixed(2) + `% `}</span></div>
             <div className="checkout-container-right-total"><span>Total</span><span>{`$ ` + (total + (total * tax)).toFixed(2)}</span></div>
           </div>
         </div>
@@ -297,4 +311,4 @@ const mapDispatchToProps = dispath => {
  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withUser(Checkout))
+export default connect(mapStateToProps, mapDispatchToProps)(withUserQuiz(Checkout))

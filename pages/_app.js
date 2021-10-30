@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }) {
       <link rel="preconnect" href="https://fonts.gstatic.com"></link>
       <link href="https://fonts.googleapis.com/css2?family=Sanchez&display=swap" rel="stylesheet"></link>
       <script type="text/javascript" src="DragDropTouch.js"></script>
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHrQuxZIoyHk51s2WxFcphYLP3PPPxT80&libraries=places"></script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIXLxwsNZqXveBVpiQzavFdvOrtY8tu5E&libraries=places"></script>
     </Head>
     <Provider store={store}>
       <Component {...pageProps} />

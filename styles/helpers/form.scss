@@ -55,7 +55,10 @@
   &-autocomplete-suggestion {
     font-size: 1.4rem;
     padding: 1rem 1rem;
-    width: 300px;
+    min-width: 300px;
+    max-width: 100%;
+    // width: 300px;
+    color: black;
     z-index: 100;
 
     &_100 {
@@ -70,7 +73,8 @@
     font-size: 1.4rem;
     padding: 1rem 1rem;
     color: white;
-    width: 300px;
+    min-width: 300px;
+    max-width: 100%;
 
     &_100 {
       font-size: 1.4rem;
@@ -531,6 +535,14 @@
         border: 0.1rem solid red !important;
       }
     }
+
+    &-info {
+      font-size: 1.6rem;
+      width: 100%;
+      color: $color-scheme-3-variation-4;
+      margin: 0.5rem 0;
+      text-align: center;
+    }
   }
 }
 
@@ -917,4 +929,10 @@
 
 .z1000 {
   z-index: 500 !important;
+}
+
+.w-50 {
+  width: 40% !important;
+  justify-self: center;
+  margin-bottom: 3rem;
 }

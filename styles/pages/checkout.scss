@@ -275,6 +275,10 @@
 
         button {
           margin-right: 2rem;
+
+          @media only screen and (max-width: $large-medium) {
+            margin-right: 0;
+          }
         }
       }
 

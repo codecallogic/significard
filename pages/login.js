@@ -55,13 +55,13 @@ const Login = ({user, userUpdate, userMessage, userEmail}) => {
       setLoading(false)
       userUpdate(responseLogin.data)
       userEmail(responseLogin.data)
-      if(responseLogin.data.recipients.length > 0){
-        window.location.href = `account/${responseLogin.data._id}`
+      if(responseLogin.data.recipients){
+        responseLogin.data.recipients.length > 0 ? window.location.href = `account/${responseLogin.data._id}` : null
       }else{
         window.location.href = '/quiz'
       }
     } catch (error) {
-      console.log(error.response.data)
+      console.log(error.response)
       if(error) error.response ? userMessage(error.response.data) : userMessage(null)
       setLoading(false)
     }
@@ -74,13 +74,13 @@ const Login = ({user, userUpdate, userMessage, userEmail}) => {
       console.log(responseLogin)
       userEmail(responseLogin.data)
       setLoading(false)
-      if(responseLogin.data.recipients.length > 0){
-        window.location.href = `account/${responseLogin.data._id}`
+      if(responseLogin.data.recipients){
+        responseLogin.data.recipients.length > 0 ? window.location.href = `account/${responseLogin.data._id}` : null
       }else{
         window.location.href = '/quiz'
       }
     } catch (error) {
-      console.log(error.response.data)
+      console.log(error.response)
       if(error) error.response ? userMessage(error.response.data) : userMessage(null)
       setLoading(false)
     }

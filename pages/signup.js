@@ -77,8 +77,8 @@ const SignUp = ({newUser, user, userUpdate, userMessage}) => {
       const responseLogin = await axios.post(`${API}/auth/login`, {user})
       setLoading(false)
       if(responseLogin.data.recipients){
-        if(responseLogin.data.recipients.length > 0){
-          window.location.href = `account/${responseLogin.data._id}`
+        if(responseLogin.data.recipients){
+          responseLogin.data.recipients.length > 0 ? window.location.href = `account/${responseLogin.data._id}` : null
         }else{
           window.location.href = '/quiz'
         }

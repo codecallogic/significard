@@ -8,6 +8,7 @@ import {useEffect} from 'react'
 const Confirmation = ({order}) => {
 
   useEffect(() => {
+    console.log(order)
     window.localStorage.clear();
   }, [])
   
@@ -52,12 +53,12 @@ const Confirmation = ({order}) => {
               Summary
             </div>
             <div className="confirmation-order-summary-billing-event">
-              <span>{order.event} Day</span>
+              <span>{order.event} Day (x{order.package_quantity})</span>
               <span>${order.package_price}</span>
             </div>
             <div className="confirmation-order-summary-billing-tax">
               <span>Sales Tax</span>
-              <span>${(Math.ceil(order.tax * 100) / 100).toFixed(2)}</span>
+              <span>{((order.tax * 100 / 100).toFixed(4) * 100).toFixed(2)} %</span>
             </div>
             <div className="confirmation-order-summary-billing-total">
               <span>Total</span>
@@ -72,6 +73,9 @@ const Confirmation = ({order}) => {
             📩  <span>Estimated arrival date: {order.delivery_date} </span>
             </div>
           </div>
+        </div>
+        <div className="recipient-modal-plan-box-checkout-button w-50">
+          <button onClick={() => window.location.href = `/account/${order.user_id}`}><span>Go to your profile</span></button>
         </div>
         <div className="confirmation-subtitle-mobile"><span>This is the only time you'll need to complete the quiz. For each additional recipient you can add the details right in your profile.</span></div>
       </div>

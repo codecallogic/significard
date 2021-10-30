@@ -18,12 +18,14 @@ const searchOptionsCities = {
 }
 
 const Info = ({user, dashboard, credits}) => {
-  // console.log(user)
+  console.log(user)
   const node = useRef();
   const [edit, setEdit] = useState('')
   const [modal, setModal] = useState('')
+  const [loading, setLoading] = useState(false)
   const [state_list, setStateList] = useState(false)
   const [message, setMessage] = useState('')
+  const [error, setError] = useState('')
   const [address, setAddress] = useState('')
   const [address_two, setAddressTwo] = useState('')
   const [city, setCity] = useState('')
@@ -34,6 +36,11 @@ const Info = ({user, dashboard, credits}) => {
   const [history, setHistory] = useState(false)
   const [quantity, setQuantity] = useState('')
   const [result, setResult] = useState('')
+  const [planQuantity, setPlanQuantity] = useState('')
+  const [updatePlan, setUpdatePlan] = useState('')
+  const [planPrice, setPlanPrice] = useState('')
+  const [subscription, setSubscription] = useState('')
+  const [total, setTotal] = useState('')
 
   const validateIsNumber = (type) => {
     const input = document.getElementById(type)
@@ -70,6 +77,12 @@ const Info = ({user, dashboard, credits}) => {
   }
   
   useEffect(() => {
+    setAddress(user.transactions[user.transactions.length - 1].billing_address)
+    setCity(user.transactions[user.transactions.length - 1].billing_city)
+    setState(user.transactions[user.transactions.length - 1].billing_state)
+    setZip(user.transactions[user.transactions.length - 1].billing_zip)
+    setPhone(user.transactions[user.transactions.length - 1].phone)
+    
     user.transactions.map((item, i) => 
       user.transactions.length - 1 === i ? setPlan(item.package_plan) : setPlan('')
     )
@@ -83,6 +96,8 @@ const Info = ({user, dashboard, credits}) => {
 
   const calculate = () => {
     setMessage('')
+    setPlanQuantity(quantity)
+    setUpdatePlan('custom')
     if(+quantity <= 4) setResult(13.99)
     if(+quantity > 4 ) setResult(11.99)
     if(+quantity > 9) setResult(9.99)
@@ -98,6 +113,27 @@ const Info = ({user, dashboard, credits}) => {
     } catch (error) {
       console.log(error)
       if(error) error.response ? setMessage(error.response.date) : setMessage('Error occurred updating info')
+    }
+  }
+
+  const submitAddCredits = async () => {
+    setLoading(true)
+    try {
+      const responseCredits = await axios.post(`${API}/payment/add-credits`, {payment: user.transactions[user.transactions.length - 1], order: {package_plan: updatePlan, subscription: subscription, quantity: planQuantity, price: planPrice}, user: user})
+      setLoading(false)
+      // setQuantity('')
+      // setResult('')
+      // setPlanQuantity('')
+      // setUpdatePlan('')
+      // setPlanPrice('')
+      // setSubscription('')
+      // setModal('')
+      // setError('')
+      window.location.href = `/account/${user.id}?view=info`
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+      if(error) error.response ? setError(error.response.data) : setError('Error ocurred with purchase, please try again later')
     }
   }
   
@@ -139,7 +175,6 @@ const Info = ({user, dashboard, credits}) => {
           </div>
         </div>
         :
-
         <div className="profile-dashboard-info-box">
           <div className="profile-dashboard-info-box-edit" onClick={() => (setEdit('info'))}>Edit</div>
           <div className="profile-dashboard-info-box-container">
@@ -330,7 +365,7 @@ const Info = ({user, dashboard, credits}) => {
                 <div className="recipient-modal-plan-box-mobile-subtitle">
                   <span>{user.username},</span> find a plan that's right for you
                 </div>
-                <SliderProfile result={result} setresult={setResult} calculate={calculate} quantity={quantity} setQuantity={setQuantity}validateisnumber={validateIsNumber} message={message} setMessage={setMessage} updatePlan={updatePlan}></SliderProfile>
+                <SliderProfile result={result} setresult={setResult} calculate={calculate} quantity={quantity} setQuantity={setQuantity}validateisnumber={validateIsNumber} message={message} setMessage={setMessage} setPlanQuantity={setPlanQuantity} setUpdatePlan={setUpdatePlan}></SliderProfile>
                 <div className="recipient-modal-plan-box-mobile-bulk">
                   For bulk orders <a href="#">Click here</a>
                 </div>
@@ -344,7 +379,7 @@ const Info = ({user, dashboard, credits}) => {
                   </div>
                   <div className="quiz-recipient-package-item-price">$6.99 per card</div>
                   {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-                  <button className="quiz-recipient-package-item-button" onClick={ (e) => (updatePlan('best deal', 20))}>Select</button>
+                  <button className="quiz-recipient-package-item-button" onClick={ (e) => (setPlanQuantity(20), setUpdatePlan('best deal'), setPlanPrice(6.99), setSubscription('price_1Jq0qpAFcPAVZmVLF41sZGrG'), setModal('checkout'))}>Select</button>
                   <div>Free Shipping</div>
                 </div>
                 <div className="quiz-recipient-package-item">
@@ -355,7 +390,7 @@ const Info = ({user, dashboard, credits}) => {
                   </div>
                   <div className="quiz-recipient-package-item-price">$9.99 per card</div>
                   {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-                  <button className="quiz-recipient-package-item-button" onClick={ (e) => (updatePlan('better deal', 10))}>Select</button>
+                  <button className="quiz-recipient-package-item-button" onClick={ (e) => (setPlanQuantity(10), setUpdatePlan('better deal'), setPlanPrice(9.99), setSubscription('price_1Jq0orAFcPAVZmVLvZNwmwWP'), setModal('checkout'))}>Select</button>
                   <div>Free Shipping</div>
                 </div>
                 <div className="quiz-recipient-package-item">
@@ -369,7 +404,7 @@ const Info = ({user, dashboard, credits}) => {
                   </div>
                   <div className="quiz-recipient-package-item-price">$11.99 per card</div>
                   {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-                  <button className="quiz-recipient-package-item-button" onClick={ (e) => (updatePlan('good deal', 5))}>Select</button>
+                  <button className="quiz-recipient-package-item-button" onClick={ (e) => (setPlanQuantity(5), setUpdatePlan('good deal'), setPlanPrice(11.99), setSubscription('price_1Jq0oBAFcPAVZmVLtLUI1icZ'), setModal('checkout'))}>Select</button>
                   <div>Free Shipping</div>
                 </div>
                 <div className="quiz-recipient-package-item">
@@ -384,7 +419,7 @@ const Info = ({user, dashboard, credits}) => {
                   </div>
                   {!result && <button className="quiz-recipient-package-item-button mb-2" onClick={ () => (calculate())}>Calculate</button>
                   }
-                  {result && <button className="quiz-recipient-package-item-button mb-2" onClick={ (e) => (quizProgressNav(e,'mail'))}>Select & Continue</button>
+                  {result && <button className="quiz-recipient-package-item-button mb-2" onClick={ (e) => (setPlanQuantity(quantity), setPlanPrice(result), setUpdatePlan('custom'), setModal('checkout'))}>Select & Continue</button>
                   }
                   {result && <>
                   <div className="quiz-recipient-package-item-price">${result} per card</div>
@@ -406,6 +441,47 @@ const Info = ({user, dashboard, credits}) => {
                   Blank or preselected message inside the card
                 </div>
               </div>
+            </div>
+          </div>
+        }
+        { modal == 'checkout' &&
+          <div className="recipient-modal-plan">
+            <div className="recipient-modal-plan-box">
+              <div className="recipient-modal-plan-box-close" onClick={() => setModal('')}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
+              <div className="quiz-title">Payment Method</div>
+              <div className="recipient-modal-plan-box-mobile">
+                <div className="recipient-modal-plan-box-mobile-title">
+                  Payment Method
+                </div>
+              </div>
+              <div className="recipient-modal-plan-box-checkout">
+                <div className="recipient-modal-plan-box-checkout-title">{updatePlan ? updatePlan : 'none'}
+                </div>
+                <div className="recipient-modal-plan-box-checkout-payment">Payment Info Billing to: <span>VISA XXX-{user.transactions[user.transactions.length - 1] ? `${user.transactions[user.transactions.length - 1].last4}` : '0000'}</span>
+                </div>
+                <div className="recipient-modal-plan-box-checkout-credits">Credits {planQuantity ? planQuantity : '0'}
+                </div>
+                <div className="recipient-modal-plan-box-checkout-cards">
+                  <span>
+                    Cards ({planQuantity}x)
+                  </span>
+                  <span>
+                    ${planPrice ? planPrice : '0'}
+                  </span>
+                </div>
+                <div className="recipient-modal-plan-box-checkout-tax">
+                  <span>Sales Tax</span>
+                  <span>{((+user.transactions[user.transactions.length - 1].tax * 10)).toFixed(2)} %</span>
+                </div>
+                <div className="recipient-modal-plan-box-checkout-total">
+                  <span>Total</span>
+                  <span>{`$ ` + ((+planQuantity * +planPrice) + ((+planQuantity * +planPrice) * +user.transactions[user.transactions.length - 1].tax)).toFixed(2)}</span>
+                </div>
+                <div className="recipient-modal-plan-box-checkout-button">
+                  <button onClick={() => !loading ? submitAddCredits() : null}>{loading ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : <span>Confirm</span>}</button>
+                </div>
+              </div>
+              {error && <span className="form-message-error">{error}</span>}
             </div>
           </div>
         }

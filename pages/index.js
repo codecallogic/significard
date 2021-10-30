@@ -7,11 +7,13 @@ import {API} from '../config'
 import Nav from '../components/nav'
 import Slider from '../components/slider/homepage_slider'
 import Footer from '../components/footer'
+import checkUser from './checkUser'
 
 initializeFirebase()
 
-const Home = ({user, userUpdate}) => {
-  
+const Home = ({loggedIn, user, userUpdate}) => {
+  // console.log(loggedIn)
+
   const signOut = async () => {
     try {
       const responseSignOut = await axios.post(`${API}/auth/logout`)
@@ -24,7 +26,7 @@ const Home = ({user, userUpdate}) => {
   
   return (
     <>
-    <Nav></Nav>
+    <Nav loggedIn={loggedIn}></Nav>
     <div className="home-header">
       {/* <div className="home-header-image" style={{backgroundImage: `url("/media/background/header_1.png")`}}> </div> */}
       <img className="home-header-image" src="/media/homepage/header_1.png" alt="" />
@@ -33,7 +35,7 @@ const Home = ({user, userUpdate}) => {
           <div className="home-header-title">
             Celebrate the moments worth holding on to.
           </div>
-          <div className="home-header-button" onClick={() => window.location.href = '/account/'}>
+          <div className="home-header-button" onClick={() => loggedIn ?window.location.href = `/account/${loggedIn.id}` : window.location.href = '/login'}>
             Get Started
           </div>
         </div>
@@ -68,7 +70,7 @@ const Home = ({user, userUpdate}) => {
           </div>
         </div>
       </div>
-      <div className="home-section_2-button-container"><div className="home-section_2-button">Get Started</div></div>
+      <div className="home-section_2-button-container"><div className="home-section_2-button" onClick={() => loggedIn ?window.location.href = `/account/${loggedIn.id}` : window.location.href = '/login'}>Get Started</div></div>
     </div>
     <div className="home-section_3">
       <Slider></Slider>
@@ -114,7 +116,7 @@ const Home = ({user, userUpdate}) => {
         </div>
       </div>
     </div>
-    <Footer></Footer>
+    <Footer loggedIn={loggedIn}></Footer>
     {/* <div className="home">
       <div>Welcome, {user.userName ? user.userName : user.userEmail}</div>
       {user.userName ? <a className="home-logout" onClick={signOut}>Logout</a> : <a href="/login"> Login</a>}
@@ -135,4 +137,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(checkUser(Home))

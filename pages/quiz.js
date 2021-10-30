@@ -1,6 +1,6 @@
 import Nav from '../components/nav'
 import Footer from '../components/footer'
-import withUser from './withUser'
+import withUserQuiz from './withUserQuiz'
 import Slider from '../components/slider/slider'
 import React, {useState, useEffect, useLayoutEffect, useRef, Fragment} from 'react'
 import {eventsList, stylesList, stylesListDrop, packageList, usStates} from '../utils/quiz'
@@ -423,9 +423,12 @@ const quiz = ({quizState}) => {
     }
 
     if(question == 'package_plan'){
-      if(type == 'good deal') window.localStorage.setItem('subscription', 'price_1JhemBAFcPAVZmVL98ks6pIR')
-      if(type == 'better deal') window.localStorage.setItem('subscription', 'price_1JhetaAFcPAVZmVLvlXGYHwb')
-      if(type == 'best deal') window.localStorage.setItem('subscription', 'price_1JhevMAFcPAVZmVLhGQP6QGE')
+      if(type == 'good deal') window.localStorage.setItem('subscription', 'price_1Jq0oBAFcPAVZmVLtLUI1icZ')
+      if(type == 'good_deal') window.localStorage.setItem('subscription', 'price_1Jq0oBAFcPAVZmVLtLUI1icZ')
+      if(type == 'better deal') window.localStorage.setItem('subscription', 'price_1Jq0orAFcPAVZmVLvZNwmwWP')
+      if(type == 'better_deal') window.localStorage.setItem('subscription', 'price_1Jq0orAFcPAVZmVLvZNwmwWP')
+      if(type == 'best deal') window.localStorage.setItem('subscription', 'price_1Jq0qpAFcPAVZmVLF41sZGrG')
+      if(type == 'best_deal') window.localStorage.setItem('subscription', 'price_1Jq0qpAFcPAVZmVLF41sZGrG')
 
       window.localStorage.setItem(question, type)
       window.localStorage.setItem('package_quantity', quantity)
@@ -939,8 +942,8 @@ const quiz = ({quizState}) => {
             )
             }
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'tags')} disabled={quizState.rank.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
-          {quizState.rank.length >= 1 && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'tags')}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'tags')} disabled={quizState.rank.length < 3 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
+          {quizState.rank.length >= 3 && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'tags')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>
           }
@@ -1377,4 +1380,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(withUser(quiz))
+export default connect(mapStateToProps)(withUserQuiz(quiz))
