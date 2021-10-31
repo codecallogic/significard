@@ -1,11 +1,12 @@
 import Nav from '../components/nav'
+import NavMobile from '../components/navMobile'
 import Footer from '../components/footer'
 import withUser from './withUser'
 import {API} from "../config"
 import axios from 'axios'
 import {useEffect} from 'react'
 
-const Confirmation = ({order}) => {
+const Confirmation = ({newUser, order}) => {
 
   useEffect(() => {
     console.log(order)
@@ -14,7 +15,8 @@ const Confirmation = ({order}) => {
   
   return (
     <>
-    <Nav></Nav>
+    <Nav loggedIn={newUser} color={'white'}></Nav>
+    <NavMobile loggedIn={newUser} color={'white'}></NavMobile>
     <div className="confirmation">
       <div className="confirmation-title"><img src="/media/emojis/partying-face.png" alt="" /></div>
       <div className="confirmation-title">Congrats! Your order is complete.</div>
@@ -86,6 +88,7 @@ const Confirmation = ({order}) => {
 }
 
 Confirmation.getInitialProps = async ({query}) => {
+  console.log(query)
   try {
     const responseSaveCard = await axios.post(`${API}/payment/save-card`, {future_use: query.id, id: query.transaction})
   } catch (error) {

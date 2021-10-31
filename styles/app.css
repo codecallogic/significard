@@ -1124,7 +1124,7 @@ body {
       height: 0.2rem;
       background-color: #0f2e4c;
       display: inline-block;
-      z-index: 100 !important; }
+      z-index: 4500 !important; }
     .nav-mobile-menu-icon::before, .nav-mobile-menu-icon::after {
       content: '';
       position: absolute;
@@ -1168,14 +1168,14 @@ body {
     position: fixed;
     transform: scale(80);
     background-image: radial-gradient(#0f2e4c, #0f2e4c);
-    z-index: 50 !important; }
+    z-index: 3000 !important; }
   .nav-mobile-list {
     height: 100vh;
     width: 100%;
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 60;
+    z-index: 4000;
     opacity: 0;
     display: flex;
     align-items: center;

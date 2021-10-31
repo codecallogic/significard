@@ -54,7 +54,7 @@ const withUser = Page => {
         //   recipients
         // }
         context.res.writeHead(302, {
-          Location: '/'
+          Location: '/login'
         });
         context.res.end();
       }else{

@@ -16,7 +16,7 @@ const NavUser = ({loggedIn, color}) => {
               <li className="nav-mobile-list-items-item"><a className="nav-mobile-list-items-link" href="/">Pricing</a></li>
               <li className="nav-mobile-list-items-item"><a className="nav-mobile-list-items-link" href="/">About</a></li>
               <li className="nav-mobile-list-items-item"><a className="nav-mobile-list-items-link" href="/">FAQ</a></li>
-              <li className="nav-mobile-list-items-item"><a  className="nav-mobile-list-items-link" href="/">Account</a></li>
+              <li className="nav-mobile-list-items-item"><a  className="nav-mobile-list-items-link" href="#" onClick={() => loggedIn ? window.location.href = `/account/${loggedIn.id}` : window.location.href = '/login'}>Account</a></li>
             </ul>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import Nav from '../components/nav'
+import NavMobile from '../components/navMobile'
 import Footer from '../components/footer'
 import {useEffect, useState} from 'react'
 import withUserQuiz from './withUserQuiz'
@@ -207,7 +208,8 @@ const Checkout = ({newUser}) => {
   
   return (
     <>
-      <Nav></Nav>
+      <Nav loggedIn={newUser} color={'white'}></Nav>
+      <NavMobile loggedIn={newUser} color={'white'}></NavMobile>
       <div className="checkout">
         <div className="checkout-back" onClick={(e) => quizProgressNav(e, 'message')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>

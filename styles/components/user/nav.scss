@@ -282,7 +282,7 @@
         height: 0.2rem;
         background-color: $color-scheme-3;
         display: inline-block;
-        z-index: 100 !important;
+        z-index: 4500 !important;
       }
 
       &::before,
@@ -349,7 +349,7 @@
       position: fixed;
       transform: scale(80);
       background-image: radial-gradient($color-scheme-3, $color-scheme-3);
-      z-index: 50 !important;
+      z-index: 3000 !important;
     }
   }
 
@@ -359,7 +359,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 60;
+    z-index: 4000;
     opacity: 0;
     display: flex;
     align-items: center;
