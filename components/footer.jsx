@@ -1,3 +1,4 @@
+import SVG from '../files/svgs'
 
 const Footer = ({}) => {
   
@@ -20,11 +21,11 @@ const Footer = ({}) => {
       <div className="footer-right-container">
         <h1 className="footer-right-heading">Join the Fam!</h1>
         <div className="footer-right-icons">
-          <svg><use xlinkHref="sprite.svg#icon-facebook-square"></use></svg>
-          <svg><use xlinkHref="sprite.svg#icon-instagram"></use></svg>
-          <svg><use xlinkHref="sprite.svg#icon-twitter"></use></svg>
-          <svg><use xlinkHref="sprite.svg#icon-linkedin-square"></use></svg>
-          <svg><use xlinkHref="sprite.svg#icon-pinterest-p"></use></svg>
+          <SVG svg={'facebook'}></SVG>
+          <SVG svg={'instagram'}></SVG>
+          <SVG svg={'twitter'}></SVG>
+          <SVG svg={'linkedin'}></SVG>
+          <SVG svg={'pinterest'}></SVG>
         </div>
       </div>
     </div>
