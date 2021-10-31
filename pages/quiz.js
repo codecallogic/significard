@@ -1,4 +1,5 @@
 import Nav from '../components/nav'
+import NavMobile from '../components/navMobile'
 import Footer from '../components/footer'
 import withUserQuiz from './withUserQuiz'
 import Slider from '../components/slider/slider'
@@ -27,7 +28,7 @@ const searchOptionsCities = {
   types: ['(cities)']
 }
 
-const quiz = ({quizState}) => {
+const quiz = ({newUser, quizState}) => {
   const dispatch = useDispatch()
   const router = useRouter()
   const node = useRef();
@@ -702,7 +703,8 @@ const quiz = ({quizState}) => {
   return (
     
     <>
-      <Nav></Nav>
+      <Nav loggedIn={newUser} color={'white'}></Nav>
+      <NavMobile loggedIn={newUser} color={'white'}></NavMobile>
       <div className="quiz">
         {quiz == 'recipient' && <>
           <div className="quiz-title">Who are we sending a card to?</div>

@@ -484,7 +484,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
   return (
     <>
       <NavMobile dashboard={dashboard} setDashboard={setDashboard} setRecipient={setRecipient} setAddNew={setAddNew}></NavMobile>
-      <NavDesktop></NavDesktop>
+      <NavDesktop loggedIn={newUser}></NavDesktop>
       <div className="profile-dashboard">
         <div className={`profile-dashboard-sidenav-container ` + (dashboard !== '' ? 'hide-on-mobile' : '')}>
           <div className="profile-dashboard-sidenav-item-container">
@@ -755,15 +755,13 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                     )
                     )
                     }
-                    <div className="profile-dashboard-recipients-edit-event-container-card-add" onClick={() => credits == 0 ? null : (setModal('edit_card_event'), resetState())}>
+                    <div className="profile-dashboard-recipients-edit-event-container-card-add" style={{cursor: credits == 0 ? 'not-allowed' : 'pointer'}} onClick={() => credits == 0 ? null : (setModal('edit_card_event'), resetState())}>
                       <SVG svg={'plus'}></SVG>
-                      <span style={{color: credits == 0 ? 'red' : ''}}>{credits == 0 ? 'You do not have enough credits' : 'Add your next card here'}</span>
+                      <span>{credits == 0 ? 'You do not have enough credits' : 'Add your next card here'}</span>
                     </div>
-                    {credits !== 0 &&
-                    <div className="profile-dashboard-recipients-edit-event-container-card-plus_button" onClick={() => (setModal('edit_card_event'), resetState())}>
+                    <div className="profile-dashboard-recipients-edit-event-container-card-plus_button" style={{cursor: credits == 0 ? 'not-allowed' : 'pointer'}} onClick={() => credits == 0 ? null : (setModal('edit_card_event'), resetState())}>
                       <span><SVG svg={'plus'}></SVG></span>
                     </div>
-                    }
                 </div>
               </div>
             </div>
@@ -961,7 +959,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                   }
               </div>
             </div>
-            <button className="form-button mail-button center-button" style={{background: credits == 0 ? 'red' : ''}} onClick={() => credits == 0 ? null : createRecipient('recipient')}>{loading == 'recipient' ? <div className="loading"><span></span><span></span><span></span></div> : <span>{credits == 0 ? 'Not enough credits' : 'Save Recipient'}</span>}</button>
+            <button className="form-button mail-button center-button" style={{cursor: credits == 0 ? 'not-allowed' : 'pointer'}} onClick={() => credits == 0 ? null : createRecipient('recipient')}>{loading == 'recipient' ? <div className="loading"><span></span><span></span><span></span></div> : <span>{credits == 0 ? 'Not enough credits' : 'Save Recipient'}</span>}</button>
             {message && <div className="form-message-error left">{message}</div>}
           </div>
         }

@@ -5,6 +5,7 @@ import {initializeFirebase} from '../helpers/firebase'
 import axios from 'axios'
 import {API} from '../config'
 import Nav from '../components/nav'
+import NavMobile from '../components/navMobile'
 import Slider from '../components/slider/homepage_slider'
 import Footer from '../components/footer'
 import checkUser from './checkUser'
@@ -26,7 +27,8 @@ const Home = ({loggedIn, user, userUpdate}) => {
   
   return (
     <>
-    <Nav loggedIn={loggedIn}></Nav>
+    <Nav loggedIn={loggedIn} color={'#DBF667'}></Nav>
+    <NavMobile loggedIn={loggedIn} color={'#DBF667'}></NavMobile>
     <div className="home-header">
       {/* <div className="home-header-image" style={{backgroundImage: `url("/media/background/header_1.png")`}}> </div> */}
       <img className="home-header-image" src="/media/homepage/header_1.png" alt="" />
@@ -35,7 +37,7 @@ const Home = ({loggedIn, user, userUpdate}) => {
           <div className="home-header-title">
             Celebrate the moments worth holding on to.
           </div>
-          <div className="home-header-button" onClick={() => loggedIn ?window.location.href = `/account/${loggedIn.id}` : window.location.href = '/login'}>
+          <div className="home-header-button" onClick={() => loggedIn ?window.location.href = `/account/${loggedIn.id}` : window.location.href = '/quiz'}>
             Get Started
           </div>
         </div>
@@ -70,7 +72,7 @@ const Home = ({loggedIn, user, userUpdate}) => {
           </div>
         </div>
       </div>
-      <div className="home-section_2-button-container"><div className="home-section_2-button" onClick={() => loggedIn ?window.location.href = `/account/${loggedIn.id}` : window.location.href = '/login'}>Get Started</div></div>
+      <div className="home-section_2-button-container"><div className="home-section_2-button" onClick={() => loggedIn ?window.location.href = `/account/${loggedIn.id}` : window.location.href = '/quiz'}>Get Started</div></div>
     </div>
     <div className="home-section_3">
       <Slider></Slider>

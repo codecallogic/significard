@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react'
 import Nav from '../components/nav'
+import NavMobile from '../components/navMobile'
 import Footer from '../components/footer'
 import firebase from 'firebase'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
@@ -77,7 +78,7 @@ const SignUp = ({newUser, user, userUpdate, userMessage}) => {
       const responseLogin = await axios.post(`${API}/auth/login`, {user})
       setLoading(false)
       if(responseLogin.data.recipients){
-        if(responseLogin.data.recipients){
+        if(responseLogin.data.recipients[0]){
           responseLogin.data.recipients.length > 0 ? window.location.href = `account/${responseLogin.data._id}` : null
         }else{
           window.location.href = '/quiz'
@@ -109,7 +110,8 @@ const SignUp = ({newUser, user, userUpdate, userMessage}) => {
 
   return (
     <>
-    <Nav></Nav>
+    <Nav loggedIn={user}></Nav>
+    <NavMobile loggedIn={user}></NavMobile>
     <div className="signup-container">
     <div className="signup">
       <h1 className="signup-heading">Let's set up your account:</h1>
