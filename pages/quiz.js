@@ -1343,7 +1343,7 @@ const quiz = ({quizState}) => {
                   <textarea className="w-4" rows="5" value={quizState.message == 'blank' || quizState.message == 'message_options' ? '' : quizState.message} onChange={(e) => (handleChange('message', e, null, e.target.value), document.getElementsByName('message_blank')[0].checked = false, document.getElementsByName('message_textarea_blank')[0].checked = false)}></textarea>
                   <div className="checkbox_2"><input type="checkbox" name="message_blank" onChange={(e) => (handleChange('message', e, null, 'blank'), document.getElementsByName('message_textarea_blank')[0].checked = false)}/><span>Leave it blank</span></div>
                   <div className="checkbox_2 w-4 info-popup"><input type="checkbox" name="message_textarea_blank" onClick={(e) => (handleChange('message', e, null, 'message_options'), document.getElementsByName('message_blank')[0].checked = false)}/>
-                    <span>Give me message options for $2.00</span>
+                    <span className="checkbox_2-message">Give me message options for $2.00</span>
                     <div className="quiz-recipient-package-description-text-bubble">
                       <svg onMouseOver={(e) => showTooltip(e, 0)} onMouseLeave={(e) => hideTooltip(e, 0)}><use xlinkHref="sprite.svg#icon-information"></use></svg>
                       <div className="quiz-recipient-package-description-text-bubble-tooltip">
@@ -1360,7 +1360,7 @@ const quiz = ({quizState}) => {
               <div className="checkbox_2 center show-on-mobile"><input type="checkbox"/><span>Not sure yet, ask me later</span></div>
             </div>
           </div>
-          <div className="checkbox_2 center hide-on-mobile"><input id="message_unsure" type="checkbox" onClick={(e) => e.target.checked ? (window.localStorage.setItem('message_later', 'not_sure'), resetMessage(), setMessageLater(false)) : (window.localStorage.removeItem('message_later'), setMessageLater(true))}/><span>Not sure yet, ask me later</span></div>
+          <div className="checkbox_2 center hide-on-mobile"><input id="message_unsure" type="checkbox" onClick={(e) => e.target.checked ? (window.localStorage.setItem('message_later', 'not_sure'), resetMessage(), setMessageLater(false)) : (window.localStorage.removeItem('message_later'), setMessageLater(false))}/><span>Not sure yet, ask me later</span></div>
           <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => window.location.href = '/checkout'} disabled={message_later}>Continue</button><div className="quiz-button-container"></div></div>
           {/* {handleFormProgressButtons('message') && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'description')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>

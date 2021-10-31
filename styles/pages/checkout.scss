@@ -131,6 +131,7 @@
 
       @media only screen and (max-width: $large) {
         width: 100%;
+        padding: 0 2rem;
       }
 
       &-title {
@@ -181,7 +182,7 @@
       @media only screen and (max-width: $large) {
         margin-left: 0;
         width: 100%;
-        padding: 4rem 0rem;
+        padding: 4rem 2rem;
         border: none;
         height: 100%;
       }

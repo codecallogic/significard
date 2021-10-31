@@ -67,7 +67,7 @@ const Confirmation = ({order}) => {
           </div>
           <div className="confirmation-order-summary-package">
             <div className="confirmation-order-summary-package-title">
-              Package: {order.package_plan}
+              Package: {order.package_plan.replace(/_/g, ' ')}
             </div>
             <div className="confirmation-order-summary-package-delivery">
             📩  <span>Estimated arrival date: {order.delivery_date} </span>

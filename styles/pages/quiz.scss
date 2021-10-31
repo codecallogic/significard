@@ -1682,12 +1682,16 @@
   border-radius: 1.2rem;
   background-color: white !important;
   z-index: 2000 !important;
+  font-size: 1.8rem;
 
   @media only screen and (max-width: $small) {
     min-width: 300px !important;
     background-color: white !important;
     z-index: 1000 !important;
   }
+}
+.react-calendar__navigation__label__labelText {
+  font-size: 1.8rem;
 }
 
 .react-calendar__navigation {

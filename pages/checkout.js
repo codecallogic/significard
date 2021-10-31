@@ -284,7 +284,7 @@ const Checkout = ({newUser}) => {
             </Elements>
           </div>
           <div className="checkout-container-right">
-            <div className="checkout-container-right-package">Package: {recipient.package_plan ? recipient.package_plan : ''} </div>
+            <div className="checkout-container-right-package">Package: {recipient.package_plan ? recipient.package_plan.replace(/_/g, ' ') : ''} </div>
             {recipient.mail_to == 'recipient' && <div className="checkout-container-right-ship_to">Ship to {recipient.recipient ? `${recipient.recipient}'s address` : recipient.recipient_other ? `${recipient.recipient_other}'s address`: ''} </div>}
             <div className="checkout-container-right-delivery">📩 <span>Estimated arrival date: {delivery}</span></div>
             <div className="checkout-container-right-price"><span>{recipient.event ? `${recipient.event} (${recipient.package_quantity}x)` : ''}</span><span>{`$ ` + Math.ceil(package_price * 100) / 100}</span></div>

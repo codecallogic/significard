@@ -98,10 +98,10 @@ const Info = ({user, dashboard, credits}) => {
     setMessage('')
     setPlanQuantity(quantity)
     setUpdatePlan('custom')
-    if(+quantity <= 4) setResult(13.99)
-    if(+quantity > 4 ) setResult(11.99)
-    if(+quantity > 9) setResult(9.99)
-    if(+quantity > 19) setResult(6.99)
+    if(+quantity <= 4){setResult(13.99), setPlanPrice(13.99)}
+    if(+quantity > 4 ){setResult(11.99), setPlanPrice(11.99)}
+    if(+quantity > 9){setResult(9.99), setPlanPrice(9.99)}
+    if(+quantity > 19){setResult(6.99), setPlanPrice(6.99)}
     if(+quantity > 50){setMessage('For 50+ cards, please contact us.'), setResult('')}
   }
 
@@ -224,7 +224,7 @@ const Info = ({user, dashboard, credits}) => {
             {
               user.transactions.map((item, i) => 
                 user.transactions.length - 1 === i ? 
-                  <div key={i}>{item.package_plan ? item.package_plan !== 'custom' ? `Standard Annual - ${item.package_plan}` : `Custom`: null} </div>
+                  <div key={i}>{item.package_plan ? item.package_plan !== 'custom' ? `Standard Annual - ${item.package_plan.replace(/_/g, ' ')}` : `Custom`: null} </div>
                 : 
                 null
               )
@@ -252,7 +252,7 @@ const Info = ({user, dashboard, credits}) => {
                 <div className="profile-dashboard-info-box-history-list-transactions">
                   <span>{parseDateCreated(item.createdAt)}</span>
                   <span>{item.order}</span>
-                  <span>{item.package_plan}</span>
+                  <span>{item.package_plan.replace(/_/g, ' ')}</span>
                   <span>${item.amount}</span>
                 </div>
               )
@@ -356,7 +356,7 @@ const Info = ({user, dashboard, credits}) => {
                 <div className="recipient-modal-plan-box-mobile-subtitle">
                   <span>{user.username},</span> find a plan that's right for you
                 </div>
-                <SliderProfile result={result} setresult={setResult} calculate={calculate} quantity={quantity} setQuantity={setQuantity}validateisnumber={validateIsNumber} message={message} setMessage={setMessage} setPlanQuantity={setPlanQuantity} setUpdatePlan={setUpdatePlan}></SliderProfile>
+                <SliderProfile result={result} setresult={setResult} calculate={calculate} quantity={quantity} setQuantity={setQuantity} validateisnumber={validateIsNumber} message={message} setMessage={setMessage} setPlanQuantity={setPlanQuantity} setUpdatePlan={setUpdatePlan} setPlanPrice={setPlanPrice} setSubscription={setSubscription} setModal={setModal}></SliderProfile>
                 <div className="recipient-modal-plan-box-mobile-bulk">
                   For bulk orders <a href="#">Click here</a>
                 </div>

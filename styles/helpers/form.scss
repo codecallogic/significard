@@ -658,6 +658,13 @@
       font-size: 1rem;
     }
   }
+
+  &-message {
+    @media only screen and (max-width: $small) {
+      font-size: 1rem;
+      text-align: left;
+    }
+  }
 }
 
 .w-4 {
@@ -726,7 +733,7 @@
 }
 
 .hide-on-mobile {
-  @media only screen and (max-width: $large) {
+  @media only screen and (max-width: $large-medium) {
     display: none;
   }
 }
@@ -936,4 +943,8 @@
   justify-self: center;
   align-self: center;
   margin-bottom: 3rem;
+
+  @media only screen and (max-width: $small) {
+    width: 100% !important;
+  }
 }

@@ -25,7 +25,7 @@ body {
   display: none;
   padding: 1.5rem 3rem;
   justify-content: space-between; }
-  @media only screen and (min-width: 1100px) {
+  @media only screen and (min-width: 1101px) {
     .nav {
       display: flex;
       align-items: center; } }
@@ -549,6 +549,10 @@ body {
         .recipient-modal-plan-box-checkout {
           margin-top: 3rem;
           color: black; } }
+      @media only screen and (max-width: 768px) {
+        .recipient-modal-plan-box-checkout {
+          width: 100%;
+          margin-bottom: 25rem; } }
       .recipient-modal-plan-box-checkout-title {
         font-size: 2.4rem;
         font-weight: 700;
@@ -2787,12 +2791,16 @@ body {
   min-width: 400px !important;
   border-radius: 1.2rem;
   background-color: white !important;
-  z-index: 2000 !important; }
+  z-index: 2000 !important;
+  font-size: 1.8rem; }
   @media only screen and (max-width: 600px) {
     .react-calendar {
       min-width: 300px !important;
       background-color: white !important;
       z-index: 1000 !important; } }
+
+.react-calendar__navigation__label__labelText {
+  font-size: 1.8rem; }
 
 .react-calendar__navigation {
   border-radius: 1.2rem; }
@@ -2932,7 +2940,8 @@ body {
       width: 410px; }
       @media only screen and (max-width: 992px) {
         .checkout-container-left {
-          width: 100%; } }
+          width: 100%;
+          padding: 0 2rem; } }
       .checkout-container-left-title {
         font-size: 2.4rem;
         color: #011722;
@@ -2968,7 +2977,7 @@ body {
         .checkout-container-right {
           margin-left: 0;
           width: 100%;
-          padding: 4rem 0rem;
+          padding: 4rem 2rem;
           border: none;
           height: 100%; } }
       .checkout-container-right-package {
@@ -4621,6 +4630,10 @@ body {
     @media only screen and (max-width: 350px) {
       .checkbox_2 span {
         font-size: 1rem; } }
+  @media only screen and (max-width: 600px) {
+    .checkbox_2-message {
+      font-size: 1rem;
+      text-align: left; } }
 
 .w-4 {
   width: 100% !important; }
@@ -4672,7 +4685,7 @@ body {
       margin-top: 0 !important;
       display: block; } }
 
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 1100px) {
   .hide-on-mobile {
     display: none; } }
 
@@ -4834,3 +4847,6 @@ body {
   justify-self: center;
   align-self: center;
   margin-bottom: 3rem; }
+  @media only screen and (max-width: 600px) {
+    .w-50 {
+      width: 100% !important; } }
