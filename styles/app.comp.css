@@ -63,13 +63,19 @@ body {
   padding: 5rem 3rem; }
   @media only screen and (max-width: 992px) {
     .footer {
+      padding: 5rem 0.5rem;
+      margin: 3rem 1rem; } }
+  @media only screen and (max-width: 800px) {
+    .footer {
       display: flex;
-      flex-direction: column; } }
+      flex-direction: column;
+      margin: 3rem 3rem;
+      padding: 5rem 2rem; } }
   .footer-left-container {
     display: flex;
     justify-content: space-between;
     flex-grow: 0.5; }
-    @media only screen and (max-width: 992px) {
+    @media only screen and (max-width: 800px) {
       .footer-left-container {
         display: flex;
         flex-direction: column; } }
@@ -78,7 +84,7 @@ body {
     font-size: 4rem;
     font-style: normal;
     font-weight: 400; }
-    @media only screen and (max-width: 992px) {
+    @media only screen and (max-width: 800px) {
       .footer-left-logo {
         font-size: 3.6rem;
         line-height: 4.6rem;
@@ -86,13 +92,13 @@ body {
   .footer-left-list-heading {
     font-size: 24px;
     font-weight: 500; }
-    @media only screen and (max-width: 992px) {
+    @media only screen and (max-width: 800px) {
       .footer-left-list-heading {
         display: none; } }
   .footer-left-list-link {
     list-style-type: none;
     font-size: 22px; }
-    @media only screen and (max-width: 992px) {
+    @media only screen and (max-width: 800px) {
       .footer-left-list-link {
         font-size: 1.8rem;
         line-height: 2.1rem;
@@ -4249,6 +4255,150 @@ body {
               fill: black;
               border-radius: 50%;
               border: 0.1rem solid black; }
+
+.aboutus {
+  min-height: 75rem;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+  @media only screen and (max-width: 768px) {
+    .aboutus {
+      width: 100%; } }
+  .aboutus-title {
+    font-size: 4rem;
+    font-family: Sanchez;
+    font-weight: 400;
+    line-height: 5.1rem;
+    margin-bottom: 2rem; }
+  .aboutus-description {
+    min-width: 59.7rem;
+    max-width: 59.7rem;
+    font-size: 1.8rem;
+    font-weight: 400;
+    font-family: Roboto;
+    line-height: 2.1rem;
+    margin-bottom: 10rem; }
+    @media only screen and (max-width: 768px) {
+      .aboutus-description {
+        min-width: 100%;
+        padding: 0 5rem; } }
+    .aboutus-description span {
+      font-weight: 700; }
+  .aboutus-team {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; }
+    @media only screen and (max-width: 768px) {
+      .aboutus-team {
+        flex-direction: column; } }
+    .aboutus-team-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-right: 3rem; }
+      .aboutus-team-item img {
+        border-radius: 50%;
+        margin-bottom: 1.5rem; }
+      .aboutus-team-item-name {
+        font-size: 2.2rem;
+        line-height: 2.6rem;
+        text-align: center; }
+      .aboutus-team-item-title {
+        font-size: 1.8rem;
+        line-height: 2.1rem;
+        color: #39525f;
+        text-align: center;
+        margin-bottom: 1.5rem; }
+      .aboutus-team-item-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 0.2rem solid #18405d;
+        border-radius: 1.2rem;
+        width: 19rem;
+        height: 5.2rem;
+        font-size: 1.8rem;
+        line-height: 2.1rem;
+        color: #18405d;
+        margin-bottom: 6rem; }
+
+.faq {
+  min-height: 75rem;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; }
+  .faq-title {
+    font-size: 4rem;
+    font-weight: 400;
+    font-family: Sanchez;
+    line-height: 5.1rem;
+    margin-bottom: 6rem; }
+    @media only screen and (max-width: 768px) {
+      .faq-title {
+        font-size: 3.2rem; } }
+    @media only screen and (max-width: 600px) {
+      .faq-title {
+        font-size: 1.8rem; } }
+    @media only screen and (max-width: 350px) {
+      .faq-title {
+        font-size: 1.6rem; } }
+  .faq-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0 25rem; }
+    @media only screen and (max-width: 1500px) {
+      .faq-container {
+        padding: 0 22rem; } }
+    @media only screen and (max-width: 1350px) {
+      .faq-container {
+        padding: 0 16rem; } }
+    @media only screen and (max-width: 1200px) {
+      .faq-container {
+        padding: 0 10rem; } }
+    @media only screen and (max-width: 1100px) {
+      .faq-container {
+        padding: 0 5rem; } }
+  .faq-questions {
+    width: 100%; }
+    .faq-questions-item {
+      padding: 2rem 0;
+      border-top: 1px solid #e5e5e5;
+      border-bottom: 1px solid #e5e5e5; }
+      .faq-questions-item-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%; }
+        .faq-questions-item-title div {
+          font-size: 2.2rem;
+          font-weight: 700 !important; }
+          @media only screen and (max-width: 768px) {
+            .faq-questions-item-title div {
+              font-size: 1.8rem; } }
+          @media only screen and (max-width: 600px) {
+            .faq-questions-item-title div {
+              font-size: 1.6rem; } }
+        .faq-questions-item-title svg {
+          width: 2.5rem !important;
+          height: 2.5rem !important; }
+        .faq-questions-item-title:hover {
+          cursor: pointer; }
+      .faq-questions-item-description {
+        margin-top: 2rem;
+        font-size: 1.6rem;
+        line-height: 1.8rem; }
+  .faq-images {
+    display: flex;
+    flex-direction: column;
+    margin: 0 4rem; }
+    @media only screen and (max-width: 992px) {
+      .faq-images {
+        display: none; } }
 
 .giphy-loading {
   margin: 1rem 0 !important; }
