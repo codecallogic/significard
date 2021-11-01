@@ -483,7 +483,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
   
   return (
     <>
-      <NavMobile dashboard={dashboard} setDashboard={setDashboard} setRecipient={setRecipient} setAddNew={setAddNew}></NavMobile>
+      <NavMobile loggedIn={newUser} dashboard={dashboard} setDashboard={setDashboard} setRecipient={setRecipient} setAddNew={setAddNew}></NavMobile>
       <NavDesktop loggedIn={newUser}></NavDesktop>
       <div className="profile-dashboard">
         <div className={`profile-dashboard-sidenav-container ` + (dashboard !== '' ? 'hide-on-mobile' : '')}>

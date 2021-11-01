@@ -186,6 +186,20 @@ const SVGs = ({svg, classprop}) => {
         </svg>
         break;
 
+      case 'add':
+        return <svg version="1.1" className={classprop} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <title>Add</title>
+        <path d="M18.984 12.984h-6v6h-1.969v-6h-6v-1.969h6v-6h1.969v6h6v1.969z"></path>
+        </svg>
+        break;
+
+      case 'minus':
+        return <svg version="1.1" className={classprop} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+        <title>Minus</title>
+        <path d="M16 10c0 0.553-0.048 1-0.601 1h-10.798c-0.552 0-0.601-0.447-0.601-1s0.049-1 0.601-1h10.799c0.552 0 0.6 0.447 0.6 1z"></path>
+        </svg>
+        break;
+
       default:
         break;
     }

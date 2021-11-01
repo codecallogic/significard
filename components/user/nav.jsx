@@ -1,6 +1,6 @@
 import SVG from '../../files/svgs'
 
-const NavUser = ({dashboard, setDashboard, setRecipient, setAddNew}) => {
+const NavUser = ({loggedIn, dashboard, setDashboard, setRecipient, setAddNew}) => {
   
   return (
     <div className="nav-user-container">
@@ -20,9 +20,9 @@ const NavUser = ({dashboard, setDashboard, setRecipient, setAddNew}) => {
             <ul className="nav-user-list-items">
               <li className="nav-user-list-items-item"><a className="nav-user-list-items-link" href="/">Home</a></li>
               <li className="nav-user-list-items-item"><a className="nav-user-list-items-link" href="/">Pricing</a></li>
-              <li className="nav-user-list-items-item"><a className="nav-user-list-items-link" href="/">About</a></li>
-              <li className="nav-user-list-items-item"><a className="nav-user-list-items-link" href="/">FAQ</a></li>
-              <li className="nav-user-list-items-item"><a  className="nav-user-list-items-link" href="/">Account</a></li>
+              <li className="nav-user-list-items-item"><a className="nav-user-list-items-link" href="/about-us">About</a></li>
+              <li className="nav-user-list-items-item"><a className="nav-user-list-items-link" href="/faq">FAQ</a></li>
+              <li className="nav-user-list-items-item"><a  className="nav-user-list-items-link" href="#" onClick={() => loggedIn ? window.location.href = `/account/${loggedIn.id}` : window.location.href = '/login'}>Account</a></li>
             </ul>
           </div>
         </div>

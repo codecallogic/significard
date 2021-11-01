@@ -7,8 +7,15 @@
   padding: 5rem 3rem;
 
   @media only screen and (max-width: $large) {
+    padding: 5rem 0.5rem;
+    margin: 3rem 1rem;
+  }
+
+  @media only screen and (max-width: $extra-medium) {
     display: flex;
     flex-direction: column;
+    margin: 3rem 3rem;
+    padding: 5rem 2rem;
   }
 
   &-left {
@@ -17,7 +24,7 @@
       justify-content: space-between;
       flex-grow: 0.5;
 
-      @media only screen and (max-width: $large) {
+      @media only screen and (max-width: $extra-medium) {
         display: flex;
         flex-direction: column;
       }
@@ -29,7 +36,7 @@
       font-style: normal;
       font-weight: 400;
 
-      @media only screen and (max-width: $large) {
+      @media only screen and (max-width: $extra-medium) {
         font-size: 3.6rem;
         line-height: 4.6rem;
         margin-bottom: 3rem;
@@ -41,7 +48,7 @@
         font-size: 24px;
         font-weight: 500;
 
-        @media only screen and (max-width: $large) {
+        @media only screen and (max-width: $extra-medium) {
           display: none;
         }
       }
@@ -50,7 +57,7 @@
         list-style-type: none;
         font-size: 22px;
 
-        @media only screen and (max-width: $large) {
+        @media only screen and (max-width: $extra-medium) {
           font-size: 1.8rem;
           line-height: 2.1rem;
           margin-bottom: 2rem;

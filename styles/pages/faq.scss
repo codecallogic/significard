@@ -1,0 +1,106 @@
+.faq {
+  min-height: 75rem;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  &-title {
+    font-size: 4rem;
+    font-weight: 400;
+    font-family: Sanchez;
+    line-height: 5.1rem;
+    margin-bottom: 6rem;
+
+    @media only screen and (max-width: $medium) {
+      font-size: 3.2rem;
+    }
+
+    @media only screen and (max-width: $small) {
+      font-size: 1.8rem;
+    }
+
+    @media only screen and (max-width: $extra-small) {
+      font-size: 1.6rem;
+    }
+  }
+
+  &-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0 25rem;
+
+    @media only screen and (max-width: $wide) {
+      padding: 0 22rem;
+    }
+
+    @media only screen and (max-width: $wide-small) {
+      padding: 0 16rem;
+    }
+
+    @media only screen and (max-width: $extra-large) {
+      padding: 0 10rem;
+    }
+
+    @media only screen and (max-width: $large-medium) {
+      padding: 0 5rem;
+    }
+  }
+
+  &-questions {
+    width: 100%;
+
+    &-item {
+      padding: 2rem 0;
+      border-top: 1px solid #e5e5e5;
+      border-bottom: 1px solid #e5e5e5;
+
+      &-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+
+        div {
+          font-size: 2.2rem;
+          font-weight: 700 !important;
+
+          @media only screen and (max-width: $medium) {
+            font-size: 1.8rem;
+          }
+
+          @media only screen and (max-width: $small) {
+            font-size: 1.6rem;
+          }
+        }
+
+        svg {
+          width: 2.5rem !important;
+          height: 2.5rem !important;
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      &-description {
+        margin-top: 2rem;
+        font-size: 1.6rem;
+        line-height: 1.8rem;
+      }
+    }
+  }
+
+  &-images {
+    display: flex;
+    flex-direction: column;
+    margin: 0 4rem;
+
+    @media only screen and (max-width: $large) {
+      display: none;
+    }
+  }
+}
