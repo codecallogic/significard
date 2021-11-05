@@ -34,7 +34,7 @@ const quiz = ({newUser, quizState}) => {
   const node = useRef();
   // console.log(quizState)
   
-  const [quiz, setQuiz] = useState('package')
+  const [quiz, setQuiz] = useState('recipient')
   const [recipient, setRecipient] = useState('')
   const [toggleEvents, setToggleEvents] = useState(false)
   const [events, setEvents] = useState(toggleEvents ? parseInt('8') : parseInt('20'))
