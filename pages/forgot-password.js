@@ -4,7 +4,7 @@ import {useState} from 'react'
 import axios from 'axios'
 import {API} from '../config'
 
-const ForgotPassword = ({}) => {
+const ForgotPassword = ({loggedIn}) => {
 
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
@@ -20,7 +20,7 @@ const ForgotPassword = ({}) => {
 
   return (
     <>
-      <Nav></Nav>
+      <Nav loggedIn={loggedIn}></Nav>
       {!message ? <div className="forgotPassword">
         <h1 className="forgotPassword-title">Forgot Password?</h1>
         <div className="forgotPassword-subtitle">Enter the email address associated with your account.</div>
@@ -37,4 +37,4 @@ const ForgotPassword = ({}) => {
   )
 }
 
-export default ForgotPassword
+export default checkUser(ForgotPassword)
