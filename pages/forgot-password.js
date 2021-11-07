@@ -3,6 +3,7 @@ import Footer from '../components/footer'
 import {useState} from 'react'
 import axios from 'axios'
 import {API} from '../config'
+import checkUser from './checkUser'
 
 const ForgotPassword = ({loggedIn}) => {
 
