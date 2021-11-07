@@ -120,9 +120,9 @@ const Checkout = ({newUser}) => {
     }
 
     if(!recipientData.message_later){
-      if(!recipientData.nickname) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
+      // if(!recipientData.nickname) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
       if(!recipientData.message) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
-      if(!recipientData.signature) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
+      // if(!recipientData.signature) return  (window.localStorage.setItem('quiz_question', 'message'), window.location.href = '/quiz')
     }
     if(!recipientData.description) return  (window.localStorage.setItem('quiz_question', 'description'), window.location.href = '/quiz')
 
@@ -161,16 +161,23 @@ const Checkout = ({newUser}) => {
 
     setDeliveryDate(`${month} ${day}, ${year}`)
     setRecipient(recipientData)
-    console.log(recipientData.subscription)
+
   }, [])
 
   const handleBillingAutoFill = () => {
     let el = document.getElementById('shipping_address')
+    
     if(el.checked == false){
       setAddress(recipient.address_one)
       setCity(recipient.city)
       setZipCode(recipient.zip_code)
       setState(recipient.state)
+      usStates.forEach((item) => {
+        if(item.abbreviation.trim() == recipient.state.trim()){
+          setTaxID(item.id)
+          setTax(item.taxRate)
+        }
+      })
     }
 
     if(el.checked == true){

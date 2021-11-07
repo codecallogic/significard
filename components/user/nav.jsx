@@ -1,6 +1,22 @@
 import SVG from '../../files/svgs'
+import {initializeFirebase} from '../../helpers/firebase'
+import axios from 'axios'
+import {API} from '../../config'
+import firebase from 'firebase'
+
+initializeFirebase()
 
 const NavUser = ({loggedIn, dashboard, setDashboard, setRecipient, setAddNew}) => {
+
+  const signOut = async () => {
+    try {
+      const responseSignOut = await axios.post(`${API}/auth/logout`)
+      firebase.auth().signOut()
+      window.location.href = '/signup'
+    } catch (error) {
+      console.log(error)
+    }
+  }
   
   return (
     <div className="nav-user-container">
@@ -23,6 +39,7 @@ const NavUser = ({loggedIn, dashboard, setDashboard, setRecipient, setAddNew}) =
               <li className="nav-user-list-items-item"><a className="nav-user-list-items-link" href="/about-us">About</a></li>
               <li className="nav-user-list-items-item"><a className="nav-user-list-items-link" href="/faq">FAQ</a></li>
               <li className="nav-user-list-items-item"><a  className="nav-user-list-items-link" href="#" onClick={() => loggedIn ? window.location.href = `/account/${loggedIn.id}` : window.location.href = '/login'}>Account</a></li>
+              {loggedIn.username && <li className="nav-mobile-list-items-item"><a  className="nav-mobile-list-items-link" href="#" onClick={() => signOut()}>Logout</a></li>}
             </ul>
           </div>
         </div>

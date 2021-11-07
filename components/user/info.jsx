@@ -131,7 +131,7 @@ const Info = ({user, dashboard, credits}) => {
   return (
     <div className={`profile-dashboard-info ` + (dashboard == 'info' ? '' : 'hide-on-mobile')}>
       <div className="profile-dashboard-info-title">My Info</div>
-      <div className="profile-dashboard-info-credits"><span>&nbsp;</span> You have {credits ? credits : '0'} credits</div>
+      <div className="profile-dashboard-info-credits"><span>&nbsp;</span> You have {credits ? credits : '0'} cards</div>
       {edit == 'info' ?
         <div className="profile-dashboard-info-box">
           <div className="profile-dashboard-info-box-edit" onClick={() => (updateInfo(), setEdit(''), setModal(''))}>Save</div>
@@ -450,7 +450,7 @@ const Info = ({user, dashboard, credits}) => {
                 </div>
                 <div className="recipient-modal-plan-box-checkout-payment">Payment Info Billing to: <span>VISA XXX-{user.transactions[user.transactions.length - 1] ? `${user.transactions[user.transactions.length - 1].last4}` : '0000'}</span>
                 </div>
-                <div className="recipient-modal-plan-box-checkout-credits">Credits {planQuantity ? planQuantity : '0'}
+                <div className="recipient-modal-plan-box-checkout-credits">Cards {planQuantity ? planQuantity : '0'}
                 </div>
                 <div className="recipient-modal-plan-box-checkout-cards">
                   <span>

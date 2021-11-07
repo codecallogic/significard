@@ -525,7 +525,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
           </div>
         </div>
         { dashboard == 'orders' &&
-          <Orders credits={credits}></Orders>
+          <Orders user={newUser} credits={credits}></Orders>
         }
         {dashboard == 'info' && 
           <Info user={newUser} dashboard={dashboard} credits={credits}></Info>
@@ -542,7 +542,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
           dashboard == 'profile' && !addNew && recipientID && allRecipients.filter((item) => item._id == recipientID).map((item, idx) =>
             <div key={idx} className="profile-dashboard-recipients-edit">
               <div className="profile-dashboard-recipients-edit-title">
-                <div className="profile-dashboard-recipients-edit-title-credits"><span>&nbsp;</span> You have {credits ? credits : '0'} credits</div>
+                <div className="profile-dashboard-recipients-edit-title-credits"><span>&nbsp;</span> You have {credits ? credits : '0'} cards</div>
                 <div className="profile-dashboard-recipients-edit-title-recipient">{item.recipient ? item.recipient : item.recipient_other}</div>
                 <div className="profile-dashboard-recipients-edit-title-name">{item.name}</div>
                 <div className="profile-dashboard-recipients-edit-title-edit">
@@ -770,7 +770,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
         {
           addNew && <div className="profile-dashboard-recipients-edit">
             <div className="profile-dashboard-recipients-edit-title">
-              <div className="profile-dashboard-recipients-edit-title-credits"><span>&nbsp;</span> You have {credits ? credits : '0'} credits</div>
+              <div className="profile-dashboard-recipients-edit-title-credits"><span>&nbsp;</span> You have {credits ? credits : '0'} cards</div>
               <div className="profile-dashboard-recipients-edit-title-recipient">{recipient.recipient ? recipient.recipient : recipient.recipient_other ? item.recipient_other : 'Recipient'}</div>
               <div className="profile-dashboard-recipients-edit-title-name">{recipient.name ? recipient.name : 'Name'}</div>
               <div className="profile-dashboard-recipients-edit-title-edit">

@@ -1,6 +1,22 @@
 import SVG from '../files/svgs'
+import axios from 'axios'
+import {API} from '../config'
+import firebase from 'firebase'
+import {initializeFirebase} from '../helpers/firebase'
+
+initializeFirebase()
 
 const NavUser = ({loggedIn, color}) => {
+
+  const signOut = async () => {
+    try {
+      const responseSignOut = await axios.post(`${API}/auth/logout`)
+      firebase.auth().signOut()
+      window.location.href = '/signup'
+    } catch (error) {
+      console.log(error)
+    }
+  }
   
   return (
     <div className="nav-mobile-container" style={{backgroundColor: color}}>
@@ -17,6 +33,7 @@ const NavUser = ({loggedIn, color}) => {
               <li className="nav-mobile-list-items-item"><a className="nav-mobile-list-items-link" href="/about-us">About</a></li>
               <li className="nav-mobile-list-items-item"><a className="nav-mobile-list-items-link" href="/faq">FAQ</a></li>
               <li className="nav-mobile-list-items-item"><a  className="nav-mobile-list-items-link" href="#" onClick={() => loggedIn ? window.location.href = `/account/${loggedIn.id}` : window.location.href = '/login'}>Account</a></li>
+              {loggedIn.username && <li className="nav-mobile-list-items-item"><a  className="nav-mobile-list-items-link" href="#" onClick={() => signOut()}>Logout</a></li>}
             </ul>
           </div>
         </div>

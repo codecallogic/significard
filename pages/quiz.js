@@ -531,9 +531,9 @@ const quiz = ({newUser, quizState}) => {
 
     if(type == 'message'){
       let inputs = []
-      if(quizState.nickname.length < 1 ){ inputs.push('true')}
+      // if(quizState.nickname.length < 1 ){ inputs.push('true')}
       if(quizState.message.length < 1){ inputs.push('true')}
-      if(quizState.signature.length < 1){ inputs.push('true')}
+      // if(quizState.signature.length < 1){ inputs.push('true')}
 
       if(window.localStorage.getItem('message_later')) return setMessageLater(false)
       if(inputs.length > 0) setMessageLater(true)
@@ -944,8 +944,8 @@ const quiz = ({newUser, quizState}) => {
             )
             }
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'tags')} disabled={quizState.rank.length < 3 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
-          {quizState.rank.length >= 3 && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'tags')}>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'tags')} disabled={quizState.rank.length < 6 ? true : false}>Next</button><div className="quiz-button-container"></div></div>
+          {quizState.rank.length >= 6 && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'tags')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>
           }
@@ -1335,11 +1335,11 @@ const quiz = ({newUser, quizState}) => {
             <div className="quiz-recipient-message-heading">Card: {typeof window !== 'undefined' ? window.localStorage.getItem('event') ? window.localStorage.getItem('event') : quizState.event ? quizState.event : 'event' : null}</div>
             <div className="quiz-recipient-message-container">
               <form>
-                <div className="form-group-single message">
+                {/* <div className="form-group-single message">
                   <label htmlFor="name">Name/Nickname in front of the card:</label>
                   <input type="text" name="name" required value={quizState.nickname == 'blank' ? '' : quizState.nickname} onChange={(e) => (handleChange('nickname', e, null, e.target.value), document.getElementsByName('nickname_blank')[0].checked = false)}/>
                   <div className="checkbox_2"><input id="nickname" type="checkbox" name="nickname_blank" onClick={(e) => handleChange('nickname', e, null, 'blank')}/><span>Leave it blank</span></div>
-                </div>
+                </div> */}
                 <div className="form-group-single message p-0">
                   <label htmlFor="message">Handwritten message inside:</label>
                   <textarea className="w-4" rows="5" value={quizState.message == 'blank' || quizState.message == 'message_options' ? '' : quizState.message} onChange={(e) => (handleChange('message', e, null, e.target.value), document.getElementsByName('message_blank')[0].checked = false, document.getElementsByName('message_textarea_blank')[0].checked = false)}></textarea>
@@ -1354,10 +1354,10 @@ const quiz = ({newUser, quizState}) => {
                     </div>
                   </div>
                 </div>
-                <div className="form-group-single message p-0">
+                {/* <div className="form-group-single message p-0">
                   <label htmlFor="name">Signature:</label>
                   <input type="text" name="signature" required value={quizState.signature == 'blank' ? '' : quizState.signature} onChange={(e) => handleChange('signature', e, null, e.target.value)}/>
-                </div>
+                </div> */}
               </form>
               <div className="checkbox_2 center show-on-mobile"><input type="checkbox"/><span>Not sure yet, ask me later</span></div>
             </div>
