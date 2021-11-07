@@ -33,7 +33,7 @@ const NavUser = ({loggedIn, color}) => {
               <li className="nav-mobile-list-items-item"><a className="nav-mobile-list-items-link" href="/about-us">About</a></li>
               <li className="nav-mobile-list-items-item"><a className="nav-mobile-list-items-link" href="/faq">FAQ</a></li>
               <li className="nav-mobile-list-items-item"><a  className="nav-mobile-list-items-link" href="#" onClick={() => loggedIn ? window.location.href = `/account/${loggedIn.id}` : window.location.href = '/login'}>Account</a></li>
-              {loggedIn.username && <li className="nav-mobile-list-items-item"><a  className="nav-mobile-list-items-link" href="#" onClick={() => signOut()}>Logout</a></li>}
+              {loggedIn && loggedIn.username && <li className="nav-mobile-list-items-item"><a  className="nav-mobile-list-items-link" href="#" onClick={() => signOut()}>Logout</a></li>}
             </ul>
           </div>
         </div>

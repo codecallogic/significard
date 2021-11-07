@@ -27,7 +27,7 @@ const Nav = ({loggedIn, color}) => {
         <a className="nav-menu-item" onClick={() => window.location.href = '/faq'}><SVG svg={'question'}></SVG></a>
         <a className="nav-menu-item" onClick={() => loggedIn ? window.location.href = `/account/${loggedIn.id}` : window.location.href = '/login'}><SVG svg={'person-user'}></SVG></a>
         {!loggedIn && <a className="nav-menu-item" onClick={() => window.location.href = '/login'}>Sign In</a>}
-        {loggedIn.username && <a className="nav-menu-item" onClick={() => signOut()}>Logout</a>}
+        {loggedIn && loggedIn.username && <a className="nav-menu-item" onClick={() => signOut()}>Logout</a>}
       </div>
     </div>
     </>
