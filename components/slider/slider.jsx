@@ -43,7 +43,7 @@ const Slider = ({slider, quizProgressNav, handleChange, result, setresult, calcu
         >
           <div className="slider-slides-item">
             <div className="slider-slides-item-title">Best Deal</div>
-            <div className="slider-slides-item-subtitle">You get 20 cards</div>
+            <div className="slider-slides-item-subtitle">You get 20 cards annually</div>
             <img src={`/media/package/standard.png`} alt="" className="slider-slides-item-image" />
             <div className="slider-slides-item-price">$6.99 per card</div>
             {/* <div className="slider-slides-item-discount">15% discount for 10+ cards</div> */}
@@ -52,7 +52,7 @@ const Slider = ({slider, quizProgressNav, handleChange, result, setresult, calcu
           </div>
           <div className="slider-slides-item">
             <div className="slider-slides-item-title">Better Deal</div>
-            <div className="slider-slides-item-subtitle">You get 10 cards</div>
+            <div className="slider-slides-item-subtitle">You get 10 cards annually</div>
             <img src={`/media/package/standard.png`} alt="" className="slider-slides-item-image" />
             <div className="slider-slides-item-price">$9.99 per card</div>
             {/* <div className="slider-slides-item-discount">15% discount for 10+ cards</div> */}
@@ -61,7 +61,7 @@ const Slider = ({slider, quizProgressNav, handleChange, result, setresult, calcu
           </div>
           <div className="slider-slides-item">
             <div className="slider-slides-item-title">Good Deal</div>
-            <div className="slider-slides-item-subtitle">You get 5 cards</div>
+            <div className="slider-slides-item-subtitle">You get 5 cards annually</div>
             <img src={`/media/package/standard.png`} alt="" className="slider-slides-item-image" />
             <div className="slider-slides-item-price">$11.99 per card</div>
             {/* <div className="slider-slides-item-discount">15% discount for 10+ cards</div> */}
@@ -70,7 +70,7 @@ const Slider = ({slider, quizProgressNav, handleChange, result, setresult, calcu
           </div>
           <div className="slider-slides-item">
             <div className="slider-slides-item-title">Customize It</div>
-            <div className="slider-slides-item-subtitle">Enter the number of cards you want</div>
+            <div className="slider-slides-item-subtitle">Enter number of cards</div>
             <div className="slider-slides-item-input">
               <input id="custom_quantity" type="text" value={quizstate.package_quantity} placeholder="Number of Cards" onChange={(e) => (setresult(''), validateisnumber('custom_quantity'), handleChange('package_plan', e, null, 'custom', e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Number of Cards'} onKeyDown={(e) => {
               if (e.code === "Enter") {

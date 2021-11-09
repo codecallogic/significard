@@ -47,7 +47,7 @@ const Slider = ({slider, result, setresult, calculate, validateisnumber, quantit
         >
           <div className="slider-profile-slides-item">
             <div className="slider-profile-slides-item-title">Best Deal</div>
-            <div className="slider-profile-slides-item-subtitle">You get 20 cards</div>
+            <div className="slider-profile-slides-item-subtitle">You get 20 cards anually</div>
             <img src={`/media/package/standard.png`} alt="" className="slider-profile-slides-item-image" />
             <div className="slider-profile-slides-item-price">$6.99 per card</div>
             {/* <div className="slider-profile-slides-item-discount">15% discount for 10+ cards</div> */}
@@ -56,7 +56,7 @@ const Slider = ({slider, result, setresult, calculate, validateisnumber, quantit
           </div>
           <div className="slider-profile-slides-item">
             <div className="slider-profile-slides-item-title">Better Deal</div>
-            <div className="slider-profile-slides-item-subtitle">You get 10 cards</div>
+            <div className="slider-profile-slides-item-subtitle">You get 10 cards anually</div>
             <img src={`/media/package/standard.png`} alt="" className="slider-profile-slides-item-image" />
             <div className="slider-profile-slides-item-price">$9.99 per card</div>
             {/* <div className="slider-profile-slides-item-discount">15% discount for 10+ cards</div> */}
@@ -65,7 +65,7 @@ const Slider = ({slider, result, setresult, calculate, validateisnumber, quantit
           </div>
           <div className="slider-profile-slides-item">
             <div className="slider-profile-slides-item-title">Good Deal</div>
-            <div className="slider-profile-slides-item-subtitle">You get 5 cards</div>
+            <div className="slider-profile-slides-item-subtitle">You get 5 cards anually</div>
             <img src={`/media/package/standard.png`} alt="" className="slider-profile-slides-item-image" />
             <div className="slider-profile-slides-item-price">$11.99 per card</div>
             {/* <div className="slider-profile-slides-item-discount">15% discount for 10+ cards</div> */}
@@ -74,7 +74,7 @@ const Slider = ({slider, result, setresult, calculate, validateisnumber, quantit
           </div>
           <div className="slider-profile-slides-item">
             <div className="slider-profile-slides-item-title">Customize It</div>
-            <div className="slider-profile-slides-item-subtitle">Enter the number of cards you want</div>
+            <div className="slider-profile-slides-item-subtitle">Enter number of cards</div>
             <div className="slider-profile-slides-item-input">
               <input id="custom_quantity" type="text" value={quantity} placeholder="Number of Cards" onChange={(e) => (setresult(''), validateisnumber('custom_quantity'), setQuantity(e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Number of Cards'} onKeyDown={(e) => {
               if (e.code === "Enter") {
