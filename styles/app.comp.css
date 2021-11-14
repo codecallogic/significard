@@ -3142,7 +3142,7 @@ body {
           margin-right: 2rem; }
     .checkout-container-right {
       width: 410px;
-      height: 495px;
+      height: 490px;
       border: 0.2rem solid #e5e5e5;
       border-radius: 1.2rem;
       margin: 0 0 0 10rem;
@@ -3159,12 +3159,12 @@ body {
         font-weight: 700;
         text-transform: capitalize; }
       .checkout-container-right-ship_to {
-        font-size: 1.4rem;
+        font-size: 1.8rem;
         color: #778186; }
       .checkout-container-right-delivery {
         font-size: 1.8rem;
         font-weight: 400;
-        margin: 10rem 0 0 0; }
+        margin: 3rem 0 0 0; }
         @media only screen and (max-width: 992px) {
           .checkout-container-right-delivery {
             margin: 2rem 0 0 0; } }
@@ -3176,6 +3176,11 @@ body {
         margin: 4rem 0 0 0; }
         .checkout-container-right-price span {
           font-size: 1.8rem;
+          text-transform: capitalize; }
+        .checkout-container-right-price-event {
+          font-size: 1.8rem;
+          padding-left: 3rem;
+          padding-top: 2rem;
           text-transform: capitalize; }
       .checkout-container-right-tax {
         display: flex;
@@ -3516,8 +3521,16 @@ body {
       width: 100%;
       display: flex;
       justify-content: space-between;
+      margin: 0.5rem 0;
+      font-size: 1.8rem; }
+      .confirmation-order-summary-billing-event-package {
+        text-transform: capitalize; }
+    .confirmation-order-summary-billing-event-first {
+      width: 100%;
+      display: flex;
       text-transform: capitalize;
       margin: 0.5rem 0;
+      padding-left: 2rem;
       font-size: 1.8rem; }
     .confirmation-order-summary-billing-tax {
       width: 100%;
