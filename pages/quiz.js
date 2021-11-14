@@ -955,10 +955,10 @@ const quiz = ({newUser, quizState}) => {
           <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'ranking')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
-          <div className="quiz-title">Anything specific your {typeof window !== "undefined" ? window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient' : 'recipient'} might like?</div>
-          <div className="quiz-title-mobile">Anything specific your {typeof window !== "undefined" ? window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient' : 'recipient'} might like?</div>
-          <div className="quiz-subtitle">Animals, flowers, foods etc. Add as many tags as you'd like!</div>
-          <div className="quiz-subtitle-mobile">Animals, flowers, foods etc. Add as many tags as you'd like!</div>
+          <div className="quiz-title">Anything specific theme your {typeof window !== "undefined" ? window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient' : 'recipient'} might like?</div>
+          <div className="quiz-title-mobile">Anything specific theme your {typeof window !== "undefined" ? window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient' : 'recipient'} might like?</div>
+          <div className="quiz-subtitle">Animals, flowers, foods etc. Add one theme at a time as many as you'd like!</div>
+          <div className="quiz-subtitle-mobile">Animals, flowers, foods etc. Add one theme at a time as many as you'd like!</div>
           <div className="quiz-recipient-tags">
             <div className={`quiz-recipient-tags-box ` + (invalid_tag ? ` form-message-error-outline` : null)}>
               <input type="hidden" name="tags" id="tagValue" value="" required></input>
@@ -993,7 +993,7 @@ const quiz = ({newUser, quizState}) => {
               ? 
               (handleChange('other', e),
                 setTimeout(() => {
-                  quizProgressNav(e,'involvement')
+                  quizProgressNav(e,'package')
                 }, 500)
               ) 
             
@@ -1003,8 +1003,8 @@ const quiz = ({newUser, quizState}) => {
               )
               }/><span>Nope</span></div>
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" disabled={quizState.other.length < 1 ? true : false} onClick={(e) => quizProgressNav(e,'involvement')}>Next</button><div className="quiz-button-container"></div></div>
-          {quizState.other && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'involvement')}>
+          <div className="quiz-button-container"><button className="quiz-button" disabled={quizState.other.length < 1 ? true : false} onClick={(e) => quizProgressNav(e,'package')}>Next</button><div className="quiz-button-container"></div></div>
+          {quizState.other && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'package')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>}
         </>
@@ -1029,11 +1029,11 @@ const quiz = ({newUser, quizState}) => {
         </>
         }
         {quiz == 'package' && <>
-          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'involvement')}>
+          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'other')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
-          <div className="quiz-title">Choose a plan</div>
-          <div className="quiz-title-mobile">Choose a plan</div>
+          <div className="quiz-title">Choose an annual plan</div>
+          <div className="quiz-title-mobile">Choose an annual plan</div>
           <div className="quiz-recipient-package">
             <div className="quiz-recipient-package-item">
               <div className="quiz-recipient-package-item-title">Best Deal</div>

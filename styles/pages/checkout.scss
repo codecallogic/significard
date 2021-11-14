@@ -173,7 +173,7 @@
 
     &-right {
       width: 410px;
-      height: 495px;
+      height: 490px;
       border: 0.2rem solid $color-light-gray;
       border-radius: 1.2rem;
       margin: 0 0 0 10rem;
@@ -194,14 +194,14 @@
       }
 
       &-ship_to {
-        font-size: 1.4rem;
+        font-size: 1.8rem;
         color: $color-light-gray-alt-1;
       }
 
       &-delivery {
         font-size: 1.8rem;
         font-weight: 400;
-        margin: 10rem 0 0 0;
+        margin: 3rem 0 0 0;
 
         @media only screen and (max-width: $large) {
           margin: 2rem 0 0 0;
@@ -219,6 +219,13 @@
 
         span {
           font-size: 1.8rem;
+          text-transform: capitalize;
+        }
+
+        &-event {
+          font-size: 1.8rem;
+          padding-left: 3rem;
+          padding-top: 2rem;
           text-transform: capitalize;
         }
       }

@@ -55,8 +55,11 @@ const Confirmation = ({newUser, order}) => {
               Summary
             </div>
             <div className="confirmation-order-summary-billing-event">
-              <span>{order.event} Day (x{order.package_quantity})</span>
-              <span>${order.package_price}</span>
+              <span> <span className="confirmation-order-summary-billing-event-package">{order.package_plan.replace(/_/g, ' ')}</span> (x{order.package_quantity})</span>
+              <span>${order.package_price} (x{order.package_quantity})</span>
+            </div>
+            <div className="confirmation-order-summary-billing-event-first">
+              <span>First card: {order.event} for {order.shipping_name}</span>
             </div>
             <div className="confirmation-order-summary-billing-tax">
               <span>Sales Tax</span>

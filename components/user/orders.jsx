@@ -8,7 +8,7 @@ const Orders = ({user, credits}) => {
       <div className="profile-dashboard-orders-title">
         <div className="profile-dashboard-orders-title-sent profile-dashboard-orders-title-sent-selected">Upcoming</div>
         <div className="profile-dashboard-orders-title-sent">Sent</div>
-        <div className="profile-dashboard-orders-title-sent">Order History</div>
+        {/* <div className="profile-dashboard-orders-title-sent">Order History</div> */}
       </div>
       {user.recipients.length > 0 && user.recipients.map((item) => 
       <div className="profile-dashboard-orders-card">

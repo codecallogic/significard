@@ -24,7 +24,7 @@ const NavUser = ({loggedIn, dashboard, setDashboard, setRecipient, setAddNew}) =
         {dashboard !== '' && <div className="nav-user-arrow" onClick={() => (setDashboard(''), document.querySelector('.profile-dashboard-recipients') ? document.querySelector('.profile-dashboard-recipients').classList.remove('hide-on-mobile') : null, setRecipient(''), setAddNew(false))}><SVG svg={'arrow-left-thin'}></SVG></div>}
         <div className="nav-user-current">
           {dashboard == '' ? 'Profile' : ''}
-          {dashboard == 'profile' ? 'Contacts' : ''}
+          {dashboard == 'profile' ? 'Recipients' : ''}
           {dashboard == 'info' ? 'My Info' : ''}
           {dashboard == 'orders' ? 'Orders' : ''}
         </div>

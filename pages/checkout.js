@@ -66,7 +66,7 @@ const Checkout = ({newUser}) => {
       recipientData.rank = JSON.parse(window.localStorage.getItem('rank'))
       recipientData.tags = JSON.parse(window.localStorage.getItem('tags'))
       recipientData.other = window.localStorage.getItem('other')
-      recipientData.involvement = window.localStorage.getItem('involvement')
+      // recipientData.involvement = window.localStorage.getItem('involvement')
       recipientData.package_plan = window.localStorage.getItem('package_plan')
       recipientData.subscription = window.localStorage.getItem('subscription')
       recipientData.package_quantity = window.localStorage.getItem('package_quantity')
@@ -105,7 +105,7 @@ const Checkout = ({newUser}) => {
     if(!recipientData.rank) return  (window.localStorage.setItem('quiz_question', 'ranking'), window.location.href = '/quiz')
     if(!recipientData.tags) return  (window.localStorage.setItem('quiz_question', 'tags'), window.location.href = '/quiz')
     if(!recipientData.other) return  (window.localStorage.setItem('quiz_question', 'other'), window.location.href = '/quiz')
-    if(!recipientData.involvement) return  (window.localStorage.setItem('quiz_question', 'involvement'), window.location.href = '/quiz')
+    // if(!recipientData.involvement) return  (window.localStorage.setItem('quiz_question', 'involvement'), window.location.href = '/quiz')
     if(!recipientData.package_plan) return  (window.localStorage.setItem('quiz_question', 'package'), window.location.href = '/quiz')
     // if(!recipientData.subscription) return  (window.localStorage.setItem('quiz_question', 'package'), window.location.href = '/quiz')
     if(!recipientData.package_quantity) return  (window.localStorage.setItem('quiz_question', 'package'), window.location.href = '/quiz')
@@ -296,7 +296,8 @@ const Checkout = ({newUser}) => {
             <div className="checkout-container-right-package">Package: {recipient.package_plan ? recipient.package_plan.replace(/_/g, ' ') : ''} </div>
             {recipient.mail_to == 'recipient' && <div className="checkout-container-right-ship_to">Ship to {recipient.recipient ? `${recipient.recipient}'s address` : recipient.recipient_other ? `${recipient.recipient_other}'s address`: ''} </div>}
             <div className="checkout-container-right-delivery">📩 <span>Estimated arrival date: {delivery}</span></div>
-            <div className="checkout-container-right-price"><span>{recipient.event ? `${recipient.event} (${recipient.package_quantity}x)` : ''}</span><span>{`$ ` + Math.ceil(package_price * 100) / 100}</span></div>
+            <div className="checkout-container-right-price"><span>{recipient.package_plan ? `${recipient.package_plan ? recipient.package_plan.replace(/_/g, ' ') : ''} (${recipient.package_quantity}x)` : ''}</span><span>{`$ ` + Math.ceil(package_price * 100) / 100}</span></div>
+            <div className="checkout-container-right-price-event"><span>First card: {recipient.event ? `${recipient.event ? recipient.event : ''} for ${recipient.recipient ? recipient.recipient : ''}` : ''}</span></div>
             <div className="checkout-container-right-tax"><span>Sales Tax</span><span>{((tax * 100 / 100).toFixed(4) * 100).toFixed(2) + `% `}</span></div>
             <div className="checkout-container-right-total"><span>Total</span><span>{`$ ` + (total + (total * tax)).toFixed(2)}</span></div>
           </div>

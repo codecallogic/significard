@@ -510,7 +510,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
               <div className="profile-dashboard-sidenav-item-icon-container">
                 <SVG svg={'users'} classprop={'profile-dashboard-sidenav-item-icon'}></SVG>
               </div>
-              <span>Contacts</span>
+              <span>Recipients</span>
               <div className="profile-dashboard-sidenav-item-arrow-container"><SVG svg={'arrow-right'} classprop={'profile-dashboard-sidenav-item-arrow'}></SVG></div>
             </div>
           </div>
@@ -759,9 +759,9 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                       <SVG svg={'plus'}></SVG>
                       <span>{credits == 0 ? 'You do not have enough credits' : 'Add your next card here'}</span>
                     </div>
-                    <div className="profile-dashboard-recipients-edit-event-container-card-plus_button" style={{cursor: credits == 0 ? 'not-allowed' : 'pointer'}} onClick={() => credits == 0 ? null : (setModal('edit_card_event'), resetState())}>
+                    {/* <div className="profile-dashboard-recipients-edit-event-container-card-plus_button" style={{cursor: credits == 0 ? 'not-allowed' : 'pointer'}} onClick={() => credits == 0 ? null : (setModal('edit_card_event'), resetState())}>
                       <span><SVG svg={'plus'}></SVG></span>
-                    </div>
+                    </div> */}
                 </div>
               </div>
             </div>
@@ -1182,10 +1182,10 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
           <div className="recipient-modal-box">
             <div className="recipient-modal-box-close" onClick={() => (setModal(''), setCardMenu('empty'))}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
             <div className="recipient-modal-box-message">
-              <div className="quiz-title">Anything specific your {recipient.recipient ? recipient.recipient : 'recipient'} might like?</div>
-              <div className="quiz-title-mobile">Anything specific your {recipient.recipient ? recipient.recipient : 'recipient'} might like?</div>
-              <div className="quiz-subtitle">Animals, flowers, foods etc. Add as many tags as you'd like!</div>
-              <div className="quiz-subtitle-mobile">Animals, flowers, foods etc. Add as many tags as you'd like!</div>
+              <div className="quiz-title">Anything specific theme your {recipient.recipient ? recipient.recipient : 'recipient'} might like?</div>
+              <div className="quiz-title-mobile">Anything specific them your {recipient.recipient ? recipient.recipient : 'recipient'} might like?</div>
+              <div className="quiz-subtitle">Animals, flowers, foods etc. Add one theme at a time as many as you'd like!</div>
+              <div className="quiz-subtitle-mobile">Animals, flowers, foods etc. Add one theme at a time as many as you'd like!</div>
               <div className="quiz-recipient-tags">
                 <div className={`quiz-recipient-tags-box ` + (invalid_tag ? ` form-message-error-outline` : null)}>
                   <input type="hidden" name="tags" id="tagValue" value="" required></input>
