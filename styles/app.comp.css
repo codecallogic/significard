@@ -3140,6 +3140,24 @@ body {
           height: 3.5rem;
           fill: #3fab34;
           margin-right: 2rem; }
+      .checkout-container-left-updates {
+        margin-top: 3rem; }
+        .checkout-container-left-updates-title {
+          font-size: 2.4rem;
+          color: #011722;
+          font-weight: 700; }
+        .checkout-container-left-updates-subtitle {
+          font-weight: 400;
+          font-size: 1.8rem;
+          margin: 2rem 0 2rem 0; }
+        .checkout-container-left-updates-subtitle-two {
+          font-weight: 400;
+          font-size: 1.8rem;
+          margin: 2rem 0 -2rem 0; }
+        .checkout-container-left-updates-subtitle-three {
+          font-weight: 400;
+          font-size: 1.8rem;
+          margin: 2rem 0 2rem 0; }
     .checkout-container-right {
       width: 410px;
       height: 490px;
