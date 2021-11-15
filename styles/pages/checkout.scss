@@ -169,6 +169,34 @@
           margin-right: 2rem;
         }
       }
+
+      &-updates {
+        margin-top: 3rem;
+
+        &-title {
+          font-size: 2.4rem;
+          color: $color-scheme-3-variation-3;
+          font-weight: 700;
+        }
+
+        &-subtitle {
+          font-weight: 400;
+          font-size: 1.8rem;
+          margin: 2rem 0 2rem 0;
+        }
+
+        &-subtitle-two {
+          font-weight: 400;
+          font-size: 1.8rem;
+          margin: 2rem 0 -2rem 0;
+        }
+
+        &-subtitle-three {
+          font-weight: 400;
+          font-size: 1.8rem;
+          margin: 2rem 0 2rem 0;
+        }
+      }
     }
 
     &-right {

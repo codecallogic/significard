@@ -43,6 +43,7 @@ const Checkout = ({newUser}) => {
   const [zip_code, setZipCode] = useState('')
   const [delivery, setDeliveryDate] = useState('')
   const [state_list, setStateList] = useState(false)
+ 
 
   const quizProgressNav = (e, next) => {
     window.localStorage.setItem('quiz_question', next)

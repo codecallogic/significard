@@ -29,6 +29,13 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [success, setSuccess] = useState('')
+  const [phone, setPhone] = useState('')
+
+  const validateIsNumber = (type) => {
+    const input = document.getElementById(type)
+    const regex = /[^0-9|\n\r]/g
+    input.value = input.value.split(regex).join('')
+  }
 
   const handleCardPayment = async (e) => {
     e.preventDefault()
@@ -40,13 +47,6 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
     }
 
     setLoading(true)
-
-    try {
-      const responseRecipient = await axios.post(`${API}/recipient/quiz`, {user, recipient})
-      console.log(responseRecipient)
-    } catch (error) {
-      if(error) return error.response ? setMessage(error.response.data) : setMessage('Error submitting your information, please try again later')
-    }
 
     setMessage('')
 
@@ -70,10 +70,15 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
       setLoading(false)
     }else {
       try {
+        
         let orderNumber = Math.floor(100000000 + Math.random() * 900000000)
         // console.log(paymentMethod)
-        const responsePayment = await axios.post(`${API}/payment/checkout`, {'payment_method': paymentMethod.id, 'email': user.email, 'amount': amount, 'name': user.username, 'order': orderNumber, 'cardholder_name': cardholder, 'billing_address': address, 'billing_city': city, 'billing_state': state, 'billing_zip': zip_code, 'shipping_name': recipient.name, 'shipping_address': recipient.address_one, 'shipping_city': recipient.city, 'shipping_state': recipient.state, 'shipping_zip': recipient.zip_code, 'event': recipient.event, 'package_price': package_price, 'tax': tax, 'taxID': taxID, 'package_plan': recipient.package_plan, 'package_quantity': recipient.package_quantity, 'delivery_date': delivery, 'last4': paymentMethod.card.last4, 'user': user, 'subscription': subscription})
+        const responsePayment = await axios.post(`${API}/payment/checkout`, {'payment_method': paymentMethod.id, 'email': user.email, 'amount': amount, 'name': user.username, 'order': orderNumber, 'cardholder_name': cardholder, 'billing_address': address, 'billing_city': city, 'billing_state': state, 'billing_zip': zip_code, 'shipping_name': recipient.name, 'shipping_address': recipient.address_one, 'shipping_city': recipient.city, 'shipping_state': recipient.state, 'shipping_zip': recipient.zip_code, 'event': recipient.event, 'package_price': package_price, 'tax': tax, 'taxID': taxID, 'package_plan': recipient.package_plan, 'package_quantity': recipient.package_quantity, 'delivery_date': delivery, 'last4': paymentMethod.card.last4, 'user': user, 'subscription': subscription, 'phone': phone})
         // console.log(responsePayment.data)
+
+        const responseRecipient = await axios.post(`${API}/recipient/quiz`, {user, recipient})
+        console.log(responseRecipient)
+        
         const {client_secret, status, payment_id, order} = responsePayment.data
         // console.log(status)
         if(status === 'requires_payment_method'){
@@ -106,10 +111,17 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
         if(status === 'succeeded'){
           window.location.href = `/${order}?id=${payment_id}`
         }
+
+        // try {
+        //   const responseRecipient = await axios.post(`${API}/recipient/quiz`, {user, recipient})
+        //   console.log(responseRecipient)
+        // } catch (error) {
+        //   if(error) return error.response ? setMessage(error.response.data) : setMessage('Error submitting your information, please try again later')
+        // }
         
       } catch (error) {
         console.log(error.response)
-        if(error) error.response ? setMessage(error.response.data) : setMessage('An error occurred while processing your card. Try again in a little bit.')
+        if(error) error.response ? setMessage(error.response.data) : setMessage('An error occurred submitting your information, please try again later')
         setLoading(false)
       }
     }
@@ -119,6 +131,15 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
   return (
     <>
       <CardElement className="checkout-container-left-form" options={CARD_ELEMENT_OPTIONS} />
+      <div className="checkout-container-left-updates">
+        <div className="checkout-container-left-updates-title">Order Updates</div>
+        <div className="checkout-container-left-updates-subtitle">You'll get order updates by email.</div>
+        <div className="checkout-container-left-updates-subtitle-two">Get order updates by text</div>
+        <div className="form-group-double mail checkout-group-double">
+          <input id="phoneNumber" type="text" placeholder="Mobile Phone Number" value={phone} onChange={ (e) => (validateIsNumber('phoneNumber'), setPhone(e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Mobile Phone Number'} required/>
+        </div>
+        <div className="checkout-container-left-updates-subtitle-three">To expedite the order process, please add your phone number.</div>
+      </div>
       <div className="checkout-container-button-container">
         <button className="checkout-container-button" disabled={!stripe} onClick={handleCardPayment}>{loading ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : 'Confirm'}</button>
       </div>
