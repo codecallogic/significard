@@ -230,7 +230,7 @@ const Checkout = ({newUser}) => {
 
         <div className="checkout-container">
           <div className="checkout-container-left">
-            <div className="checkout-container-left-title">Payment Method</div>
+            {/* <div className="checkout-container-left-title">Payment Method</div> */}
             <div className="checkout-container-left-subtitle">What's your payment method?</div>
             {recipient.mail_to == 'user' && 
             <div className="form-group-checkbox">
