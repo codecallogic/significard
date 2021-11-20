@@ -31,6 +31,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
   const myRefs = useRef(null)
   const node = useRef();
   // console.log(newUser)
+  console.log(recipients)
   const router = useRouter()
   const [sideNav, setSideNav] = useState('recipients')
   const [recipientID, setRecipient] = useState('')
@@ -496,7 +497,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
               <div className="profile-dashboard-sidenav-item-arrow-container"><SVG svg={'arrow-right'} classprop={'profile-dashboard-sidenav-item-arrow'}></SVG></div>
             </div>
           </div>
-          <div className="profile-dashboard-sidenav-item-container" onClick={() => setDashboard('info')}>
+          <div className="profile-dashboard-sidenav-item-container" onClick={() => (setAddNew(false), setDashboard('info'))}>
             <div className="profile-dashboard-sidenav-item">
               <div className="profile-dashboard-sidenav-item-icon-container">
                 <SVG svg={'user'} classprop={'profile-dashboard-sidenav-item-icon'}></SVG>
@@ -506,7 +507,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
             </div>
           </div>
           <div className="profile-dashboard-sidenav-item-container">
-            <div className="profile-dashboard-sidenav-item" onClick={() => setDashboard('profile')}>
+            <div className="profile-dashboard-sidenav-item" onClick={() => (setAddNew(false), setDashboard('profile'))}>
               <div className="profile-dashboard-sidenav-item-icon-container">
                 <SVG svg={'users'} classprop={'profile-dashboard-sidenav-item-icon'}></SVG>
               </div>
@@ -534,7 +535,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
         <div className="profile-dashboard-recipients">
           <div className="profile-dashboard-recipients-item-add" onClick={() => (resetRecipient(), setAddNew(true), document.querySelector('.profile-dashboard-recipients').classList.add('hide-on-mobile'))}><SVG svg={'plus'}></SVG><span>Add Recipient</span></div>
           {allRecipients.map((item, idx) => 
-            <div key={idx} className="profile-dashboard-recipients-item" onClick={() => (setEdit(''), setRecipient(item._id), setCardMenu('empty'), setAddNew(false), document.querySelector('.profile-dashboard-recipients').classList.add('hide-on-mobile'))}>{item.name}</div>
+            <div key={idx} className="profile-dashboard-recipients-item" onClick={() => (setEdit(''), setRecipient(item._id), setCardMenu('empty'), setAddNew(false), document.querySelector('.profile-dashboard-recipients').classList.add('hide-on-mobile'))}>{item.recipient_name}</div>
           )}
         </div>
         }
@@ -544,15 +545,15 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
               <div className="profile-dashboard-recipients-edit-title">
                 <div className="profile-dashboard-recipients-edit-title-credits"><span>&nbsp;</span> You have {credits ? credits : '0'} cards</div>
                 <div className="profile-dashboard-recipients-edit-title-recipient">{item.recipient ? item.recipient : item.recipient_other}</div>
-                <div className="profile-dashboard-recipients-edit-title-name">{item.name}</div>
+                <div className="profile-dashboard-recipients-edit-title-name">{item.recipient_name}</div>
                 <div className="profile-dashboard-recipients-edit-title-edit">
                   <span onClick={() => cardMenu === 'recipient' ? setCardMenu('empty'): setCardMenu('recipient')}><SVG svg={'arrow-down'}></SVG></span>
                   {cardMenu == 'recipient' && 
                   <div className="profile-dashboard-recipients-edit-title-edit-menu" ref={myRefs}>
                     <div className="profile-dashboard-recipients-edit-title-edit-menu-item" onClick={() => setModal('title')}>Edit Recipient</div>
-                    <div className="profile-dashboard-recipients-edit-title-edit-menu-item" onClick={() => deleteRecipient('delete')}>
+                    {/* <div className="profile-dashboard-recipients-edit-title-edit-menu-item" onClick={() => deleteRecipient('delete')}>
                       {loading == 'delete' ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : <span>Delete</span>}
-                    </div>
+                    </div> */}
                   </div>
                   }
                 </div>
@@ -684,11 +685,14 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                   }
                 </div>
                 {edit == 'style' ? 
-                   <div className="profile-dashboard-recipients-edit-profile-edit">{loading == 'style' ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : <><span onClick={() => (setRecipient(recipientID), setEdit(''))}>Cancel</span><span onClick={() => (updateRecipient('style'))}>Save</span></>}</div>
+                   <div className="profile-dashboard-recipients-edit-profile-edit">{loading == 'style' ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : <>
+                   <span onClick={() => (setRecipient(recipientID), setEdit(''))}>Cancel</span>
+                   {recipient.rank.length == 6 ? <span onClick={() => updateRecipient('style') }>Save</span> : null}
+                   </>}
+                   </div>
                   :
                   <div className="profile-dashboard-recipients-edit-profile-edit" onClick={() => (setEdit('style'), resetRank())}>Edit</div>
                 }
-                
               </div>
               <div className="profile-dashboard-recipients-edit-event">
                 <div className="profile-dashboard-recipients-edit-event-title">Your cards:</div>
@@ -847,7 +851,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
               </div>
             }
             <div className="profile-dashboard-recipients-edit-style">
-              <div className="profile-dashboard-recipients-edit-style-title"><span>Card style</span> (rate it from more important to least important):</div>
+              <div className="profile-dashboard-recipients-edit-style-title"><span>Card style</span> (rate it from more important to least important, must have 6.):</div>
               <div className="profile-dashboard-recipients-edit-style-selection">
                 {edit == 'style'
 
@@ -964,13 +968,13 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
           </div>
         }
         {modal == 'title' && 
-        <div className="recipient-modal">
-          <div className="recipient-modal-box">
-            <div className="recipient-modal-box-close" onClick={() => setModal('')}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
+        <div className="recipient-modal-small">
+          <div className="recipient-modal-box-small">
+            <div className="recipient-modal-box-close-small" onClick={() => setModal('')}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
             <div className="quiz-recipient-title">
               <form>
                 <div className="form-group-single mail">
-                  <input id='recipient' type="text" placeholder="Recipient" value={recipient.recipient} onChange={ (e) => (editRecipient('recipient', e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Recipient'} required/>
+                  <input id='recipient' type="text" placeholder="Recipient (ex. Mom)" value={recipient.recipient} onChange={ (e) => (editRecipient('recipient', e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Recipient (ex. Mom)'} style={{textTransform: 'capitalize'}} required/>
                 </div>
                 <div className="form-group-single mail">
                   <input id='name' type="text" placeholder="Name" value={recipient.name} onChange={ (e) => (editRecipient('name', e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Name'} required/>
@@ -1067,10 +1071,10 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
           <div className="recipient-modal-box">
             <div className="recipient-modal-box-close" onClick={() => (setModal(''), setCardMenu('empty'))}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
             <div className="recipient-modal-box-event">
-            <div className="quiz-title recipient-modal-box-event-title">What are the events you'd like to send cards for your {recipient.recipient ? recipient.recipient : recipient.recipient_other ? recipient.recipient_other : 'recipient'}?</div>
-            <div className="quiz-title-mobile">What are the events you'd like to send cards for your {recipient.firstName ? recipient.firstName : 'recipient'}?</div>
-            <div className="quiz-subtitle">Pick the event and tell us the arrival date.</div>
-            <div className="quiz-subtitle-mobile">Select the estimated arrival date for the event.</div>
+            <div className="quiz-title recipient-modal-box-event-title">Pick one event for {recipient.recipient ? recipient.recipient : recipient.recipient_other ? recipient.recipient_other : 'recipient'}?</div>
+            <div className="quiz-title-mobile">Pick one event for{recipient.firstName ? recipient.firstName : 'recipient'}?</div>
+            <div className="quiz-subtitle">Select arrival date.</div>
+            <div className="quiz-subtitle-mobile">Select arrival date.</div>
             <div className="quiz-recipient-event">
               {eventsList.slice(0, toggleEvents ? 20 : 8).map( (item, idx) => 
               <div key={idx} className={`quiz-recipient-event-item`} onClick={(e) => 
@@ -1209,10 +1213,10 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
           <div className="recipient-modal-box">
             <div className="recipient-modal-box-close" onClick={() => (setModal(''), setCardMenu('empty'))}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
             <div className="recipient-modal-box-event">
-            <div className="quiz-title recipient-modal-box-event-title">Test that are the events you'd like to send cards for your {recipient.recipient ? recipient.recipient : recipient.recipient_other ? recipient.recipient_other : 'recipient'}?</div>
-            <div className="quiz-title-mobile">What are the events you'd like to send cards for your {recipient.recipient ? recipient.recipient : recipient.recipient_other ? recipient.recipient_other : 'recipient'}?</div>
-            <div className="quiz-subtitle">Pick the event and tell us the arrival date.</div>
-            <div className="quiz-subtitle-mobile">Select the estimated arrival date for the event.</div>
+            <div className="quiz-title recipient-modal-box-event-title">Pick one event for {recipient.recipient ? recipient.recipient : recipient.recipient_other ? recipient.recipient_other : 'recipient'}?</div>
+            <div className="quiz-title-mobile">Pick one event for {recipient.recipient ? recipient.recipient : recipient.recipient_other ? recipient.recipient_other : 'recipient'}?</div>
+            <div className="quiz-subtitle">Select arrival date.</div>
+            <div className="quiz-subtitle-mobile">Select arrival date</div>
             <div className="quiz-recipient-event">
               {eventsList.slice(0, toggleEvents ? 20 : 8).map( (item, idx) => 
               <div key={idx} className={`quiz-recipient-event-item`} onClick={(e) => 

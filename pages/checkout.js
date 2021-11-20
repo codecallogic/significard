@@ -60,6 +60,7 @@ const Checkout = ({newUser}) => {
     if(window.localStorage.getItem('package_plan')){
       recipientData.recipient = window.localStorage.getItem('recipient')
       recipientData.recipient_other = window.localStorage.getItem('recipient_other')
+      recipientData.recipient_name = window.localStorage.getItem('recipient_name')
       recipientData.age = window.localStorage.getItem('age')
       recipientData.event = window.localStorage.getItem('event')
       recipientData.event_other = window.localStorage.getItem('event_other')

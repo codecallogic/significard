@@ -207,7 +207,7 @@
           border: none;
           text-indent: 1rem;
           height: 3rem;
-          font-size: 1.8rem;
+          font-size: 1.4rem;
           flex-grow: 1;
 
           &-container {
@@ -664,6 +664,10 @@
 
         &:not(:last-child) {
           margin: 0 3rem 0 0;
+
+          @media only screen and (min-width: $extra-large) {
+            margin: 0 1rem 0 0;
+          }
         }
 
         @media only screen and (max-width: $extra-large) {
@@ -760,7 +764,7 @@
         align-items: center;
         flex-direction: column;
         position: relative;
-        width: 16.7rem;
+        width: 15.7rem;
         height: 23.3rem;
 
         @media only screen and (max-width: $large) {
@@ -1461,7 +1465,7 @@
       flex-direction: column;
       align-items: center;
       width: 85rem;
-      height: 55.3rem;
+      height: 45.3rem;
       border: 0.2rem solid $color-light-gray;
       box-sizing: border-box;
       border-radius: 1.2rem;

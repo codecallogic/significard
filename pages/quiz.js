@@ -46,6 +46,9 @@ const quiz = ({newUser, quizState}) => {
   const [message_blank, setMessageBlank] = useState(false)
   const [message_later, setMessageLater] = useState(false)
   const [other, setOther] = useState('')
+  const [name_popup, setPopUp] = useState('')
+  const [popup_type, setPopUpType] = useState('')
+  const [checkmarkName, setCheckmarkName] = useState(false)
   const [checkmarkOther, setCheckmarkOther] = useState(false)
   const [enableCalendar, setEnableCalendar] = useState('')
   const [calendar, setCalendar] = useState(new Date())
@@ -91,9 +94,14 @@ const quiz = ({newUser, quizState}) => {
     if(window.localStorage.getItem('recipient')){
       dispatch({type: 'UPDATE_CHANGE', name: 'recipient', payload: window.localStorage.getItem('recipient')})
 
-      let els = document.querySelectorAll('.quiz-recipient-item')
+      // let els = document.querySelectorAll('.quiz-recipient-item')
 
-      els.forEach( (el) => {el.textContent.toLowerCase().split(' ')[0].trim() == window.localStorage.getItem('recipient').trim() ? el.classList.add("quiz-recipient-item-active") : null})
+      // els.forEach( (el) => {el.textContent.toLowerCase().split(' ')[0].trim() == window.localStorage.getItem('recipient').trim() ? el.classList.add("quiz-recipient-item-active") : null})
+    }
+
+    if(window.localStorage.getItem('recipient_name')){
+      dispatch({type: 'UPDATE_CHANGE', name: 'recipient_name', payload: window.localStorage.getItem('recipient_name')})
+      setPopUpType(window.localStorage.getItem('recipient_type'))
     }
 
     if(window.localStorage.getItem('recipient_other')){
@@ -228,6 +236,18 @@ const quiz = ({newUser, quizState}) => {
   useEffect(() => {
     handleFormDisableButtons('message')
 
+    if(quizState.recipient_name.length > 0){
+      let userTyping = setTimeout(() => {
+        setCheckmarkName(true)
+      }, 500)
+
+      return () => clearTimeout(userTyping);
+    }
+
+    if(quizState.recipient_name.length == 0){
+      setCheckmarkName(false)
+    }
+
     if(quizState.recipient_other.length > 0){
       let userTyping = setTimeout(() => {
         setCheckmarkOther(true)
@@ -256,7 +276,7 @@ const quiz = ({newUser, quizState}) => {
       setResult('')
     }
     
-  }, [quizState.nickname, quizState.message, quizState.signature, quizState.recipient_other, quizState.event_other, quizState.package_quantity])
+  }, [quizState.nickname, quizState.message, quizState.signature, quizState.recipient_name, quizState.recipient_other, quizState.event_other, quizState.package_quantity])
 
 
   useLayoutEffect(() => {
@@ -505,11 +525,22 @@ const quiz = ({newUser, quizState}) => {
       return setOther('')
     }
 
+    if(question == 'recipient_name'){
+      window.localStorage.setItem('recipient_name', e.target.value)
+      window.localStorage.setItem('recipient_type', type)
+      dispatch({type: 'UPDATE_CHANGE', name: question, payload: e.target.value})
+      return
+    }
+
     if(question == 'recipient_other'){
+      if(type) window.localStorage.setItem('recipient_type', type)
       window.localStorage.setItem('recipient_other', e.target.value)
       dispatch({type: 'UPDATE_CHANGE', name: question, payload: e.target.value})
       dispatch({type: 'UPDATE_CHANGE', name: 'recipient', payload: ''})
       window.localStorage.removeItem('recipient')
+
+      dispatch({type: 'UPDATE_CHANGE', name: 'recipient_name', payload: ''})
+      window.localStorage.setItem('recipient_name', '')
       return 
     }
 
@@ -709,24 +740,204 @@ const quiz = ({newUser, quizState}) => {
         {quiz == 'recipient' && <>
           <div className="quiz-title">Who are we sending a card to?</div>
           <div className="quiz-title-mobile">Who are we sending a card to?</div>
-          <div className="quiz-subtitle">For now just pick <span>one person</span>. Later, you can finish adding other loved ones in your profile.</div>
-          <div className="quiz-subtitle-mobile">For now just pick <span>one person</span>. Later, you can finish adding other loved ones in your profile.</div>
+          <div className="quiz-subtitle">For now just pick <span>one person</span>. Later, you can finish adding other recipients in your profile.</div>
+          <div className="quiz-subtitle-mobile">For now just pick <span>one person</span>. Later, you can finish adding other recipients in your profile.</div>
           <div className="quiz-recipient">
-            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), quizProgress(e.target.textContent, 'age'))}>Friend</div>
-            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), quizProgress(e.target.textContent, 'age'))}>Partner</div>
-            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), quizProgress(e.target.textContent, 'age'))}>Mom</div>
-            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), quizProgress(e.target.textContent, 'age'))}>Dad</div>
-            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), quizProgress(e.target.textContent, 'age'))}>Sister</div>
-            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), quizProgress(e.target.textContent, 'age'))}>Brother</div>
-            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), quizProgress(e.target.textContent, 'age'))}>Grandma</div>
-            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), quizProgress(e.target.textContent, 'age'))}>Grandpa</div>
-            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), quizProgress(e.target.textContent, 'age'))}>Daughter</div>
-            <div className={`quiz-recipient-item recipient-other ` + (other == 'recipient' ? ` pb-4 ` : '') + (typeof window !== "undefined" ? window.localStorage.getItem('recipient_other') ? window.localStorage.getItem('recipient_other').length > 0 ? ` pb-4 ` : '' : '' : '')} onClick={(e) => (handleChange('recipient', e), setOther('recipient'))}>{quizState.recipient_other ? quizState.recipient_other : 'Other '}
-
-            {quizState.recipient_other ? 
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), setPopUp('friend'), setPopUpType('friend'), dispatch({type: 'UPDATE_CHANGE', name: 'recipient_name', payload: ''}))}>Friend
+              {popup_type == 'friend' && quizState.recipient_name ? 
+                <span className="quiz-recipient-item-other-container">
+                  <div className="quiz-recipient-item-other-recipient">
+                    {quizState.recipient_name}
+                  </div>
+                </span>
+                :
+                null
+              }
+              {name_popup == 'friend' ? 
+                <span className="quiz-recipient-item-other mt-4" onClick={(e) => e.stopPropagation()}>
+                <div className="quiz-recipient-item-other-input-container">
+                  <input className="quiz-recipient-item-other-input" type="text" placeholder="Recipient Name" autoFocus value={quizState.recipient_name} onChange={(e) => handleChange('recipient_name', e, 0, 'friend')}/>
+                  <div className="quiz-recipient-item-other-input-svg" onClick={(e) => (setPopUp(''))}>{checkmarkName && <SVGs svg={'checkmark'}></SVGs>}</div>
+                </div>
+                </span> 
+              : 
+              null
+              }
+            </div>
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), setPopUp('partner'), setPopUpType('partner'), dispatch({type: 'UPDATE_CHANGE', name: 'recipient_name', payload: ''}))}>Partner
+              {popup_type == 'partner' && quizState.recipient_name ? 
+                <span className="quiz-recipient-item-other-container">
+                  <div className="quiz-recipient-item-other-recipient">
+                    {quizState.recipient_name}
+                  </div>
+                </span>
+                :
+                null
+              }
+              {name_popup == 'partner' ? 
+                <span className="quiz-recipient-item-other mt-4" onClick={(e) => e.stopPropagation()}>
+                <div className="quiz-recipient-item-other-input-container">
+                  <input className="quiz-recipient-item-other-input" type="text" placeholder="Recipient Name" autoFocus value={quizState.recipient_name} onChange={(e) => handleChange('recipient_name', e, 0, 'partner')}/>
+                  <div className="quiz-recipient-item-other-input-svg" onClick={(e) => (setPopUp(''))}>{checkmarkName && <SVGs svg={'checkmark'}></SVGs>}</div>
+                </div>
+                </span> 
+              : 
+              null
+              }
+            </div>
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), setPopUp('mom'), setPopUpType('mom'), dispatch({type: 'UPDATE_CHANGE', name: 'recipient_name', payload: ''}))}>Mom
+              {popup_type == 'mom' && quizState.recipient_name ? 
+                <span className="quiz-recipient-item-other-container">
+                  <div className="quiz-recipient-item-other-recipient">
+                    {quizState.recipient_name}
+                  </div>
+                </span>
+                :
+                null
+              }
+              {name_popup == 'mom' ? 
+                <span className="quiz-recipient-item-other mt-4" onClick={(e) => e.stopPropagation()}>
+                <div className="quiz-recipient-item-other-input-container">
+                  <input className="quiz-recipient-item-other-input" type="text" placeholder="Recipient Name" autoFocus value={quizState.recipient_name} onChange={(e) => handleChange('recipient_name', e, 0, 'mom')}/>
+                  <div className="quiz-recipient-item-other-input-svg" onClick={(e) => (setPopUp(''))}>{checkmarkName && <SVGs svg={'checkmark'}></SVGs>}</div>
+                </div>
+                </span> 
+              : 
+              null
+              }
+            </div>
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), setPopUp('dad'), setPopUpType('dad'), dispatch({type: 'UPDATE_CHANGE', name: 'recipient_name', payload: ''}))}>Dad
+              {popup_type == 'dad' && quizState.recipient_name ? 
+                <span className="quiz-recipient-item-other-container">
+                  <div className="quiz-recipient-item-other-recipient">
+                    {quizState.recipient_name}
+                  </div>
+                </span>
+                :
+                null
+              }
+              {name_popup == 'dad' ? 
+                <span className="quiz-recipient-item-other mt-4" onClick={(e) => e.stopPropagation()}>
+                <div className="quiz-recipient-item-other-input-container">
+                  <input className="quiz-recipient-item-other-input" type="text" placeholder="Recipient Name" autoFocus value={quizState.recipient_name} onChange={(e) => handleChange('recipient_name', e, 0, 'dad')}/>
+                  <div className="quiz-recipient-item-other-input-svg" onClick={(e) => (setPopUp(''))}>{checkmarkName && <SVGs svg={'checkmark'}></SVGs>}</div>
+                </div>
+                </span> 
+              : 
+              null
+              }
+            </div>
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), setPopUp('sister'), setPopUpType('sister'), dispatch({type: 'UPDATE_CHANGE', name: 'recipient_name', payload: ''}))}>Sister
+              {popup_type == 'sister' && quizState.recipient_name ? 
+              <span className="quiz-recipient-item-other-container">
+                <div className="quiz-recipient-item-other-recipient">
+                  {quizState.recipient_name}
+                </div>
+              </span>
+              :
+              null
+              }
+              {name_popup == 'sister' ? 
+                <span className="quiz-recipient-item-other mt-4" onClick={(e) => e.stopPropagation()}>
+                <div className="quiz-recipient-item-other-input-container">
+                  <input className="quiz-recipient-item-other-input" type="text" placeholder="Recipient Name" autoFocus value={quizState.recipient_name} onChange={(e) => handleChange('recipient_name', e, 0, 'sister')}/>
+                  <div className="quiz-recipient-item-other-input-svg" onClick={(e) => (setPopUp(''))}>{checkmarkName && <SVGs svg={'checkmark'}></SVGs>}</div>
+                </div>
+                </span> 
+              : 
+              null
+              }
+            </div>
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), setPopUp('brother'), setPopUpType('brother'), dispatch({type: 'UPDATE_CHANGE', name: 'recipient_name', payload: ''}))}>Brother
+              {popup_type == 'brother' && quizState.recipient_name ? 
+              <span className="quiz-recipient-item-other-container">
+                <div className="quiz-recipient-item-other-recipient">
+                  {quizState.recipient_name}
+                </div>
+              </span>
+              :
+              null
+              }
+              {name_popup == 'brother' ? 
+                <span className="quiz-recipient-item-other mt-4" onClick={(e) => e.stopPropagation()}>
+                <div className="quiz-recipient-item-other-input-container">
+                  <input className="quiz-recipient-item-other-input" type="text" placeholder="Recipient Name" autoFocus value={quizState.recipient_name} onChange={(e) => handleChange('recipient_name', e, 0, 'brother')}/>
+                  <div className="quiz-recipient-item-other-input-svg" onClick={(e) => (setPopUp(''))}>{checkmarkName && <SVGs svg={'checkmark'}></SVGs>}</div>
+                </div>
+                </span> 
+              : 
+              null
+              }
+            </div>
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), setPopUp('grandma'), setPopUpType('grandma'), dispatch({type: 'UPDATE_CHANGE', name: 'recipient_name', payload: ''}))}>Grandma
+              {popup_type == 'grandma' && quizState.recipient_name ? 
+              <span className="quiz-recipient-item-other-container">
+                <div className="quiz-recipient-item-other-recipient">
+                  {quizState.recipient_name}
+                </div>
+              </span>
+              :
+              null
+              }
+              {name_popup == 'grandma' ? 
+                <span className="quiz-recipient-item-other mt-4" onClick={(e) => e.stopPropagation()}>
+                <div className="quiz-recipient-item-other-input-container">
+                  <input className="quiz-recipient-item-other-input" type="text" placeholder="Recipient Name" autoFocus value={quizState.recipient_name} onChange={(e) => handleChange('recipient_name', e, 0, 'grandma')}/>
+                  <div className="quiz-recipient-item-other-input-svg" onClick={(e) => (setPopUp(''))}>{checkmarkName && <SVGs svg={'checkmark'}></SVGs>}</div>
+                </div>
+                </span> 
+              : 
+              null
+              }
+            </div>
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), setPopUp('grandpa'), setPopUpType('grandpa'), dispatch({type: 'UPDATE_CHANGE', name: 'recipient_name', payload: ''}))}>Grandpa
+              {popup_type == 'grandpa' && quizState.recipient_name ? 
+              <span className="quiz-recipient-item-other-container">
+                <div className="quiz-recipient-item-other-recipient">
+                  {quizState.recipient_name}
+                </div>
+              </span>
+              :
+              null
+              }
+              {name_popup == 'grandpa' ? 
+                <span className="quiz-recipient-item-other mt-4" onClick={(e) => e.stopPropagation()}>
+                <div className="quiz-recipient-item-other-input-container">
+                  <input className="quiz-recipient-item-other-input" type="text" placeholder="Recipient Name" autoFocus value={quizState.recipient_name} onChange={(e) => handleChange('recipient_name', e, 0, 'grandpa')}/>
+                  <div className="quiz-recipient-item-other-input-svg" onClick={(e) => (setPopUp(''))}>{checkmarkName && <SVGs svg={'checkmark'}></SVGs>}</div>
+                </div>
+                </span> 
+              : 
+              null
+              }
+            </div>
+            <div className="quiz-recipient-item" onClick={(e) => (handleChange('recipient', e), setPopUp('daughter'), setPopUpType('daughter'), dispatch({type: 'UPDATE_CHANGE', name: 'recipient_name', payload: ''}))}>Daughter
+              {popup_type == 'daughter' && quizState.recipient_name ? 
+              <span className="quiz-recipient-item-other-container">
+                <div className="quiz-recipient-item-other-recipient">
+                  {quizState.recipient_name}
+                </div>
+              </span>
+              :
+              null
+              }
+              {name_popup == 'daughter' ? 
+                <span className="quiz-recipient-item-other mt-4" onClick={(e) => e.stopPropagation()}>
+                <div className="quiz-recipient-item-other-input-container">
+                  <input className="quiz-recipient-item-other-input" type="text" placeholder="Recipient Name" autoFocus value={quizState.recipient_name} onChange={(e) => handleChange('recipient_name', e, 0, 'daughter')}/>
+                  <div className="quiz-recipient-item-other-input-svg" onClick={(e) => (setPopUp(''))}>{checkmarkName && <SVGs svg={'checkmark'}></SVGs>}</div>
+                </div>
+                </span> 
+              : 
+              null
+              }
+            </div>
+            <div className={`quiz-recipient-item recipient-other ` + (other == 'recipient' ? ` pb-4 ` : '') + (typeof window !== "undefined" ? window.localStorage.getItem('recipient_other') ? window.localStorage.getItem('recipient_other').length > 0 ? ` pb-4 ` : '' : '' : '')} onClick={(e) => (handleChange('recipient', e), setOther('recipient'))}>
+            {quizState.recipient_other ? quizState.recipient_other : 'Other '}
+            {popup_type == 'other' && quizState.recipient_other ? 
             <span className="quiz-recipient-item-other-container">
               <div className="quiz-recipient-item-other-recipient">
-                {quizState.recipient_other}
+                {quizState.recipient_other}: {quizState.recipient_name}
               </div>
             </span>
             :
@@ -736,19 +947,42 @@ const quiz = ({newUser, quizState}) => {
             {other == 'recipient' ? 
             <span className="quiz-recipient-item-other mt-4" onClick={(e) => e.stopPropagation()}>
               <div className="quiz-recipient-item-other-input-container">
-                <input className="quiz-recipient-item-other-input" type="text" placeholder="Please specify" autoFocus value={quizState.recipient_other} onChange={(e) => handleChange('recipient_other', e)}/>
-                <div className="quiz-recipient-item-other-input-svg" onClick={(e) => (quizProgress('other'), setOther(false), document.querySelectorAll('.recipient-other')[0].classList.add("active"))}>{checkmarkOther && <SVGs svg={'checkmark'}></SVGs>}</div>
+                <input className="quiz-recipient-item-other-input" type="text" placeholder="Please specify" autoFocus value={quizState.recipient_other} onChange={(e) => (setPopUp(''),handleChange('recipient_other', e))}/>
+                <div className="quiz-recipient-item-other-input-svg" onClick={(e) => (setOther(false), document.querySelectorAll('.recipient-other')[0].classList.add("active"), setPopUp('other'), setPopUpType('other'), dispatch({type: 'UPDATE_CHANGE', name: 'recipient_name', payload: ''}))}>{checkmarkOther && <SVGs svg={'checkmark'}></SVGs>}</div>
               </div>
               </span> 
             : 
             null
             }
+
+            {name_popup == 'other' ? 
+                <span className="quiz-recipient-item-other mt-4" onClick={(e) => e.stopPropagation()}>
+                <div className="quiz-recipient-item-other-input-container">
+                  <input className="quiz-recipient-item-other-input" type="text" placeholder="Recipient Name" autoFocus value={quizState.recipient_name} onChange={(e) => handleChange('recipient_name', e, 0, 'other')}/>
+                  <div className="quiz-recipient-item-other-input-svg" onClick={(e) => (setPopUp(''))}>{checkmarkName && <SVGs svg={'checkmark'}></SVGs>}</div>
+                </div>
+                </span> 
+              : 
+              null
+            } 
             </div>
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e, 'age')} disabled={other.length > 0 ? quizState.recipient ? true : false : false}>Next</button></div>
-          {quizState.recipient && !other && <div className="quiz-next" onClick={(e) => quizProgressNav(e, 'age')}>
-            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
-          </div>}
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e, 'age')} disabled={quizState.recipient_other.length > 0 ? false : quizState.recipient ? quizState.recipient_name ? false : true : true}>Next</button></div>
+          {quizState.recipient_other.length > 0 ? 
+            <div className="quiz-next" onClick={(e) => quizProgressNav(e, 'age')}>
+              <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
+            </div>
+            :
+            quizState.recipient ? 
+            quizState.recipient_name ?
+
+            <div className="quiz-next" onClick={(e) => quizProgressNav(e, 'age')}>
+              <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
+            </div>
+
+            : null
+            : null
+          }
         </>
         }
         {quiz == 'age' && <>
@@ -778,10 +1012,10 @@ const quiz = ({newUser, quizState}) => {
           <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'age')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
-          <div className="quiz-title">What are the events you'd like to send cards for your {typeof window !== "undefined" ? window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient' : 'recipient'}?</div>
-          <div className="quiz-title-mobile">Select an event for {window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient'}.</div>
-          <div className="quiz-subtitle">Pick one or more events. Select the estimated arrival date for each card. Make sure it's at least 3 weeks away!</div>
-          <div className="quiz-subtitle-mobile">Select the estimated arrival date for the event.</div>
+          <div className="quiz-title">Pick one event for {typeof window !== "undefined" ? window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient' : 'recipient'}.</div>
+          <div className="quiz-title-mobile">Pick one event for {window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient'}.</div>
+          <div className="quiz-subtitle">Select arrival date.</div>
+          <div className="quiz-subtitle-mobile">Select arrival date.</div>
           <div className="quiz-recipient-event">
             {eventsList.slice(0, toggleEvents ? 20 : 8).map( (item, idx) => 
             <div key={idx} className={`quiz-recipient-event-item`} onClick={(e) => 
@@ -925,8 +1159,8 @@ const quiz = ({newUser, quizState}) => {
           </div>
           <div className="quiz-title">How would you rank the styles that describe your {typeof window !== "undefined" ? window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient' : 'recipient'}?</div>
           <div className="quiz-title-mobile">Rate the cards for {recipient ? recipient : 'recipient'}.</div>
-          <div className="quiz-subtitle">How would you rank the styles that describe your {recipient ? recipient : 'recipient'}?</div>
-          <div className="quiz-subtitle-mobile">What does {recipient ? recipient : 'recipient'} like? Drag and drog from 1 (most important) to 6 (least important).</div>
+          <div className="quiz-subtitle">Please drag and drop.</div>
+          <div className="quiz-subtitle-mobile">Please drap and drop.</div>
           <div className="quiz-recipient-style">
             {stylesList.map( (item, idx) => 
             <div key={idx} onDragOver={(e)=> onDragOver(e)} onDrop={(e) => onDropBack(e)}  className="quiz-recipient-style-item-container">
@@ -1224,7 +1458,7 @@ const quiz = ({newUser, quizState}) => {
                 <div className="form-group-single mail">
                   <input type="text" placeholder="Zip Code" value={quizState.zip_code} onChange={ (e) => (handleChange('mail', e, null, 'zip_code'))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Zip Code'} required/>
                 </div>
-                <button onClick={(e) => handleZipCode(e)} className="form-button mail-button" disabled={ handleFormDisableButtons('mail') ? true : false}>Add Address</button>
+                {/* <button onClick={(e) => handleZipCode(e)} className="form-button mail-button" disabled={ handleFormDisableButtons('mail') ? true : false}>Add Address</button> */}
                 {message && <div className="form-message-error">{message}</div>}
               </form>
             </div>
@@ -1311,7 +1545,7 @@ const quiz = ({newUser, quizState}) => {
                   <div className="form-group-single mail">
                     <input type="text" placeholder="Zip Code" value={quizState.zip_code} onChange={ (e) => (handleChange('mail', e, null, 'zip_code'))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Zip Code'} required/>
                   </div>
-                  <button onClick={(e) => handleZipCode(e)} className="form-button mail-button" disabled={ handleFormDisableButtons('mail') ? true : false}>Add Address</button>
+                  {/* <button onClick={(e) => handleZipCode(e)} className="form-button mail-button" disabled={ handleFormDisableButtons('mail') ? true : false}>Add Address</button> */}
                   {message && <div className="form-message-error">{message}</div>}
                 </form>
               </div>
@@ -1329,8 +1563,8 @@ const quiz = ({newUser, quizState}) => {
           </div>
           <div className="quiz-title">What would you like the card to say?</div>
           <div className="quiz-title-mobile">What would you like the card to say?</div>
-          <div className="quiz-subtitle">Fill in the blank!</div>
-          <div className="quiz-subtitle-mobile">Fill in the blank!</div>
+          {/* <div className="quiz-subtitle">Fill in the blank!</div>
+          <div className="quiz-subtitle-mobile">Fill in the blank!</div> */}
           <div className="quiz-recipient-message">
             <div className="quiz-recipient-message-heading">Card: {typeof window !== 'undefined' ? window.localStorage.getItem('event') ? window.localStorage.getItem('event') : quizState.event ? quizState.event : 'event' : null}</div>
             <div className="quiz-recipient-message-container">
@@ -1354,10 +1588,10 @@ const quiz = ({newUser, quizState}) => {
                     </div>
                   </div>
                 </div>
-                {/* <div className="form-group-single message p-0">
+                <div className="form-group-single message p-0">
                   <label htmlFor="name">Signature:</label>
                   <input type="text" name="signature" required value={quizState.signature == 'blank' ? '' : quizState.signature} onChange={(e) => handleChange('signature', e, null, e.target.value)}/>
-                </div> */}
+                </div>
               </form>
               <div className="checkbox_2 center show-on-mobile"><input type="checkbox"/><span>Not sure yet, ask me later</span></div>
             </div>

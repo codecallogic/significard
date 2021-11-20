@@ -21,7 +21,6 @@ const CARD_ELEMENT_OPTIONS = {
   },
 };
 
-
 const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, cardholder, package_price, tax, taxID, recipient, subscription}) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -130,7 +129,7 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
 
   return (
     <>
-      <CardElement className="checkout-container-left-form" options={CARD_ELEMENT_OPTIONS} />
+      <CardElement className="checkout-container-left-form" options={CARD_ELEMENT_OPTIONS}/>
       <div className="checkout-container-left-updates">
         <div className="checkout-container-left-updates-title">Order Updates</div>
         <div className="checkout-container-left-updates-subtitle">You'll get order updates by email.</div>

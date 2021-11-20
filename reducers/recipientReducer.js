@@ -1,6 +1,7 @@
 const initialState = {
   recipient: '',
   recipient_other: '',
+  recipient_name: '',
   age: '',
   event: '',
   event_other: '',

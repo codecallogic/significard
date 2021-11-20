@@ -219,6 +219,10 @@
             top: 2rem;
           }
 
+          @media only screen and (max-width: $large-medium) {
+            font-size: 1rem;
+          }
+
           span {
             display: block;
             width: 1rem;
@@ -226,6 +230,10 @@
             margin-right: 1rem;
             background-color: #f3c623;
             border-radius: 50%;
+
+            @media only screen and (max-width: $large-medium) {
+              margin-right: 0.5rem;
+            }
           }
         }
 
