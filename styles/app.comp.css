@@ -142,7 +142,7 @@ body {
   grid-column: 1/-1;
   display: none;
   margin: 10rem 0 0 0; }
-  @media only screen and (max-width: 1200px) {
+  @media only screen and (max-width: 1100px) {
     .slider {
       display: block; } }
   .slider-title {
@@ -414,6 +414,25 @@ body {
   align-items: center;
   z-index: 2000;
   justify-content: center; }
+  .recipient-modal-small {
+    position: fixed;
+    top: 5%;
+    left: 10%;
+    width: 80%;
+    min-height: 75rem;
+    display: flex;
+    background-color: white;
+    border: 0.2rem solid #e5e5e5;
+    border-radius: 1.2rem;
+    box-shadow: 0.2rem 0.1rem 0rem 0rem rgba(0, 0, 0, 0.2);
+    align-items: center;
+    z-index: 2000;
+    justify-content: center; }
+    @media only screen and (max-width: 768px) {
+      .recipient-modal-small {
+        top: 25%;
+        min-height: max-content;
+        max-height: max-content; } }
   .recipient-modal-box {
     width: 100%;
     display: flex;
@@ -428,10 +447,48 @@ body {
       width: 0.2rem; }
     .recipient-modal-box::-webkit-scrollbar-thumb {
       background-color: #0f2e4c; }
+    .recipient-modal-box-small {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 75rem;
+      max-height: 75rem;
+      border-radius: 1.2rem;
+      position: relative;
+      overflow-y: auto; }
+      @media only screen and (max-width: 768px) {
+        .recipient-modal-box-small {
+          min-height: 30rem;
+          max-height: max-content; } }
+      .recipient-modal-box-small::-webkit-scrollbar {
+        width: 0.2rem; }
+      .recipient-modal-box-small::-webkit-scrollbar-thumb {
+        background-color: #0f2e4c; }
     .recipient-modal-box-close {
       position: absolute;
       top: 2rem;
       right: 2rem; }
+      .recipient-modal-box-close-small {
+        position: absolute;
+        top: 2rem;
+        right: 2rem; }
+        @media only screen and (max-width: 768px) {
+          .recipient-modal-box-close-small {
+            top: 1rem;
+            right: 1rem; } }
+        .recipient-modal-box-close-small-svg {
+          width: 3rem;
+          height: 3rem;
+          fill: #0f2e4c; }
+          .recipient-modal-box-close-small-svg:hover {
+            cursor: pointer;
+            fill: #e84925; }
+          @media only screen and (max-width: 768px) {
+            .recipient-modal-box-close-small-svg {
+              width: 1rem;
+              height: 1rem;
+              fill: #0f2e4c; } }
       .recipient-modal-box-close-svg {
         width: 3rem;
         height: 3rem;
@@ -1834,7 +1891,7 @@ body {
           border: none;
           text-indent: 1rem;
           height: 3rem;
-          font-size: 1.8rem;
+          font-size: 1.4rem;
           flex-grow: 1; }
           .quiz-recipient-item-other-input-container {
             display: flex;
@@ -2191,6 +2248,9 @@ body {
         gap: 0; }
         .quiz-recipient-style-drop-item:not(:last-child) {
           margin: 0 3rem 0 0; }
+          @media only screen and (min-width: 1200px) {
+            .quiz-recipient-style-drop-item:not(:last-child) {
+              margin: 0 1rem 0 0; } }
         @media only screen and (max-width: 1200px) {
           .quiz-recipient-style-drop-item {
             width: 19rem;
@@ -2268,7 +2328,7 @@ body {
         align-items: center;
         flex-direction: column;
         position: relative;
-        width: 16.7rem;
+        width: 15.7rem;
         height: 23.3rem; }
         @media only screen and (max-width: 992px) {
           .quiz-recipient-style-item-container {
@@ -2802,7 +2862,7 @@ body {
       flex-direction: column;
       align-items: center;
       width: 85rem;
-      height: 55.3rem;
+      height: 45.3rem;
       border: 0.2rem solid #e5e5e5;
       box-sizing: border-box;
       border-radius: 1.2rem;
@@ -3752,6 +3812,9 @@ body {
             .profile-dashboard-recipients-edit-title-credits {
               left: 2rem;
               top: 2rem; } }
+          @media only screen and (max-width: 1100px) {
+            .profile-dashboard-recipients-edit-title-credits {
+              font-size: 1rem; } }
           .profile-dashboard-recipients-edit-title-credits span {
             display: block;
             width: 1rem;
@@ -3759,6 +3822,9 @@ body {
             margin-right: 1rem;
             background-color: #f3c623;
             border-radius: 50%; }
+            @media only screen and (max-width: 1100px) {
+              .profile-dashboard-recipients-edit-title-credits span {
+                margin-right: 0.5rem; } }
         @media only screen and (max-width: 1100px) {
           .profile-dashboard-recipients-edit-title {
             background-image: linear-gradient(#18405d 99%, #18405d 80%);
