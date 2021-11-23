@@ -444,12 +444,13 @@ const quiz = ({newUser, quizState}) => {
     }
 
     if(question == 'package_plan'){
-      if(type == 'good deal') window.localStorage.setItem('subscription', 'price_1Jq0oBAFcPAVZmVLtLUI1icZ')
-      if(type == 'good_deal') window.localStorage.setItem('subscription', 'price_1Jq0oBAFcPAVZmVLtLUI1icZ')
-      if(type == 'better deal') window.localStorage.setItem('subscription', 'price_1Jq0orAFcPAVZmVLvZNwmwWP')
-      if(type == 'better_deal') window.localStorage.setItem('subscription', 'price_1Jq0orAFcPAVZmVLvZNwmwWP')
-      if(type == 'best deal') window.localStorage.setItem('subscription', 'price_1Jq0qpAFcPAVZmVLF41sZGrG')
-      if(type == 'best_deal') window.localStorage.setItem('subscription', 'price_1Jq0qpAFcPAVZmVLF41sZGrG')
+      setMessage('')
+      if(type == 'good deal') (setResult(''),  window.localStorage.setItem('subscription', 'price_1Jq0oBAFcPAVZmVLtLUI1icZ'))
+      if(type == 'good_deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1Jq0oBAFcPAVZmVLtLUI1icZ'))
+      if(type == 'better deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1Jq0orAFcPAVZmVLvZNwmwWP'))
+      if(type == 'better_deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1Jq0orAFcPAVZmVLvZNwmwWP'))
+      if(type == 'best deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1Jq0qpAFcPAVZmVLF41sZGrG'))
+      if(type == 'best_deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1Jq0qpAFcPAVZmVLF41sZGrG'))
 
       window.localStorage.setItem(question, type)
       window.localStorage.setItem('package_quantity', quantity)
@@ -724,6 +725,7 @@ const quiz = ({newUser, quizState}) => {
 
   const calculate = () => {
     setMessage('')
+    if(+quizState.package_quantity == 0) return setMessage('Must be greater than 0')
     if(+quizState.package_quantity <= 4) setResult(13.99)
     if(+quizState.package_quantity > 4 ) setResult(11.99)
     if(+quizState.package_quantity > 9) setResult(9.99)
@@ -1309,7 +1311,7 @@ const quiz = ({newUser, quizState}) => {
               <div className="quiz-recipient-package-item-title">Customize It</div>
               <div className="quiz-recipient-package-item-subtitle">Enter number of cards</div>
               <div className="quiz-recipient-package-item-input">
-                <input id="custom_quantity" type="text" value={quizState.package_quantity} placeholder="Number of Cards" onChange={(e) => (setResult(''), validateIsNumber('custom_quantity'),handleChange('package_plan', e, null, 'custom', e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Number of Cards'} onKeyDown={(e) => {
+                <input id="custom_quantity" type="text" value={quizState.package_quantity} placeholder="Number of Cards" onChange={(e) => (setResult(''), validateIsNumber('custom_quantity'), handleChange('package_plan', e, null, 'custom', e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Number of Cards'} onKeyDown={(e) => {
                   if (e.code === "Enter") {
                     calculate()
                   }
@@ -1364,9 +1366,21 @@ const quiz = ({newUser, quizState}) => {
               </div>
           </div> */}
           {/* <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'mail')} disabled={quizState.package_plan.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div> */}
-          {quizState.package_plan && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'mail')}>
+          {quizState.package_plan == 'custom' ? 
+          result ?
+          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'mail')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
-          </div>}
+          </div>
+          : 
+          null
+          :
+          quizState.package_plan ? 
+          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'mail')}>
+            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
+          </div>
+          : 
+          null
+          }
         </>
         }
         {quiz == 'mail' && <>
