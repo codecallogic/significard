@@ -656,7 +656,7 @@ const quiz = ({newUser, quizState}) => {
   const handleZipCode = (e) => {
     e.preventDefault()
     if(!/^\d{5}(-\d{4})?$/.test(quizState.zip_code)) return setMessage('Zip code is invalid');
-    quizProgressNav(e, 'message')
+    quizProgressNav(e, 'package')
   }
 
   const validateIsNumber = (type) => {
@@ -1229,7 +1229,7 @@ const quiz = ({newUser, quizState}) => {
               ? 
               (handleChange('other', e),
                 setTimeout(() => {
-                  quizProgressNav(e,'package')
+                  quizProgressNav(e,'mail')
                 }, 500)
               ) 
             
@@ -1239,8 +1239,8 @@ const quiz = ({newUser, quizState}) => {
               )
               }/><span>Nope</span></div>
           </div>
-          <div className="quiz-button-container"><button className="quiz-button" disabled={quizState.other.length < 1 ? true : false} onClick={(e) => quizProgressNav(e,'package')}>Next</button><div className="quiz-button-container"></div></div>
-          {quizState.other && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'package')}>
+          <div className="quiz-button-container"><button className="quiz-button" disabled={quizState.other.length < 1 ? true : false} onClick={(e) => quizProgressNav(e,'mail')}>Next</button><div className="quiz-button-container"></div></div>
+          {quizState.other && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'mail')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>}
         </>
@@ -1262,125 +1262,6 @@ const quiz = ({newUser, quizState}) => {
           {quizState.involvement && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'package')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>}
-        </>
-        }
-        {quiz == 'package' && <>
-          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'other')}>
-            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
-          </div>
-          <div className="quiz-title">Choose an annual plan</div>
-          <div className="quiz-title-mobile">Choose an annual plan</div>
-          <div className="quiz-recipient-package">
-            <div className="quiz-recipient-package-item">
-              <div className="quiz-recipient-package-item-title">Best Deal</div>
-              <div className="quiz-recipient-package-item-subtitle">You get 20 cards annually</div>
-              <div className="quiz-recipient-package-item-image-container">
-                <img src={`/media/package/standard.png`} alt="" />
-              </div>
-              <div className="quiz-recipient-package-item-price">$6.99 per card</div>
-              {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package_plan', e, null, 'best deal', 20))}>Select</button>
-              <div>Free Shipping</div>
-            </div>
-            <div className="quiz-recipient-package-item">
-              <div className="quiz-recipient-package-item-title">Better Deal</div>
-              <div className="quiz-recipient-package-item-subtitle">You get 10 cards annually</div>
-              <div className="quiz-recipient-package-item-image-container">
-                <img src={`/media/package/standard.png`} alt="" />
-              </div>
-              <div className="quiz-recipient-package-item-price">$9.99 per card</div>
-              {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package_plan', e, null, 'better deal', 10))}>Select</button>
-              <div>Free Shipping</div>
-            </div>
-            <div className="quiz-recipient-package-item">
-              <div className="quiz-recipient-package-item-title">Good Deal</div>
-              <div className="quiz-recipient-package-item-subtitle">You get 5 cards annually</div>
-              <div className="quiz-recipient-package-item-image-container">
-                {/* {packageList.slice(3, 6).map((item, idx) =>
-                  <img key={idx} style={{transform: `rotate(${item.rotate}deg)`}} src={`/media/package/${item.image}`} alt="" />
-                )} */}
-                <img src={`/media/package/standard.png`} alt="" />
-              </div>
-              <div className="quiz-recipient-package-item-price">$11.99 per card</div>
-              {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package_plan', e, null, 'good deal', 5))}>Select</button>
-              <div>Free Shipping</div>
-            </div>
-            <div className="quiz-recipient-package-item">
-              <div className="quiz-recipient-package-item-title">Customize It</div>
-              <div className="quiz-recipient-package-item-subtitle">Enter number of cards</div>
-              <div className="quiz-recipient-package-item-input">
-                <input id="custom_quantity" type="text" value={quizState.package_quantity} placeholder="Number of Cards" onChange={(e) => (setResult(''), validateIsNumber('custom_quantity'), handleChange('package_plan', e, null, 'custom', e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Number of Cards'} onKeyDown={(e) => {
-                  if (e.code === "Enter") {
-                    calculate()
-                  }
-                }}/>
-              </div>
-              {!result && <button className="quiz-recipient-package-item-button mb-2" onClick={ () => (calculate())}>Calculate</button>
-              }
-              {result && <button className="quiz-recipient-package-item-button mb-2" onClick={ (e) => (quizProgressNav(e,'mail'))}>Select & Continue</button>
-              }
-              {result && <>
-              <div className="quiz-recipient-package-item-price">${result} per card</div>
-              <div>Free Shipping</div>
-              </>}
-              {message && <div className="form-message-error">{message}</div>}
-            </div>
-          </div>
-          <Slider result={result} setresult={setResult} calculate={calculate} quizProgressNav={quizProgressNav} handleChange={handleChange} validateisnumber={validateIsNumber} quizstate={quizState} message={message} setMessage={setMessage}></Slider>
-          <div className="quiz-recipient-package-bulk">For more than 50 cards, please <a href="">contact us</a></div>
-          <div className="quiz-recipient-package-footer">All packages come with the following items <span>at no extra cost</span></div>
-          <div className="quiz-recipient-package-footer-2">
-            <div className="quiz-recipient-package-footer-2-item">
-              USPS Forever First Class Stamps
-            </div>
-            <div className="quiz-recipient-package-footer-2-item">
-              Envelope
-            </div>
-            <div className="quiz-recipient-package-footer-2-item">
-              Blank or preselected message inside the card
-            </div>
-          </div>
-          {/* <div className="quiz-recipient-package-description">
-              <div className="quiz-recipient-package-description-title">All cards are 5 x 7 (A7 Folded) and include: </div>
-                <div className="quiz-recipient-package-description-text">• Handwritten address on the envelope.</div>
-                <div className="quiz-recipient-package-description-text">• Recipients name in front of card.</div>
-                <div className="quiz-recipient-package-description-text">• Blank or Preselected message inside the card (2-3 sentences)</div>
-              <div className="quiz-recipient-package-description-title">Optional </div>
-              <div className="quiz-recipient-package-description-text">• You can add handwritten message inside the card for extra $1.00. 
-                <div className="quiz-recipient-package-description-text-bubble">
-                  <svg onMouseOver={(e) => showTooltip(e, 0)} onMouseLeave={(e) => hideTooltip(e, 0)}><use xlinkHref="sprite.svg#icon-information"></use></svg>
-                  <div className="quiz-recipient-package-description-text-bubble-tooltip">
-                  Our team of artists will beautifully handwrite your message inside the card
-                  </div>
-                </div>
-              </div>
-              <div className="quiz-recipient-package-description-text">• Get advice on what to write inside the card for extra $2.00. 
-                <div className="quiz-recipient-package-description-text-bubble">
-                  <svg onMouseOver={(e) => showTooltip(e, 1)} onMouseLeave={(e) => hideTooltip(e, 1)}><use xlinkHref="sprite.svg#icon-information"></use></svg>
-                  <div className="quiz-recipient-package-description-text-bubble-tooltip">
-                  Don’t know what to write? We got you! We’ll give you options on what you could write inside the card.
-                  </div>
-                </div>
-              </div>
-          </div> */}
-          {/* <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'mail')} disabled={quizState.package_plan.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div> */}
-          {quizState.package_plan == 'custom' ? 
-          result ?
-          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'mail')}>
-            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
-          </div>
-          : 
-          null
-          :
-          quizState.package_plan ? 
-          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'mail')}>
-            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
-          </div>
-          : 
-          null
-          }
         </>
         }
         {quiz == 'mail' && <>
@@ -1571,8 +1452,127 @@ const quiz = ({newUser, quizState}) => {
           </div>}
         </>
         }
-        {quiz == 'message' && <>
+        {quiz == 'package' && <>
           <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'mail')}>
+            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
+          </div>
+          <div className="quiz-title">Choose the number of cards you'd like to receive for ANY recipients</div>
+          <div className="quiz-title-mobile">Choose the number of cards you'd like to receive for ANY recipients</div>
+          <div className="quiz-recipient-package">
+            <div className="quiz-recipient-package-item">
+              <div className="quiz-recipient-package-item-title">Best Deal</div>
+              <div className="quiz-recipient-package-item-subtitle">You get 20 cards annually</div>
+              <div className="quiz-recipient-package-item-image-container">
+                <img src={`/media/package/standard.png`} alt="" />
+              </div>
+              <div className="quiz-recipient-package-item-price">$6.99 per card</div>
+              {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
+              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'best deal', 20))}>Select</button>
+              <div>Free Shipping</div>
+            </div>
+            <div className="quiz-recipient-package-item">
+              <div className="quiz-recipient-package-item-title">Better Deal</div>
+              <div className="quiz-recipient-package-item-subtitle">You get 10 cards annually</div>
+              <div className="quiz-recipient-package-item-image-container">
+                <img src={`/media/package/standard.png`} alt="" />
+              </div>
+              <div className="quiz-recipient-package-item-price">$9.99 per card</div>
+              {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
+              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'better deal', 10))}>Select</button>
+              <div>Free Shipping</div>
+            </div>
+            <div className="quiz-recipient-package-item">
+              <div className="quiz-recipient-package-item-title">Good Deal</div>
+              <div className="quiz-recipient-package-item-subtitle">You get 5 cards annually</div>
+              <div className="quiz-recipient-package-item-image-container">
+                {/* {packageList.slice(3, 6).map((item, idx) =>
+                  <img key={idx} style={{transform: `rotate(${item.rotate}deg)`}} src={`/media/package/${item.image}`} alt="" />
+                )} */}
+                <img src={`/media/package/standard.png`} alt="" />
+              </div>
+              <div className="quiz-recipient-package-item-price">$11.99 per card</div>
+              {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
+              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'good deal', 5))}>Select</button>
+              <div>Free Shipping</div>
+            </div>
+            <div className="quiz-recipient-package-item">
+              <div className="quiz-recipient-package-item-title">Customize It</div>
+              <div className="quiz-recipient-package-item-subtitle">Enter number of cards</div>
+              <div className="quiz-recipient-package-item-input">
+                <input id="custom_quantity" type="text" value={quizState.package_quantity} placeholder="Number of Cards" onChange={(e) => (setResult(''), validateIsNumber('custom_quantity'), handleChange('package_plan', e, null, 'custom', e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Number of Cards'} onKeyDown={(e) => {
+                  if (e.code === "Enter") {
+                    calculate()
+                  }
+                }}/>
+              </div>
+              {!result && <button className="quiz-recipient-package-item-button mb-2" onClick={ () => (calculate())}>Calculate</button>
+              }
+              {result && <button className="quiz-recipient-package-item-button mb-2" onClick={ (e) => (quizProgressNav(e,'message'))}>Select & Continue</button>
+              }
+              {result && <>
+              <div className="quiz-recipient-package-item-price">${result} per card</div>
+              <div>Free Shipping</div>
+              </>}
+              {message && <div className="form-message-error">{message}</div>}
+            </div>
+          </div>
+          <Slider result={result} setresult={setResult} calculate={calculate} quizProgressNav={quizProgressNav} handleChange={handleChange} validateisnumber={validateIsNumber} quizstate={quizState} message={message} setMessage={setMessage}></Slider>
+          <div className="quiz-recipient-package-bulk">For more than 50 cards, please <a href="">contact us</a></div>
+          <div className="quiz-recipient-package-footer">All packages come with the following items <span>at no extra cost</span></div>
+          <div className="quiz-recipient-package-footer-2">
+            <div className="quiz-recipient-package-footer-2-item">
+              USPS Forever First Class Stamps
+            </div>
+            <div className="quiz-recipient-package-footer-2-item">
+              Envelope
+            </div>
+            <div className="quiz-recipient-package-footer-2-item">
+              Blank or preselected message inside the card
+            </div>
+          </div>
+          {/* <div className="quiz-recipient-package-description">
+              <div className="quiz-recipient-package-description-title">All cards are 5 x 7 (A7 Folded) and include: </div>
+                <div className="quiz-recipient-package-description-text">• Handwritten address on the envelope.</div>
+                <div className="quiz-recipient-package-description-text">• Recipients name in front of card.</div>
+                <div className="quiz-recipient-package-description-text">• Blank or Preselected message inside the card (2-3 sentences)</div>
+              <div className="quiz-recipient-package-description-title">Optional </div>
+              <div className="quiz-recipient-package-description-text">• You can add handwritten message inside the card for extra $1.00. 
+                <div className="quiz-recipient-package-description-text-bubble">
+                  <svg onMouseOver={(e) => showTooltip(e, 0)} onMouseLeave={(e) => hideTooltip(e, 0)}><use xlinkHref="sprite.svg#icon-information"></use></svg>
+                  <div className="quiz-recipient-package-description-text-bubble-tooltip">
+                  Our team of artists will beautifully handwrite your message inside the card
+                  </div>
+                </div>
+              </div>
+              <div className="quiz-recipient-package-description-text">• Get advice on what to write inside the card for extra $2.00. 
+                <div className="quiz-recipient-package-description-text-bubble">
+                  <svg onMouseOver={(e) => showTooltip(e, 1)} onMouseLeave={(e) => hideTooltip(e, 1)}><use xlinkHref="sprite.svg#icon-information"></use></svg>
+                  <div className="quiz-recipient-package-description-text-bubble-tooltip">
+                  Don’t know what to write? We got you! We’ll give you options on what you could write inside the card.
+                  </div>
+                </div>
+              </div>
+          </div> */}
+          {/* <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'mail')} disabled={quizState.package_plan.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div> */}
+          {quizState.package_plan == 'custom' ? 
+          result ?
+          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'message')}>
+            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
+          </div>
+          : 
+          null
+          :
+          quizState.package_plan ? 
+          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'message')}>
+            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
+          </div>
+          : 
+          null
+          }
+        </>
+        }
+        {quiz == 'message' && <>
+          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'package')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
           <div className="quiz-title">What would you like the card to say?</div>
@@ -1590,9 +1590,11 @@ const quiz = ({newUser, quizState}) => {
                 </div> */}
                 <div className="form-group-single message p-0">
                   <label htmlFor="message">Handwritten message inside:</label>
-                  <textarea className="w-4" rows="5" value={quizState.message == 'blank' || quizState.message == 'message_options' ? '' : quizState.message} onChange={(e) => (handleChange('message', e, null, e.target.value), document.getElementsByName('message_blank')[0].checked = false, document.getElementsByName('message_textarea_blank')[0].checked = false)}></textarea>
-                  <div className="checkbox_2"><input type="checkbox" name="message_blank" onChange={(e) => (handleChange('message', e, null, 'blank'), document.getElementsByName('message_textarea_blank')[0].checked = false)}/><span>Leave it blank</span></div>
-                  <div className="checkbox_2 w-4 info-popup"><input type="checkbox" name="message_textarea_blank" onClick={(e) => (handleChange('message', e, null, 'message_options'), document.getElementsByName('message_blank')[0].checked = false)}/>
+                  <textarea className="w-4" rows="5" value={quizState.message == 'blank' || quizState.message == 'message_options' ? '' : quizState.message} onChange={(e) => (handleChange('message', e, null, e.target.value), document.getElementsByName('message_blank')[0].checked = false)}></textarea>
+                  {/* document.getElementsByName('message_textarea_blank')[0].checked = false */}
+                  <div className="checkbox_2"><input type="checkbox" name="message_blank" onChange={(e) => (handleChange('message', e, null, 'blank'))}/><span>Leave it blank</span></div>
+                  {/* document.getElementsByName('message_textarea_blank')[0].checked = false */}
+                  {/* <div className="checkbox_2 w-4 info-popup"><input type="checkbox" name="message_textarea_blank" onClick={(e) => (handleChange('message', e, null, 'message_options'), document.getElementsByName('message_blank')[0].checked = false)}/>
                     <span className="checkbox_2-message">Give me message options for $2.00</span>
                     <div className="quiz-recipient-package-description-text-bubble">
                       <svg onMouseOver={(e) => showTooltip(e, 0)} onMouseLeave={(e) => hideTooltip(e, 0)}><use xlinkHref="sprite.svg#icon-information"></use></svg>
@@ -1600,7 +1602,7 @@ const quiz = ({newUser, quizState}) => {
                       We got you! We’ll send you different message options for just $2.00 per card once you sign up.
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="form-group-single message p-0">
                   <label htmlFor="name">Signature:</label>

@@ -348,10 +348,10 @@ const Info = ({user, dashboard, credits}) => {
           <div className="recipient-modal-plan">
             <div className="recipient-modal-plan-box">
               <div className="recipient-modal-plan-box-close" onClick={() => setModal('')}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
-              <div className="quiz-title">Choose an annual plan</div>
+              <div className="quiz-title">Choose the number of cards you'd like to receive for ANY recipients</div>
               <div className="recipient-modal-plan-box-mobile">
                 <div className="recipient-modal-plan-box-mobile-title">
-                  Change Plan
+                  Choose the number of cards you'd like to receive for ANY recipients
                 </div>
                 <div className="recipient-modal-plan-box-mobile-subtitle">
                   <span>{user.username},</span> find a plan that's right for you

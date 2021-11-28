@@ -32,12 +32,25 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
 
   const validateIsNumber = (type) => {
     const input = document.getElementById(type)
-    const regex = /[^0-9|\n\r]/g
+    const regex = /^(\d+(\d{0,2})?|\.?\d{1,2})$/
     input.value = input.value.split(regex).join('')
+  }
+
+  const validateIsPhoneNumber = (type) => {
+    setMessage('')
+    const input = document.getElementById(type)
+    const cleanNum = input.value.toString().replace(/\D/g, '');
+    const match = cleanNum.match(/^(\d{3})(\d{0,3})(\d{0,4})$/);
+    if (match) {
+      return  setPhone('(' + match[1] + ') ' + (match[2] ? match[2] + "-" : "") + match[3]);
+    }
+    return null;
   }
 
   const handleCardPayment = async (e) => {
     e.preventDefault()
+    setMessage('')
+    if(phone.length < 14) return setMessage('Invalid phone number')
     if(user){
     if(!stripe || !elements){
       // Stripe.js has not loaded yet. Make sure to disable
@@ -46,8 +59,6 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
     }
 
     setLoading(true)
-
-    setMessage('')
 
     if(!cardholder){setMessage('Cardholder field is empty'); setLoading(false); return}
     if(!address){setMessage('Address field is empty'); setLoading(false); return}
@@ -135,9 +146,9 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
         <div className="checkout-container-left-updates-subtitle">You'll get order updates by email.</div>
         <div className="checkout-container-left-updates-subtitle-two">Get order updates by text</div>
         <div className="form-group-double mail checkout-group-double">
-          <input id="phoneNumber" type="text" placeholder="Mobile Phone Number" value={phone} onChange={ (e) => (validateIsNumber('phoneNumber'), setPhone(e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Mobile Phone Number'} required/>
+          <input id="phoneNumber" type="text" placeholder="Mobile Phone Number" value={phone} onChange={ (e) => e.target.value.length < 15 ? (validateIsNumber('phoneNumber'), setPhone(e.target.value), validateIsPhoneNumber('phoneNumber')) : null} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Mobile Phone Number'} required/>
         </div>
-        <div className="checkout-container-left-updates-subtitle-three">To expedite the order process, please add your phone number.</div>
+        <div className="checkout-container-left-updates-subtitle-three">To make the process easier, please add your phone number.</div>
       </div>
       <div className="checkout-container-button-container">
         <button className="checkout-container-button" disabled={!stripe} onClick={handleCardPayment}>{loading ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : 'Confirm'}</button>

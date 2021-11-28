@@ -26,7 +26,7 @@ const Home = ({loggedIn, user, userUpdate}) => {
   }
   
   return (
-    <>
+    <div className="home">
     <Nav loggedIn={loggedIn} color={'#DBF667'}></Nav>
     <NavMobile loggedIn={loggedIn} color={'#DBF667'}></NavMobile>
     <div className="home-header">
@@ -123,7 +123,7 @@ const Home = ({loggedIn, user, userUpdate}) => {
       <div>Welcome, {user.userName ? user.userName : user.userEmail}</div>
       {user.userName ? <a className="home-logout" onClick={signOut}>Logout</a> : <a href="/login"> Login</a>}
     </div> */}
-    </>
+    </div>
   )
 }
 

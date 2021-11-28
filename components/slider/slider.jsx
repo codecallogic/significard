@@ -80,7 +80,7 @@ const Slider = ({slider, quizProgressNav, handleChange, result, setresult, calcu
             </div>
             {!result && <button className="slider-slides-item-button mb-1" onClick={ () => (calculate())}>Calculate</button>
             }
-            {result && <button className="slider-slides-item-button mb-1" onClick={ (e) => (quizProgressNav(e,'mail'))}>Select</button>
+            {result && <button className="slider-slides-item-button mb-1" onClick={ (e) => (quizProgressNav(e,'message'))}>Select</button>
             }
             {result && <>
             <div className="slider-slides-item-price">${result} per card</div>
