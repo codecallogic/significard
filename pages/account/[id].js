@@ -31,7 +31,8 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
   const myRefs = useRef(null)
   const node = useRef();
   // console.log(newUser)
-  console.log(recipients)
+  // console.log(recipients)
+  console.log(recipient)
   const router = useRouter()
   const [sideNav, setSideNav] = useState('recipients')
   const [recipientID, setRecipient] = useState('')
@@ -776,7 +777,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
             <div className="profile-dashboard-recipients-edit-title">
               <div className="profile-dashboard-recipients-edit-title-credits"><span>&nbsp;</span> You have {credits ? credits : '0'} cards</div>
               <div className="profile-dashboard-recipients-edit-title-recipient">{recipient.recipient ? recipient.recipient : recipient.recipient_other ? item.recipient_other : 'Recipient'}</div>
-              <div className="profile-dashboard-recipients-edit-title-name">{recipient.name ? recipient.name : 'Name'}</div>
+              <div className="profile-dashboard-recipients-edit-title-name">{recipient.recipient_name ? recipient.recipient_name : 'Name'}</div>
               <div className="profile-dashboard-recipients-edit-title-edit">
                 <span onClick={() => cardMenu === 'recipient' ? setCardMenu(''): setCardMenu('recipient')}><SVG svg={'arrow-down'}></SVG></span>
                 {cardMenu == 'recipient' && 
@@ -913,7 +914,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                 }
               </div>
               {edit == 'style' ? 
-                  <div className="profile-dashboard-recipients-edit-profile-edit">{loading == 'style' ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : <><span onClick={() => (setRecipient(recipientID), setEdit(''))}>Cancel</span><span onClick={() => (updateRecipient('style'))}>Save</span></>}</div>
+                  <div className="profile-dashboard-recipients-edit-profile-edit">{loading == 'style' ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : <><span onClick={() => (setRecipient(recipientID), setEdit(''), editRecipient('rank', []))}>Cancel</span>{recipient.rank && recipient.rank.length > 5 && <span onClick={() => (updateRecipient('style'))}>Save</span>}</>}</div>
                 :
                 <div className="profile-dashboard-recipients-edit-profile-edit" onClick={() => (setEdit('style'), resetRank())}>Edit</div>
               }
@@ -977,7 +978,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                   <input id='recipient' type="text" placeholder="Recipient (ex. Mom)" value={recipient.recipient} onChange={ (e) => (editRecipient('recipient', e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Recipient (ex. Mom)'} style={{textTransform: 'capitalize'}} required/>
                 </div>
                 <div className="form-group-single mail">
-                  <input id='name' type="text" placeholder="Name" value={recipient.name} onChange={ (e) => (editRecipient('name', e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Name'} required/>
+                  <input id='name' type="text" placeholder="Name" value={recipient.recipient_name} onChange={ (e) => (editRecipient('recipient_name', e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Name'} required/>
                 </div>
                 <button onClick={(e) => (!addNew ? updateRecipient('title', e) : setModal(''))}className="form-button mail-button">{loading == 'title' ? <div className="loading"><span></span><span></span><span></span></div> : <span>Save</span>}</button>
                 {message && <div className="form-message-error">{message}</div>}
@@ -1142,22 +1143,24 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
             <div className="recipient-modal-box-message">
             <div className="quiz-title">What would you like the card to say?</div>
             <div className="quiz-title-mobile">What would you like the card to say?</div>
-            <div className="quiz-subtitle">Fill in the blank!</div>
-            <div className="quiz-subtitle-mobile">Fill in the blank!</div>
+            {/* <div className="quiz-subtitle">Fill in the blank!</div>
+            <div className="quiz-subtitle-mobile">Fill in the blank!</div> */}
             <div className="quiz-recipient-message">
               <div className="quiz-recipient-message-heading">Card: {recipient.event}</div>
               <div className="quiz-recipient-message-container">
                 <form>
-                  <div className="form-group-single message">
+                  {/* <div className="form-group-single message">
                     <label htmlFor="name">Name/Nickname in front of the card:</label>
                     <input type="text" name="name" required value={recipient.nickname} onChange={(e) => (editRecipient('nickname', e.target.value), document.getElementsByName('nickname_blank')[0].checked = false)}/>
                     <div className="checkbox_2"><input id="nickname" type="checkbox" name="nickname_blank" onClick={(e) => editRecipient('nickname', '')}/><span>Leave it blank</span></div>
-                  </div>
+                  </div> */}
                   <div className="form-group-single message p-0">
                     <label htmlFor="message">Handwritten message inside:</label>
-                    <textarea className="w-4" rows="5" value={recipient.message == 'blank' || recipient.message == 'message_options' ? '' : recipient.message} onChange={(e) => (editRecipient('message', e.target.value), document.getElementsByName('message_blank')[0].checked = false, document.getElementsByName('message_textarea_blank')[0].checked = false)}></textarea>
-                    <div className="checkbox_2"><input type="checkbox" name="message_blank" onChange={(e) => (editRecipient('message', 'blank'), document.getElementsByName('message_textarea_blank')[0].checked = false)}/><span>Leave it blank</span></div>
-                    <div className="checkbox_2 w-4 info-popup"><input type="checkbox" name="message_textarea_blank" onClick={(e) => (editRecipient('message', 'message_options'), document.getElementsByName('message_blank')[0].checked = false)}/>
+                    <textarea className="w-4" rows="5" value={recipient.message == 'blank' || recipient.message == 'message_options' ? '' : recipient.message} onChange={(e) => (editRecipient('message', e.target.value), document.getElementsByName('message_blank')[0].checked = false)}></textarea>
+                    {/* , document.getElementsByName('message_textarea_blank')[0].checked = false */}
+                    <div className="checkbox_2"><input type="checkbox" name="message_blank" onChange={(e) => (editRecipient('message', 'blank'))}/><span>Leave it blank</span></div>
+                    {/* , document.getElementsByName('message_textarea_blank')[0].checked = false */}
+                    {/* <div className="checkbox_2 w-4 info-popup"><input type="checkbox" name="message_textarea_blank" onClick={(e) => (editRecipient('message', 'message_options'), document.getElementsByName('message_blank')[0].checked = false)}/>
                       <span>Give me message options for $2.00</span>
                       <div className="quiz-recipient-package-description-text-bubble" onMouseOver={(e) => showTooltip(e, 0)} onMouseLeave={(e) => hideTooltip(e, 0)}>
                         <SVG svg={'information'}></SVG>
@@ -1165,7 +1168,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                         We got you! We’ll send you different message options for just $2.00 per card once you sign up.
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="form-group-single message p-0">
                     <label htmlFor="name">Signature:</label>

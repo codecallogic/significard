@@ -7,7 +7,7 @@ import axios from 'axios'
 import {useEffect} from 'react'
 
 const Confirmation = ({newUser, order}) => {
-
+  console.log(order)
   useEffect(() => {
     console.log(order)
     window.localStorage.clear();
@@ -59,7 +59,7 @@ const Confirmation = ({newUser, order}) => {
               <span>${order.package_price} (x{order.package_quantity})</span>
             </div>
             <div className="confirmation-order-summary-billing-event-first">
-              <span>First card: {order.event} for {order.shipping_name}</span>
+              <span>First card: {order.event} for {order.recipient_name}</span>
             </div>
             <div className="confirmation-order-summary-billing-tax">
               <span>Sales Tax</span>

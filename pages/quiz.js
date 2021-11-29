@@ -1265,7 +1265,7 @@ const quiz = ({newUser, quizState}) => {
         </>
         }
         {quiz == 'mail' && <>
-          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'package')}>
+          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'other')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
           <div className="quiz-title">Where should we mail your card?</div>
