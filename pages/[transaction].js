@@ -7,9 +7,8 @@ import axios from 'axios'
 import {useEffect} from 'react'
 
 const Confirmation = ({newUser, order}) => {
-  console.log(order)
+  
   useEffect(() => {
-    console.log(order)
     window.localStorage.clear();
   }, [])
   

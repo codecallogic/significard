@@ -30,9 +30,9 @@ const searchOptionsCities = {
 const User = ({params, newUser, recipients, recipient, editRecipient, updateTags, resetRecipient, resetState, resetRank, updateRank, removeRank, sortRank, card, editCard, updateCardTags}) => {
   const myRefs = useRef(null)
   const node = useRef();
-  // console.log(newUser)
+  console.log(newUser)
   // console.log(recipients)
-  console.log(recipient)
+  // console.log(recipient)
   const router = useRouter()
   const [sideNav, setSideNav] = useState('recipients')
   const [recipientID, setRecipient] = useState('')

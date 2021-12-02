@@ -10,10 +10,11 @@ const Orders = ({user, credits}) => {
         <div className="profile-dashboard-orders-title-sent">Sent</div>
         {/* <div className="profile-dashboard-orders-title-sent">Order History</div> */}
       </div>
-      {user.recipients.length > 0 && user.recipients.map((item) => 
       <div className="profile-dashboard-orders-card">
+      {user.recipients.length > 0 && user.recipients.map((item) => 
+     
         <div className="profile-dashboard-orders-card-item">
-          <div className="profile-dashboard-orders-card-item-name">{item.name ? item.name : 'Unknown'}</div>
+          <div className="profile-dashboard-orders-card-item-name">{item.recipient_name ? item.recipient_name : 'Unknown'}</div>
           <div className="profile-dashboard-orders-card-item-event">{item.event ? item.event : item.event_other ? item.event_other : 'Unknown event'}</div>
           <div className="profile-dashboard-orders-card-item-delivery">Estimated Delivery</div>
           <div className="profile-dashboard-orders-card-item-date">{item.card_arrival ? item.card_arrival : 'Unknown'}</div>
@@ -22,9 +23,9 @@ const Orders = ({user, credits}) => {
             <img src={`https://via.placeholder.com/150C/O https://placeholder.com/`}className="profile-dashboard-orders-card-item-image-inside"></img>
           </div>
         </div>
-      </div>
       )
       }
+      </div>
     </div>
   )
 }
