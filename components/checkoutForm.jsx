@@ -21,31 +21,12 @@ const CARD_ELEMENT_OPTIONS = {
   },
 };
 
-const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, cardholder, package_price, tax, taxID, recipient, subscription}) => {
+const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, cardholder, package_price, tax, taxID, recipient, subscription, phone, message, setMessage}) => {
   const stripe = useStripe();
   const elements = useElements();
   // console.log(recipient)
   const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState('')
   const [success, setSuccess] = useState('')
-  const [phone, setPhone] = useState('')
-
-  const validateIsNumber = (type) => {
-    const input = document.getElementById(type)
-    const regex = /^(\d+(\d{0,2})?|\.?\d{1,2})$/
-    input.value = input.value.split(regex).join('')
-  }
-
-  const validateIsPhoneNumber = (type) => {
-    setMessage('')
-    const input = document.getElementById(type)
-    const cleanNum = input.value.toString().replace(/\D/g, '');
-    const match = cleanNum.match(/^(\d{3})(\d{0,3})(\d{0,4})$/);
-    if (match) {
-      return  setPhone('(' + match[1] + ') ' + (match[2] ? match[2] + "-" : "") + match[3]);
-    }
-    return null;
-  }
 
   const handleCardPayment = async (e) => {
     e.preventDefault()
@@ -102,6 +83,7 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
             })
             if(result.error) setMessage(`${result.error.message}. For ${result.error.decline_code}`)
             // console.log(result)
+            window.localStorage.removeItem('recipient')
             window.location.href = `/${order}?id=${result.paymentIntent.id}`
           } catch (error) {
             setLoading(false)
@@ -142,13 +124,13 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
     <>
       <CardElement className="checkout-container-left-form" options={CARD_ELEMENT_OPTIONS}/>
       <div className="checkout-container-left-updates">
-        <div className="checkout-container-left-updates-title">Order Updates</div>
+        {/* <div className="checkout-container-left-updates-title">Order Updates</div>
         <div className="checkout-container-left-updates-subtitle">You'll get order updates by email.</div>
-        <div className="checkout-container-left-updates-subtitle-two">Get order updates by text</div>
-        <div className="form-group-double mail checkout-group-double">
+        <div className="checkout-container-left-updates-subtitle-two">Get order updates by text</div> */}
+        {/* <div className="form-group-double mail checkout-group-double">
           <input id="phoneNumber" type="text" placeholder="Mobile Phone Number" value={phone} onChange={ (e) => e.target.value.length < 15 ? (validateIsNumber('phoneNumber'), setPhone(e.target.value), validateIsPhoneNumber('phoneNumber')) : null} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Mobile Phone Number'} required/>
-        </div>
-        <div className="checkout-container-left-updates-subtitle-three">To make the process easier, please add your phone number.</div>
+        </div> */}
+        {/* <div className="checkout-container-left-updates-subtitle-three">To make the process easier, please add your phone number.</div> */}
       </div>
       <div className="checkout-container-button-container">
         <button className="checkout-container-button" disabled={!stripe} onClick={handleCardPayment}>{loading ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : 'Confirm'}</button>

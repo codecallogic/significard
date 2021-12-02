@@ -58,10 +58,17 @@ const withUser = Page => {
         });
         context.res.end();
       }else{
-        return {
-          ...(Page.getInitialProps ? await Page.getInitialProps(context) : {}),
-          newUser,
-          recipients
+        if(newUser.recipients.length > 0){
+          context.res.writeHead(302, {
+            Location: `/account/${newUser.id}`
+          });
+          context.res.end();
+        }else{
+          return {
+            ...(Page.getInitialProps ? await Page.getInitialProps(context) : {}),
+            newUser,
+            recipients
+          }
         }
       }
     }

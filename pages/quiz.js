@@ -55,6 +55,7 @@ const quiz = ({newUser, quizState}) => {
   const [result, setResult] = useState('')
 
   useEffect(() => {
+    // if(newUser.recipients.length > 0) window.location.href = `/account/${newUser.id}`
     if(window.localStorage.getItem('quiz_question')) window.localStorage.getItem('quiz_question').length > 0 ? window.localStorage.getItem('quiz_question') == 'checkout' ? window.location.href = '/checkout' : setQuiz(window.localStorage.getItem('quiz_question')) : null
     
   }, [])

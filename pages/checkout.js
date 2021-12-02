@@ -43,6 +43,26 @@ const Checkout = ({newUser}) => {
   const [zip_code, setZipCode] = useState('')
   const [delivery, setDeliveryDate] = useState('')
   const [state_list, setStateList] = useState(false)
+
+  const [phone, setPhone] = useState('')
+  const [message, setMessage] = useState('')
+
+  const validateIsNumber = (type) => {
+    const input = document.getElementById(type)
+    const regex = /^(\d+(\d{0,2})?|\.?\d{1,2})$/
+    input.value = input.value.split(regex).join('')
+  }
+
+  const validateIsPhoneNumber = (type) => {
+    setMessage('')
+    const input = document.getElementById(type)
+    const cleanNum = input.value.toString().replace(/\D/g, '');
+    const match = cleanNum.match(/^(\d{3})(\d{0,3})(\d{0,4})$/);
+    if (match) {
+      return  setPhone('(' + match[1] + ') ' + (match[2] ? match[2] + "-" : "") + match[3]);
+    }
+    return null;
+  }
  
 
   const quizProgressNav = (e, next) => {
@@ -50,11 +70,9 @@ const Checkout = ({newUser}) => {
     window.location.href = '/quiz'
   }
 
-  useEffect(() => {
-
-  }, [total])
-
   useEffect( async () => {
+    // if(newUser.recipients.length > 0) window.location.href = `/account/${newUser.id}`
+
     let recipientData = new Object()
 
     if(window.localStorage.getItem('package_plan')){
@@ -290,8 +308,11 @@ const Checkout = ({newUser}) => {
               </div>
               }
             </div>
+            <div className="form-group-double mail checkout-group-double">
+              <input id="phoneNumber" type="text" placeholder="Mobile Phone Number" value={phone} onChange={ (e) => e.target.value.length < 15 ? (setMessage(''), validateIsNumber('phoneNumber'), setPhone(e.target.value), validateIsPhoneNumber('phoneNumber')) : null} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Mobile Phone Number'} required/>
+            </div>
             <Elements stripe={stripePromise}>
-              <CheckOutForm user={newUser} amount={(total + (total * tax)).toFixed(2)} cardholder={cardholder} address={address} city={city} state={state} zip_code={zip_code} delivery={delivery} package_price={package_price} tax={tax} recipient={recipient} taxID={taxID} subscription={recipient.subscription}></CheckOutForm>
+              <CheckOutForm user={newUser} amount={(total + (total * tax)).toFixed(2)} cardholder={cardholder} address={address} city={city} state={state} zip_code={zip_code} delivery={delivery} package_price={package_price} tax={tax} recipient={recipient} taxID={taxID} phone={phone} subscription={recipient.subscription} message={message} setMessage={setMessage}></CheckOutForm>
             </Elements>
           </div>
           <div className="checkout-container-right">
@@ -299,7 +320,7 @@ const Checkout = ({newUser}) => {
             {recipient.mail_to == 'recipient' && <div className="checkout-container-right-ship_to">Ship to {recipient.recipient ? `${recipient.recipient}'s address` : recipient.recipient_other ? `${recipient.recipient_other}'s address`: ''} </div>}
             <div className="checkout-container-right-delivery">📩 <span>Estimated arrival date: {delivery}</span></div>
             <div className="checkout-container-right-price"><span>{recipient.package_plan ? `${recipient.package_plan ? recipient.package_plan.replace(/_/g, ' ') : ''} (${recipient.package_quantity}x)` : ''}</span><span>{`$ ` + Math.ceil(package_price * 100) / 100}</span></div>
-            <div className="checkout-container-right-price-event"><span>First card: {recipient.event ? `${recipient.event ? recipient.event : ''} for ${recipient.recipient ? recipient.recipient : ''}` : ''}</span></div>
+            <div className="checkout-container-right-price-event"><span>First card: {recipient.event ? `${recipient.event ? recipient.event : ''} for ${recipient.recipient_name ? recipient.recipient_name : ''}` : ''}</span></div>
             <div className="checkout-container-right-tax"><span>Sales Tax</span><span>{((tax * 100 / 100).toFixed(4) * 100).toFixed(2) + `% `}</span></div>
             <div className="checkout-container-right-total"><span>Total</span><span>{`$ ` + (total + (total * tax)).toFixed(2)}</span></div>
           </div>
