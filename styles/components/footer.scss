@@ -1,10 +1,10 @@
 .footer {
   display: flex;
   justify-content: space-between;
-  margin: 3rem 5rem;
+  margin: 3rem 5rem 0 5rem;
   border-top: 0.1rem solid #e9e9e9;
   border-bottom: 0.1rem solid #e9e9e9;
-  padding: 5rem 3rem;
+  padding: 5rem 3rem 0 3rem;
 
   @media only screen and (max-width: $large) {
     padding: 5rem 0.5rem;
@@ -87,6 +87,27 @@
         &:not(:first-child) {
           margin-left: 0.5rem;
         }
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  &-links {
+    width: 100%;
+    padding: 2rem 5rem;
+
+    &-list {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      list-style-type: none;
+
+      &-link {
+        margin-right: 2rem;
+        font-size: 1.8rem;
 
         &:hover {
           cursor: pointer;
