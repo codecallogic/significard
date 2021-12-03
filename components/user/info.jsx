@@ -419,7 +419,7 @@ const Info = ({user, dashboard, credits}) => {
                   {message && <div className="form-message-error">{message}</div>}
                 </div>
               </div>             
-              <div className="quiz-recipient-package-bulk">For more than 50 cards, please <a href="">contact us</a></div>
+              <div className="quiz-recipient-package-bulk">For more than 50 cards, please <a href="mailto: hello@significard.com">contact us</a></div>
               <div className="quiz-recipient-package-footer">All packages come with the following items <span>at no extra cost</span></div>
               <div className="quiz-recipient-package-footer-2">
                 <div className="quiz-recipient-package-footer-2-item">

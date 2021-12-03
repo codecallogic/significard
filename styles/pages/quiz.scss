@@ -1284,11 +1284,11 @@
       font-size: 1.8rem;
       margin: 2rem 0 6rem 0;
 
-      @media only screen and (max-width: $wide) {
-        a {
-          display: none;
-        }
-      }
+      // @media only screen and (max-width: $wide) {
+      //   a {
+      //     display: none;
+      //   }
+      // }
     }
 
     &-footer {

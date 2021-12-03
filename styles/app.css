@@ -2748,9 +2748,6 @@ body {
       justify-self: center;
       font-size: 1.8rem;
       margin: 2rem 0 6rem 0; }
-      @media only screen and (max-width: 1500px) {
-        .quiz-recipient-package-bulk a {
-          display: none; } }
     .quiz-recipient-package-footer {
       grid-column: 1/-1;
       justify-self: center;

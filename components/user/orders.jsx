@@ -1,8 +1,6 @@
 import SVG from '../../files/svgs'
 
 const Orders = ({user, credits}) => {
-  console.log(user)
-
   const formatDate = (e) => {
     let date = new Date(e)
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];

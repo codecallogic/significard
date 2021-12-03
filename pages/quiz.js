@@ -1518,7 +1518,7 @@ const quiz = ({newUser, quizState}) => {
             </div>
           </div>
           <Slider result={result} setresult={setResult} calculate={calculate} quizProgressNav={quizProgressNav} handleChange={handleChange} validateisnumber={validateIsNumber} quizstate={quizState} message={message} setMessage={setMessage}></Slider>
-          <div className="quiz-recipient-package-bulk">For more than 50 cards, please <a href="">contact us</a></div>
+          <div className="quiz-recipient-package-bulk">For more than 50 cards, please <a href="mailto: hello@significard.com">contact us</a></div>
           <div className="quiz-recipient-package-footer">All packages come with the following items <span>at no extra cost</span></div>
           <div className="quiz-recipient-package-footer-2">
             <div className="quiz-recipient-package-footer-2-item">
