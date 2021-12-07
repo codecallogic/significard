@@ -16,7 +16,7 @@ const Slider = ({slider, result, setResult, calculate, validateIsNumber, moveSli
     if(i == 0) moveSlide(el[i].offsetWidth + 140, i)
     if(i == 1) moveSlide(-el[i].offsetWidth + 260, i)
     if(i == 2) moveSlide(-el[i].offsetWidth*i + 240, i)
-    if(i == 3) moveSlide(-el[i].offsetWidth*i + 240, i)
+    if(i == 3) moveSlide(-el[i].offsetWidth*i + 300, i)
   }
 
   const handlers = useSwipeable({
@@ -25,7 +25,7 @@ const Slider = ({slider, result, setResult, calculate, validateIsNumber, moveSli
       let el = document.querySelectorAll('.slider-slides-item')
       if(swipe + 1 == 1) moveSlide(el[swipe + 1].offsetWidth, swipe + 1)
       if(swipe + 1 == 2) moveSlide(-el[swipe + 1].offsetWidth*2 + 240, swipe + 1)
-      if(swipe + 1 == 3) moveSlide(-el[swipe + 1].offsetWidth*3 + 240, swipe + 1)
+      if(swipe + 1 == 3) moveSlide(-el[swipe + 1].offsetWidth*3 + 300, swipe + 1)
     },
     onSwipedRight: () => {
       setSwipe(swipe == 0 ? swipe : swipe - 1)
