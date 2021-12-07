@@ -9,7 +9,7 @@ const Footer = ({}) => {
         <div className="footer-left-logo">Significard</div>
         <ul className="footer-left-list">
           <li className="footer-left-list-link" onClick={() => window.location.href = '/about-us'}>About Us</li>
-          <li className="footer-left-list-link" onClick={() => window.location.href = '/'}>Pricing</li>
+          <li className="footer-left-list-link" onClick={() => window.location.href = '/pricing'}>Pricing</li>
           <li className="footer-left-list-link" onClick={() => window.location.href = '/faq'}>FAQ</li>
         </ul>
         <ul className="footer-left-list">

@@ -35,7 +35,7 @@ const NavUser = ({loggedIn, dashboard, setDashboard, setRecipient, setAddNew}) =
           <div className="nav-user-list">
             <ul className="nav-user-list-items">
               <li className="nav-user-list-items-item"><a className="nav-user-list-items-link" href="/">Home</a></li>
-              <li className="nav-user-list-items-item"><a className="nav-user-list-items-link" href="/">Pricing</a></li>
+              <li className="nav-user-list-items-item"><a className="nav-user-list-items-link" href="/pricing">Pricing</a></li>
               <li className="nav-user-list-items-item"><a className="nav-user-list-items-link" href="/about-us">About</a></li>
               <li className="nav-user-list-items-item"><a className="nav-user-list-items-link" href="/faq">FAQ</a></li>
               <li className="nav-user-list-items-item"><a  className="nav-user-list-items-link" href="#" onClick={() => loggedIn ? window.location.href = `/account/${loggedIn.id}` : window.location.href = '/login'}>Account</a></li>
