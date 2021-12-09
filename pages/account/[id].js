@@ -15,6 +15,7 @@ import 'react-calendar/dist/Calendar.css';
 import {manageTags, manageCardTags} from '../../helpers/forms'
 import Orders from '../../components/user/orders'
 import Info from '../../components/user/info'
+import CalendarUI from '../../components/user/calendar'
 import {useRouter} from 'next/router'
 
 const searchOptionsAddress = {
@@ -30,7 +31,7 @@ const searchOptionsCities = {
 const User = ({params, newUser, recipients, recipient, editRecipient, updateTags, resetRecipient, resetState, resetRank, updateRank, removeRank, sortRank, card, editCard, updateCardTags}) => {
   const myRefs = useRef(null)
   const node = useRef();
-  console.log(newUser)
+  // console.log(newUser)
   // console.log(recipients)
   // console.log(recipient)
   const router = useRouter()
@@ -55,7 +56,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
   const [addNew, setAddNew] = useState(false)
   const [cardUpdate, setCardUpdate] = useState(false)
   const [cardTagsItem, setCardTagsItem] = useState(null)
-  const [dashboard, setDashboard] = useState('')
+  const [dashboard, setDashboard] = useState('calendar')
   const [credits, setCredits] = useState(newUser.credits)
 
   const handleClickOutside = (event) => {
@@ -517,7 +518,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
             </div>
           </div>
           <div className="profile-dashboard-sidenav-item-container">
-            <div className="profile-dashboard-sidenav-item">
+            <div className="profile-dashboard-sidenav-item" onClick={() => (setAddNew(false), setDashboard('calendar'))}>
               <div className="profile-dashboard-sidenav-item-icon-container">
                 <SVG svg={'calendar'} classprop={'profile-dashboard-sidenav-item-icon'}></SVG>
               </div>
@@ -968,6 +969,12 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
             {message && <div className="form-message-error left">{message}</div>}
           </div>
         }
+        { dashboard == 'calendar' &&
+          <CalendarUI recipients={recipients}></CalendarUI>
+        }
+
+
+        {/* //////////////////// MODALS ////////////////////////////// */}
         {modal == 'title' && 
         <div className="recipient-modal-small">
           <div className="recipient-modal-box-small">
