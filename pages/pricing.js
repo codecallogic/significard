@@ -42,7 +42,7 @@ const Pricing = ({loggedIn}) => {
           </div>
           <div className="quiz-recipient-package-item-price">$6.99 per card</div>
           {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-          <button className="quiz-recipient-package-item-button" onClick={() => window.location.href = '/quiz'}>Select</button>
+          <button className="quiz-recipient-package-item-button" onClick={() => window.location.href = '/quiz'}>Continue</button>
           <div>Free Shipping</div>
         </div>
         <div className="quiz-recipient-package-item">
@@ -53,7 +53,7 @@ const Pricing = ({loggedIn}) => {
           </div>
           <div className="quiz-recipient-package-item-price">$9.99 per card</div>
           {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-          <button className="quiz-recipient-package-item-button" onClick={() => window.location.href = '/quiz'}>Select</button>
+          <button className="quiz-recipient-package-item-button" onClick={() => window.location.href = '/quiz'}>Continue</button>
           <div>Free Shipping</div>
         </div>
         <div className="quiz-recipient-package-item">
