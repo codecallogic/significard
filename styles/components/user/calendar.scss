@@ -1,6 +1,124 @@
 .profile-dashboard-calendar {
   flex-grow: 1;
-  padding: 2rem 3rem;
+  display: flex;
+  padding: 2rem 1rem;
   position: relative;
   width: 100%;
+
+  &-view {
+    // min-height: 80rem;
+    height: 70rem;
+    width: 70%;
+  }
+
+  &-events {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 28%;
+
+    &-title {
+      font-size: 2.2rem;
+      font-family: Sanchez;
+      color: $color-scheme-3-variation-1;
+      margin: -1rem 0 1rem 0;
+    }
+
+    &-list {
+      border-radius: 1.5rem;
+      height: 67rem;
+      border: 0.3rem solid #ebeced;
+      width: 100%;
+      margin: 0 0 0 2rem;
+      padding: 3rem 2rem;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar-button {
+        background-color: $color-scheme-1;
+      }
+
+      &::-webkit-scrollbar {
+        width: 0.5rem;
+        // height: 0.3rem;
+      }
+
+      &-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 2.5rem;
+        width: 100%;
+
+        &-title {
+          font-size: 1.6rem;
+          font-weight: 400;
+          line-height: 2.1rem;
+          font-family: 'Roboto';
+          margin-left: 1rem;
+          position: relative;
+        }
+
+        &-date {
+          position: absolute;
+          bottom: -60%;
+          width: max-content;
+          font-weight: 400;
+          font-size: 1.2rem;
+          line-height: 1.4rem;
+          line-height: 14px;
+          letter-spacing: 0.06em;
+          text-transform: capitalize;
+          font-family: 'Roboto';
+          color: #778186;
+        }
+
+        &-bullet {
+          &-blue {
+            display: flex;
+            align-items: center;
+            width: 0.8rem;
+            height: 0.8rem;
+            border-radius: 50%;
+            border-radius: 50%;
+            background-color: #56bdf4;
+          }
+
+          &-orange {
+            display: flex;
+            width: 0.8rem;
+            height: 0.8rem;
+            border-radius: 50%;
+            background-color: #ef6130;
+          }
+        }
+      }
+    }
+  }
+}
+
+.rbc {
+  &-toolbar-label {
+    font-size: 2.2rem;
+    line-height: 2.2rem;
+    font-weight: 400;
+    font-family: Sanchez !important;
+    color: $color-scheme-3-variation-1;
+  }
+
+  &-header {
+    span {
+      display: block;
+      font-size: 1.4rem;
+      padding: 1rem 0;
+      text-transform: uppercase;
+    }
+  }
+
+  &-day-bg {
+    border: 1.5px solid rgba(119, 129, 134, 0.15);
+  }
+
+  &-month-view {
+    border-radius: 1.2rem;
+    border: 0.3rem solid rgba(119, 129, 134, 0.15) !important;
+  }
 }

@@ -38,7 +38,7 @@ const withUser = Page => {
           if(userID !== 'DragDropTouch.js'){
             try {
               const responseRecipients = await axios.post(`${API}/auth/user-recipients`, {id: userID})
-              console.log(responseRecipients)
+              // console.log(responseRecipients)
               recipients = responseRecipients.data
             } catch (error) {
               console.log(error)
