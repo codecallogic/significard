@@ -152,6 +152,11 @@
       overflow-x: hidden;
       overflow: hidden;
 
+      &-container {
+        height: 65rem;
+        width: 100%;
+      }
+
       &-image {
         height: 65rem;
         width: 110rem;

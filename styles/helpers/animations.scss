@@ -55,6 +55,10 @@
   animation: slideFromRight 1s ease-in-out;
 }
 
+.slideFromRightFast {
+  animation: slideFromRight 0.3s ease-in-out;
+}
+
 @keyframes dots {
   50% {
     opacity: 0;
