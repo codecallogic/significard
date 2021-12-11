@@ -11,8 +11,6 @@ const CalendarUI = ({recipients}) => {
   const [events, setEvents] = useState(holidays)
 
   useEffect(() => {
-    let array = []
-    
     if(recipients){
       recipients.forEach((item) => {
         let object = new Object()
@@ -27,6 +25,12 @@ const CalendarUI = ({recipients}) => {
     }
 
   }, [])
+
+  // useEffect(() => {
+  //   let filteredEvents = events.filter((item, idx) => new Date(item.start) < new Date('December 23, 2021'))
+
+  //   setEvents(filteredEvents)
+  // }, [events])
 
   const eventStyleGetter = (event) => {
     let style = {
@@ -54,7 +58,7 @@ const CalendarUI = ({recipients}) => {
         {/* .sort( (a, b) => a['start'] > b['start'] ? -1 : 1) */}
         <div className="profile-dashboard-calendar-events-list">
           {events && events.sort( (a, b) => new Date(a['start']) > new Date(b['start']) ? 1 : -1).map((item, idx) => 
-            // console.log(new Date(item.start))
+            new Date(item.start) > new Date(Date.now()) ?
             <div 
             key={idx}
             className="profile-dashboard-calendar-events-list-item">
@@ -68,6 +72,8 @@ const CalendarUI = ({recipients}) => {
                 </div>
               </div>
             </div>
+            :
+            null
           )}
         </div>
       </div>
