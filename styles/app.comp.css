@@ -267,6 +267,9 @@ body {
       overflow-y: hidden;
       overflow-x: hidden;
       overflow: hidden; }
+      .homepage_slider-slides-main-container {
+        height: 65rem;
+        width: 100%; }
       .homepage_slider-slides-main-image {
         height: 65rem;
         width: 110rem;
@@ -4690,6 +4693,9 @@ body {
 
 .slideFromRight {
   animation: slideFromRight 1s ease-in-out; }
+
+.slideFromRightFast {
+  animation: slideFromRight 0.3s ease-in-out; }
 
 @keyframes dots {
   50% {
