@@ -5,10 +5,18 @@
   position: relative;
   width: 100%;
 
+  @media only screen and (max-width: $extra-medium) {
+    flex-direction: column;
+  }
+
   &-view {
     // min-height: 80rem;
     height: 70rem;
     width: 70%;
+
+    @media only screen and (max-width: $extra-medium) {
+      width: 100%;
+    }
   }
 
   &-events {
@@ -17,11 +25,20 @@
     align-items: center;
     width: 28%;
 
+    @media only screen and (max-width: $extra-medium) {
+      width: 100%;
+      margin: 1rem 0;
+    }
+
     &-title {
       font-size: 2.2rem;
       font-family: Sanchez;
       color: $color-scheme-3-variation-1;
       margin: -1rem 0 1rem 0;
+
+      @media only screen and (max-width: $extra-medium) {
+        margin: 0;
+      }
     }
 
     &-list {
@@ -55,6 +72,10 @@
           font-family: 'Roboto';
           margin-left: 1rem;
           position: relative;
+
+          @media only screen and (max-width: $large) {
+            font-size: 1.4rem;
+          }
         }
 
         &-date {

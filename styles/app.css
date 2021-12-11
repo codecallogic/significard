@@ -1319,19 +1319,32 @@ body {
   padding: 2rem 1rem;
   position: relative;
   width: 100%; }
+  @media only screen and (max-width: 800px) {
+    .profile-dashboard-calendar {
+      flex-direction: column; } }
   .profile-dashboard-calendar-view {
     height: 70rem;
     width: 70%; }
+    @media only screen and (max-width: 800px) {
+      .profile-dashboard-calendar-view {
+        width: 100%; } }
   .profile-dashboard-calendar-events {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 28%; }
+    @media only screen and (max-width: 800px) {
+      .profile-dashboard-calendar-events {
+        width: 100%;
+        margin: 1rem 0; } }
     .profile-dashboard-calendar-events-title {
       font-size: 2.2rem;
       font-family: Sanchez;
       color: #003e5f;
       margin: -1rem 0 1rem 0; }
+      @media only screen and (max-width: 800px) {
+        .profile-dashboard-calendar-events-title {
+          margin: 0; } }
     .profile-dashboard-calendar-events-list {
       border-radius: 1.5rem;
       height: 67rem;
@@ -1356,6 +1369,9 @@ body {
           font-family: 'Roboto';
           margin-left: 1rem;
           position: relative; }
+          @media only screen and (max-width: 992px) {
+            .profile-dashboard-calendar-events-list-item-title {
+              font-size: 1.4rem; } }
         .profile-dashboard-calendar-events-list-item-date {
           position: absolute;
           bottom: -60%;
