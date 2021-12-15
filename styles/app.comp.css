@@ -4639,6 +4639,53 @@ body {
   align-items: center;
   margin: 3rem 0; }
 
+.not-found {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 8rem 0; }
+  .not-found-image {
+    margin: 4rem 0;
+    width: 53.7rem;
+    height: 25.7rem; }
+    @media only screen and (max-width: 992px) {
+      .not-found-image {
+        width: 100%;
+        height: 100%;
+        padding: 5rem 15rem 0 15rem; } }
+  .not-found-message {
+    font-size: 2.2rem;
+    font-weight: 400;
+    font-family: Roboto;
+    line-height: 2.5rem; }
+    @media only screen and (max-width: 992px) {
+      .not-found-message {
+        font-size: 1.8rem; } }
+  .not-found-buttons {
+    display: flex;
+    margin: 4rem 0; }
+    .not-found-buttons a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 16.6rem;
+      height: 5.3rem;
+      border-radius: 1.2rem;
+      border: 0.2rem solid #003e5f;
+      box-sizing: border-box;
+      background-color: white;
+      color: #003e5f;
+      font-size: 1.8rem;
+      text-decoration: none; }
+      .not-found-buttons a:hover {
+        background-color: #003e5f;
+        color: white;
+        cursor: pointer; }
+    .not-found-buttons-contact {
+      margin-right: 2rem; }
+
 .giphy-loading {
   margin: 1rem 0 !important; }
   .giphy-loading-space {
