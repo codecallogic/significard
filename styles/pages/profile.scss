@@ -496,6 +496,14 @@
                 color: black;
                 border-radius: 3.4rem !important;
               }
+
+              div {
+                cursor: grab;
+
+                &:hover {
+                  cursor: grab;
+                }
+              }
             }
           }
 

@@ -4128,6 +4128,10 @@ body {
                 width: 100%;
                 color: black;
                 border-radius: 3.4rem !important; } }
+            .profile-dashboard-recipients-edit-style-selection-item-box div {
+              cursor: grab; }
+              .profile-dashboard-recipients-edit-style-selection-item-box div:hover {
+                cursor: grab; }
           .profile-dashboard-recipients-edit-style-selection-item-1 {
             display: flex;
             justify-content: center;

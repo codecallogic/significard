@@ -212,6 +212,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
   }
   
   const onDragStart = (e, id, type) => {
+    e.stopPropagation()
     if(edit !== 'style') return
     e.dataTransfer.setData("id", id)
     e.dataTransfer.setData("type", type)
@@ -875,8 +876,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                     </div>
                     <div className={`profile-dashboard-recipients-edit-style-selection-item-${3} profile-dashboard-recipients-edit-style-selection-item-box slideFromRight ` + (recipient.rank.some(e => e.rank == 3) ? null : ' disable')} onDrop={(e) => onDropNew(e, 3)} onDragOver={(e) => onDragOver(e)}>
                     <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${3}`}
-                    draggable onDragStart={(e) => {onDragStart(e, 3, 'cute')}}
-                    >
+                    draggable onDragStart={(e) => (console.log('Hello'), onDragStart(e, 3, 'cute'))}>
                       Cute
                     </div>
                     </div>
