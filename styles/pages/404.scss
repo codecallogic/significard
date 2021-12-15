@@ -1,0 +1,61 @@
+.not-found {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 8rem 0;
+
+  &-image {
+    margin: 4rem 0;
+    width: 53.7rem;
+    height: 25.7rem;
+
+    @media only screen and (max-width: $large) {
+      width: 100%;
+      height: 100%;
+      padding: 5rem 15rem 0 15rem;
+    }
+  }
+
+  &-message {
+    font-size: 2.2rem;
+    font-weight: 400;
+    font-family: Roboto;
+    line-height: 2.5rem;
+
+    @media only screen and (max-width: $large) {
+      font-size: 1.8rem;
+    }
+  }
+
+  &-buttons {
+    display: flex;
+    margin: 4rem 0;
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 16.6rem;
+      height: 5.3rem;
+      border-radius: 1.2rem;
+      border: 0.2rem solid #003e5f;
+      box-sizing: border-box;
+      background-color: white;
+      color: #003e5f;
+      font-size: 1.8rem;
+      text-decoration: none;
+
+      &:hover {
+        background-color: #003e5f;
+        color: white;
+        cursor: pointer;
+      }
+    }
+
+    &-contact {
+      margin-right: 2rem;
+    }
+  }
+}
