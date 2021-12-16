@@ -4,9 +4,12 @@ import {createStore} from 'redux'
 import {Provider} from 'react-redux'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import rootReducer from './../reducers/rootReducer'
+import {GOOGLE_MAPS} from '../config'
 
 // store
 const store = createStore(rootReducer, composeWithDevTools())
+
+const googleSource = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS}&libraries=places`
 
 function MyApp({ Component, pageProps }) {
   return <>
@@ -20,7 +23,7 @@ function MyApp({ Component, pageProps }) {
       <link rel="preconnect" href="https://fonts.gstatic.com"></link>
       <link href="https://fonts.googleapis.com/css2?family=Sanchez&display=swap" rel="stylesheet"></link>
       <script type="text/javascript" src="DragDropTouch.js"></script>
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIXLxwsNZqXveBVpiQzavFdvOrtY8tu5E&libraries=places"></script>
+      <script src={googleSource}></script>
     </Head>
     <Provider store={store}>
       <Component {...pageProps} />
