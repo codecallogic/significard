@@ -29,8 +29,8 @@ const Orders = ({user, credits}) => {
           <div className="profile-dashboard-orders-card-item-delivery">Estimated Delivery</div>
           <div className="profile-dashboard-orders-card-item-date">{item.card_arrival ? item.card_arrival : 'Unknown'}</div>
           <div className="profile-dashboard-orders-card-item-image">
-            <img src={`https://via.placeholder.com/150C/O https://placeholder.com/`}className="profile-dashboard-orders-card-item-image-front"></img>
-            <img src={`https://via.placeholder.com/150C/O https://placeholder.com/`}className="profile-dashboard-orders-card-item-image-inside"></img>
+            <img src={`/media/orders-placeholder.jpeg`}className="profile-dashboard-orders-card-item-image-front"></img>
+            <img src={`/media/orders-placeholder.jpeg`}className="profile-dashboard-orders-card-item-image-inside"></img>
           </div>
           <div className="profile-dashboard-orders-card-item-ordered">Ordered: {formatDate(item.createdAt)}</div>
         </div>
@@ -45,8 +45,8 @@ const Orders = ({user, credits}) => {
           <div className="profile-dashboard-orders-card-item-delivery">Estimated Delivery</div>
           <div className="profile-dashboard-orders-card-item-date">{card.card_arrival ? card.card_arrival : 'Unknown'}</div>
           <div className="profile-dashboard-orders-card-item-image">
-            <img src={`https://via.placeholder.com/150C/O https://placeholder.com/`}className="profile-dashboard-orders-card-item-image-front"></img>
-            <img src={`https://via.placeholder.com/150C/O https://placeholder.com/`}className="profile-dashboard-orders-card-item-image-inside"></img>
+            <img src={`/media/orders-placeholder.jpeg`}className="profile-dashboard-orders-card-item-image-front"></img>
+            <img src={`/media/orders-placeholder.jpeg`}className="profile-dashboard-orders-card-item-image-inside"></img>
           </div>
           <div className="profile-dashboard-orders-card-item-ordered">Ordered: {formatDate(card.createdAt)}</div>
         </div>
