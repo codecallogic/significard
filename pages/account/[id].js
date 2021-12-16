@@ -484,6 +484,11 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
       if(error) error.response ? setMessage(error.response.data) : setMessage('Error occurred creating recipient')
     }
   }
+
+  const uncheckOther = () => {
+    let el = document.getElementById('other')
+    if(el) el.checked = false
+  }
   
   return (
     <>
@@ -536,9 +541,13 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
         }
         { dashboard == 'profile' && sideNav == 'recipients' &&
         <div className="profile-dashboard-recipients">
-          <div className="profile-dashboard-recipients-item-add" onClick={() => (resetRecipient(), setAddNew(true), document.querySelector('.profile-dashboard-recipients').classList.add('hide-on-mobile'))}><SVG svg={'plus'}></SVG><span>Add Recipient</span></div>
+          <div className="profile-dashboard-recipients-item-add" onClick={() => (resetRecipient(), setRecipient(''), setAddNew(true), document.querySelector('.profile-dashboard-recipients').classList.add('hide-on-mobile'))}><SVG svg={'plus'}></SVG><span>Add Recipient</span></div>
           {allRecipients.map((item, idx) => 
-            <div key={idx} className="profile-dashboard-recipients-item" onClick={() => (setEdit(''), setRecipient(item._id), setCardMenu('empty'), setAddNew(false), document.querySelector('.profile-dashboard-recipients').classList.add('hide-on-mobile'))}>{item.recipient_name}</div>
+            <div 
+            key={idx} 
+            className="profile-dashboard-recipients-item" 
+            onClick={() => (setEdit(''), setRecipient(item._id), setCardMenu('empty'), setAddNew(false), document.querySelector('.profile-dashboard-recipients').classList.add('hide-on-mobile'))}>{item.recipient_name}
+            </div>
           )}
         </div>
         }
@@ -708,6 +717,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                               <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setModal('event')}>Edit Event</div>
                               <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setModal('message')}>Edit Message</div>
                               <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => (setModal('tags'))}>Edit Card Themes</div>
+                              <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => (setModal('comments'))}>Edit Comments</div>
                             </div>
                             }
                             <div className="profile-dashboard-recipients-edit-event-container-card-dots" onClick={() => cardMenu !== 'empty' ? setCardMenu('empty') :  setCardMenu('recipient_card')}><span></span><span></span><span></span></div>
@@ -738,6 +748,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                             <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setCardForUpdate(cardItem._id, 'edit_card_event')}>Edit Event</div>
                             <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setCardForUpdate(cardItem._id, 'edit_card_message')}>Edit Message</div>
                             <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setCardForUpdate(cardItem._id, 'edit_card_tags', setCardTagsItem(cardItem))}>Edit Card Themes</div>
+                            <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setCardForUpdate(cardItem._id, 'edit_comments')}>Edit Comments</div>
                           </div>
                           }
                           <div className="profile-dashboard-recipients-edit-event-container-card-dots" onClick={() => cardMenu !== 'empty' ? setCardMenu('empty') :  setCardMenu(idx)}><span></span><span></span><span></span></div>
@@ -1218,6 +1229,27 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
           </div>
           </div>
         }
+        {modal == 'comments' &&
+          <div className="recipient-modal">
+          <div className="recipient-modal-box">
+            <div className="recipient-modal-box-close" onClick={() => (setModal(''), setCardMenu('empty'))}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
+            <div className="recipient-modal-box-comment">
+              <div className="quiz-title">Is there anything else you want us to know or any designs we should avoid?</div>
+              <div className="quiz-title-mobile">Is there anything else you want us to know or any designs we should avoid?</div>
+              <div className="quiz-subtitle">Color, theme, animals, etc.</div>
+              <div className="quiz-subtitle-mobile">Color, theme, animals, etc.</div>
+              <div className="quiz-recipient-other">
+                <textarea type="text" name="other" cols="100" value={recipient.other === 'blank' ? '' : recipient.other} onChange={ (e) => (uncheckOther(), editRecipient('other', e.target.value))}/>
+                <div className="quiz-recipient-other-checkbox"><input id="other" type="checkbox" name="other" value="blank" onClick={(e) =>  editRecipient('other', '')}/><span>Nope</span></div>
+              </div>
+              <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => updateRecipient('comment', e)}>{loading == 'comment' ? <div className="loading loading-event"><span></span><span></span><span></span></div> : <span>Save</span>}</button><div className="quiz-button-container"></div></div>
+              {/* {quizState.other && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'mail')}>
+                <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
+              </div>}     */}
+              </div>
+          </div>
+          </div>
+        }
         {modal == 'edit_card_event' &&
           <div className="recipient-modal">
           <div className="recipient-modal-box">
@@ -1357,6 +1389,27 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
               </div>
               <div className="quiz-button-container recipient-modal-box-event-button"><button className="quiz-button" onClick={() => (submitCardUpdate('tags'))}>{loading == 'tags' ? <div className="loading loading-event"><span></span><span></span><span></span></div> : <span>Done</span>}</button><div className="quiz-button-container"></div></div>
           </div>
+          </div>
+          </div>
+        }
+        {modal == 'edit_comments' &&
+          <div className="recipient-modal">
+          <div className="recipient-modal-box">
+            <div className="recipient-modal-box-close" onClick={() => (setModal(''), setCardMenu('empty'))}><SVG svg={'close'} classprop={'recipient-modal-box-close-svg'}></SVG></div>
+            <div className="recipient-modal-box-comment">
+              <div className="quiz-title">Is there anything else you want us to know or any designs we should avoid?</div>
+              <div className="quiz-title-mobile">Is there anything else you want us to know or any designs we should avoid?</div>
+              <div className="quiz-subtitle">Color, theme, animals, etc.</div>
+              <div className="quiz-subtitle-mobile">Color, theme, animals, etc.</div>
+              <div className="quiz-recipient-other">
+                <textarea type="text" name="other" cols="100" value={card.comment === 'blank' ? '' : card.comment ? card.comment : ''} onChange={ (e) => (uncheckOther(), editCard('comment', e.target.value))}/>
+                <div className="quiz-recipient-other-checkbox"><input id="other" type="checkbox" name="other" value="blank" onClick={(e) =>  editCard('comment', '')}/><span>Nope</span></div>
+              </div>
+              <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => submitCardUpdate('comment')}>{loading == 'comment' ? <div className="loading loading-event"><span></span><span></span><span></span></div> : <span>Save</span>}</button><div className="quiz-button-container"></div></div>
+              {/* {quizState.other && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'mail')}>
+                <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
+              </div>}     */}
+              </div>
           </div>
           </div>
         }

@@ -3,6 +3,7 @@ const initialState = {
   event_other: '',
   card_arrival: '',
   tags: [],
+  comment: '',
   nickname: '',
   message: '',
   message_later: '',

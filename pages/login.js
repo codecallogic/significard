@@ -11,11 +11,12 @@ import {API} from '../config'
 import withUser from './withUser'
 import {useRouter} from 'next/router'
 import {connect} from 'react-redux'
+import checkUser from './checkUser'
 axios.defaults.withCredentials = true
 
 initializeFirebase()
 
-const Login = ({user, userUpdate, userMessage, userEmail}) => {
+const Login = ({loggedIn, user, userUpdate, userMessage, userEmail}) => {
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -100,8 +101,8 @@ const Login = ({user, userUpdate, userMessage, userEmail}) => {
   
   return (
     <>
-    <Nav loggedIn={user}></Nav>
-    <NavMobile loggedIn={user}></NavMobile>
+    <Nav loggedIn={loggedIn}></Nav>
+    <NavMobile loggedIn={loggedIn}></NavMobile>
     <div className="signup-container">
       <div className="signup">
         <h1 className="signup-heading">Login to access your account</h1>
@@ -152,4 +153,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(checkUser(Login))
