@@ -560,6 +560,12 @@ body {
       .recipient-modal-box-tags-button {
         width: max-content;
         margin-bottom: 2rem; }
+    .recipient-modal-box-comment {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%; }
 
 .black {
   color: black !important; }
