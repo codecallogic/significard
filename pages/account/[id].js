@@ -56,7 +56,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
   const [addNew, setAddNew] = useState(false)
   const [cardUpdate, setCardUpdate] = useState(false)
   const [cardTagsItem, setCardTagsItem] = useState(null)
-  const [dashboard, setDashboard] = useState('calendar')
+  const [dashboard, setDashboard] = useState('orders')
   const [credits, setCredits] = useState(newUser.credits)
 
   const handleClickOutside = (event) => {
@@ -399,7 +399,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
   const createCard = async (loading) => {
     setLoading(loading)
     try {
-      const responseCard = await axios.post(`${API}/card/create`, {id: recipientID, card: card, user: newUser})
+      const responseCard = await axios.post(`${API}/card/create`, {id: recipientID, card: card, user: newUser, recipient: recipient})
       setLoading('')
       setEdit('')
       setModal('')
@@ -534,7 +534,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
           </div>
         </div>
         { dashboard == 'orders' &&
-          <Orders user={newUser} credits={credits}></Orders>
+          <Orders user={newUser} credits={credits} recipients={allRecipients}></Orders>
         }
         {dashboard == 'info' && 
           <Info user={newUser} dashboard={dashboard} credits={credits}></Info>
@@ -563,9 +563,9 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                   {cardMenu == 'recipient' && 
                   <div className="profile-dashboard-recipients-edit-title-edit-menu" ref={myRefs}>
                     <div className="profile-dashboard-recipients-edit-title-edit-menu-item" onClick={() => setModal('title')}>Edit Recipient</div>
-                    {/* <div className="profile-dashboard-recipients-edit-title-edit-menu-item" onClick={() => deleteRecipient('delete')}>
+                    <div className="profile-dashboard-recipients-edit-title-edit-menu-item" onClick={() => deleteRecipient('delete')}>
                       {loading == 'delete' ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : <span>Delete</span>}
-                    </div> */}
+                    </div>
                   </div>
                   }
                 </div>

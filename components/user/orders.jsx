@@ -1,6 +1,26 @@
 import SVG from '../../files/svgs'
+import {useEffect, useState} from 'react'
 
-const Orders = ({user, credits}) => {
+const Orders = ({user, credits, recipients}) => {
+
+  const [allRecipients, setAllRecipients] = useState(recipients)
+
+  useEffect(() => {
+    let recipientsArray = [...recipients]
+    let cardsArray = []
+    
+    recipients.forEach((item) => {  
+      item.cards.forEach((card) => {
+        cardsArray.push(card)
+      })
+    })
+
+    recipientsArray = [...recipientsArray, ...cardsArray]
+    recipientsArray.sort((a, b) => a['card_arrival'] > b['card_arrival'] ? 1 : -1)
+    setAllRecipients([...recipientsArray])
+    
+  }, [recipients])
+  
   const formatDate = (e) => {
     let date = new Date(e)
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -21,7 +41,7 @@ const Orders = ({user, credits}) => {
         {/* <div className="profile-dashboard-orders-title-sent">Order History</div> */}
       </div>
       <div className="profile-dashboard-orders-card">
-      {user.recipients.length > 0 && user.recipients.map((item) => 
+      {allRecipients.length > 0 && allRecipients.map((item) => 
      
         <div className="profile-dashboard-orders-card-item">
           <div className="profile-dashboard-orders-card-item-name">{item.recipient_name ? item.recipient_name : 'Unknown'}</div>
@@ -36,7 +56,7 @@ const Orders = ({user, credits}) => {
         </div>
       )
       }
-      {user.recipients.length > 0 && user.recipients.map((item) => 
+      {/* {allRecipients.length > 0 && allRecipients.map((item) => 
         item.cards.length > 0 && item.cards.map((card) => 
         // console.log(card)
         <div className="profile-dashboard-orders-card-item">
@@ -52,7 +72,7 @@ const Orders = ({user, credits}) => {
         </div>
       )
       )
-      }
+      } */}
       </div>
     </div>
   )
