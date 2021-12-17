@@ -45,7 +45,7 @@ const Login = ({loggedIn, user, userUpdate, userMessage, userEmail}) => {
         loginFirebase(authResult.user)
         return false
       },
-      signInFailure: (error) => console.log(error)
+      signInFailure: (error) => console.log('GOOGLE ERROR', error)
     }
   }
 
