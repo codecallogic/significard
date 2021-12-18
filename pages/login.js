@@ -17,6 +17,7 @@ axios.defaults.withCredentials = true
 initializeFirebase()
 
 const Login = ({loggedIn, user, userUpdate, userMessage, userEmail}) => {
+  
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
