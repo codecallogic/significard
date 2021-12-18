@@ -78,7 +78,7 @@ const Login = ({loggedIn, user, userUpdate, userMessage, userEmail}) => {
     setLoading(true)
     try {
       const responseLogin = await axios.post(`${API}/auth/login`, {user})
-      console.log(responseLogin.data)
+      // console.log(responseLogin.data)
       userEmail(responseLogin.data)
       setLoading(false)
       if(responseLogin.data.recipients){
