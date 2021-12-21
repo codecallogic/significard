@@ -116,6 +116,8 @@ body {
       margin-left: 0.5rem; }
     .footer-right-icons svg:hover {
       cursor: pointer; }
+  .footer-right-icons span {
+    margin-right: 0.5rem; }
   .footer-links {
     width: 100%;
     padding: 2rem 5rem; }
@@ -150,6 +152,9 @@ body {
     min-width: 20rem; }
     .activate-login:hover {
       cursor: pointer; }
+  .activate-error {
+    font-size: 1.2rem;
+    color: red; }
 
 .slider {
   grid-column: 1/-1;
@@ -4537,6 +4542,8 @@ body {
       justify-content: center;
       margin-right: 3rem; }
       .aboutus-team-item img {
+        width: 15rem;
+        height: 15rem;
         border-radius: 50%;
         margin-bottom: 1.5rem; }
       .aboutus-team-item-name {
