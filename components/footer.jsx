@@ -21,11 +21,9 @@ const Footer = ({}) => {
       <div className="footer-right-container">
         <h1 className="footer-right-heading">Join the Fam!</h1>
         <div className="footer-right-icons">
-          <SVG svg={'facebook'}></SVG>
-          <SVG svg={'instagram'}></SVG>
-          <SVG svg={'twitter'}></SVG>
-          <SVG svg={'linkedin'}></SVG>
-          <SVG svg={'pinterest'}></SVG>
+          <span onClick={ () => window.location.href = `https://www.facebook.com/significard`}><SVG svg={'facebook'}></SVG></span>
+          <span onClick={ () => window.location.href = `https://www.instagram.com`}><SVG svg={'instagram'}></SVG></span>
+          <span onClick={ () => window.location.href = `https://www.linkedin.com/company/significard`}><SVG svg={'linkedin'}></SVG></span>
         </div>
       </div>
     </div>

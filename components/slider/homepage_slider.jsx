@@ -12,7 +12,7 @@ const Slider = ({slider}) => {
   const [imageType, setImageType] = useState('jpeg')
 
   useEffect(() => {
-    let delay = 3000
+    let delay = 5000
     let timer = setInterval(() => {
       if(slideDirection == 'right'){
         setCounter(counter + 1)

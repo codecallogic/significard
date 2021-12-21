@@ -9,6 +9,8 @@ axios.defaults.withCredentials = true
 const ActivateAccount = ({user, userUpdate, userMessage, userEmail}) => {
   const router = useRouter()
 
+  const [error, setError] = useState('')
+
   const activateUser = async (e) => {
     e.preventDefault()
     
@@ -16,27 +18,25 @@ const ActivateAccount = ({user, userUpdate, userMessage, userEmail}) => {
     try {
       const responseActivate = await axios.post(`${API}/auth/activate-account`, {query})
       console.log(responseActivate)
-      userMessage(null)
+      setError('')
       window.location.href = '/quiz'
     } catch (error) {
       console.log(error)
-      if(error) error.response ? userMessage(error.response.data) : userMessage(null)
+      if(error) error.response ? setError(error.response.data) : setError('Error ocurred activating account, please try again later or contact support')
     }
   }
   
   return (
     <>
-      {user.message == null && <div className="activate">
+      <div className="activate">
         <div>Hello, click on the button below to activate!</div>
-        <a href="/quiz" className="activate-login" onClick={activateUser}>Activate Account!</a>
+        <a className="activate-login" onClick={activateUser}>Activate Account!</a>
+        {error && 
+          <div className="activate-error">{error}</div>
+        }
       </div>
-      }
 
-      {user.message !== null && <div className="activate">
-        <div>{user.message}</div>
-        <a href="/signup" className="activate-login">Signup to Start</a>
-      </div>
-      }
+      
     </>
   )
 }

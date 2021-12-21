@@ -7,7 +7,7 @@ import {initializeFirebase} from '../helpers/firebase'
 initializeFirebase()
 
 const Nav = ({loggedIn, color}) => {
-  console.log(loggedIn)
+
   const signOut = async () => {
     try {
       const responseSignOut = await axios.post(`${API}/auth/logout`)
