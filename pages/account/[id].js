@@ -59,6 +59,10 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
   const [dashboard, setDashboard] = useState('orders')
   const [credits, setCredits] = useState(newUser.credits)
 
+  useEffect(() => {
+    console.log(recipient)
+  }, [recipient])
+
   const handleClickOutside = (event) => {
     if(myRefs.current){
       if(!myRefs.current.contains(event.target)){
@@ -462,6 +466,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
       setMessage('')
       setLoading('')
       setAddNew(false)
+      setCredits(credits - 1)
       setAllRecipients(recipientResponse.data)
     } catch (error) {
       console.log(error)
@@ -914,7 +919,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                     </div>
                   </>)
                   :
-                  (recipient.rank.length > 0 && recipient.rank.map((item, idx) =>
+                  (recipient.rank.length > 0 && recipient.rank.sort((a, b) => a['rank'] > b['rank'] ? 1 : -1).map((item, idx) =>
                     <div className={`profile-dashboard-recipients-edit-style-selection-item-${item.rank} profile-dashboard-recipients-edit-style-selection-item-box`} key={idx} onDrop={(e) => onDropNew(e, item.rank)} onDragOver={(e) => onDragOver(e)}>
                     <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${item.rank}`}
                     draggable onDragStart={(e) => {onDragStart(e, item.rank,item.style)}}
@@ -926,7 +931,14 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                 }
               </div>
               {edit == 'style' ? 
-                  <div className="profile-dashboard-recipients-edit-profile-edit">{loading == 'style' ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : <><span onClick={() => (setRecipient(recipientID), setEdit(''), editRecipient('rank', []))}>Cancel</span>{recipient.rank && recipient.rank.length > 5 && <span onClick={() => (updateRecipient('style'))}>Save</span>}</>}</div>
+                  <div className="profile-dashboard-recipients-edit-profile-edit">{loading == 'style' 
+                  ? 
+                  <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> 
+                  : 
+                  <>
+                  <span onClick={() => (setRecipient(recipientID), setEdit(''), editRecipient('rank', []))}>Cancel</span>
+                  {recipient.rank && recipient.rank.length > 5 && <span onClick={() => setEdit('')}>Save</span>}</>}
+                  </div>
                 :
                 <div className="profile-dashboard-recipients-edit-profile-edit" onClick={() => (setEdit('style'), resetRank())}>Edit</div>
               }
@@ -943,6 +955,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                             <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setModal('event')}>Edit Event</div>
                             <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => setModal('message')}>Edit Message</div>
                             <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => (setModal('tags'))}>Edit Card Themes</div>
+                            <div className="profile-dashboard-recipients-edit-event-container-card-menu-item" onClick={() => (setModal('comments'))}>Edit Comments</div>
                           </div>
                           }
                           <div className="profile-dashboard-recipients-edit-event-container-card-dots" onClick={() => cardMenu !== 'empty' ? setCardMenu('empty') :  setCardMenu(idx)}><span></span><span></span><span></span></div>
@@ -981,9 +994,8 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
           </div>
         }
         { dashboard == 'calendar' &&
-          <CalendarUI recipients={recipients}></CalendarUI>
+          <CalendarUI recipients={allRecipients}></CalendarUI>
         }
-
 
         {/* //////////////////// MODALS ////////////////////////////// */}
         {modal == 'title' && 
