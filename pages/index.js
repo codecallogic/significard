@@ -17,7 +17,7 @@ const Home = ({loggedIn, user, userUpdate}) => {
   // console.log(loggedIn)
 
   useEffect(() => {
-    ReactGA.initialize('G-JMZSJHJCNH')
+    ReactGA.initialize('G-52G8Y3RPRR')
     ReactGA.pageview('/')
   }, [])
 
