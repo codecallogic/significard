@@ -171,7 +171,7 @@ const Checkout = ({newUser}) => {
     recipientData.package_plan === 'custom' ? setTotal((result * recipientData.package_quantity)): null
 
 
-    let delivery = new Date(Date.now() + 12096e5)
+    let delivery = new Date(recipientData.card_arrival)
 
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 

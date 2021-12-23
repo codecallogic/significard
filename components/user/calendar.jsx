@@ -8,6 +8,7 @@ import holidays from '../../utils/holidays'
 const localizer = momentLocalizer(moment)
 
 const CalendarUI = ({recipients}) => {
+  // console.log(recipients)
   const [events, setEvents] = useState(holidays)
 
   useEffect(() => {
@@ -24,7 +25,31 @@ const CalendarUI = ({recipients}) => {
       })
     }
 
+    if(recipients){
+      recipients.forEach((item) => {
+        if(item.cards.length > 0){
+          item.cards.forEach((card) => {
+            console.log(card)
+    
+            let cardObject = new Object()
+            cardObject.id = card._id
+            cardObject.title = card.event ? `${card.recipient_name}'s ${card.event} card` : `${card.recipient_name}'s ${card.event_other} card`
+            cardObject.start = card.card_arrival
+            cardObject.end = card.card_arrival
+            cardObject.color = '#56BDF4'
+            cardObject.type = 'card'
+            
+            setEvents(oldArray => [...oldArray, cardObject])
+          })
+        }
+      })
+    }
+
   }, [])
+
+  useEffect(() => {
+    console.log(events)
+  }, [events])
 
   // useEffect(() => {
   //   let filteredEvents = events.filter((item, idx) => new Date(item.start) < new Date('December 23, 2021'))
