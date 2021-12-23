@@ -13,14 +13,12 @@ import ReactGA from 'react-ga'
 
 initializeFirebase()
 
-ReactGA.initialize('UA-210604477')
-ReactGA.pageview('/')
-
 const Home = ({loggedIn, user, userUpdate}) => {
   // console.log(loggedIn)
 
   useEffect(() => {
-   
+    ReactGA.initialize('G-JMZSJHJCNH')
+    ReactGA.pageview('/')
   }, [])
 
   const handleEventAnalytics = (type) => {
