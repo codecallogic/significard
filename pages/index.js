@@ -9,19 +9,26 @@ import NavMobile from '../components/navMobile'
 import Slider from '../components/slider/homepage_slider'
 import Footer from '../components/footer'
 import checkUser from './checkUser'
+import ReactGA from 'react-ga'
 
 initializeFirebase()
+
+ReactGA.initialize('UA-210604477')
+ReactGA.pageview('/')
 
 const Home = ({loggedIn, user, userUpdate}) => {
   // console.log(loggedIn)
 
-  const signOut = async () => {
-    try {
-      const responseSignOut = await axios.post(`${API}/auth/logout`)
-      firebase.auth().signOut()
-      window.location.href = '/signup'
-    } catch (error) {
-      console.log(error)
+  useEffect(() => {
+   
+  }, [])
+
+  const handleEventAnalytics = (type) => {
+    if(type == 'header'){
+      ReactGA.event({
+        category: 'Button',
+        action: 'Get started button on header homepage'
+      })
     }
   }
   
@@ -37,7 +44,7 @@ const Home = ({loggedIn, user, userUpdate}) => {
           <div className="home-header-title">
             Celebrate the moments worth holding on to.
           </div>
-          <div className="home-header-button" onClick={() => loggedIn ?window.location.href = `/account/${loggedIn.id}` : window.location.href = '/quiz'}>
+          <div className="home-header-button" onClick={() => (handleEventAnalytics('header'), loggedIn ?window.location.href = `/account/${loggedIn.id}` : window.location.href = '/quiz')}>
             Get Started
           </div>
         </div>
