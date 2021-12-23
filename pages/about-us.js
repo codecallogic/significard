@@ -16,8 +16,6 @@ const AboutUs = ({loggedIn}) => {
         <br />
         <p>The idea of Significard came to our CEO, Ekaterina Taunova, who has been working in IT, but always had a passion for art and card giving. She started testing the idea in early 2020, and with the help from her friends and family Signficard started to get some traction. After finding a technical Co-Founder, Nick Kridler, in 2021 Significard’s technology magic has finally started to evolve to provide better card recommendations for you and your recipients.</p>
         <br />
-        <p>This year we joined the top pre-seed startup accelerator program, the Founder Institute, that helps us grow and evolve so we could provide you the best services.</p>
-        <br />
         <p>With the help from our Marketing Manager, Geisha Naut Diaz, we have been learning more about branding and spreading awareness (btw we are small, so sharing our link with your friend would mean the world to us!)</p>
         <br />
         <p>This platform is new and evolving and any feedback is welcomed :) We will continue to improve our business and help you create beautiful connections.</p>
@@ -29,13 +27,13 @@ const AboutUs = ({loggedIn}) => {
         <div className="aboutus-team-item">
           <img src="/media/about/about-us-katia.jpeg" alt="" />
           <div className="aboutus-team-item-name">Ekaterina Taunova</div>
-          <div className="aboutus-team-item-title">CEO & Founder</div>
+          <div className="aboutus-team-item-title">CEO & Co-Founder</div>
           {/* <div className="aboutus-team-item-button">Read more</div> */}
         </div>
         <div className="aboutus-team-item">
           <img src="/media/about/about-us-nick.jpeg" alt="" />
           <div className="aboutus-team-item-name">Nick Kridler</div>
-          <div className="aboutus-team-item-title">Co-Founder</div>
+          <div className="aboutus-team-item-title">CTO & Co-Founder</div>
           {/* <div className="aboutus-team-item-button">Read more</div> */}
         </div>
         <div className="aboutus-team-item">
