@@ -62,9 +62,9 @@ const SignUp = ({loggedIn, user, userUpdate, userMessage}) => {
       setName('')
       setEmail('')
       setPassword('')
-      setTimeout(() => {
-        window.location.href = '/login'
-      }, 1500);
+      // setTimeout(() => {
+      //   window.location.href = '/login'
+      // }, 1500);
     } catch (error) {
       console.log(error.response)
       setLoading(false)
