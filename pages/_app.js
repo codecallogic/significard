@@ -4,14 +4,20 @@ import {createStore} from 'redux'
 import {Provider} from 'react-redux'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import rootReducer from './../reducers/rootReducer'
-import {GOOGLE_MAPS} from '../config'
+import {GOOGLE_MAPS, GOOGLE_ANALYTICS} from '../config'
+import {useEffect} from 'react'
+import ReactGA from 'react-ga'
 
+const UA = GOOGLE_ANALYTICS
+
+ReactGA.initialize(UA)
 // store
 const store = createStore(rootReducer, composeWithDevTools())
 
 const googleSource = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS}&libraries=places`
 
 function MyApp({ Component, pageProps }) {
+  
   return <>
     <Head>
       <title>Significard</title>

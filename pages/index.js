@@ -17,7 +17,6 @@ const Home = ({loggedIn, user, userUpdate}) => {
   // console.log(loggedIn)
 
   useEffect(() => {
-    ReactGA.initialize('UA-215843786-1')
     ReactGA.pageview('/')
   }, [])
 
@@ -26,6 +25,13 @@ const Home = ({loggedIn, user, userUpdate}) => {
       ReactGA.event({
         category: 'Button',
         action: 'Get started button on header homepage'
+      })
+    }
+
+    if(type == 'section_2_homepage'){
+      ReactGA.event({
+        category: 'Button',
+        action: 'Get started button on how it works section homepage'
       })
     }
   }
@@ -77,7 +83,7 @@ const Home = ({loggedIn, user, userUpdate}) => {
           </div>
         </div>
       </div>
-      <div className="home-section_2-button-container"><div className="home-section_2-button" onClick={() => loggedIn ?window.location.href = `/account/${loggedIn.id}` : window.location.href = '/quiz'}>Get Started</div></div>
+      <div className="home-section_2-button-container"><div className="home-section_2-button" onClick={() => (handleEventAnalytics('section_2_homepage'), loggedIn ? window.location.href = `/account/${loggedIn.id}` : window.location.href = '/quiz')}>Get Started</div></div>
     </div>
     <div className="home-section_3">
       <Slider></Slider>
