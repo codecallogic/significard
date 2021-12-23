@@ -48,6 +48,17 @@ const Info = ({user, dashboard, credits}) => {
     input.value = input.value.split(regex).join('')
   }
 
+  const validateIsPhoneNumber = (type) => {
+    setMessage('')
+    const input = document.getElementById(type)
+    const cleanNum = input.value.toString().replace(/\D/g, '');
+    const match = cleanNum.match(/^(\d{3})(\d{0,3})(\d{0,4})$/);
+    if (match) {
+      return  setPhone('(' + match[1] + ') ' + (match[2] ? match[2] + "-" : "") + match[3]);
+    }
+    return null;
+  }
+
   const handleZipCode = (e) => {
     e.preventDefault()
     if(!/^\d{5}(-\d{4})?$/.test(zip)) return setMessage('Zip code is invalid');
@@ -159,7 +170,7 @@ const Info = ({user, dashboard, credits}) => {
             <div className="profile-dashboard-info-box-address">
               <div className="profile-dashboard-info-box-address-title">Mobile Phone Number</div>
               <div className="form-group-single">
-                <input id='phone' type="text" placeholder="Phone #" value={phone} onChange={ (e) => (validateIsNumber('phone'), setPhone(e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Phone #'} required/>
+                <input id='phone' type="text" placeholder="Phone #" value={phone} onChange={ (e) => e.target.value.length < 15 ?(validateIsNumber('phone'), setPhone(e.target.value), validateIsPhoneNumber('phone')) : null} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Phone #'} required/>
               </div>
             </div>
           </div>

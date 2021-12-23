@@ -59,10 +59,6 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
   const [dashboard, setDashboard] = useState('orders')
   const [credits, setCredits] = useState(newUser.credits)
 
-  useEffect(() => {
-    console.log(recipient)
-  }, [recipient])
-
   const handleClickOutside = (event) => {
     if(myRefs.current){
       if(!myRefs.current.contains(event.target)){
@@ -444,6 +440,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
       setEdit('')
       setModal('')
       setCardMenu('empty')
+      console.log(responseCard.data)
       setAllRecipients(responseCard.data)
       responseCard.data.filter((item) => {
         if(item._id == recipientID){
@@ -568,9 +565,9 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                   {cardMenu == 'recipient' && 
                   <div className="profile-dashboard-recipients-edit-title-edit-menu" ref={myRefs}>
                     <div className="profile-dashboard-recipients-edit-title-edit-menu-item" onClick={() => setModal('title')}>Edit Recipient</div>
-                    <div className="profile-dashboard-recipients-edit-title-edit-menu-item" onClick={() => deleteRecipient('delete')}>
+                    {/* <div className="profile-dashboard-recipients-edit-title-edit-menu-item" onClick={() => deleteRecipient('delete')}>
                       {loading == 'delete' ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : <span>Delete</span>}
-                    </div>
+                    </div> */}
                   </div>
                   }
                 </div>
@@ -892,7 +889,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                     </div>
                     <div className={`profile-dashboard-recipients-edit-style-selection-item-${3} profile-dashboard-recipients-edit-style-selection-item-box slideFromRight ` + (recipient.rank.some(e => e.rank == 3) ? null : ' disable')} onDrop={(e) => onDropNew(e, 3)} onDragOver={(e) => onDragOver(e)}>
                     <div className={` profile-dashboard-recipients-edit-style-selection-item rank-content-${3}`}
-                    draggable onDragStart={(e) => (console.log('Hello'), onDragStart(e, 3, 'cute'))}>
+                    draggable onDragStart={(e) => (onDragStart(e, 3, 'cute'))}>
                       Cute
                     </div>
                     </div>
