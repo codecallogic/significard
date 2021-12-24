@@ -4797,6 +4797,9 @@ body {
     background-color: #e5e5e5;
     color: black; }
 
+.react-calendar__month-view__days__day--weekend {
+  color: black !important; }
+
 .form {
   display: grid;
   grid-template-columns: repeat(2, 1fr); }
