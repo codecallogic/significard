@@ -399,7 +399,8 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
   const createCard = async (loading) => {
     setLoading(loading)
     try {
-      const responseCard = await axios.post(`${API}/card/create`, {id: recipientID, card: card, user: newUser, recipient: recipient})
+      const responseCard = await axios.post(`${API}/card/create`, {id: recipientID, card: card, user: newUser, recipient: recipient, credits: credits})
+      console.log(responseCard.data)
       setLoading('')
       setEdit('')
       setModal('')
@@ -440,7 +441,6 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
       setEdit('')
       setModal('')
       setCardMenu('empty')
-      console.log(responseCard.data)
       setAllRecipients(responseCard.data)
       responseCard.data.filter((item) => {
         if(item._id == recipientID){
@@ -459,7 +459,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
   const createRecipient = async (type) => {
     setLoading(type)
     try {
-      const recipientResponse = await axios.post(`${API}/recipient/create-recipient`, {recipient: recipient, user: newUser})
+      const recipientResponse = await axios.post(`${API}/recipient/create-recipient`, {recipient: recipient, user: newUser, credits: credits})
       setMessage('')
       setLoading('')
       setAddNew(false)

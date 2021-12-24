@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useStripe, useElements, CardElement, CardNumberElement} from '@stripe/react-stripe-js';
 import axios from 'axios'
 import {API} from '../config'
+import ReactGA from 'react-ga'
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -120,6 +121,15 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
     }
   }
 
+  const handleEventAnalytics = (type) => {
+    if(type == 'confirm'){
+      ReactGA.event({
+        category: 'Button',
+        action: 'Confirm payment clicked in checkout page'
+      })
+    }
+  }
+
   return (
     <>
       <CardElement className="checkout-container-left-form" options={CARD_ELEMENT_OPTIONS}/>
@@ -133,7 +143,7 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
         {/* <div className="checkout-container-left-updates-subtitle-three">To make the process easier, please add your phone number.</div> */}
       </div>
       <div className="checkout-container-button-container">
-        <button className="checkout-container-button" disabled={!stripe} onClick={handleCardPayment}>{loading ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : 'Confirm'}</button>
+        <button className="checkout-container-button" disabled={!stripe} onClick={() => (handleEventAnalytics('confirm'), handleCardPayment())}>{loading ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : 'Confirm'}</button>
       </div>
       {message && <span className="checkout-container-left-message">{message}</span>}
       {success && <span className="checkout-container-left-success"><svg><use xlinkHref="sprite.svg#icon-checkmark"></use></svg>{success}</span>}

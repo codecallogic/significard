@@ -9,7 +9,7 @@ import {useRouter} from 'next/router'
 import PlacesAutocomplete, {geocodeByPlaceId} from 'react-places-autocomplete'
 import {usStates} from '../utils/quiz'
 import {connect } from 'react-redux'
-import store from 'store-js'
+import ReactGA from 'react-ga'
 
 const searchOptionsAddress = {
   componentRestrictions: {country: 'us'},
@@ -232,13 +232,22 @@ const Checkout = ({newUser}) => {
       }
     })
   }
+
+  const handleEventAnalytics = (type) => {
+    if(type == 'go_back'){
+      ReactGA.event({
+        category: 'Button',
+        action: 'Go back to quiz arrow clicked in checkout page'
+      })
+    }
+  }
   
   return (
     <>
       <Nav loggedIn={newUser} color={'white'}></Nav>
       <NavMobile loggedIn={newUser} color={'white'}></NavMobile>
       <div className="checkout">
-        <div className="checkout-back" onClick={(e) => quizProgressNav(e, 'message')}>
+        <div className="checkout-back" onClick={(e) => (handleEventAnalytics('go_back'), quizProgressNav(e, 'message'))}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
         </div>
         <div className="quiz-title">Payment Method</div>

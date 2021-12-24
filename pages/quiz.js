@@ -17,6 +17,7 @@ import axios from 'axios'
 import {API} from '../config'
 import SVGs from '../files/svgs'
 import store from 'store-js'
+import ReactGA from 'react-ga'
 
 const searchOptionsAddress = {
   componentRestrictions: {country: 'us'},
@@ -732,6 +733,36 @@ const quiz = ({newUser, quizState}) => {
     if(+quizState.package_quantity > 9) setResult(9.99)
     if(+quizState.package_quantity > 19) setResult(6.99)
     if(+quizState.package_quantity > 50){setMessage('For 50+ cards, please contact us.'), setResult('')}
+  }
+
+  const handleEventAnalytics = (type) => {
+    if(type == 'best_deal'){
+      ReactGA.event({
+        category: 'Button',
+        action: 'Best deal package selected'
+      })
+    }
+
+    if(type == 'better_deal'){
+      ReactGA.event({
+        category: 'Button',
+        action: 'Better deal package selected'
+      })
+    }
+
+    if(type == 'good_deal'){
+      ReactGA.event({
+        category: 'Button',
+        action: 'Good deal package selected'
+      })
+    }
+
+    if(type == 'custom_deal'){
+      ReactGA.event({
+        category: 'Button',
+        action: 'Custom deal package selected'
+      })
+    }
   }
 
   return (
@@ -1468,7 +1499,7 @@ const quiz = ({newUser, quizState}) => {
               </div>
               <div className="quiz-recipient-package-item-price">$6.99 per card</div>
               {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'best deal', 20))}>Select</button>
+              <button className="quiz-recipient-package-item-button" onClick={ (e) => (handleEventAnalytics('best_deal'), quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'best deal', 20))}>Select</button>
               <div>Free Shipping</div>
             </div>
             <div className="quiz-recipient-package-item">
@@ -1479,7 +1510,7 @@ const quiz = ({newUser, quizState}) => {
               </div>
               <div className="quiz-recipient-package-item-price">$9.99 per card</div>
               {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'better deal', 10))}>Select</button>
+              <button className="quiz-recipient-package-item-button" onClick={ (e) => (handleEventAnalytics('better_deal'), quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'better deal', 10))}>Select</button>
               <div>Free Shipping</div>
             </div>
             <div className="quiz-recipient-package-item">
@@ -1493,7 +1524,7 @@ const quiz = ({newUser, quizState}) => {
               </div>
               <div className="quiz-recipient-package-item-price">$11.99 per card</div>
               {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-              <button className="quiz-recipient-package-item-button" onClick={ (e) => (quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'good deal', 5))}>Select</button>
+              <button className="quiz-recipient-package-item-button" onClick={ (e) => (handleEventAnalytics('good_deal'), quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'good deal', 5))}>Select</button>
               <div>Free Shipping</div>
             </div>
             <div className="quiz-recipient-package-item">
@@ -1506,7 +1537,7 @@ const quiz = ({newUser, quizState}) => {
                   }
                 }}/>
               </div>
-              {!result && <button className="quiz-recipient-package-item-button mb-2" onClick={ () => (calculate())}>Calculate</button>
+              {!result && <button className="quiz-recipient-package-item-button mb-2" onClick={ () => (handleEventAnalytics('custom_deal'), calculate())}>Calculate</button>
               }
               {result && <button className="quiz-recipient-package-item-button mb-2" onClick={ (e) => (quizProgressNav(e,'message'))}>Select & Continue</button>
               }

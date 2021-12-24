@@ -16,7 +16,7 @@ const Orders = ({user, credits, recipients}) => {
     })
 
     recipientsArray = [...recipientsArray, ...cardsArray]
-    recipientsArray.sort((a, b) => a['card_arrival'] > b['card_arrival'] ? 1 : -1)
+    recipientsArray.sort((a, b) => new Date(a['card_arrival']) > new Date(b['card_arrival']) ? 1 : -1)
     setAllRecipients([...recipientsArray])
     
   }, [recipients])
