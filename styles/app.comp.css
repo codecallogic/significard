@@ -4143,8 +4143,10 @@ body {
               cursor: grab;
               width: 100%;
               padding: 1rem 0;
-              border-radius: 1.2rem;
-              background-color: red; }
+              border-radius: 1.2rem; }
+              @media only screen and (max-width: 1100px) {
+                .profile-dashboard-recipients-edit-style-selection-item-box div {
+                  border-radius: 3.4rem !important; } }
               .profile-dashboard-recipients-edit-style-selection-item-box div:hover {
                 cursor: grab; }
           .profile-dashboard-recipients-edit-style-selection-item-1 {
