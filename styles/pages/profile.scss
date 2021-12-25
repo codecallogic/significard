@@ -499,6 +499,10 @@
 
               div {
                 cursor: grab;
+                width: 100%;
+                padding: 1rem 0;
+                border-radius: 1.2rem;
+                background-color: red;
 
                 &:hover {
                   cursor: grab;
@@ -511,7 +515,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1rem;
+            // padding: 1rem 0;
             border: 0.2rem solid #ef6130;
             border-radius: 1.2rem;
             font-size: 1.8rem;
@@ -545,7 +549,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1rem;
+            // padding: 1rem;
             border: 0.2rem solid #e58a5d;
             border-radius: 1.2rem;
             font-size: 1.8rem;
@@ -579,7 +583,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1rem;
+            // padding: 1rem;
             border: 0.2rem solid #ecab7d;
             border-radius: 1.2rem;
             font-size: 1.8rem;
@@ -613,7 +617,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1rem;
+            // padding: 1rem;
             border: 0.2rem solid #f4cd9d;
             border-radius: 1.2rem;
             font-size: 1.8rem;
@@ -647,7 +651,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1rem;
+            // padding: 1rem;
             border: 0.2rem solid #f6d9a8;
             border-radius: 1.2rem;
             font-size: 1.8rem;
@@ -681,7 +685,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1rem;
+            // padding: 1rem;
             border: 0.2rem solid #fff0b8;
             border-radius: 1.2rem;
             font-size: 1.8rem;

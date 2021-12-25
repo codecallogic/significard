@@ -4140,14 +4140,17 @@ body {
                 color: black;
                 border-radius: 3.4rem !important; } }
             .profile-dashboard-recipients-edit-style-selection-item-box div {
-              cursor: grab; }
+              cursor: grab;
+              width: 100%;
+              padding: 1rem 0;
+              border-radius: 1.2rem;
+              background-color: red; }
               .profile-dashboard-recipients-edit-style-selection-item-box div:hover {
                 cursor: grab; }
           .profile-dashboard-recipients-edit-style-selection-item-1 {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1rem;
             border: 0.2rem solid #ef6130;
             border-radius: 1.2rem;
             font-size: 1.8rem;
@@ -4176,7 +4179,6 @@ body {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1rem;
             border: 0.2rem solid #e58a5d;
             border-radius: 1.2rem;
             font-size: 1.8rem;
@@ -4205,7 +4207,6 @@ body {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1rem;
             border: 0.2rem solid #ecab7d;
             border-radius: 1.2rem;
             font-size: 1.8rem;
@@ -4234,7 +4235,6 @@ body {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1rem;
             border: 0.2rem solid #f4cd9d;
             border-radius: 1.2rem;
             font-size: 1.8rem;
@@ -4263,7 +4263,6 @@ body {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1rem;
             border: 0.2rem solid #f6d9a8;
             border-radius: 1.2rem;
             font-size: 1.8rem;
@@ -4292,7 +4291,6 @@ body {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1rem;
             border: 0.2rem solid #fff0b8;
             border-radius: 1.2rem;
             font-size: 1.8rem;
