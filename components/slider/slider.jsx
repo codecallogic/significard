@@ -47,7 +47,7 @@ const Slider = ({slider, quizProgressNav, handleChange, result, setresult, calcu
             <img src={`/media/package/standard.png`} alt="" className="slider-slides-item-image" />
             <div className="slider-slides-item-price">$6.99 per card</div>
             {/* <div className="slider-slides-item-discount">15% discount for 10+ cards</div> */}
-            <button className="slider-slides-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package_plan', e, null, 'best_deal', 20))}>Select</button>
+            <button className="slider-slides-item-button" onClick={ (e) => (quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'best_deal', 20))}>Select</button>
             <div className="slider-slides-item-shipping">Free shipping</div>
           </div>
           <div className="slider-slides-item">
@@ -56,7 +56,7 @@ const Slider = ({slider, quizProgressNav, handleChange, result, setresult, calcu
             <img src={`/media/package/standard.png`} alt="" className="slider-slides-item-image" />
             <div className="slider-slides-item-price">$9.99 per card</div>
             {/* <div className="slider-slides-item-discount">15% discount for 10+ cards</div> */}
-            <button className="slider-slides-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package_plan', e, null, 'better_deal', 10))}>Select</button>
+            <button className="slider-slides-item-button" onClick={ (e) => (quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'better_deal', 10))}>Select</button>
             <div className="slider-slides-item-shipping">Free shipping</div>
           </div>
           <div className="slider-slides-item">
@@ -65,7 +65,7 @@ const Slider = ({slider, quizProgressNav, handleChange, result, setresult, calcu
             <img src={`/media/package/standard.png`} alt="" className="slider-slides-item-image" />
             <div className="slider-slides-item-price">$11.99 per card</div>
             {/* <div className="slider-slides-item-discount">15% discount for 10+ cards</div> */}
-            <button className="slider-slides-item-button" onClick={ (e) => (quizProgressNav(e,'mail'), handleChange('package_plan', e, null, 'good_deal', 5))}>Select</button>
+            <button className="slider-slides-item-button" onClick={ (e) => (quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'good_deal', 5))}>Select</button>
             <div className="slider-slides-item-shipping">Free shipping</div>
           </div>
           <div className="slider-slides-item">
