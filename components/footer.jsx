@@ -29,7 +29,7 @@ const Footer = ({}) => {
     </div>
     <div className="footer-links">
       <ul className="footer-links-list">
-        <li className="footer-links-list-link" onClick={() => window.location.href = '/'}>Terms of Use</li>
+        <li className="footer-links-list-link" onClick={() => window.location.href = '/terms'}>Terms of Use</li>
         <li className="footer-links-list-link" onClick={() => window.location.href = '/'}>Privacy Policy</li>
       </ul>
     </div>
