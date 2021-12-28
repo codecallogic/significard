@@ -58,6 +58,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
   const [cardTagsItem, setCardTagsItem] = useState(null)
   const [dashboard, setDashboard] = useState('orders')
   const [credits, setCredits] = useState(newUser.credits)
+  const [width, setWidth] = useState('')
 
   const handleClickOutside = (event) => {
     if(myRefs.current){
@@ -67,6 +68,17 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
       }
     }
   }
+
+  useEffect(() => {
+    if(window.innerWidth < 1100) setDashboard('')
+    if(window.innerWidth > 1100) setDashboard('orders')
+    
+    function handleResize() {
+      setWidth(window.innerWidth);
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [])
 
   useEffect(() => {
     setEnableCalendar(``)
