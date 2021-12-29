@@ -31,11 +31,12 @@ body {
       align-items: center; } }
   .nav-logo {
     display: flex;
-    align-items: center; }
+    align-items: center;
+    color: white; }
     .nav-logo svg {
       width: 4.7rem;
       height: 4.7rem;
-      fill: red; }
+      fill: white !important; }
     .nav-logo span {
       font-family: 'Sanchez', serif;
       font-size: 2.4rem;
@@ -47,12 +48,14 @@ body {
     align-items: center; }
     .nav-menu-item {
       font-size: 1.8rem;
-      margin-right: 2rem; }
+      margin-right: 2rem;
+      color: white; }
       .nav-menu-item:hover {
         cursor: pointer; }
       .nav-menu-item svg {
         width: 3.6rem;
-        height: 3.6rem; }
+        height: 3.6rem;
+        fill: white !important; }
 
 .footer {
   display: flex;
@@ -743,7 +746,8 @@ body {
       align-items: center;
       margin-right: 2rem;
       font-size: 2.2rem;
-      white-space: nowrap; }
+      white-space: nowrap;
+      transition: all 0.3s ease-in-out; }
       .profile-dashboard-orders-title-sent:hover {
         cursor: pointer; }
       @media only screen and (max-width: 1100px) {
@@ -1204,11 +1208,12 @@ body {
         background-color: transparent; } }
   .nav-mobile-logo {
     display: flex;
-    align-items: center; }
+    align-items: center;
+    color: white; }
     .nav-mobile-logo svg {
       width: 4.7rem;
       height: 4.7rem;
-      fill: red; }
+      fill: white; }
     .nav-mobile-logo span {
       font-family: 'Sanchez', serif;
       font-size: 2.4rem;
@@ -1243,7 +1248,7 @@ body {
     .nav-mobile-menu-icon, .nav-mobile-menu-icon::before, .nav-mobile-menu-icon::after {
       width: 3rem;
       height: 0.2rem;
-      background-color: #0f2e4c;
+      background-color: white;
       display: inline-block;
       z-index: 4500 !important; }
     .nav-mobile-menu-icon::before, .nav-mobile-menu-icon::after {
@@ -1627,14 +1632,14 @@ body {
     font-size: 4rem;
     font-family: Sanchez;
     line-height: 5.1rem;
-    margin: 1rem 0; }
+    margin: 1rem 0;
+    color: white; }
     @media only screen and (max-width: 992px) {
       .home-header-title {
         padding: 1rem;
         font-size: 3.6rem;
         text-align: center;
         font-family: Sanchez;
-        color: #0f2e4c;
         font-weight: 400;
         padding: 0 3.5rem; } }
     .home-header-title-container {
@@ -1656,8 +1661,8 @@ body {
     width: 16rem;
     height: 5.2rem;
     font-size: 1.8rem;
-    color: white;
-    background-color: #0f2e4c;
+    color: #0f2e4c;
+    background-color: white;
     border-radius: 1.2rem; }
     .home-header-button:hover {
       cursor: pointer; }
@@ -4504,7 +4509,8 @@ body {
   max-height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center; }
+  align-items: center;
+  margin: 5rem 0; }
   @media only screen and (max-width: 768px) {
     .aboutus {
       width: 100%; } }
@@ -4575,7 +4581,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%; }
+  width: 100%;
+  margin: 5rem 0; }
   .faq-title {
     font-size: 4rem;
     font-weight: 400;
