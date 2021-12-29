@@ -7,8 +7,8 @@ const AboutUs = ({loggedIn}) => {
   
   return (
     <>
-    <Nav loggedIn={loggedIn}></Nav>
-    <NavMobile loggedIn={loggedIn}></NavMobile>
+    <Nav loggedIn={loggedIn} color={'#003E5F'}></Nav>
+    <NavMobile loggedIn={loggedIn} color={'#003E5F'}></NavMobile>
     <div className="aboutus">
       <div className="aboutus-title">Our Story</div>
       <div className="aboutus-description">

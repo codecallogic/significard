@@ -11,11 +11,12 @@
   &-logo {
     display: flex;
     align-items: center;
+    color: white;
 
     svg {
       width: 4.7rem;
       height: 4.7rem;
-      fill: red;
+      fill: white !important;
     }
 
     span {
@@ -36,6 +37,7 @@
     &-item {
       font-size: 1.8rem;
       margin-right: 2rem;
+      color: white;
 
       &:hover {
         cursor: pointer;
@@ -44,6 +46,7 @@
       svg {
         width: 3.6rem;
         height: 3.6rem;
+        fill: white !important;
       }
     }
   }

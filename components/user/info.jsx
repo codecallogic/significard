@@ -48,11 +48,24 @@ const Info = ({user, dashboard, credits}) => {
     input.value = input.value.split(regex).join('')
   }
 
+  const isNumber = (data) => {
+    let reg = new RegExp(/[0-9\-\(\)\+\s]+/gm)
+    return reg.test(data)
+  }
+
   const validateIsPhoneNumber = (type) => {
     setMessage('')
     const input = document.getElementById(type)
     const cleanNum = input.value.toString().replace(/\D/g, '');
+    input.onkeydown = function(event){
+      if(event.keyCode == 8){
+        if(cleanNum.length == 1) return setPhone('')
+        return setPhone(cleanNum.substr(0, cleanNum.length - 0))
+      }
+    }
+
     const match = cleanNum.match(/^(\d{3})(\d{0,3})(\d{0,4})$/);
+
     if (match) {
       return  setPhone('(' + match[1] + ') ' + (match[2] ? match[2] + "-" : "") + match[3]);
     }
@@ -150,7 +163,7 @@ const Info = ({user, dashboard, credits}) => {
           <div className="profile-dashboard-info-box-address-container">
             <div className="profile-dashboard-info-box-address">
               <div className="profile-dashboard-info-box-address-title">Address</div>
-              <textarea rows="3" wrap="on" onKeyDown={(e) => e.keyCode == 13 ? e.preventDefault() : null} name="address" placeholder="(Edit Address)" value={address ? `${address}, ${city}, ${state}, ${zip}`: address_two} onClick={() => setModal('address')} readOnly></textarea>
+              <textarea rows="3" wrap="on" onKeyDown={(e) => e.keyCode == 13 ? e.preventDefault() : null} name="address" placeholder="(Edit Address)" value={address ? `${address} ${city}, ${state} ${zip}`: address_two} onClick={() => setModal('address')} readOnly></textarea>
             </div>
           </div>
           <div className="profile-dashboard-info-box-address-container">
@@ -170,7 +183,7 @@ const Info = ({user, dashboard, credits}) => {
             <div className="profile-dashboard-info-box-address">
               <div className="profile-dashboard-info-box-address-title">Mobile Phone Number</div>
               <div className="form-group-single">
-                <input id='phone' type="text" placeholder="Phone #" value={phone} onChange={ (e) => e.target.value.length < 15 ?(validateIsNumber('phone'), setPhone(e.target.value), validateIsPhoneNumber('phone')) : null} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Phone #'} required/>
+                <input id='phone' type="text" placeholder="Phone #" value={phone} onChange={ (e) => e.target.value.length < 15 ?(validateIsNumber('phone'), isNumber(e.target.value) ? (setPhone(e.target.value), validateIsPhoneNumber('phone')) : null) : null} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Phone #'} required/>
               </div>
             </div>
           </div>

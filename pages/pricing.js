@@ -28,8 +28,8 @@ const Pricing = ({loggedIn}) => {
   
   return (
     <>
-    <Nav loggedIn={loggedIn} color={'white'}></Nav>
-    <NavMobile loggedIn={loggedIn} color={'white'}></NavMobile>
+    <Nav loggedIn={loggedIn} color={'#003E5F'}></Nav>
+    <NavMobile loggedIn={loggedIn} color={'#003E5F'}></NavMobile>
     <div className="pricing-packages">
       <div className="quiz-title">Choose the number of cards you'd like to receive for ANY recipients</div>
       <div className="quiz-title-mobile">Choose the number of cards you'd like to receive for ANY recipients</div>
@@ -102,7 +102,7 @@ const Pricing = ({loggedIn}) => {
           Envelope
         </div>
         <div className="quiz-recipient-package-footer-2-item">
-          Blank or preselected message inside the card
+          Blank or preselected handwritten message inside the card
         </div>
       </div>
     </div>

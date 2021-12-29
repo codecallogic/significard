@@ -111,8 +111,8 @@ const SignUp = ({loggedIn, user, userUpdate, userMessage}) => {
 
   return (
     <>
-    <Nav loggedIn={loggedIn}></Nav>
-    <NavMobile loggedIn={loggedIn}></NavMobile>
+    <Nav loggedIn={loggedIn} color={'#003E5F'}></Nav>
+    <NavMobile loggedIn={loggedIn} color={'#003E5F'}></NavMobile>
     <div className="signup-container">
     <div className="signup">
       <h1 className="signup-heading">Let's set up your account:</h1>

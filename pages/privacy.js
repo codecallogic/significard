@@ -7,8 +7,8 @@ const Privacy = ({loggedIn}) => {
   
   return (
     <>
-    <Nav loggedIn={loggedIn}></Nav>
-    <NavMobile loggedIn={loggedIn}></NavMobile>
+    <Nav loggedIn={loggedIn} color={'#003E5F'}></Nav>
+    <NavMobile loggedIn={loggedIn} color={'#003E5F'}></NavMobile>
     <div className="terms">
       <div className="terms-container">
         <div className="terms-title">Privacy Policy</div>

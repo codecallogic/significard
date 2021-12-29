@@ -1559,7 +1559,7 @@ const quiz = ({newUser, quizState}) => {
               Envelope
             </div>
             <div className="quiz-recipient-package-footer-2-item">
-              Blank or preselected message inside the card
+              Blank or preselected handwritten message inside the card
             </div>
           </div>
           {/* <div className="quiz-recipient-package-description">

@@ -14,8 +14,8 @@ const Confirmation = ({newUser, order}) => {
   
   return (
     <>
-    <Nav loggedIn={newUser} color={'white'}></Nav>
-    <NavMobile loggedIn={newUser} color={'white'}></NavMobile>
+    <Nav loggedIn={newUser} color={'#003E5F'}></Nav>
+    <NavMobile loggedIn={newUser} color={'#003E5F'}></NavMobile>
     <div className="confirmation">
       <div className="confirmation-title"><img src="/media/emojis/partying-face.png" alt="" /></div>
       <div className="confirmation-title">Congrats! Your order is complete.</div>

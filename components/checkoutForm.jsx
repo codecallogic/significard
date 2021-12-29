@@ -104,13 +104,6 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
         if(status === 'succeeded'){
           window.location.href = `/${order}?id=${payment_id}`
         }
-
-        // try {
-        //   const responseRecipient = await axios.post(`${API}/recipient/quiz`, {user, recipient})
-        //   console.log(responseRecipient)
-        // } catch (error) {
-        //   if(error) return error.response ? setMessage(error.response.data) : setMessage('Error submitting your information, please try again later')
-        // }
         
       } catch (error) {
         console.log(error.response)

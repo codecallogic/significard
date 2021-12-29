@@ -507,7 +507,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
   return (
     <>
       <NavMobile loggedIn={newUser} dashboard={dashboard} setDashboard={setDashboard} setRecipient={setRecipient} setAddNew={setAddNew}></NavMobile>
-      <NavDesktop loggedIn={newUser}></NavDesktop>
+      <NavDesktop loggedIn={newUser} color={'#003E5F'}></NavDesktop>
       <div className="profile-dashboard">
         <div className={`profile-dashboard-sidenav-container ` + (dashboard !== '' ? 'hide-on-mobile' : '')}>
           <div className="profile-dashboard-sidenav-item-container">
@@ -834,7 +834,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                   <div className="profile-dashboard-recipients-edit-profile-address">
                     <div className="profile-dashboard-recipients-edit-profile-address-title">Address</div>
                     <div className="form-group-single-dropdown-menu profile-dashboard-recipients-edit-profile-personality-input">
-                      <textarea rows="3" wrap="on" onKeyDown={(e) => e.keyCode == 13 ? e.preventDefault() : null} name="description" placeholder="(Edit Address)" value={recipient.address_one ? `${recipient.address_one}, ${recipient.city}, ${recipient.state}, ${recipient.zip_code}`: recipient.address_two} onClick={() => setModal('address')} readOnly></textarea>
+                      <textarea rows="3" wrap="on" onKeyDown={(e) => e.keyCode == 13 ? e.preventDefault() : null} name="description" placeholder="(Edit Address)" value={recipient.address_one ? `${recipient.address_one} ${recipient.city}, ${recipient.state} ${recipient.zip_code}`: recipient.address_two} onClick={() => setModal('address')} readOnly></textarea>
                     </div>
                   </div>
                   <div className="profile-dashboard-recipients-edit-profile-age">
@@ -868,7 +868,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                 <div className="profile-dashboard-recipients-edit-profile-address">
                   <div className="profile-dashboard-recipients-edit-profile-address-title">Address</div>
                   <span>{recipient.address_one ? recipient.address_one : recipient.address_two}</span>
-                  <span>{recipient.city}, {recipient.state} {recipient.zip_code}</span>
+                  <span>{recipient.city} {recipient.state} {recipient.zip_code}</span>
                 </div>
                 <div className="profile-dashboard-recipients-edit-profile-age">
                   <div className="profile-dashboard-recipients-edit-profile-age-title">Age</div>

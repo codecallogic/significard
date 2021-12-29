@@ -53,11 +53,24 @@ const Checkout = ({newUser}) => {
     input.value = input.value.split(regex).join('')
   }
 
+  const isNumber = (data) => {
+    let reg = new RegExp(/[0-9\-\(\)\+\s]+/gm)
+    return reg.test(data)
+  }
+
   const validateIsPhoneNumber = (type) => {
     setMessage('')
     const input = document.getElementById(type)
     const cleanNum = input.value.toString().replace(/\D/g, '');
+    input.onkeydown = function(event){
+      if(event.keyCode == 8){
+        if(cleanNum.length == 1) return setPhone('')
+        return setPhone(cleanNum.substr(0, cleanNum.length - 0))
+      }
+    }
+
     const match = cleanNum.match(/^(\d{3})(\d{0,3})(\d{0,4})$/);
+
     if (match) {
       return  setPhone('(' + match[1] + ') ' + (match[2] ? match[2] + "-" : "") + match[3]);
     }
@@ -244,8 +257,8 @@ const Checkout = ({newUser}) => {
   
   return (
     <>
-      <Nav loggedIn={newUser} color={'white'}></Nav>
-      <NavMobile loggedIn={newUser} color={'white'}></NavMobile>
+      <Nav loggedIn={newUser} color={'#003E5F'}></Nav>
+      <NavMobile loggedIn={newUser} color={'#003E5F'}></NavMobile>
       <div className="checkout">
         <div className="checkout-back" onClick={(e) => (handleEventAnalytics('go_back'), quizProgressNav(e, 'message'))}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
@@ -318,7 +331,7 @@ const Checkout = ({newUser}) => {
               }
             </div>
             <div className="form-group-double mail checkout-group-double">
-              <input id="phoneNumber" type="text" placeholder="Mobile Phone Number" value={phone} onChange={ (e) => e.target.value.length < 15 ? (setMessage(''), validateIsNumber('phoneNumber'), setPhone(e.target.value), validateIsPhoneNumber('phoneNumber')) : null} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Mobile Phone Number'} required/>
+              <input id="phoneNumber" type="text" placeholder="Mobile Phone Number" value={phone} onChange={ (e) => e.target.value.length < 15 ? (setMessage(''), isNumber(e.target.value) ? (setPhone(e.target.value), validateIsPhoneNumber('phoneNumber')) : null) : null} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Mobile Phone Number'} required/>
             </div>
             <Elements stripe={stripePromise}>
               <CheckOutForm user={newUser} amount={(total + (total * tax)).toFixed(2)} cardholder={cardholder} address={address} city={city} state={state} zip_code={zip_code} delivery={delivery} package_price={package_price} tax={tax} recipient={recipient} taxID={taxID} phone={phone} subscription={recipient.subscription} message={message} setMessage={setMessage}></CheckOutForm>

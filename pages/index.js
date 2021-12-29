@@ -38,11 +38,11 @@ const Home = ({loggedIn, user, userUpdate}) => {
   
   return (
     <div className="home">
-    <Nav loggedIn={loggedIn} color={'#DBF667'}></Nav>
-    <NavMobile loggedIn={loggedIn} color={'#DBF667'}></NavMobile>
+    <Nav loggedIn={loggedIn} color={'#003E5F'}></Nav>
+    <NavMobile loggedIn={loggedIn} color={'#003E5F'}></NavMobile>
     <div className="home-header">
       {/* <div className="home-header-image" style={{backgroundImage: `url("/media/background/header_1.png")`}}> </div> */}
-      <img className="home-header-image" src="/media/homepage/header_1.png" alt="" />
+      <img className="home-header-image" src="/media/homepage/header_2.png" alt="" />
       <div className="home-header-container">
         <div className="home-header-title-container">
           <div className="home-header-title">

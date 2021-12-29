@@ -212,11 +212,12 @@
   &-logo {
     display: flex;
     align-items: center;
+    color: white;
 
     svg {
       width: 4.7rem;
       height: 4.7rem;
-      fill: red;
+      fill: white;
     }
 
     span {
@@ -280,7 +281,7 @@
       &::after {
         width: 3rem;
         height: 0.2rem;
-        background-color: $color-scheme-3;
+        background-color: white;
         display: inline-block;
         z-index: 4500 !important;
       }
