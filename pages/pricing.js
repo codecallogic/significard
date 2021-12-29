@@ -96,13 +96,13 @@ const Pricing = ({loggedIn}) => {
       <div className="quiz-recipient-package-footer">All packages come with the following items <span>at no extra cost</span></div>
       <div className="quiz-recipient-package-footer-2">
         <div className="quiz-recipient-package-footer-2-item">
-          USPS Forever First Class Stamps
+          Blank or preselected <strong>handwritten</strong> message inside the card
         </div>
         <div className="quiz-recipient-package-footer-2-item">
           Envelope
         </div>
         <div className="quiz-recipient-package-footer-2-item">
-          Blank or preselected handwritten message inside the card
+          USPS Forever First Class Stamps
         </div>
       </div>
     </div>

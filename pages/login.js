@@ -43,6 +43,7 @@ const Login = ({loggedIn, user, userUpdate, userMessage, userEmail}) => {
     ],
     callbacks: {
       signInSuccessWithAuthResult: (authResult, redirectUrl) => {
+        console.log(authResult)
         loginFirebase(authResult.user)
         return false
       },

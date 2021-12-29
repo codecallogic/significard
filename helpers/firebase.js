@@ -1,11 +1,14 @@
 import firebase from 'firebase'
-import {FIREBASE} from '../config'
+import {FIREBASE_DOMAIN, FIREBASE_KEY} from '../config'
+
+const key = FIREBASE_KEY
+const domain = FIREBASE_DOMAIN
 
 export function initializeFirebase () {
   if (!firebase.apps.length) {
     return firebase.initializeApp({
-      apiKey: 'AIzaSyBIXLxwsNZqXveBVpiQzavFdvOrtY8tu5E',
-      authDomain: 'significard-5f5b6.firebaseapp.com'
+      apiKey: key,
+      authDomain: domain
     })
   }else {
     return firebase.app(); // if already initialized, use that one

@@ -768,8 +768,8 @@ const quiz = ({newUser, quizState}) => {
   return (
     
     <>
-      <Nav loggedIn={newUser} color={'white'}></Nav>
-      <NavMobile loggedIn={newUser} color={'white'}></NavMobile>
+      <Nav loggedIn={newUser} color={'#003E5F'}></Nav>
+      <NavMobile loggedIn={newUser} color={'#003E5F'}></NavMobile>
       <div className="quiz">
         {quiz == 'recipient' && <>
           <div className="quiz-title">Who are we sending a card to?</div>
@@ -1553,13 +1553,13 @@ const quiz = ({newUser, quizState}) => {
           <div className="quiz-recipient-package-footer">All packages come with the following items <span>at no extra cost</span></div>
           <div className="quiz-recipient-package-footer-2">
             <div className="quiz-recipient-package-footer-2-item">
-              USPS Forever First Class Stamps
+              Blank or preselected <strong>handwritten</strong> message inside the card
             </div>
             <div className="quiz-recipient-package-footer-2-item">
               Envelope
             </div>
             <div className="quiz-recipient-package-footer-2-item">
-              Blank or preselected handwritten message inside the card
+              USPS Forever First Class Stamps
             </div>
           </div>
           {/* <div className="quiz-recipient-package-description">
