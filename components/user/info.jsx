@@ -99,6 +99,13 @@ const Info = ({user, dashboard, credits}) => {
       editRecipient('state', e.split(',')[2])
     }
   }
+
+  useEffect(() => {
+    for(let i = user.transactions.length - 1; i >= 0; i--){
+      if(user.transactions[i].package_plan !== 'custom') return setPlan(user.transactions[i].package_plan)
+      setPlan(user.transactions[user.transactions.length - 1].package_plan)
+    }
+  }, [])
   
   useEffect(() => {
     setAddress(user.transactions[user.transactions.length - 1].billing_address)
@@ -106,10 +113,6 @@ const Info = ({user, dashboard, credits}) => {
     setState(user.transactions[user.transactions.length - 1].billing_state)
     setZip(user.transactions[user.transactions.length - 1].billing_zip)
     setPhone(user.transactions[user.transactions.length - 1].phone)
-    
-    user.transactions.map((item, i) => 
-      user.transactions.length - 1 === i ? setPlan(item.package_plan) : setPlan('')
-    )
   }, [user])
 
   const parseDateCreated = (data) => {
@@ -245,20 +248,21 @@ const Info = ({user, dashboard, credits}) => {
         <div className="profile-dashboard-info-box-add profile-dashboard-info-mobile-cards" onClick={() => setModal('package_plan')}>Add More Cards</div>
         <div className="profile-dashboard-info-box-plan">
           <div className="profile-dashboard-info-box-plan-title">
-            {
+          <div>{plan ? `Standard - ${plan}` : 'none'} </div>
+            {/* {
               user.transactions.map((item, i) => 
                 user.transactions.length - 1 === i ? 
-                  <div key={i}>{item.package_plan ? item.package_plan !== 'custom' ? `Standard Annual - ${item.package_plan.replace(/_/g, ' ')}` : `Custom`: null} </div>
+                  <div key={i}>{item.package_plan ? item.package_plan !== 'custom' ? `Standard - ${item.package_plan.replace(/_/g, ' ')}` : `Custom`: null} </div>
                 : 
                 null
               )
-            }
+            } */}
           </div>
           <div className="profile-dashboard-info-box-plan-credits">
             {plan == 'custom' ? `${user.credits} custom cards` : ''}
-            {plan == 'best deal' ? `20 cards a year total` : ''}
-            {plan == 'better deal' ? `10 cards a year total` : ''}
-            {plan == 'good deal' ? `5 cards a year total` : ''}
+            {plan == 'best deal' ? `20 cards a year` : ''}
+            {plan == 'better deal' ? `10 cards a year` : ''}
+            {plan == 'good deal' ? `5 cards a year` : ''}
           </div>
         </div>
         <div className="profile-dashboard-info-box-history">
@@ -272,7 +276,7 @@ const Info = ({user, dashboard, credits}) => {
               <span>Amount</span>
             </div>
             {
-              user.transactions.map( (item, i) => 
+              user.transactions.reverse().map( (item, i) => 
                 <div className="profile-dashboard-info-box-history-list-transactions">
                   <span>{parseDateCreated(item.createdAt)}</span>
                   <span>{item.order}</span>
@@ -388,7 +392,7 @@ const Info = ({user, dashboard, credits}) => {
               <div className="quiz-recipient-package">
                 <div className="quiz-recipient-package-item">
                   <div className="quiz-recipient-package-item-title">Good Deal</div>
-                  <div className="quiz-recipient-package-item-subtitle">You get 5 cards anually</div>
+                  <div className="quiz-recipient-package-item-subtitle">You get 5 cards annually</div>
                   <div className="quiz-recipient-package-item-image-container">
                     {/* {packageList.slice(3, 6).map((item, idx) =>
                       <img key={idx} style={{transform: `rotate(${item.rotate}deg)`}} src={`/media/package/${item.image}`} alt="" />
@@ -396,18 +400,19 @@ const Info = ({user, dashboard, credits}) => {
                     <img src={`/media/package/standard.png`} alt="" />
                   </div>
                   <div className="quiz-recipient-package-item-plan">$4.99/mo</div>
-                  <div className="quiz-recipient-package-item-price">$11.99 per card</div>
+                  <div className="quiz-recipient-package-item-price">$11.99/card</div>
                   {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
                   <button className="quiz-recipient-package-item-button" onClick={ (e) => (setPlanQuantity(5), setUpdatePlan('good deal'), setPlanPrice(11.99), setSubscription('price_1KDzLjAFcPAVZmVLhpOYVAl1'), setModal('checkout'))}>Select</button>
                   <div className="quiz-recipient-package-item-features">
-                    <div>Free Shipping</div>
-                    <div>Access to events, calendars & reminders</div>
-                    <div>Envelope</div>
+                    <div>&#8226; Free Shipping</div>
+                    <div>&#8226; Envelope</div>
+                    <div>&#8226; Access to event calendar</div>
+                    <div>&#8226; Event reminders</div>
                   </div>
                 </div>
                 <div className="quiz-recipient-package-item">
                   <div className="quiz-recipient-package-item-title">Better Deal</div>
-                  <div className="quiz-recipient-package-item-subtitle">You get 10 cards anually</div>
+                  <div className="quiz-recipient-package-item-subtitle">You get 10 cards annually</div>
                   <div className="quiz-recipient-package-item-image-container">
                     <img src={`/media/package/standard.png`} alt="" />
                   </div>
@@ -416,33 +421,35 @@ const Info = ({user, dashboard, credits}) => {
                   {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
                   <button className="quiz-recipient-package-item-button" onClick={ (e) => (setPlanQuantity(10), setUpdatePlan('better deal'), setPlanPrice(9.99), setSubscription('price_1KDzMiAFcPAVZmVLdicfFXlc'), setModal('checkout'))}>Select</button>
                   <div className="quiz-recipient-package-item-features">
-                    <div>Free Shipping</div>
-                    <div>Access to events, calendars & reminders</div>
-                    <div>Handwritten message</div>
-                    <div>Envelope</div>
+                    <div>&#8226; Free Shipping</div>
+                    <div>&#8226; Envelope</div>
+                    <div>&#8226; Access to event calendar</div>
+                    <div>&#8226; Event reminders</div>
+                    <div>&#8226; Handwritten message</div>
                   </div>
                 </div>
                 <div className="quiz-recipient-package-item">
                   <div className="quiz-recipient-package-item-title">Best Deal</div>
-                  <div className="quiz-recipient-package-item-subtitle">You get 20 cards anually</div>
+                  <div className="quiz-recipient-package-item-subtitle">You get 20 cards annually</div>
                   <div className="quiz-recipient-package-item-image-container">
                     <img src={`/media/package/standard.png`} alt="" />
                   </div>
                   <div className="quiz-recipient-package-item-plan">$11.65/mo</div>
-                  <div className="quiz-recipient-package-item-price">$6.99 per card</div>
+                  <div className="quiz-recipient-package-item-price">$6.99/card</div>
                   {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
                   <button className="quiz-recipient-package-item-button" onClick={ (e) => (setPlanQuantity(20), setUpdatePlan('best deal'), setPlanPrice(6.99), setSubscription('price_1KDzNkAFcPAVZmVLR8ixpbE4'), setModal('checkout'))}>Select</button>
                   <div className="quiz-recipient-package-item-features">
-                    <div>Free Shipping</div>
-                    <div>Access to events, calendars & reminders</div>
-                    <div>Handwritten message</div>
-                    <div>Rollover cards</div>
-                    <div>Envelope</div>
+                    <div>&#8226; Free Shipping</div>
+                    <div>&#8226; Envelope</div>
+                    <div>&#8226; Access to event calendar</div>
+                    <div>&#8226; Event reminders</div>
+                    <div>&#8226; Handwritten message</div>
+                    <div>&#8226; Rollover unsused cards</div>
                   </div>
                 </div>
                 <div className="quiz-recipient-package-item">
-                  <div className="quiz-recipient-package-item-title">Customize It</div>
-                  <div className="quiz-recipient-package-item-subtitle">Enter number of cards</div>
+                  <div className="quiz-recipient-package-item-title">One Time Payment</div>
+                  <div className="quiz-recipient-package-item-subtitle">Choose Your Volume</div>
                   <div className="quiz-recipient-package-item-input">
                     <input id="custom_quantity" type="text" value={quantity} placeholder="Number of Cards" onChange={(e) => (setResult(''), validateIsNumber('custom_quantity'), setQuantity(e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Number of Cards'} onKeyDown={(e) => {
                       if (e.code === "Enter") {
@@ -462,7 +469,7 @@ const Info = ({user, dashboard, credits}) => {
                 </div>
               </div>             
               {/* <div className="quiz-recipient-package-bulk">For more than 50 cards, please <a href="mailto: hello@significard.com">contact us</a></div> */}
-              <div className="quiz-recipient-package-footer">All packages come with the following items <span>at no extra cost</span></div>
+              {/* <div className="quiz-recipient-package-footer">All packages come with the following items <span>at no extra cost</span></div>
               <div className="quiz-recipient-package-footer-2">
                 <div className="quiz-recipient-package-footer-2-item">
                   USPS Forever First Class Stamps
@@ -473,7 +480,7 @@ const Info = ({user, dashboard, credits}) => {
                 <div className="quiz-recipient-package-footer-2-item">
                   Blank or preselected message inside the card
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         }
@@ -499,7 +506,7 @@ const Info = ({user, dashboard, credits}) => {
                     Cards ({planQuantity}x)
                   </span>
                   <span>
-                    ${planPrice ? planPrice : '0'}
+                    ${planPrice ? planPrice * planQuantity : '0'}
                   </span>
                 </div>
                 <div className="recipient-modal-plan-box-checkout-tax">
@@ -507,7 +514,7 @@ const Info = ({user, dashboard, credits}) => {
                   <span>{(((+user.transactions[user.transactions.length - 1].tax).toFixed(4) * 100)).toFixed(2)} %</span>
                 </div>
                 <div className="recipient-modal-plan-box-checkout-total">
-                  <span>Total</span>
+                  <span>Total {updatePlan == 'custom' ? '' : 'per month'}</span>
                   { updatePlan == 'custom' ?
                     <span>{`$ ` + ((+planQuantity * +planPrice) + ((+planQuantity * +planPrice) * +user.transactions[user.transactions.length - 1].tax)).toFixed(2)}</span>
                     :

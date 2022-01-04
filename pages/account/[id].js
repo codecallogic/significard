@@ -746,7 +746,10 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                                   <div key={idx} className="profile-dashboard-recipients-edit-event-container-card-tags-tag">{ item.tags.length > 1 ? idx == 2 ? `${tag.substring(0, 10)} ` : item.tags.length - 1 == idx ? `${tag.substring(0, 10)} ` : `${tag.substring(0, 10)}, ` : `${tag.substring(0, 10)} `}</div>
                                 )
                               }
-                              <div onClick={() => (setModal('tags'))}className="profile-dashboard-recipients-edit-event-container-card-tags-dots"><span></span><span></span><span></span></div>
+                              <div onClick={() => (setModal('tags'))}className="profile-dashboard-recipients-edit-event-container-card-tags-dots">
+                                <SVG svg={'plus'}></SVG>
+                                {/* <span></span><span></span><span></span> */}
+                              </div>
                             </div>
                           </div>
                         :
@@ -777,7 +780,10 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                                 <div key={idx} className="profile-dashboard-recipients-edit-event-container-card-tags-tag">{ cardItem.tags.length > 1 ? idx == 2 ? `${tag.substring(0, 10)} ` : cardItem.tags.length - 1 == idx ? `${tag.substring(0, 10)} ` : `${tag.substring(0, 10)}, ` : `${tag.substring(0, 10)} `}</div>
                               )
                             }
-                            <div onClick={() => (setCardForUpdate(cardItem._id, 'edit_card_tags', setCardTagsItem(cardItem)))}className="profile-dashboard-recipients-edit-event-container-card-tags-dots"><span></span><span></span><span></span></div>
+                            <div onClick={() => (setCardForUpdate(cardItem._id, 'edit_card_tags', setCardTagsItem(cardItem)))}className="profile-dashboard-recipients-edit-event-container-card-tags-dots">
+                              <SVG svg={'plus'}></SVG>
+                              {/* <span></span><span></span><span></span> */}
+                            </div>
                           </div>
                         </div>
                       
@@ -979,7 +985,10 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                                 <div key={idx} className="profile-dashboard-recipients-edit-event-container-card-tags-tag">{ recipient.tags.length > 1 ? idx == 2 ? `${tag.substring(0, 10)} ` : recipient.tags.length - 1 == idx ? `${tag.substring(0, 10)} ` : `${tag.substring(0, 10)}, ` : `${tag.substring(0, 10)} `}</div>
                               )
                             }
-                            <div onClick={() => (setModal('tags'))}className="profile-dashboard-recipients-edit-event-container-card-tags-dots"><span></span><span></span><span></span></div>
+                            <div onClick={() => (setModal('tags'))}className="profile-dashboard-recipients-edit-event-container-card-tags-dots">
+                              <SVG svg={'plus'}></SVG>
+                              {/* <span></span><span></span><span></span> */}
+                            </div>
                           </div>
                         </div>
                       :
@@ -1194,7 +1203,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                     <div className="checkbox_2"><input id="nickname" type="checkbox" name="nickname_blank" onClick={(e) => editRecipient('nickname', '')}/><span>Leave it blank</span></div>
                   </div> */}
                   <div className="form-group-single message p-0">
-                    <label htmlFor="message">Handwritten message inside:</label>
+                    <label htmlFor="message">Message inside:</label>
                     <textarea className="w-4" rows="5" value={recipient.message == 'blank' || recipient.message == 'message_options' ? '' : recipient.message} onChange={(e) => (editRecipient('message', e.target.value), document.getElementsByName('message_blank')[0].checked = false)}></textarea>
                     {/* , document.getElementsByName('message_textarea_blank')[0].checked = false */}
                     <div className="checkbox_2"><input type="checkbox" name="message_blank" onChange={(e) => (editRecipient('message', 'blank'))}/><span>Leave it blank</span></div>

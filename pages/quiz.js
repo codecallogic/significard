@@ -1505,9 +1505,10 @@ const quiz = ({newUser, quizState}) => {
               {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
               <button className="quiz-recipient-package-item-button" onClick={ (e) => (handleEventAnalytics('good_deal'), quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'good deal', 5))}>Select</button>
               <div className="quiz-recipient-package-item-features">
-                <div>Free Shipping</div>
-                <div>Access to events, calendars & reminders</div>
-                <div>Envelope</div>
+                <div>&#8226; Free Shipping</div>
+                <div>&#8226; Envelope</div>
+                <div>&#8226; Access to event calendar</div>
+                <div>&#8226; Event reminders</div>
               </div>
             </div>
             <div className="quiz-recipient-package-item">
@@ -1521,10 +1522,11 @@ const quiz = ({newUser, quizState}) => {
               {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
               <button className="quiz-recipient-package-item-button" onClick={ (e) => (handleEventAnalytics('better_deal'), quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'better deal', 10))}>Select</button>
               <div className="quiz-recipient-package-item-features">
-                <div>Free Shipping</div>
-                <div>Access to events, calendars & reminders</div>
-                <div>Handwritten message</div>
-                <div>Envelope</div>
+                <div>&#8226; Free Shipping</div>
+                <div>&#8226; Envelope</div>
+                <div>&#8226; Access to event calendar</div>
+                <div>&#8226; Event reminders</div>
+                <div>&#8226; Handwritten message</div>
               </div>
             </div>
             <div className="quiz-recipient-package-item">
@@ -1538,16 +1540,17 @@ const quiz = ({newUser, quizState}) => {
               {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
               <button className="quiz-recipient-package-item-button" onClick={ (e) => (handleEventAnalytics('best_deal'), quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'best deal', 20))}>Select</button>
               <div className="quiz-recipient-package-item-features">
-                <div>Free Shipping</div>
-                <div>Access to events, calendars & reminders</div>
-                <div>Handwritten message</div>
-                <div>Rollover cards</div>
-                <div>Envelope</div>
+                <div>&#8226; Free Shipping</div>
+                <div>&#8226; Envelope</div>
+                <div>&#8226; Access to event calendar</div>
+                <div>&#8226; Event reminders</div>
+                <div>&#8226; Handwritten message</div>
+                <div>&#8226; Rollover unsused cards</div>
               </div>
             </div>
             <div className="quiz-recipient-package-item">
-              <div className="quiz-recipient-package-item-title">Customize It</div>
-              <div className="quiz-recipient-package-item-subtitle">Enter number of cards</div>
+              <div className="quiz-recipient-package-item-title">One Time Payment</div>
+              <div className="quiz-recipient-package-item-subtitle">Choose Your Volume</div>
               <div className="quiz-recipient-package-item-input">
                 <input id="custom_quantity" type="text" value={quizState.package_quantity} placeholder="Number of Cards" onChange={(e) => (setResult(''), validateIsNumber('custom_quantity'), handleChange('package_plan', e, null, 'custom', e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Number of Cards'} onKeyDown={(e) => {
                   if (e.code === "Enter") {
@@ -1568,7 +1571,7 @@ const quiz = ({newUser, quizState}) => {
           </div>
           <Slider result={result} setresult={setResult} calculate={calculate} quizProgressNav={quizProgressNav} handleChange={handleChange} validateisnumber={validateIsNumber} quizstate={quizState} message={message} setMessage={setMessage}></Slider>
           <div className="quiz-recipient-package-bulk">For more than 50 cards, please <a href="mailto: hello@significard.com">contact us</a></div>
-          <div className="quiz-recipient-package-footer">All packages come with the following items <span>at no extra cost</span></div>
+          {/* <div className="quiz-recipient-package-footer">All packages come with the following items <span>at no extra cost</span></div>
           <div className="quiz-recipient-package-footer-2">
             <div className="quiz-recipient-package-footer-2-item">
               Blank or preselected <strong>handwritten</strong> message inside the card
@@ -1579,7 +1582,7 @@ const quiz = ({newUser, quizState}) => {
             <div className="quiz-recipient-package-footer-2-item">
               USPS Forever First Class Stamps
             </div>
-          </div>
+          </div> */}
           {/* <div className="quiz-recipient-package-description">
               <div className="quiz-recipient-package-description-title">All cards are 5 x 7 (A7 Folded) and include: </div>
                 <div className="quiz-recipient-package-description-text">• Handwritten address on the envelope.</div>
@@ -1639,7 +1642,7 @@ const quiz = ({newUser, quizState}) => {
                   <div className="checkbox_2"><input id="nickname" type="checkbox" name="nickname_blank" onClick={(e) => handleChange('nickname', e, null, 'blank')}/><span>Leave it blank</span></div>
                 </div> */}
                 <div className="form-group-single message p-0">
-                  <label htmlFor="message">Handwritten message inside:</label>
+                  <label htmlFor="message">Message inside:</label>
                   <textarea className="w-4" rows="5" value={quizState.message == 'blank' || quizState.message == 'message_options' ? '' : quizState.message} onChange={(e) => (handleChange('message', e, null, e.target.value), document.getElementsByName('message_blank')[0].checked = false)}></textarea>
                   {/* document.getElementsByName('message_textarea_blank')[0].checked = false */}
                   <div className="checkbox_2"><input type="checkbox" name="message_blank" onChange={(e) => (handleChange('message', e, null, 'blank'))}/><span>Leave it blank</span></div>

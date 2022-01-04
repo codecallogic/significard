@@ -145,6 +145,7 @@ const SignUp = ({loggedIn, user, userUpdate, userMessage}) => {
         />
         <p className="signup-form-signin">Already have an account? <a href="/login">Login</a></p>
       </form>
+      <div className="signup-terms">By continuing you accept Significard's <a href="/terms">Terms & Conditions</a></div>
     </div>
     </div>
     <Footer></Footer>

@@ -54,9 +54,10 @@ const Slider = ({slider, result, setResult, calculate, validateIsNumber, moveSli
             {/* <div className="slider-slides-item-discount">15% discount for 10+ cards</div> */}
             <button className="slider-slides-item-button" onClick={() => window.location.href = '/quiz'}>Continue</button>
             <div className="slider-slides-item-features">
-              <div>Free Shipping</div>
-              <div>Access to events, calendars & reminders</div>
-              <div>Envelope</div>
+              <div>&#8226; Free Shipping</div>
+              <div>&#8226; Envelope</div>
+              <div>&#8226; Access to event calendar</div>
+              <div>&#8226; Event reminders</div>
             </div>
           </div>
           <div className="slider-slides-item">
@@ -68,10 +69,11 @@ const Slider = ({slider, result, setResult, calculate, validateIsNumber, moveSli
             {/* <div className="slider-slides-item-discount">15% discount for 10+ cards</div> */}
             <button className="slider-slides-item-button" onClick={ (e) => window.location.href = '/quiz'}>Continue</button>
             <div className="slider-slides-item-features">
-              <div>Free Shipping</div>
-              <div>Access to events, calendars & reminders</div>
-              <div>Handwritten message</div>
-              <div>Envelope</div>
+              <div>&#8226; Free Shipping</div>
+              <div>&#8226; Envelope</div>
+              <div>&#8226; Access to event calendar</div>
+              <div>&#8226; Event reminders</div>
+              <div>&#8226; Handwritten message</div>
             </div>
           </div>
           <div className="slider-slides-item">
@@ -83,16 +85,17 @@ const Slider = ({slider, result, setResult, calculate, validateIsNumber, moveSli
             {/* <div className="slider-slides-item-discount">15% discount for 10+ cards</div> */}
             <button className="slider-slides-item-button" onClick={ (e) => window.location.href = '/quiz'}>Continue</button>
             <div className="slider-slides-item-features">
-              <div>Free Shipping</div>
-              <div>Access to events, calendars & reminders</div>
-              <div>Handwritten message</div>
-              <div>Rollover cards</div>
-              <div>Envelope</div>
+              <div>&#8226; Free Shipping</div>
+              <div>&#8226; Envelope</div>
+              <div>&#8226; Access to event calendar</div>
+              <div>&#8226; Event reminders</div>
+              <div>&#8226; Handwritten message</div>
+              <div>&#8226; Rollover unsused cards</div>
             </div>
           </div>
           <div className="slider-slides-item">
-            <div className="slider-slides-item-title">Customize It</div>
-            <div className="slider-slides-item-subtitle">Enter number of cards</div>
+            <div className="slider-slides-item-title">One Time Payment</div>
+            <div className="slider-slides-item-subtitle">Choose Your Volume</div>
             <div className="slider-slides-item-input">
               <input id="custom_quantity" type="text" value={custom} onChange={(e) => (setResult(''), validateIsNumber('custom_quantity'), setCustom(e.target.value))} placeholder="Number of Cards" onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Number of Cards'} onKeyDown={(e) => {
               if (e.code === "Enter") {

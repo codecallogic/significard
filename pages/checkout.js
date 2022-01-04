@@ -271,7 +271,7 @@ const Checkout = ({newUser}) => {
         <div className="checkout-container">
           <div className="checkout-container-left">
             {/* <div className="checkout-container-left-title">Payment Method</div> */}
-            <div className="checkout-container-left-subtitle">What's your payment method?</div>
+            <div className="checkout-container-left-subtitle">What's your billing information?</div>
             {recipient.mail_to == 'user' && 
             <div className="form-group-checkbox">
               <input type="checkbox" id="shipping_address"/>
@@ -341,10 +341,17 @@ const Checkout = ({newUser}) => {
             <div className="checkout-container-right-package">Package: {recipient.package_plan ? recipient.package_plan.replace(/_/g, ' ') : ''} </div>
             {recipient.mail_to == 'recipient' && <div className="checkout-container-right-ship_to">Ship to {recipient.recipient ? `${recipient.recipient}'s address` : recipient.recipient_other ? `${recipient.recipient_other}'s address`: ''} </div>}
             <div className="checkout-container-right-delivery">📩 <span>Estimated arrival date: {delivery}</span></div>
-            <div className="checkout-container-right-price"><span>{recipient.package_plan ? `${recipient.package_plan ? recipient.package_plan.replace(/_/g, ' ') : ''} (${recipient.package_quantity}x)` : ''}</span><span>{`$ ` + Math.ceil(package_price * 100) / 100}</span></div>
+            <div className="checkout-container-right-price"><span>{recipient.package_plan ? `${recipient.package_plan ? recipient.package_plan.replace(/_/g, ' ') : ''} (${recipient.package_quantity}x)` : ''}</span><span>{`$ ` + Math.ceil(package_price * 100 * +recipient.package_quantity) / 100}</span></div>
             <div className="checkout-container-right-price-event"><span>First card: {recipient.event ? `${recipient.event ? recipient.event : ''} for ${recipient.recipient_name ? recipient.recipient_name : ''}` : ''}</span></div>
             <div className="checkout-container-right-tax"><span>Sales Tax</span><span>{((tax * 100 / 100).toFixed(4) * 100).toFixed(2) + `% `}</span></div>
-            <div className="checkout-container-right-total"><span>Total</span><span>{`$ ` + (total + (total * tax)).toFixed(2)}</span></div>
+            <div className="checkout-container-right-total">
+              <span>Total {recipient.package_plan == 'custom' ? '' : 'per month'}</span>
+              {recipient.package_plan == 'custom' ? 
+              <span>{`$ ` + ((+recipient.package_quantity * +package_price) + ((+recipient.package_quantity * +package_price) * +tax)).toFixed(2)}</span>
+              :
+              <span>{`$ ` + ((+recipient.package_quantity * +package_price / 12) + ((+recipient.package_quantity * +package_price / 12) * +tax)).toFixed(2)}</span>
+              }
+            </div>
           </div>
         </div>
         

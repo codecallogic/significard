@@ -47,52 +47,55 @@ const Slider = ({slider, result, setresult, calculate, validateisnumber, quantit
         >
           <div className="slider-profile-slides-item">
             <div className="slider-profile-slides-item-title">Good Deal</div>
-            <div className="slider-profile-slides-item-subtitle">You get 5 cards anually</div>
+            <div className="slider-profile-slides-item-subtitle">You get 5 cards annually</div>
             <img src={`/media/package/standard.png`} alt="" className="slider-profile-slides-item-image" />
             <div className="slider-profile-slides-item-plan">$4.99/mo</div>
             <div className="slider-profile-slides-item-price">$11.99/card</div>
             {/* <div className="slider-profile-slides-item-discount">15% discount for 10+ cards</div> */}
             <button className="slider-profile-slides-item-button" onClick={ (e) => (setPlanQuantity(5), setUpdatePlan('good deal'), setPlanPrice(11.99), setSubscription('price_1KDzLjAFcPAVZmVLhpOYVAl1'), setModal('checkout'))}>Select</button>
             <div className="slider-profile-slides-item-features">
-              <div>Free Shipping</div>
-              <div>Access to events, calendars & reminders</div>
-              <div>Envelope</div>
+              <div>&#8226; Free Shipping</div>
+              <div>&#8226; Envelope</div>
+              <div>&#8226; Access to event calendar</div>
+              <div>&#8226; Event reminders</div>
             </div>
           </div>
           <div className="slider-profile-slides-item">
             <div className="slider-profile-slides-item-title">Better Deal</div>
-            <div className="slider-profile-slides-item-subtitle">You get 10 cards anually</div>
+            <div className="slider-profile-slides-item-subtitle">You get 10 cards annually</div>
             <img src={`/media/package/standard.png`} alt="" className="slider-profile-slides-item-image" />
             <div className="slider-profile-slides-item-plan">$8.33/mo</div>
             <div className="slider-profile-slides-item-price">$9.99/card</div>
             {/* <div className="slider-profile-slides-item-discount">15% discount for 10+ cards</div> */}
             <button className="slider-profile-slides-item-button" onClick={ (e) => (setPlanQuantity(10), setUpdatePlan('better deal'), setPlanPrice(9.99), setSubscription('price_1KDzMiAFcPAVZmVLdicfFXlc'), setModal('checkout'))}>Select</button>
             <div className="slider-profile-slides-item-features">
-              <div>Free Shipping</div>
-              <div>Access to events, calendars & reminders</div>
-              <div>Handwritten message</div>
-              <div>Envelope</div>
+              <div>&#8226; Free Shipping</div>
+              <div>&#8226; Envelope</div>
+              <div>&#8226; Access to event calendar</div>
+              <div>&#8226; Event reminders</div>
+              <div>&#8226; Handwritten message</div>
             </div>
           </div>
           <div className="slider-profile-slides-item">
             <div className="slider-profile-slides-item-title">Best Deal</div>
-            <div className="slider-profile-slides-item-subtitle">You get 20 cards anually</div>
+            <div className="slider-profile-slides-item-subtitle">You get 20 cards annually</div>
             <img src={`/media/package/standard.png`} alt="" className="slider-profile-slides-item-image" />
             <div className="slider-profile-slides-item-plan">$11.65/mo</div>
             <div className="slider-profile-slides-item-price">$6.99/card</div>
             {/* <div className="slider-profile-slides-item-discount">15% discount for 10+ cards</div> */}
             <button className="slider-profile-slides-item-button" onClick={ (e) => (setPlanQuantity(20), setUpdatePlan('best deal'), setPlanPrice(6.99), setSubscription('price_1KDzNkAFcPAVZmVLR8ixpbE4'), setModal('checkout'))}>Select</button>
             <div className="slider-profile-slides-item-features">
-              <div>Free Shipping</div>
-              <div>Access to events, calendars & reminders</div>
-              <div>Handwritten message</div>
-              <div>Rollover cards</div>
-              <div>Envelope</div>
+              <div>&#8226; Free Shipping</div>
+              <div>&#8226; Envelope</div>
+              <div>&#8226; Access to event calendar</div>
+              <div>&#8226; Event reminders</div>
+              <div>&#8226; Handwritten message</div>
+              <div>&#8226; Rollover unsused cards</div>
             </div>
           </div>
           <div className="slider-profile-slides-item">
-            <div className="slider-profile-slides-item-title">Customize It</div>
-            <div className="slider-profile-slides-item-subtitle">Enter number of cards</div>
+            <div className="slider-profile-slides-item-title">One Time Payment</div>
+            <div className="slider-profile-slides-item-subtitle">Choose Your Volume</div>
             <div className="slider-profile-slides-item-input">
               <input id="custom_quantity" type="text" value={quantity} placeholder="Number of Cards" onChange={(e) => (setresult(''), validateisnumber('custom_quantity'), setQuantity(e.target.value))} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Number of Cards'} onKeyDown={(e) => {
               if (e.code === "Enter") {

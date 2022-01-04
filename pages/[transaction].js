@@ -56,7 +56,7 @@ const Confirmation = ({newUser, order}) => {
             
             <div className="confirmation-order-summary-billing-event">
               <span> <span className="confirmation-order-summary-billing-event-package">{order.package_plan.replace(/_/g, ' ')}</span> (x{order.package_quantity})</span>
-              <span>${order.package_price} (x{order.package_quantity})</span>
+              <span>${order.package_price * order.package_quantity}</span>
             </div>
             <div className="confirmation-order-summary-billing-event-first">
               <span>First card: {order.event} for {order.recipient_name}</span>
@@ -70,7 +70,7 @@ const Confirmation = ({newUser, order}) => {
               <span>{order.delivery_date} </span>
             </div>
             <div className="confirmation-order-summary-billing-total">
-              <span>Total</span>
+              <span>Total {order.package_plan == 'custom' ? '' : ' per month'}</span>
               <span>${Math.ceil(order.amount * 100) / 100}</span>
             </div>
           </div>
