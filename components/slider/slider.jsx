@@ -42,31 +42,49 @@ const Slider = ({slider, quizProgressNav, handleChange, result, setresult, calcu
          {...handlers}
         >
           <div className="slider-slides-item">
-            <div className="slider-slides-item-title">Best Deal</div>
-            <div className="slider-slides-item-subtitle">You get 20 cards annually</div>
+            <div className="slider-slides-item-title">Good Deal</div>
+            <div className="slider-slides-item-subtitle">You get 5 cards annually</div>
             <img src={`/media/package/standard.png`} alt="" className="slider-slides-item-image" />
-            <div className="slider-slides-item-price">$6.99 per card</div>
+            <div className="slider-slides-item-plan">$4.99/mo</div>
+            <div className="slider-slides-item-price">$11.99 per card</div>
             {/* <div className="slider-slides-item-discount">15% discount for 10+ cards</div> */}
-            <button className="slider-slides-item-button" onClick={ (e) => (quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'best_deal', 20))}>Select</button>
-            <div className="slider-slides-item-shipping">Free shipping</div>
+            <button className="slider-slides-item-button" onClick={ (e) => (quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'good_deal', 5))}>Select</button>
+            <div className="slider-slides-item-features">
+              <div>Free Shipping</div>
+              <div>Access to events, calendars & reminders</div>
+              <div>Envelope</div>
+            </div>
           </div>
           <div className="slider-slides-item">
             <div className="slider-slides-item-title">Better Deal</div>
             <div className="slider-slides-item-subtitle">You get 10 cards annually</div>
             <img src={`/media/package/standard.png`} alt="" className="slider-slides-item-image" />
+            <div className="slider-slides-item-plan">$8.33/mo</div>
             <div className="slider-slides-item-price">$9.99 per card</div>
             {/* <div className="slider-slides-item-discount">15% discount for 10+ cards</div> */}
             <button className="slider-slides-item-button" onClick={ (e) => (quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'better_deal', 10))}>Select</button>
-            <div className="slider-slides-item-shipping">Free shipping</div>
+            <div className="slider-slides-item-features">
+              <div>Free Shipping</div>
+              <div>Access to events, calendars & reminders</div>
+              <div>Handwritten message</div>
+              <div>Envelope</div>
+            </div>
           </div>
           <div className="slider-slides-item">
-            <div className="slider-slides-item-title">Good Deal</div>
-            <div className="slider-slides-item-subtitle">You get 5 cards annually</div>
+            <div className="slider-slides-item-title">Best Deal</div>
+            <div className="slider-slides-item-subtitle">You get 20 cards annually</div>
             <img src={`/media/package/standard.png`} alt="" className="slider-slides-item-image" />
-            <div className="slider-slides-item-price">$11.99 per card</div>
+            <div className="slider-slides-item-plan">$11.65/mo</div>
+            <div className="slider-slides-item-price">$6.99 per card</div>
             {/* <div className="slider-slides-item-discount">15% discount for 10+ cards</div> */}
-            <button className="slider-slides-item-button" onClick={ (e) => (quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'good_deal', 5))}>Select</button>
-            <div className="slider-slides-item-shipping">Free shipping</div>
+            <button className="slider-slides-item-button" onClick={ (e) => (quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'best_deal', 20))}>Select</button>
+            <div className="slider-slides-item-features">
+              <div>Free Shipping</div>
+              <div>Access to events, calendars & reminders</div>
+              <div>Handwritten message</div>
+              <div>Rollover cards</div>
+              <div>Envelope</div>
+            </div>
           </div>
           <div className="slider-slides-item">
             <div className="slider-slides-item-title">Customize It</div>

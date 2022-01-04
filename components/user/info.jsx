@@ -381,9 +381,9 @@ const Info = ({user, dashboard, credits}) => {
                   <span>{user.username},</span> find a plan that's right for you
                 </div>
                 <SliderProfile result={result} setresult={setResult} calculate={calculate} quantity={quantity} setQuantity={setQuantity} validateisnumber={validateIsNumber} message={message} setMessage={setMessage} setPlanQuantity={setPlanQuantity} setUpdatePlan={setUpdatePlan} setPlanPrice={setPlanPrice} setSubscription={setSubscription} setModal={setModal}></SliderProfile>
-                <div className="recipient-modal-plan-box-mobile-bulk">
+                {/* <div className="recipient-modal-plan-box-mobile-bulk">
                   For bulk orders <a href="#">Click here</a>
-                </div>
+                </div> */}
               </div>
               <div className="quiz-recipient-package">
                 <div className="quiz-recipient-package-item">
@@ -461,7 +461,7 @@ const Info = ({user, dashboard, credits}) => {
                   {message && <div className="form-message-error">{message}</div>}
                 </div>
               </div>             
-              <div className="quiz-recipient-package-bulk">For more than 50 cards, please <a href="mailto: hello@significard.com">contact us</a></div>
+              {/* <div className="quiz-recipient-package-bulk">For more than 50 cards, please <a href="mailto: hello@significard.com">contact us</a></div> */}
               <div className="quiz-recipient-package-footer">All packages come with the following items <span>at no extra cost</span></div>
               <div className="quiz-recipient-package-footer-2">
                 <div className="quiz-recipient-package-footer-2-item">

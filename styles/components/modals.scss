@@ -252,8 +252,8 @@
     }
 
     @media only screen and (max-width: $large-medium) {
-      overflow-y: hidden !important;
-      overflow: hidden;
+      // overflow-y: hidden !important;
+      overflow-x: hidden;
 
       &::-webkit-scrollbar {
         width: 0.2rem;

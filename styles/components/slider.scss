@@ -97,6 +97,7 @@
         width: 100%;
         text-align: left;
         padding: 0.5rem 3rem;
+        font-size: 1.2rem;
 
         div {
           padding: 0 0 0.5rem 0;
@@ -249,11 +250,11 @@
 .slider-profile {
   grid-column: 1/-1;
   display: none;
-  margin: 10rem 0 0 0;
+  margin: 2rem 0 0 0;
 
   @media only screen and (max-width: $extra-large) {
     display: block;
-    margin: 2rem 0 4rem 0;
+    margin: 2rem 0 2rem 0;
   }
 
   &-title {
@@ -278,11 +279,10 @@
 
     &-item {
       width: 240px !important;
-      height: 34rem !important;
+      height: 48rem !important;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       border: 0.2rem solid $color-light-gray;
       border-radius: 1.2rem;
       box-sizing: border-box;
@@ -331,6 +331,27 @@
         font-size: 2.2rem;
         color: $color-scheme-3-variation-3;
         margin-bottom: 0.3rem;
+      }
+
+      &-plan {
+        font-family: Sanchez;
+        font-size: 1.8rem !important;
+        color: $color-scheme-3-variation-3;
+
+        @media only screen and (max-width: $wide) {
+          font-size: 1.6rem !important;
+        }
+      }
+
+      &-features {
+        width: 100%;
+        text-align: left;
+        padding: 0.5rem 3rem;
+        font-size: 1.2rem;
+
+        div {
+          padding: 0 0 0.5rem 0;
+        }
       }
 
       &-discount {
