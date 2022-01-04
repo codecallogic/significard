@@ -1154,7 +1154,7 @@
 
     &-item {
       width: 32rem;
-      height: 46.3rem;
+      height: 63rem;
       border: 0.2rem solid $color-light-gray;
       border-radius: 1.2rem;
       padding: 5.8rem 3.8rem;
@@ -1163,24 +1163,24 @@
 
       @media only screen and (max-width: $wide-medium) {
         width: 30rem;
-        height: 44.3rem;
+        height: 63rem;
       }
 
       @media only screen and (max-width: $wide) {
         width: 25rem;
-        height: 39.3rem;
+        height: 61rem;
       }
 
       @media only screen and (max-width: $wide-small) {
         padding: 2rem 1rem;
-        width: 22rem;
-        height: 37.3rem;
+        width: 24rem;
+        height: 58rem;
       }
 
       @media only screen and (max-width: $extra-large) {
         padding: 2rem 1rem;
         width: 20rem;
-        height: 35.3rem;
+        height: 58rem;
       }
 
       &-title {
@@ -1247,8 +1247,28 @@
         }
       }
 
+      &-plan {
+        font-weight: 400;
+        font-size: 1.8rem !important;
+        color: $color-scheme-3-variation-3;
+
+        @media only screen and (max-width: $wide) {
+          font-size: 1.6rem !important;
+        }
+      }
+
       &-discount {
         font-size: 1.6rem;
+      }
+
+      &-features {
+        width: 100%;
+        text-align: left;
+        padding: 0 2rem 0rem 2rem;
+
+        div {
+          padding: 0 0 0.5rem 0;
+        }
       }
 
       &-button {

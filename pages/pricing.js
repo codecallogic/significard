@@ -35,28 +35,6 @@ const Pricing = ({loggedIn}) => {
       <div className="quiz-title-mobile">Choose the number of cards you'd like to receive for ANY recipients</div>
       <div className="quiz-recipient-package">
         <div className="quiz-recipient-package-item">
-          <div className="quiz-recipient-package-item-title">Best Deal</div>
-          <div className="quiz-recipient-package-item-subtitle">You get 20 cards annually</div>
-          <div className="quiz-recipient-package-item-image-container">
-            <img src={`/media/package/standard.png`} alt="" />
-          </div>
-          <div className="quiz-recipient-package-item-price">$6.99 per card</div>
-          {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-          <button className="quiz-recipient-package-item-button" onClick={() => window.location.href = '/quiz'}>Get Started</button>
-          <div>Free Shipping</div>
-        </div>
-        <div className="quiz-recipient-package-item">
-          <div className="quiz-recipient-package-item-title">Better Deal</div>
-          <div className="quiz-recipient-package-item-subtitle">You get 10 cards annually</div>
-          <div className="quiz-recipient-package-item-image-container">
-            <img src={`/media/package/standard.png`} alt="" />
-          </div>
-          <div className="quiz-recipient-package-item-price">$9.99 per card</div>
-          {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-          <button className="quiz-recipient-package-item-button" onClick={() => window.location.href = '/quiz'}>Get Started</button>
-          <div>Free Shipping</div>
-        </div>
-        <div className="quiz-recipient-package-item">
           <div className="quiz-recipient-package-item-title">Good Deal</div>
           <div className="quiz-recipient-package-item-subtitle">You get 5 cards annually</div>
           <div className="quiz-recipient-package-item-image-container">
@@ -65,10 +43,50 @@ const Pricing = ({loggedIn}) => {
             )} */}
             <img src={`/media/package/standard.png`} alt="" />
           </div>
+          <div className="quiz-recipient-package-item-plan">$4.99/mo</div>
           <div className="quiz-recipient-package-item-price">$11.99 per card</div>
           {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
           <button className="quiz-recipient-package-item-button" onClick={() => window.location.href = '/quiz'}>Get Started</button>
-          <div>Free Shipping</div>
+          <div className="quiz-recipient-package-item-features">
+            <div>Free Shipping</div>
+            <div>Access to events, calendars & reminders</div>
+            <div>Envelope</div>
+          </div>
+        </div>
+        <div className="quiz-recipient-package-item">
+          <div className="quiz-recipient-package-item-title">Better Deal</div>
+          <div className="quiz-recipient-package-item-subtitle">You get 10 cards annually</div>
+          <div className="quiz-recipient-package-item-image-container">
+            <img src={`/media/package/standard.png`} alt="" />
+          </div>
+          <div className="quiz-recipient-package-item-plan">$8.33/mo</div>
+          <div className="quiz-recipient-package-item-price">$9.99 per card</div>
+          {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
+          <button className="quiz-recipient-package-item-button" onClick={() => window.location.href = '/quiz'}>Get Started</button>
+          <div className="quiz-recipient-package-item-features">
+            <div>Free Shipping</div>
+            <div>Access to events, calendars & reminders</div>
+            <div>Handwritten message</div>
+            <div>Envelope</div>
+          </div>
+        </div>
+        <div className="quiz-recipient-package-item">
+          <div className="quiz-recipient-package-item-title">Best Deal</div>
+          <div className="quiz-recipient-package-item-subtitle">You get 20 cards annually</div>
+          <div className="quiz-recipient-package-item-image-container">
+            <img src={`/media/package/standard.png`} alt="" />
+          </div>
+          <div className="quiz-recipient-package-item-plan">$11.65/mo</div>
+          <div className="quiz-recipient-package-item-price">$6.99 per card</div>
+          {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
+          <button className="quiz-recipient-package-item-button" onClick={() => window.location.href = '/quiz'}>Get Started</button>
+          <div className="quiz-recipient-package-item-features">
+            <div>Free Shipping</div>
+            <div>Access to events, calendars & reminders</div>
+            <div>Handwritten message</div>
+            <div>Rollover cards</div>
+            <div>Envelope</div>
+          </div>
         </div>
         <div className="quiz-recipient-package-item">
           <div className="quiz-recipient-package-item-title">Customize It</div>

@@ -53,6 +53,7 @@ const Confirmation = ({newUser, order}) => {
             <div className="confirmation-order-summary-billing-title">
               Summary
             </div>
+            
             <div className="confirmation-order-summary-billing-event">
               <span> <span className="confirmation-order-summary-billing-event-package">{order.package_plan.replace(/_/g, ' ')}</span> (x{order.package_quantity})</span>
               <span>${order.package_price} (x{order.package_quantity})</span>
@@ -64,19 +65,23 @@ const Confirmation = ({newUser, order}) => {
               <span>Sales Tax</span>
               <span>{((order.tax * 100 / 100).toFixed(4) * 100).toFixed(2)} %</span>
             </div>
+            <div className="confirmation-order-summary-billing-delivery">
+              <span>Estimated arrival date &nbsp; 📩  </span>
+              <span>{order.delivery_date} </span>
+            </div>
             <div className="confirmation-order-summary-billing-total">
               <span>Total</span>
               <span>${Math.ceil(order.amount * 100) / 100}</span>
             </div>
           </div>
-          <div className="confirmation-order-summary-package">
+          {/* <div className="confirmation-order-summary-package">
             <div className="confirmation-order-summary-package-title">
               Package: {order.package_plan.replace(/_/g, ' ')}
             </div>
             <div className="confirmation-order-summary-package-delivery">
             📩  <span>Estimated arrival date: {order.delivery_date} </span>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="recipient-modal-plan-box-checkout-button w-50">
           <button onClick={() => window.location.href = `/account/${order.user_id}`}><span>Go to your profile</span></button>

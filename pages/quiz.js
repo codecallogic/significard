@@ -447,12 +447,12 @@ const quiz = ({newUser, quizState}) => {
 
     if(question == 'package_plan'){
       setMessage('')
-      if(type == 'good deal') (setResult(''),  window.localStorage.setItem('subscription', 'price_1Jq0oBAFcPAVZmVLtLUI1icZ'))
-      if(type == 'good_deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1Jq0oBAFcPAVZmVLtLUI1icZ'))
-      if(type == 'better deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1Jq0orAFcPAVZmVLvZNwmwWP'))
-      if(type == 'better_deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1Jq0orAFcPAVZmVLvZNwmwWP'))
-      if(type == 'best deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1Jq0qpAFcPAVZmVLF41sZGrG'))
-      if(type == 'best_deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1Jq0qpAFcPAVZmVLF41sZGrG'))
+      if(type == 'good deal') (setResult(''),  window.localStorage.setItem('subscription', 'price_1KDzLjAFcPAVZmVLhpOYVAl1'))
+      if(type == 'good_deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1KDzLjAFcPAVZmVLhpOYVAl1'))
+      if(type == 'better deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1KDzMiAFcPAVZmVLdicfFXlc'))
+      if(type == 'better_deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1KDzMiAFcPAVZmVLdicfFXlc'))
+      if(type == 'best deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1KDzNkAFcPAVZmVLR8ixpbE4'))
+      if(type == 'best_deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1KDzNkAFcPAVZmVLR8ixpbE4'))
 
       window.localStorage.setItem(question, type)
       window.localStorage.setItem('package_quantity', quantity)
@@ -1116,8 +1116,8 @@ const quiz = ({newUser, quizState}) => {
           <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'events')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
-          <div className="quiz-title">What best describes {typeof window !== "undefined" ? window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient' : 'recipient'}?</div>
-          <div className="quiz-title-mobile">What best describes {window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient'}?</div>
+          <div className="quiz-title">What best describes your {typeof window !== "undefined" ? window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient' : 'recipient'}?</div>
+          <div className="quiz-title-mobile">What best describes your {window.localStorage.getItem('recipient') ? window.localStorage.getItem('recipient') : quizState.recipient ? quizState.recipient : 'recipient'}?</div>
           <div className="quiz-subtitle">Select one.</div>
           <div className="quiz-subtitle-mobile">Select one.</div>
           <div className="quiz-recipient-description">
@@ -1492,28 +1492,6 @@ const quiz = ({newUser, quizState}) => {
           <div className="quiz-title-mobile">Choose the number of cards you'd like to receive for ANY recipients</div>
           <div className="quiz-recipient-package">
             <div className="quiz-recipient-package-item">
-              <div className="quiz-recipient-package-item-title">Best Deal</div>
-              <div className="quiz-recipient-package-item-subtitle">You get 20 cards annually</div>
-              <div className="quiz-recipient-package-item-image-container">
-                <img src={`/media/package/standard.png`} alt="" />
-              </div>
-              <div className="quiz-recipient-package-item-price">$6.99 per card</div>
-              {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-              <button className="quiz-recipient-package-item-button" onClick={ (e) => (handleEventAnalytics('best_deal'), quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'best deal', 20))}>Select</button>
-              <div>Free Shipping</div>
-            </div>
-            <div className="quiz-recipient-package-item">
-              <div className="quiz-recipient-package-item-title">Better Deal</div>
-              <div className="quiz-recipient-package-item-subtitle">You get 10 cards annually</div>
-              <div className="quiz-recipient-package-item-image-container">
-                <img src={`/media/package/standard.png`} alt="" />
-              </div>
-              <div className="quiz-recipient-package-item-price">$9.99 per card</div>
-              {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-              <button className="quiz-recipient-package-item-button" onClick={ (e) => (handleEventAnalytics('better_deal'), quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'better deal', 10))}>Select</button>
-              <div>Free Shipping</div>
-            </div>
-            <div className="quiz-recipient-package-item">
               <div className="quiz-recipient-package-item-title">Good Deal</div>
               <div className="quiz-recipient-package-item-subtitle">You get 5 cards annually</div>
               <div className="quiz-recipient-package-item-image-container">
@@ -1522,10 +1500,50 @@ const quiz = ({newUser, quizState}) => {
                 )} */}
                 <img src={`/media/package/standard.png`} alt="" />
               </div>
+              <div className="quiz-recipient-package-item-plan">$4.99/mo</div>
               <div className="quiz-recipient-package-item-price">$11.99 per card</div>
               {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
               <button className="quiz-recipient-package-item-button" onClick={ (e) => (handleEventAnalytics('good_deal'), quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'good deal', 5))}>Select</button>
-              <div>Free Shipping</div>
+              <div className="quiz-recipient-package-item-features">
+                <div>Free Shipping</div>
+                <div>Access to events, calendars & reminders</div>
+                <div>Envelope</div>
+              </div>
+            </div>
+            <div className="quiz-recipient-package-item">
+              <div className="quiz-recipient-package-item-title">Better Deal</div>
+              <div className="quiz-recipient-package-item-subtitle">You get 10 cards annually</div>
+              <div className="quiz-recipient-package-item-image-container">
+                <img src={`/media/package/standard.png`} alt="" />
+              </div>
+              <div className="quiz-recipient-package-item-plan">$8.33/mo</div>
+              <div className="quiz-recipient-package-item-price">$9.99 per card</div>
+              {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
+              <button className="quiz-recipient-package-item-button" onClick={ (e) => (handleEventAnalytics('better_deal'), quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'better deal', 10))}>Select</button>
+              <div className="quiz-recipient-package-item-features">
+                <div>Free Shipping</div>
+                <div>Access to events, calendars & reminders</div>
+                <div>Handwritten message</div>
+                <div>Envelope</div>
+              </div>
+            </div>
+            <div className="quiz-recipient-package-item">
+              <div className="quiz-recipient-package-item-title">Best Deal</div>
+              <div className="quiz-recipient-package-item-subtitle">You get 20 cards annually</div>
+              <div className="quiz-recipient-package-item-image-container">
+                <img src={`/media/package/standard.png`} alt="" />
+              </div>
+              <div className="quiz-recipient-package-item-plan">$11.65/mo</div>
+              <div className="quiz-recipient-package-item-price">$6.99/card</div>
+              {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
+              <button className="quiz-recipient-package-item-button" onClick={ (e) => (handleEventAnalytics('best_deal'), quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'best deal', 20))}>Select</button>
+              <div className="quiz-recipient-package-item-features">
+                <div>Free Shipping</div>
+                <div>Access to events, calendars & reminders</div>
+                <div>Handwritten message</div>
+                <div>Rollover cards</div>
+                <div>Envelope</div>
+              </div>
             </div>
             <div className="quiz-recipient-package-item">
               <div className="quiz-recipient-package-item-title">Customize It</div>

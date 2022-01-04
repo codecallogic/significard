@@ -19,7 +19,7 @@ const Footer = ({}) => {
         </ul>
       </div>
       <div className="footer-right-container">
-        <h1 className="footer-right-heading">Join the Fam!</h1>
+        <h1 className="footer-right-heading">Join our family!</h1>
         <div className="footer-right-icons">
           <span onClick={ () => window.location.href = `https://www.facebook.com/significard`}><SVG svg={'facebook'}></SVG></span>
           <span onClick={ () => window.location.href = `https://www.instagram.com`}><SVG svg={'instagram'}></SVG></span>

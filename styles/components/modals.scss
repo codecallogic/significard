@@ -234,7 +234,7 @@
   &-box {
     width: 100%;
     display: flex;
-    justify-content: center;
+    padding: 5rem 0;
     align-items: center;
     flex-direction: column;
     min-height: 80rem;
@@ -242,6 +242,27 @@
     border-radius: 1.2rem;
     position: relative;
     overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 0.2rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $color-scheme-3;
+    }
+
+    @media only screen and (max-width: $large-medium) {
+      overflow-y: hidden !important;
+      overflow: hidden;
+
+      &::-webkit-scrollbar {
+        width: 0.2rem;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $color-scheme-3;
+      }
+    }
 
     &-mobile {
       display: none;
@@ -278,27 +299,6 @@
       &-bulk {
         font-size: 1.4rem;
         color: #011722 !important;
-      }
-    }
-
-    &::-webkit-scrollbar {
-      width: 0.2rem;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: $color-scheme-3;
-    }
-
-    @media only screen and (max-width: $large-medium) {
-      overflow-y: hidden !important;
-      overflow: hidden;
-
-      &::-webkit-scrollbar {
-        width: 0.2rem;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background-color: $color-scheme-3;
       }
     }
 

@@ -166,13 +166,13 @@ const Checkout = ({newUser}) => {
     if(recipientData.package_plan == 'good deal')setPackagePrice(11.99)
     if(recipientData.package_plan == 'good_deal')setPackagePrice(11.99)
 
-    if(recipientData.package_plan === 'best deal')setTotal((6.99 * recipientData.package_quantity))
+    if(recipientData.package_plan === 'best deal')setTotal((6.99 * recipientData.package_quantity / 12))
     if(recipientData.package_plan === 'best_deal')setTotal((6.99 * recipientData.package_quantity))
 
-    if(recipientData.package_plan === 'better deal')setTotal((9.99 * recipientData.package_quantity))
+    if(recipientData.package_plan === 'better deal')setTotal((9.99 * recipientData.package_quantity / 12))
     if(recipientData.package_plan === 'better_deal')setTotal((9.99 * recipientData.package_quantity))
-    if(recipientData.package_plan === 'good deal')setTotal((11.99 * recipientData.package_quantity))
-    if(recipientData.package_plan === 'good_deal')setTotal((11.99 * recipientData.package_quantity))
+    if(recipientData.package_plan === 'good deal')setTotal((11.99 * recipientData.package_quantity / 12))
+    if(recipientData.package_plan === 'good_deal')setTotal((11.99 * recipientData.package_quantity / 12))
 
     let result = null
     if(recipientData.package_quantity <= 4) result = 13.99
