@@ -36,7 +36,7 @@ const Pricing = ({loggedIn}) => {
       <div className="quiz-recipient-package">
         <div className="quiz-recipient-package-item">
           <div className="quiz-recipient-package-item-title">Good Deal</div>
-          <div className="quiz-recipient-package-item-subtitle">You get 5 cards annually</div>
+          <div className="quiz-recipient-package-item-subtitle">You get 5 cards </div>
           <div className="quiz-recipient-package-item-image-container">
             {/* {packageList.slice(3, 6).map((item, idx) =>
               <img key={idx} style={{transform: `rotate(${item.rotate}deg)`}} src={`/media/package/${item.image}`} alt="" />
@@ -56,7 +56,7 @@ const Pricing = ({loggedIn}) => {
         </div>
         <div className="quiz-recipient-package-item">
           <div className="quiz-recipient-package-item-title">Better Deal</div>
-          <div className="quiz-recipient-package-item-subtitle">You get 10 cards annually</div>
+          <div className="quiz-recipient-package-item-subtitle">You get 10 cards </div>
           <div className="quiz-recipient-package-item-image-container">
             <img src={`/media/package/standard.png`} alt="" />
           </div>
@@ -74,7 +74,7 @@ const Pricing = ({loggedIn}) => {
         </div>
         <div className="quiz-recipient-package-item">
           <div className="quiz-recipient-package-item-title">Best Deal</div>
-          <div className="quiz-recipient-package-item-subtitle">You get 20 cards annually</div>
+          <div className="quiz-recipient-package-item-subtitle">You get 20 cards </div>
           <div className="quiz-recipient-package-item-image-container">
             <img src={`/media/package/standard.png`} alt="" />
           </div>

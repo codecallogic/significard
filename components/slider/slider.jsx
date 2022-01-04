@@ -43,7 +43,7 @@ const Slider = ({slider, quizProgressNav, handleChange, result, setresult, calcu
         >
           <div className="slider-slides-item">
             <div className="slider-slides-item-title">Good Deal</div>
-            <div className="slider-slides-item-subtitle">You get 5 cards annually</div>
+            <div className="slider-slides-item-subtitle">You get 5 cards </div>
             <img src={`/media/package/standard.png`} alt="" className="slider-slides-item-image" />
             <div className="slider-slides-item-plan">$4.99/mo</div>
             <div className="slider-slides-item-price">$11.99 per card</div>
@@ -58,7 +58,7 @@ const Slider = ({slider, quizProgressNav, handleChange, result, setresult, calcu
           </div>
           <div className="slider-slides-item">
             <div className="slider-slides-item-title">Better Deal</div>
-            <div className="slider-slides-item-subtitle">You get 10 cards annually</div>
+            <div className="slider-slides-item-subtitle">You get 10 cards </div>
             <img src={`/media/package/standard.png`} alt="" className="slider-slides-item-image" />
             <div className="slider-slides-item-plan">$8.33/mo</div>
             <div className="slider-slides-item-price">$9.99 per card</div>
@@ -74,7 +74,7 @@ const Slider = ({slider, quizProgressNav, handleChange, result, setresult, calcu
           </div>
           <div className="slider-slides-item">
             <div className="slider-slides-item-title">Best Deal</div>
-            <div className="slider-slides-item-subtitle">You get 20 cards annually</div>
+            <div className="slider-slides-item-subtitle">You get 20 cards </div>
             <img src={`/media/package/standard.png`} alt="" className="slider-slides-item-image" />
             <div className="slider-slides-item-plan">$11.65/mo</div>
             <div className="slider-slides-item-price">$6.99 per card</div>
