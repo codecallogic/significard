@@ -181,7 +181,7 @@ body {
         margin-left: -1rem; } }
   .slider-slides-item {
     width: 240px !important;
-    height: 48rem !important;
+    height: 52rem !important;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -364,7 +364,7 @@ body {
         margin-left: -1rem; } }
   .slider-profile-slides-item {
     width: 240px !important;
-    height: 48rem !important;
+    height: 52rem !important;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -2805,7 +2805,7 @@ body {
         display: none; } }
     .quiz-recipient-package-item {
       width: 32rem;
-      height: 63rem;
+      height: 65rem;
       border: 0.2rem solid #e5e5e5;
       border-radius: 1.2rem;
       padding: 5.8rem 3.8rem;
@@ -2814,21 +2814,21 @@ body {
       @media only screen and (max-width: 1650px) {
         .quiz-recipient-package-item {
           width: 30rem;
-          height: 63rem; } }
+          height: 65rem; } }
       @media only screen and (max-width: 1500px) {
         .quiz-recipient-package-item {
           width: 25rem;
-          height: 61rem; } }
+          height: 64rem; } }
       @media only screen and (max-width: 1350px) {
         .quiz-recipient-package-item {
           padding: 2rem 1rem;
           width: 24rem;
-          height: 58rem; } }
+          height: 61rem; } }
       @media only screen and (max-width: 1200px) {
         .quiz-recipient-package-item {
           padding: 2rem 1rem;
           width: 20rem;
-          height: 58rem; } }
+          height: 60rem; } }
       .quiz-recipient-package-item-title {
         font-family: 'Sanchez';
         font-size: 2.4rem !important;
