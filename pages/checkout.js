@@ -4,7 +4,7 @@ import Footer from '../components/footer'
 import {useEffect, useState} from 'react'
 import withUserQuiz from './withUserQuiz'
 import axios from 'axios'
-import {API} from '../config'
+import {STRIPE_LIVE_KEY, STRIPE_TEST_KEY} from '../config'
 import {useRouter} from 'next/router'
 import PlacesAutocomplete, {geocodeByPlaceId} from 'react-places-autocomplete'
 import {usStates} from '../utils/quiz'
@@ -25,8 +25,9 @@ const searchOptionsCities = {
 import {Elements, CardElement} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import CheckOutForm from '../components/checkoutForm'
-
-const stripePromise = loadStripe("pk_test_51J7NJWAFcPAVZmVLGQUNzfzOeZvL0kkT5nVkJPphZmV16Lqk9Q3tD0iijyXWVehFvCqRjGecfYgKsSmcXk1a5Exg00IVaeKVy0")
+const stripeKey = STRIPE_TEST_KEY
+const stripeLiveKey = STRIPE_LIVE_KEY
+const stripePromise = loadStripe(stripeKey)
 
 const Checkout = ({newUser}) => {
   const router = useRouter()

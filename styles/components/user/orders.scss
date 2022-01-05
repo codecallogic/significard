@@ -33,6 +33,32 @@
         margin-left: 1rem;
       }
     }
+
+    &-addCard {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      padding: 1rem 2rem;
+      background-color: $color-scheme-3-variation-1;
+      color: white;
+      border-radius: 3rem;
+
+      @media only screen and (max-width: $large-medium) {
+        margin-top: 3rem;
+      }
+
+      svg {
+        width: 2rem;
+        height: 2rem;
+        fill: white;
+        margin-right: 0.5rem;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 
   &-card {

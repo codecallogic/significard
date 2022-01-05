@@ -46,7 +46,7 @@ const Home = ({loggedIn, user, userUpdate}) => {
       <div className="home-header-container">
         <div className="home-header-title-container">
           <div className="home-header-title">
-            Celebrate the moments worth holding on to.
+            Never forget your occassions again
           </div>
           <div className="home-header-button" onClick={() => (handleEventAnalytics('header'), loggedIn ?window.location.href = `/account/${loggedIn.id}` : window.location.href = '/quiz')}>
             Get Started
@@ -113,7 +113,7 @@ const Home = ({loggedIn, user, userUpdate}) => {
           <div className="home-section_4-item-image">
             <img src="/media/homepage/review_2.png" alt="" />
           </div>
-          <div className="home-section_4-item-name">Andrey Shilo</div>
+          <div className="home-section_4-item-name">Fiki Hunt</div>
         </div>
         <div className="home-section_4-item">
           <div className="home-section_4-item-review">
@@ -125,7 +125,7 @@ const Home = ({loggedIn, user, userUpdate}) => {
           <div className="home-section_4-item-image">
             <img src="/media/homepage/review_3.png" alt="" />
           </div>
-          <div className="home-section_4-item-name">Andrey Shilo</div>
+          <div className="home-section_4-item-name">Kitty Rosette</div>
         </div>
       </div>
     </div>

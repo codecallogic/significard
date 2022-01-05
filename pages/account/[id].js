@@ -548,7 +548,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
           </div>
         </div>
         { dashboard == 'orders' &&
-          <Orders user={newUser} credits={credits} recipients={allRecipients}></Orders>
+          <Orders user={newUser} credits={credits} recipients={allRecipients} setDashboard={setDashboard} setSideNav={setSideNav}></Orders>
         }
         {dashboard == 'info' && 
           <Info user={newUser} dashboard={dashboard} credits={credits}></Info>
@@ -747,8 +747,8 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                                 )
                               }
                               <div onClick={() => (setModal('tags'))}className="profile-dashboard-recipients-edit-event-container-card-tags-dots">
-                                <SVG svg={'plus'}></SVG>
-                                {/* <span></span><span></span><span></span> */}
+                                {/* <SVG svg={'plus'} color={'#ff0000'}></SVG> */}
+                                <span></span><span></span><span></span>
                               </div>
                             </div>
                           </div>
@@ -781,8 +781,8 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                               )
                             }
                             <div onClick={() => (setCardForUpdate(cardItem._id, 'edit_card_tags', setCardTagsItem(cardItem)))}className="profile-dashboard-recipients-edit-event-container-card-tags-dots">
-                              <SVG svg={'plus'}></SVG>
-                              {/* <span></span><span></span><span></span> */}
+                            {/* <SVG svg={'plus'}></SVG> */}
+                              <span></span><span></span><span></span>
                             </div>
                           </div>
                         </div>
@@ -986,8 +986,8 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                               )
                             }
                             <div onClick={() => (setModal('tags'))}className="profile-dashboard-recipients-edit-event-container-card-tags-dots">
-                              <SVG svg={'plus'}></SVG>
-                              {/* <span></span><span></span><span></span> */}
+                              {/* <SVG svg={'plus'}></SVG> */}
+                              <span></span><span></span><span></span>
                             </div>
                           </div>
                         </div>

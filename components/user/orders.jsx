@@ -1,7 +1,7 @@
 import SVG from '../../files/svgs'
 import {useEffect, useState} from 'react'
 
-const Orders = ({user, credits, recipients}) => {
+const Orders = ({user, credits, recipients, setDashboard, setSideNav}) => {
 
   const [allRecipients, setAllRecipients] = useState(recipients)
   const [filter, setFilter] = useState('upcoming')
@@ -39,7 +39,7 @@ const Orders = ({user, credits, recipients}) => {
       <div className="profile-dashboard-orders-title">
         <div className={`profile-dashboard-orders-title-sent ` + (filter == 'upcoming' ? 'profile-dashboard-orders-title-sent-selected' : '')} onClick={ () => setFilter('upcoming')}>Upcoming</div>
         <div className={`profile-dashboard-orders-title-sent ` + (filter == 'shipped' ? 'profile-dashboard-orders-title-sent-selected' : '')} onClick={ () => setFilter('shipped')}>Sent</div>
-        {/* <div className="profile-dashboard-orders-title-sent">Order History</div> */}
+        <div className="profile-dashboard-orders-title-addCard" onClick={() => setDashboard('profile')}><SVG svg={'plus'}></SVG>Add Card</div>
       </div>
       {filter == 'upcoming' && 
       <div className="profile-dashboard-orders-card">
