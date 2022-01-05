@@ -27,7 +27,7 @@ import {loadStripe} from '@stripe/stripe-js';
 import CheckOutForm from '../components/checkoutForm'
 const stripeKey = STRIPE_TEST_KEY
 const stripeLiveKey = STRIPE_LIVE_KEY
-const stripePromise = loadStripe(stripeLiveKey)
+const stripePromise = loadStripe(stripeKey)
 
 const Checkout = ({newUser}) => {
   const router = useRouter()
