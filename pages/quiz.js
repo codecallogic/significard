@@ -29,6 +29,7 @@ const searchOptionsCities = {
   types: ['(cities)']
 }
 
+
 const quiz = ({newUser, quizState}) => {
   const dispatch = useDispatch()
   const router = useRouter()
@@ -447,12 +448,22 @@ const quiz = ({newUser, quizState}) => {
 
     if(question == 'package_plan'){
       setMessage('')
-      if(type == 'good deal') (setResult(''),  window.localStorage.setItem('subscription', 'price_1KDzLjAFcPAVZmVLhpOYVAl1'))
-      if(type == 'good_deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1KDzLjAFcPAVZmVLhpOYVAl1'))
-      if(type == 'better deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1KDzMiAFcPAVZmVLdicfFXlc'))
-      if(type == 'better_deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1KDzMiAFcPAVZmVLdicfFXlc'))
-      if(type == 'best deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1KDzNkAFcPAVZmVLR8ixpbE4'))
-      if(type == 'best_deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1KDzNkAFcPAVZmVLR8ixpbE4'))
+
+      // TEST //
+      // if(type == 'good deal') (setResult(''),  window.localStorage.setItem('subscription', 'price_1KDzLjAFcPAVZmVLhpOYVAl1'))
+      // if(type == 'good_deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1KDzLjAFcPAVZmVLhpOYVAl1'))
+      // if(type == 'better deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1KDzMiAFcPAVZmVLdicfFXlc'))
+      // if(type == 'better_deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1KDzMiAFcPAVZmVLdicfFXlc'))
+      // if(type == 'best deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1KDzNkAFcPAVZmVLR8ixpbE4'))
+      // if(type == 'best_deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1KDzNkAFcPAVZmVLR8ixpbE4'))
+
+      // LIVE //
+      if(type == 'good deal') (setResult(''),  window.localStorage.setItem('subscription', 'price_1KEjDKAFcPAVZmVLS3HZ2FTy'))
+      if(type == 'good_deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1KEjDKAFcPAVZmVLS3HZ2FTy'))
+      if(type == 'better deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1KEjGwAFcPAVZmVLzb8YHOyc'))
+      if(type == 'better_deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1KEjGwAFcPAVZmVLzb8YHOyc'))
+      if(type == 'best deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1KEjHnAFcPAVZmVLmpgQx8Zj'))
+      if(type == 'best_deal') (setResult(''), window.localStorage.setItem('subscription', 'price_1KEjHnAFcPAVZmVLmpgQx8Zj'))
 
       window.localStorage.setItem(question, type)
       window.localStorage.setItem('package_quantity', quantity)

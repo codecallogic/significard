@@ -649,7 +649,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                 </div>
               }
               <div className="profile-dashboard-recipients-edit-style">
-                <div className="profile-dashboard-recipients-edit-style-title"><span>Card style</span> (rate it from more important to least important):</div>
+                <div className="profile-dashboard-recipients-edit-style-title"><span>Card style</span> (Drag boxes to rate from most important (1) to least important (6)):</div>
                 <div className="profile-dashboard-recipients-edit-style-selection">
                   {edit == 'style'
 
@@ -885,7 +885,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
               </div>
             }
             <div className="profile-dashboard-recipients-edit-style">
-              <div className="profile-dashboard-recipients-edit-style-title"><span>Card style</span> (rate it from more important to least important, must have 6.):</div>
+              <div className="profile-dashboard-recipients-edit-style-title"><span>Card style</span> (Drag boxes to rate from most important (1) to least important (6)):</div>
               <div className="profile-dashboard-recipients-edit-style-selection">
                 {edit == 'style'
 

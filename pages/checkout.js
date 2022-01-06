@@ -7,7 +7,7 @@ import axios from 'axios'
 import {STRIPE_LIVE_KEY, STRIPE_TEST_KEY} from '../config'
 import {useRouter} from 'next/router'
 import PlacesAutocomplete, {geocodeByPlaceId} from 'react-places-autocomplete'
-import {usStates} from '../utils/quiz'
+import {usStates, usStatesLive} from '../utils/quiz'
 import {connect } from 'react-redux'
 import ReactGA from 'react-ga'
 
@@ -184,7 +184,6 @@ const Checkout = ({newUser}) => {
     if(recipientData.package_plan == 'custom')(setPackagePrice(result))
     recipientData.package_plan === 'custom' ? setTotal((result * recipientData.package_quantity)): null
 
-
     let delivery = new Date(recipientData.card_arrival)
 
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -206,7 +205,7 @@ const Checkout = ({newUser}) => {
       setCity(recipient.city)
       setZipCode(recipient.zip_code)
       setState(recipient.state)
-      usStates.forEach((item) => {
+      usStatesLive.forEach((item) => {
         if(item.abbreviation.trim() == recipient.state.trim()){
           setTaxID(item.id)
           setTax(item.taxRate)
@@ -239,7 +238,7 @@ const Checkout = ({newUser}) => {
   }
   
   const handleTax = (abbr) => {
-    usStates.forEach((item) => {
+    usStatesLive.forEach((item) => {
       if(item.abbreviation.trim() === abbr.trim()){
         setTaxID(item.id)
         setTax(item.taxRate)
@@ -323,7 +322,7 @@ const Checkout = ({newUser}) => {
               {state_list && 
               <div className="form-group-single-dropdown-list">
                   <div className="form-group-double-dropdown-list-container">
-                    {usStates.map( (item, idx) => (
+                    {usStatesLive.map( (item, idx) => (
                       <div className="form-group-double-dropdown-list-item" onClick={(e) => (setState(item.abbreviation), setStateList(false), setTax(item.taxRate), setTaxID(item.id))} key={idx} >{item.name}</div>
                     ))
                     }
@@ -343,7 +342,7 @@ const Checkout = ({newUser}) => {
             {recipient.mail_to == 'recipient' && <div className="checkout-container-right-ship_to">Ship to {recipient.recipient ? `${recipient.recipient}'s address` : recipient.recipient_other ? `${recipient.recipient_other}'s address`: ''} </div>}
             <div className="checkout-container-right-delivery">📩 <span>Estimated arrival date: {delivery}</span></div>
             <div className="checkout-container-right-price"><span>{recipient.package_plan ? `${recipient.package_plan ? recipient.package_plan.replace(/_/g, ' ') : ''} (${recipient.package_quantity}x)` : ''}</span><span>{`$ ` + Math.ceil(package_price * 100 * +recipient.package_quantity) / 100}</span></div>
-            <div className="checkout-container-right-price-event"><span>First card: {recipient.event ? `${recipient.event ? recipient.event : ''} for ${recipient.recipient_name ? recipient.recipient_name : ''}` : ''}</span></div>
+            <div className="checkout-container-right-price-event"><span>First card: {recipient.event ? `${recipient.event ? recipient.event : ''} for ${recipient.recipient_name ? recipient.recipient_name : recipient.recipient_other ? recipient.recipient_other : 'recipient'}` : ''}</span></div>
             <div className="checkout-container-right-tax"><span>Sales Tax</span><span>{((tax * 100 / 100).toFixed(4) * 100).toFixed(2) + `% `}</span></div>
             <div className="checkout-container-right-total">
               <span>Total {recipient.package_plan == 'custom' ? '' : 'per month'}</span>
