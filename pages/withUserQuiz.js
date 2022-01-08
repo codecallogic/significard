@@ -49,6 +49,8 @@ const withUser = Page => {
         }
       }
       
+      console.log(newUser)
+
       if(!newUser){
         // return {
         //   ...(Page.getInitialProps ? await Page.getInitialProps(context) : {}),
