@@ -19,20 +19,6 @@ const withUser = Page => {
       if(user){newUser = user.split('=')[1]}
       if(token){newToken = token.split('=')[1]}
 
-      try {
-        const responseTesting = await axios.post(`${API}/auth/testing`, 
-          JSON.stringify({test: 'Test'}), 
-          {
-          headers: {
-              Authorization: `Bearer ${newToken}`
-              // contentType: `application/json`
-          }
-        })
-        console.log(responseTesting)
-      } catch (error) {
-        console.log(error)
-      }
-      
       if(newToken !== null){
         try {
           const responseUser = await axios.get(`${API}/auth/user`, {
