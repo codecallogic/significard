@@ -22,6 +22,19 @@ const withUser = Page => {
       console.log('TESTING ERROR PAGE')
       console.log(newToken)
       console.log(API)
+
+      try {
+        const responseTesting = await axios.get(`${API}/auth/testing`, {
+          headers: {
+              Authorization: `Bearer ${newToken}`,
+              contentType: `application/json`
+          }
+        })
+        console.log(responseTesting)
+      } catch (error) {
+        console.log(error)
+      }
+      
       if(newToken !== null){
         try {
           const responseUser = await axios.get(`${API}/auth/user`, {
