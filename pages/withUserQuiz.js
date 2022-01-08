@@ -37,7 +37,7 @@ const withUser = Page => {
       
       if(newToken !== null){
         try {
-          const responseUser = await axios.get(`${API}/auth/user`, {
+          const responseUser = await axios.post(`${API}/auth/user`, {
             headers: {
                 Authorization: `Bearer ${newToken}`,
                 contentType: `application/json`
