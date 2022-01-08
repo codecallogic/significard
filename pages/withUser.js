@@ -58,25 +58,25 @@ const withUser = Page => {
         });
         context.res.end();
       }else{
-        // if(!newUser.recipients){
-        //   context.res.writeHead(302, {
-        //     Location: '/quiz'
-        //   });
-        //   return context.res.end();
-        // }
-        // if(newUser.recipients.length == 0){
-        //   context.res.writeHead(302, {
-        //     Location: '/quiz'
-        //   });
-        //   context.res.end();
-        // }
-        // else{
+        if(!newUser.recipients){
+          context.res.writeHead(302, {
+            Location: '/quiz'
+          });
+          return context.res.end();
+        }
+        if(newUser.recipients.length == 0){
+          context.res.writeHead(302, {
+            Location: '/quiz'
+          });
+          context.res.end();
+        }
+        else{
           return {
             ...(Page.getInitialProps ? await Page.getInitialProps(context) : {}),
             newUser,
             recipients
           }
-        // }
+        }
       }
     }
 

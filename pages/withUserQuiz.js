@@ -19,10 +19,6 @@ const withUser = Page => {
       if(user){newUser = user.split('=')[1]}
       if(token){newToken = token.split('=')[1]}
 
-      console.log('TESTING ERROR PAGE')
-      console.log(newToken)
-      console.log(API)
-
       try {
         const responseTesting = await axios.post(`${API}/auth/testing`, 
           JSON.stringify({test: 'Test'}), 
@@ -37,14 +33,6 @@ const withUser = Page => {
         console.log(error)
       }
       
-
-
-
-
-
-
-
-
       if(newToken !== null){
         try {
           const responseUser = await axios.get(`${API}/auth/user`, {
@@ -53,13 +41,7 @@ const withUser = Page => {
                 contentType: `application/json`
             }
           })
-          console.log(responseUser)
-          console.log('-------------------------------')
-          console.log('-------------------------------')
-          console.log('-------------------------------')
-          console.log('-------------------------------')
-          console.log('-------------------------------')
-          console.log('-------------------------------')
+         
           newUser = responseUser.data
         } catch (error) {
           console.log({'ERROR': error})
@@ -79,8 +61,6 @@ const withUser = Page => {
           }
         }
       }
-      
-      console.log(newUser)
 
       if(!newUser){
         // return {
