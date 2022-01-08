@@ -24,7 +24,7 @@ const withUser = Page => {
       console.log(API)
 
       try {
-        const responseTesting = await axios.get(`${API}/auth/testing`, {
+        const responseTesting = await axios.post(`${API}/auth/testing`, {
           headers: {
               Authorization: `Bearer ${newToken}`,
               contentType: `application/json`
@@ -35,9 +35,17 @@ const withUser = Page => {
         console.log(error)
       }
       
+
+
+
+
+
+
+
+
       if(newToken !== null){
         try {
-          const responseUser = await axios.post(`${API}/auth/user`, {
+          const responseUser = await axios.get(`${API}/auth/user`, {
             headers: {
                 Authorization: `Bearer ${newToken}`,
                 contentType: `application/json`
