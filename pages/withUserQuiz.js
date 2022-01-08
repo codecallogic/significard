@@ -20,7 +20,8 @@ const withUser = Page => {
       if(token){newToken = token.split('=')[1]}
 
       console.log('TESTING ERROR PAGE')
-
+      console.log(newToken)
+      console.log(API)
       if(newToken !== null){
         try {
           const responseUser = await axios.get(`${API}/auth/user`, {
@@ -29,6 +30,13 @@ const withUser = Page => {
                 contentType: `application/json`
             }
           })
+          console.log(responseUser)
+          console.log('-------------------------------')
+          console.log('-------------------------------')
+          console.log('-------------------------------')
+          console.log('-------------------------------')
+          console.log('-------------------------------')
+          console.log('-------------------------------')
           newUser = responseUser.data
         } catch (error) {
           console.log({'ERROR': error})
