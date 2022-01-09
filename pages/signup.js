@@ -55,7 +55,7 @@ const SignUp = ({loggedIn, user, userUpdate, userMessage}) => {
     setLoading(true)
     e.preventDefault()
     try {
-      const responseSignUp = await axios.post(`${API}/auth/signup`, {name, email, password})
+      const responseSignUp = await axios.post(`${API}/auth/signup`, {name, email, password}, {credentials: 'include'})
       // console.log(responseSignUp.data)
       userMessage(responseSignUp.data)
       setLoading(false)
@@ -76,7 +76,7 @@ const SignUp = ({loggedIn, user, userUpdate, userMessage}) => {
 
     setLoading(true)
     try {
-      const responseLogin = await axios.post(`${API}/auth/login`, {user})
+      const responseLogin = await axios.post(`${API}/auth/login`, {user}, {credentials: 'include'})
       setLoading(false)
       if(responseLogin.data.recipients){
         if(responseLogin.data.recipients[0]){

@@ -57,7 +57,7 @@ const Login = ({loggedIn, user, userUpdate, userMessage, userEmail}) => {
     userMessage('')
     
     try {
-      const responseLogin = await axios.post(`${API}/auth/login`, {email, password})
+      const responseLogin = await axios.post(`${API}/auth/login`, {email, password}, {credentials: 'include'})
       setLoading(false)
       userUpdate(responseLogin.data)
       userEmail(responseLogin.data)
@@ -80,7 +80,7 @@ const Login = ({loggedIn, user, userUpdate, userMessage, userEmail}) => {
   const loginFirebase = async (user) => {
     setLoading(true)
     try {
-      const responseLogin = await axios.post(`${API}/auth/login`, {user})
+      const responseLogin = await axios.post(`${API}/auth/login`, {user}, {credentials: 'include'})
       // console.log(responseLogin.data)
       userEmail(responseLogin.data)
       setLoading(false)
