@@ -4,10 +4,11 @@ import {createStore} from 'redux'
 import {Provider} from 'react-redux'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import rootReducer from './../reducers/rootReducer'
-import {GOOGLE_MAPS, GOOGLE_ANALYTICS} from '../config'
+import {GOOGLE_MAPS, GOOGLE_ANALYTICS, DOMAIN} from '../config'
 import {useEffect, useState} from 'react'
 import ReactGA from 'react-ga'
 import { useRouter } from "next/router";
+import axios from 'axios'
 
 const UA = GOOGLE_ANALYTICS
 
@@ -16,6 +17,16 @@ ReactGA.initialize(UA)
 const store = createStore(rootReducer, composeWithDevTools())
 
 const googleSource = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS}&libraries=places`
+
+const app = axios.create({
+  DOMAIN,
+  withCredentials: true
+})
+
+app.interceptors.response.use(
+  response => (response), 
+  error => (Promise.reject(error.response.data.err))
+)
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
