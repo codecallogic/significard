@@ -109,13 +109,9 @@ Confirmation.getInitialProps = async ({query}) => {
     console.log(`${API}/payment/get-transaction`)
     const responseTransaction = await axios.post(`${API}/payment/get-transaction`, {'id': query.transaction})
 
-    console.log(responseTransaction)
-    console.log(responseTransaction.data)
-    console.log(responseTransaction)
     orderData = responseTransaction.data
   } catch (error) {
 
-    console.log('--------here........')
 
     console.log(error)
   }

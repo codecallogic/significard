@@ -25,7 +25,8 @@ const withUser = Page => {
             headers: {
                 Authorization: `Bearer ${newToken}`,
                 contentType: `application/json`
-            }
+            },
+            credentials: 'include'
           })
          
           newUser = responseUser.data
