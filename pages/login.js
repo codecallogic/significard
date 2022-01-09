@@ -57,7 +57,7 @@ const Login = ({loggedIn, user, userUpdate, userMessage, userEmail}) => {
     userMessage('')
     
     try {
-      const responseLogin = await axios.post(`${API}/auth/login`, {email, password}, {credentials: 'include'})
+      const responseLogin = await axios.post(`${API}/auth/login`, {email, password})
       setLoading(false)
       userUpdate(responseLogin.data)
       userEmail(responseLogin.data)
