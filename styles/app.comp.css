@@ -1698,6 +1698,32 @@ body {
       @media only screen and (max-width: 768px) {
         .home-header-title-container {
           width: 100%; } }
+  .home-header-subtitle {
+    font-size: 2rem;
+    font-family: Sanchez;
+    line-height: 5.1rem;
+    margin: 1rem 0;
+    color: white; }
+    @media only screen and (max-width: 992px) {
+      .home-header-subtitle {
+        padding: 1rem;
+        font-size: 2rem;
+        text-align: center;
+        font-family: Sanchez;
+        font-weight: 400;
+        padding: 0 3.5rem; } }
+    .home-header-subtitle-container {
+      display: flex;
+      flex-direction: column;
+      width: 80%; }
+      @media only screen and (max-width: 992px) {
+        .home-header-subtitle-container {
+          z-index: 10;
+          width: 100%;
+          align-items: center; } }
+      @media only screen and (max-width: 768px) {
+        .home-header-subtitle-container {
+          width: 100%; } }
   .home-header-button {
     display: flex;
     align-items: center;
