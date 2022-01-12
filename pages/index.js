@@ -46,7 +46,11 @@ const Home = ({loggedIn, user, userUpdate}) => {
       <div className="home-header-container">
         <div className="home-header-title-container">
           <div className="home-header-title">
-            Never forget your occassions again
+            Personalized Greeting Cards
+          </div>
+
+          <div className="home-header-subtitle">
+            Subscribe now and let our artists find you a card that actually relates!
           </div>
           <div className="home-header-button" onClick={() => (handleEventAnalytics('header'), loggedIn ?window.location.href = `/account/${loggedIn.id}` : window.location.href = '/quiz')}>
             Get Started
@@ -65,21 +69,21 @@ const Home = ({loggedIn, user, userUpdate}) => {
           <div className="home-section_2-item-image-container"><img src="/media/homepage/section_2_1.png" alt="" className="home-section_2-item-image" /></div>
           <div className="home-section_2-item-description">
             <div className="home-section_2-item-description-title">Take A Short Quiz</div>
-            <span>Tell us about your greeting card needs. Please keep in mind that all cards need to be ordered 3 weeks prior to the arrival date.</span>
+            <span>(1) Take our short quiz to select your 1st card for your 1st recipient (at least 2 weeks before the desired delivery date).</span>
           </div>
         </div>
         <div className="home-section_2-item">
           <div className="home-section_2-item-image-container"><img src="/media/homepage/section_2_2.png" alt="" className="home-section_2-item-image" /></div>
           <div className="home-section_2-item-description">
             <div className="home-section_2-item-description-title">Approve & Pay</div>
-            <span>We'll email you your order and card details. You'll receive a digital image of your card at least 10 days prior to the arrival date.</span>
+            <span>(2) Select the payment plan based on how many cards you’d like to send throughout the year to ALL your recipients for their birthdays, holidays, etc.</span>
           </div>
         </div>
         <div className="home-section_2-item">
           <div className="home-section_2-item-image-container"><img src="/media/homepage/section_2_3.png" alt="" className="home-section_2-item-image" /></div>
           <div className="home-section_2-item-description">
             <div className="home-section_2-item-description-title">We'll Mail Your Contacts</div>
-            <span>We’ll deliver cards directly to you or your recipient, so you can sit back and relax!</span>
+            <span>(3) Our technology will match you with the best card for each occasion and mail it to you or your recipient. As an option, our artists can handwrite a message for you. </span>
           </div>
         </div>
       </div>

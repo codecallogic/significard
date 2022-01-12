@@ -69,6 +69,40 @@
       }
     }
 
+    &-subtitle {
+      font-size: 2rem;
+      font-family: Sanchez;
+      line-height: 5.1rem;
+      margin: 1rem 0;
+      color: white;
+
+      @media only screen and (max-width: $large) {
+        padding: 1rem;
+        font-size: 2rem;
+        text-align: center;
+        font-family: Sanchez;
+        font-weight: 400;
+        padding: 0 3.5rem;
+      }
+
+      &-container {
+        display: flex;
+        flex-direction: column;
+
+        width: 80%;
+
+        @media only screen and (max-width: $large) {
+          z-index: 10;
+          width: 100%;
+          align-items: center;
+        }
+
+        @media only screen and (max-width: $medium) {
+          width: 100%;
+        }
+      }
+    }
+
     &-button {
       display: flex;
       align-items: center;
