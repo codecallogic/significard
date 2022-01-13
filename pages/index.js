@@ -69,21 +69,21 @@ const Home = ({loggedIn, user, userUpdate}) => {
           <div className="home-section_2-item-image-container"><img src="/media/homepage/section_2_1.png" alt="" className="home-section_2-item-image" /></div>
           <div className="home-section_2-item-description">
             <div className="home-section_2-item-description-title">Take A Short Quiz</div>
-            <span>(1) Take our short quiz to select your 1st card for your 1st recipient (at least 2 weeks before the desired delivery date).</span>
+            <span>Take our short quiz to select your 1st card for your 1st recipient (at least 2 weeks before the desired delivery date).</span>
           </div>
         </div>
         <div className="home-section_2-item">
           <div className="home-section_2-item-image-container"><img src="/media/homepage/section_2_2.png" alt="" className="home-section_2-item-image" /></div>
           <div className="home-section_2-item-description">
             <div className="home-section_2-item-description-title">Approve & Pay</div>
-            <span>(2) Select the payment plan based on how many cards you’d like to send throughout the year to ALL your recipients for their birthdays, holidays, etc.</span>
+            <span>Select the payment plan based on how many cards you’d like to send throughout the year to ALL your recipients for their birthdays, holidays, etc.</span>
           </div>
         </div>
         <div className="home-section_2-item">
           <div className="home-section_2-item-image-container"><img src="/media/homepage/section_2_3.png" alt="" className="home-section_2-item-image" /></div>
           <div className="home-section_2-item-description">
             <div className="home-section_2-item-description-title">We'll Mail Your Contacts</div>
-            <span>(3) Our technology will match you with the best card for each occasion and mail it to you or your recipient. As an option, our artists can handwrite a message for you. </span>
+            <span>Our technology will match you with the best card for each occasion and mail it to you or your recipient. As an option, our artists can handwrite a message for you. </span>
           </div>
         </div>
       </div>

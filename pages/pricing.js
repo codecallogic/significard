@@ -21,7 +21,7 @@ const Pricing = ({loggedIn}) => {
     if(+custom == 0) return setMessage('Must be greater than 0')
     if(+custom <= 4) setResult(13.99)
     if(+custom > 4 ) setResult(11.99)
-    if(+custom > 9) setResult(9.99)
+    if(+custom > 9) setResult(8.99)
     if(+custom > 19) setResult(6.99)
     if(+custom > 50){setMessage('For 50+ cards, please contact us.'), setResult('')}
   }
@@ -35,7 +35,7 @@ const Pricing = ({loggedIn}) => {
       <div className="quiz-title-mobile">Choose the number of cards you'd like to receive for ANY recipients</div>
       <div className="quiz-recipient-package">
         <div className="quiz-recipient-package-item">
-          <div className="quiz-recipient-package-item-title">Good Deal</div>
+          <div className="quiz-recipient-package-item-title">Shy Sender</div>
           <div className="quiz-recipient-package-item-subtitle">You get 5 cards </div>
           <div className="quiz-recipient-package-item-image-container">
             {/* {packageList.slice(3, 6).map((item, idx) =>
@@ -55,13 +55,13 @@ const Pricing = ({loggedIn}) => {
           </div>
         </div>
         <div className="quiz-recipient-package-item">
-          <div className="quiz-recipient-package-item-title">Better Deal</div>
+          <div className="quiz-recipient-package-item-title">Friends & Fam</div>
           <div className="quiz-recipient-package-item-subtitle">You get 10 cards </div>
           <div className="quiz-recipient-package-item-image-container">
             <img src={`/media/package/standard.png`} alt="" />
           </div>
-          <div className="quiz-recipient-package-item-plan">$8.33/mo</div>
-          <div className="quiz-recipient-package-item-price">$9.99 per card</div>
+          <div className="quiz-recipient-package-item-plan">$7.49/mo</div>
+          <div className="quiz-recipient-package-item-price">$8.99 per card</div>
           {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
           <button className="quiz-recipient-package-item-button" onClick={() => window.location.href = '/quiz'}>Get Started</button>
           <div className="quiz-recipient-package-item-features">
@@ -73,7 +73,7 @@ const Pricing = ({loggedIn}) => {
           </div>
         </div>
         <div className="quiz-recipient-package-item">
-          <div className="quiz-recipient-package-item-title">Best Deal</div>
+          <div className="quiz-recipient-package-item-title">Social Butterfly</div>
           <div className="quiz-recipient-package-item-subtitle">You get 20 cards </div>
           <div className="quiz-recipient-package-item-image-container">
             <img src={`/media/package/standard.png`} alt="" />

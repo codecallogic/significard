@@ -27,7 +27,7 @@ import {loadStripe} from '@stripe/stripe-js';
 import CheckOutForm from '../components/checkoutForm'
 const stripeKey = STRIPE_TEST_KEY
 const stripeLiveKey = STRIPE_LIVE_KEY
-const stripePromise = loadStripe('pk_live_51J7NJWAFcPAVZmVLFrPDXbwZHpRhMA3TfKhVMFUD02DDdOH0qs3nZaAz5GaQ9CVHJwzhCSi6NlOFnWbzgnsscpiE00jt00VCV6')
+const stripePromise = loadStripe(stripeLiveKey)
 
 const Checkout = ({newUser}) => {
   const router = useRouter()
@@ -160,25 +160,25 @@ const Checkout = ({newUser}) => {
     }
     if(!recipientData.description) return  (window.localStorage.setItem('quiz_question', 'description'), window.location.href = '/quiz')
 
-    if(recipientData.package_plan == 'best deal')setPackagePrice(6.99)
-    if(recipientData.package_plan == 'best_deal')setPackagePrice(6.99)
-    if(recipientData.package_plan == 'better deal')setPackagePrice(9.99)
-    if(recipientData.package_plan == 'better_deal')setPackagePrice(9.99)
-    if(recipientData.package_plan == 'good deal')setPackagePrice(11.99)
-    if(recipientData.package_plan == 'good_deal')setPackagePrice(11.99)
+    if(recipientData.package_plan == 'social butterfly')setPackagePrice(6.99)
+    if(recipientData.package_plan == 'social_butterfly')setPackagePrice(6.99)
+    if(recipientData.package_plan == 'friends and fam')setPackagePrice(8.99)
+    if(recipientData.package_plan == 'friends_and_fam')setPackagePrice(8.99)
+    if(recipientData.package_plan == 'shy sender')setPackagePrice(11.99)
+    if(recipientData.package_plan == 'shy_sender')setPackagePrice(11.99)
 
-    if(recipientData.package_plan === 'best deal')setTotal((6.99 * recipientData.package_quantity / 12))
-    if(recipientData.package_plan === 'best_deal')setTotal((6.99 * recipientData.package_quantity / 12))
+    if(recipientData.package_plan === 'social butterfly')setTotal((6.99 * recipientData.package_quantity / 12))
+    if(recipientData.package_plan === 'social_butterfly')setTotal((6.99 * recipientData.package_quantity / 12))
 
-    if(recipientData.package_plan === 'better deal')setTotal((9.99 * recipientData.package_quantity / 12))
-    if(recipientData.package_plan === 'better_deal')setTotal((9.99 * recipientData.package_quantity / 12))
-    if(recipientData.package_plan === 'good deal')setTotal((11.99 * recipientData.package_quantity / 12))
-    if(recipientData.package_plan === 'good_deal')setTotal((11.99 * recipientData.package_quantity / 12))
+    if(recipientData.package_plan === 'friends and fam')setTotal((8.99 * recipientData.package_quantity / 12))
+    if(recipientData.package_plan === 'friends_and_fam')setTotal((8.99 * recipientData.package_quantity / 12))
+    if(recipientData.package_plan === 'shy sender')setTotal((11.99 * recipientData.package_quantity / 12))
+    if(recipientData.package_plan === 'shy_sender')setTotal((11.99 * recipientData.package_quantity / 12))
 
     let result = null
     if(recipientData.package_quantity <= 4) result = 13.99
     if(recipientData.package_quantity > 4 ) result = 11.99
-    if(recipientData.package_quantity > 9) result = 9.99
+    if(recipientData.package_quantity > 9) result = 8.99
     if(recipientData.package_quantity > 19) result = 6.99
     
     if(recipientData.package_plan == 'custom')(setPackagePrice(result))

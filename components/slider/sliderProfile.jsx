@@ -46,7 +46,7 @@ const Slider = ({slider, result, setresult, calculate, validateisnumber, quantit
          {...handlers}
         >
           <div className="slider-profile-slides-item">
-            <div className="slider-profile-slides-item-title">Good Deal</div>
+            <div className="slider-profile-slides-item-title">Shy Deal</div>
             <div className="slider-profile-slides-item-subtitle">You get 5 cards </div>
             <img src={`/media/package/standard.png`} alt="" className="slider-profile-slides-item-image" />
             <div className="slider-profile-slides-item-plan">$4.99/mo</div>
@@ -61,13 +61,13 @@ const Slider = ({slider, result, setresult, calculate, validateisnumber, quantit
             </div>
           </div>
           <div className="slider-profile-slides-item">
-            <div className="slider-profile-slides-item-title">Better Deal</div>
+            <div className="slider-profile-slides-item-title">Friends & Fam Deal</div>
             <div className="slider-profile-slides-item-subtitle">You get 10 cards </div>
             <img src={`/media/package/standard.png`} alt="" className="slider-profile-slides-item-image" />
-            <div className="slider-profile-slides-item-plan">$8.33/mo</div>
-            <div className="slider-profile-slides-item-price">$9.99/card</div>
+            <div className="slider-profile-slides-item-plan">$7.49/mo</div>
+            <div className="slider-profile-slides-item-price">$8.99/card</div>
             {/* <div className="slider-profile-slides-item-discount">15% discount for 10+ cards</div> */}
-            <button className="slider-profile-slides-item-button" onClick={ (e) => (setPlanQuantity(10), setUpdatePlan('better deal'), setPlanPrice(9.99), setSubscription('price_1KDzMiAFcPAVZmVLdicfFXlc'), setModal('checkout'))}>Select</button>
+            <button className="slider-profile-slides-item-button" onClick={ (e) => (setPlanQuantity(10), setUpdatePlan('friends and fam'), setPlanPrice(8.99), setSubscription('price_1KHF6zAFcPAVZmVLTQ3SMKJY'), setModal('checkout'))}>Select</button>
             <div className="slider-profile-slides-item-features">
               <div>&#8226; Free Shipping</div>
               <div>&#8226; Envelope</div>
@@ -77,13 +77,13 @@ const Slider = ({slider, result, setresult, calculate, validateisnumber, quantit
             </div>
           </div>
           <div className="slider-profile-slides-item">
-            <div className="slider-profile-slides-item-title">Best Deal</div>
+            <div className="slider-profile-slides-item-title">Social Butterfly</div>
             <div className="slider-profile-slides-item-subtitle">You get 20 cards </div>
             <img src={`/media/package/standard.png`} alt="" className="slider-profile-slides-item-image" />
             <div className="slider-profile-slides-item-plan">$11.65/mo</div>
             <div className="slider-profile-slides-item-price">$6.99/card</div>
             {/* <div className="slider-profile-slides-item-discount">15% discount for 10+ cards</div> */}
-            <button className="slider-profile-slides-item-button" onClick={ (e) => (setPlanQuantity(20), setUpdatePlan('best deal'), setPlanPrice(6.99), setSubscription('price_1KDzNkAFcPAVZmVLR8ixpbE4'), setModal('checkout'))}>Select</button>
+            <button className="slider-profile-slides-item-button" onClick={ (e) => (setPlanQuantity(20), setUpdatePlan('social butterfly'), setPlanPrice(6.99), setSubscription('price_1KDzNkAFcPAVZmVLR8ixpbE4'), setModal('checkout'))}>Select</button>
             <div className="slider-profile-slides-item-features">
               <div>&#8226; Free Shipping</div>
               <div>&#8226; Envelope</div>
