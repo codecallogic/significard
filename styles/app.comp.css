@@ -5603,3 +5603,17 @@ body {
   @media only screen and (max-width: 600px) {
     .w-50 {
       width: 100% !important; } }
+
+.address-line-2 svg {
+  position: absolute;
+  top: 50%;
+  right: 2%;
+  width: 2rem;
+  height: 2rem;
+  fill: white;
+  background-color: #003e5f;
+  border-radius: 50%;
+  padding: 0.2rem;
+  z-index: 3000; }
+  .address-line-2 svg:hover {
+    cursor: pointer; }
