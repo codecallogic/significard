@@ -419,7 +419,7 @@ const Info = ({user, dashboard, credits}) => {
                   <div className="quiz-recipient-package-item-plan">$7.49/mo</div>
                   <div className="quiz-recipient-package-item-price">$8.99/card</div>
                   {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-                  <button className="quiz-recipient-package-item-button" onClick={ (e) => (setPlanQuantity(10), setUpdatePlan('friends and fam'), setPlanPrice(8.99), setSubscription('price_1KHF6zAFcPAVZmVLTQ3SMKJY'), setModal('checkout'))}>Select</button>
+                  <button className="quiz-recipient-package-item-button" onClick={ (e) => (setPlanQuantity(10), setUpdatePlan('friends and fam'), setPlanPrice(8.99), setSubscription('price_1KHdHIAFcPAVZmVLQoW5EB8H'), setModal('checkout'))}>Select</button>
                   <div className="quiz-recipient-package-item-features">
                     <div>&#8226; Free Shipping</div>
                     <div>&#8226; Envelope</div>
