@@ -450,20 +450,20 @@ const quiz = ({newUser, quizState}) => {
       setMessage('')
 
       // TEST //
-      if(type == 'shy sender') (setResult(''),  window.localStorage.setItem('subscription', 'price_1KDzLjAFcPAVZmVLhpOYVAl1'))
-      if(type == 'shy_sender') (setResult(''), window.localStorage.setItem('subscription', 'price_1KDzLjAFcPAVZmVLhpOYVAl1'))
-      if(type == 'friends and fam') (setResult(''), window.localStorage.setItem('subscription', 'price_1KHF6zAFcPAVZmVLTQ3SMKJY'))
-      if(type == 'friends_and_fam') (setResult(''), window.localStorage.setItem('subscription', 'price_1KHF6zAFcPAVZmVLTQ3SMKJY'))
-      if(type == 'social butterfly') (setResult(''), window.localStorage.setItem('subscription', 'price_1KDzNkAFcPAVZmVLR8ixpbE4'))
-      if(type == 'social_butterfly') (setResult(''), window.localStorage.setItem('subscription', 'price_1KDzNkAFcPAVZmVLR8ixpbE4'))
+      // if(type == 'shy sender') (setResult(''),  window.localStorage.setItem('subscription', 'price_1KDzLjAFcPAVZmVLhpOYVAl1'))
+      // if(type == 'shy_sender') (setResult(''), window.localStorage.setItem('subscription', 'price_1KDzLjAFcPAVZmVLhpOYVAl1'))
+      // if(type == 'friends and fam') (setResult(''), window.localStorage.setItem('subscription', 'price_1KHF6zAFcPAVZmVLTQ3SMKJY'))
+      // if(type == 'friends_and_fam') (setResult(''), window.localStorage.setItem('subscription', 'price_1KHF6zAFcPAVZmVLTQ3SMKJY'))
+      // if(type == 'social butterfly') (setResult(''), window.localStorage.setItem('subscription', 'price_1KDzNkAFcPAVZmVLR8ixpbE4'))
+      // if(type == 'social_butterfly') (setResult(''), window.localStorage.setItem('subscription', 'price_1KDzNkAFcPAVZmVLR8ixpbE4'))
 
       // LIVE //
-      // if(type == 'shy sender') (setResult(''),  window.localStorage.setItem('subscription', 'price_1KEjDKAFcPAVZmVLS3HZ2FTy'))
-      // if(type == 'shy_sender') (setResult(''), window.localStorage.setItem('subscription', 'price_1KEjDKAFcPAVZmVLS3HZ2FTy'))
-      // if(type == 'friends and fam') (setResult(''), window.localStorage.setItem('subscription', 'price_1KHdHIAFcPAVZmVLQoW5EB8H'))
-      // if(type == 'friends_and_fam') (setResult(''), window.localStorage.setItem('subscription', 'price_1KHdHIAFcPAVZmVLQoW5EB8H'))
-      // if(type == 'social butterfly') (setResult(''), window.localStorage.setItem('subscription', 'price_1KEjHnAFcPAVZmVLmpgQx8Zj'))
-      // if(type == 'social_butterfly') (setResult(''), window.localStorage.setItem('subscription', 'price_1KEjHnAFcPAVZmVLmpgQx8Zj'))
+      if(type == 'shy sender') (setResult(''),  window.localStorage.setItem('subscription', 'price_1KEjDKAFcPAVZmVLS3HZ2FTy'))
+      if(type == 'shy_sender') (setResult(''), window.localStorage.setItem('subscription', 'price_1KEjDKAFcPAVZmVLS3HZ2FTy'))
+      if(type == 'friends and fam') (setResult(''), window.localStorage.setItem('subscription', 'price_1KHdHIAFcPAVZmVLQoW5EB8H'))
+      if(type == 'friends_and_fam') (setResult(''), window.localStorage.setItem('subscription', 'price_1KHdHIAFcPAVZmVLQoW5EB8H'))
+      if(type == 'social butterfly') (setResult(''), window.localStorage.setItem('subscription', 'price_1KEjHnAFcPAVZmVLmpgQx8Zj'))
+      if(type == 'social_butterfly') (setResult(''), window.localStorage.setItem('subscription', 'price_1KEjHnAFcPAVZmVLmpgQx8Zj'))
 
       window.localStorage.setItem(question, type)
       window.localStorage.setItem('package_quantity', quantity)
