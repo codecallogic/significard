@@ -67,13 +67,12 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
       setLoading(false)
       console.log('PAYMENT METHOD ERROR', error)
       if(error) error.response ? setMessage(error.response.data) : setMessage('An error occurred submitting your information, please try again later')
-    }
-    
-    
+    }    
 
     if(error){
+      console.log(error)
       setLoading(false)
-      if(error) return error.code ? setMessage('Invalid information') : setMessage('We are having trouble validating your card information')
+      if(error) return error.message ? setMessage(error.message) : setMessage('We are having trouble validating your card information')
     }else {
       try {
         
