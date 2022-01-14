@@ -55,6 +55,7 @@ const quiz = ({newUser, quizState}) => {
   const [enableCalendar, setEnableCalendar] = useState('')
   const [calendar, setCalendar] = useState(new Date())
   const [result, setResult] = useState('')
+  const [dropdown, setDropdown] = useState('')
 
   useEffect(() => {
     // if(newUser.recipients.length > 0) window.location.href = `/account/${newUser.id}`
@@ -1329,12 +1330,13 @@ const quiz = ({newUser, quizState}) => {
                 <div className="form-group-single mail">
                   <input type="text" placeholder="Full Name" value={quizState.name} onChange={ (e) => handleChange('mail', e, null, 'name')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Full Name'} required/>
                 </div>
-                <PlacesAutocomplete value={quizState.address_one} onChange={(e) => handleChange('mail_api', e, null, 'address_one')} onSelect={(e) => (handleSelect('mail', e, null, 'address_one', document.getElementById('address_place_id').value))} searchOptions={searchOptionsAddress}>
+                <PlacesAutocomplete value={quizState.address_one} onChange={(e) => (setDropdown('me'), handleChange('mail_api', e, null, 'address_one'))} onSelect={(e) => (setDropdown('me'), handleSelect('mail', e, null, 'address_one', document.getElementById('address_place_id').value))} searchOptions={searchOptionsAddress}>
                   {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                    <div className="form-group-single mail form-autocomplete-container">
+                    <div className="form-group-single mail form-autocomplete-container address-line-2">
                       <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'Address Line 1'})} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Address Line 1'} required/>
+                      {dropdown == 'me' && suggestions.length > 0 && <span onClick={() => setDropdown('')}><SVGs svg={'close'}></SVGs></span>}
                       {loading ? <div>...loading</div> : null}
-                      {suggestions.map((suggestion, idx) => {
+                      {dropdown == 'me' && suggestions.map((suggestion, idx) => {
                         const className = suggestion.active
                         ? 'form-autocomplete-suggestion-active'
                         : 'form-autocomplete-suggestion';
@@ -1345,12 +1347,13 @@ const quiz = ({newUser, quizState}) => {
                     </div>
                   )}
                 </PlacesAutocomplete>
-                <PlacesAutocomplete value={quizState.address_two} onChange={(e) => handleChange('mail_api', e, null, 'address_two')} onSelect={(e) => {handleSelect('mail', e, null, 'address_two')}} searchOptions={searchOptionsAddress}>
+                <PlacesAutocomplete value={quizState.address_two} onChange={(e) => (setDropdown('me_2'), handleChange('mail_api', e, null, 'address_two'))} onSelect={(e) => {setDropdown('me_2'), handleSelect('mail', e, null, 'address_two')}} searchOptions={searchOptionsAddress}>
                   {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                    <div className="form-group-single mail form-autocomplete-container_2">
+                    <div className="form-group-single mail form-autocomplete-container_2 address-line-2">
                       <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'Address Line 2'})} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Address Line 2'}/>
+                      {dropdown == 'me_2' && suggestions.length > 0 && <span onClick={() => setDropdown('')}><SVGs svg={'close'}></SVGs></span>}
                       {loading ? <div>...loading</div> : null}
-                      {suggestions.map((suggestion, idx) => {
+                      {dropdown == 'me_2' && suggestions.map((suggestion, idx) => {
                         const className = suggestion.active
                         ? 'form-autocomplete-suggestion-active'
                         : 'form-autocomplete-suggestion';
@@ -1415,12 +1418,13 @@ const quiz = ({newUser, quizState}) => {
                   <div className="form-group-single  mail">
                     <input type="text" placeholder="Full Name" value={quizState.name} onChange={ (e) => handleChange('mail', e, null, 'name')} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Full Name'} required/>
                   </div>
-                  <PlacesAutocomplete value={quizState.address_one} onChange={(e) => handleChange('mail_api', e, null, 'address_one')} onSelect={(e) => {handleSelect('mail', e, null, 'address_one', document.getElementById('address_place_id').value)}} searchOptions={searchOptionsAddress}>
+                  <PlacesAutocomplete value={quizState.address_one} onChange={(e) => (setDropdown('recipient'), handleChange('mail_api', e, null, 'address_one'))} onSelect={(e) => (setDropdown('recipient'), handleSelect('mail', e, null, 'address_one', document.getElementById('address_place_id').value))} searchOptions={searchOptionsAddress}>
                   {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                    <div className="form-group-single mail form-autocomplete-container">
+                    <div className="form-group-single mail form-autocomplete-container address-line-2">
                       <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'Address Line 1'})} required/>
+                      {dropdown == 'recipient' && suggestions.length > 0 && <span onClick={() => setDropdown('')}><SVGs svg={'close'}></SVGs></span>}
                       {loading ? <div>...loading</div> : null}
-                      {suggestions.map((suggestion, idx) => {
+                      {dropdown == 'recipient' && suggestions.map((suggestion, idx) => {
                         const className = suggestion.active
                         ? 'form-autocomplete-suggestion-active'
                         : 'form-autocomplete-suggestion';
@@ -1431,13 +1435,13 @@ const quiz = ({newUser, quizState}) => {
                     </div>
                   )}
                   </PlacesAutocomplete>
-                  <PlacesAutocomplete value={quizState.address_two} onChange={(e) => handleChange('mail_api', e, null, 'address_two')} onSelect={(e) => {handleSelect('mail', e, null, 'address_two')}} searchOptions={searchOptionsAddress}>
+                  <PlacesAutocomplete value={quizState.address_two} onChange={(e) => (setDropdown(true), handleChange('mail_api', e, null, 'address_two'))} onSelect={(e) => (setDropdown(true), handleSelect('mail', e, null, 'address_two'))} searchOptions={searchOptionsAddress}>
                     {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                       <div className="form-group-single mail form-autocomplete-container_2 address-line-2">
                         <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'Address Line 2'})}/>
-                        {suggestions.length > 0 && <span><SVGs svg={'close'}></SVGs></span>}
+                        {dropdown && suggestions.length > 0 && <span onClick={() => setDropdown(false)}><SVGs svg={'close'}></SVGs></span>}
                         {loading ? <div>...loading</div> : null}
-                        {suggestions.map((suggestion, idx) => {
+                        {dropdown && suggestions.map((suggestion, idx) => {
                           const className = suggestion.active
                           ? 'form-autocomplete-suggestion-active'
                           : 'form-autocomplete-suggestion';
