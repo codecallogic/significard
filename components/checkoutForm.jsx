@@ -145,6 +145,7 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
         
       } catch (error) {
         setLoading(false)
+        console.log(error)
         console.log('PAYMENT CONFIRMATION ERROR', error)
         if(error) error.response ? setMessage(error.response.data) : setMessage('An error occurred submitting your information, please try again later')
       }
