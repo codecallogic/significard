@@ -97,7 +97,7 @@ const Home = ({loggedIn, user, userUpdate}) => {
       <div className="home-section_4-container">
         <div className="home-section_4-item">
           <div className="home-section_4-item-review">
-            Ordered a card for my girlfriend. The staff were very friendly and got back to me quickly with questions to make the card. Even though I ordered last minute they were able to finish everything quickly and got it there in time for her birthday! She loved the card since it was her favorite bird cursom drawn! 10/10 will order again.
+            <span>My girlfriend loves the cards she’s been receiving! I signed up so that I won’t forget to give her a card for her birthday, Valentine’s day, and Christmas. The first card was so on point! They picked the card with the design of her favorite bird, and all I had to do was to mention her favorite themes & preferences in the quiz. 10/10 recommend this subscription service! </span>
             <div className="home-section_4-item-review-bottom-container">
               <div className="home-section_4-item-review-bottom"></div>
             </div>
@@ -105,11 +105,11 @@ const Home = ({loggedIn, user, userUpdate}) => {
           <div className="home-section_4-item-image">
             <img src="/media/homepage/review_1.png" alt="" />
           </div>
-          <div className="home-section_4-item-name">Andrey Shilo</div>
+          <div className="home-section_4-item-name">Andrey S</div>
         </div>
         <div className="home-section_4-item">
           <div className="home-section_4-item-review">
-            I asked for a handmade card for my good friend in college. My friend loved her card! We had an amazing, socially distant, surprise birthday party for her. I highly recommend getting a card from Significard!! I am also getting one for my amazing aunt and I can’t wait for it to come in the mail!
+            <span> I signed up for a subscription and ordered the 1st card for my good friend in college. My friend loved it! We had an amazing, socially distant, surprise birthday party for her. I highly recommend getting cards from Significard!! The next one I am supposed to receive is for my amazing aunt and I can’t wait for it to come in the mail!</span>
             <div className="home-section_4-item-review-bottom-container">
               <div className="home-section_4-item-review-bottom"></div>
             </div>
@@ -117,19 +117,19 @@ const Home = ({loggedIn, user, userUpdate}) => {
           <div className="home-section_4-item-image">
             <img src="/media/homepage/review_2.png" alt="" />
           </div>
-          <div className="home-section_4-item-name">Fiki Hunt</div>
+          <div className="home-section_4-item-name">Fiki H</div>
         </div>
         <div className="home-section_4-item">
           <div className="home-section_4-item-review">
-            I needed a card you can’t find in stores. Significard offers the customizations and added touch of sentiment I knew my friend would appreciate. The wow factor is undeniable and it’s definitely a card people will keep forever. 10/10 would recommend!
+            <span> I used to always miss someone’s birthday and shopping for cards has been a hassle for me, Significard has changed that! Nowadays, not only does it save me a trip to a store and time/stress picking out the right card, it also sends me reminders of the upcoming occasions, so my family and friends have been impressed by how thoughtful I have become :) THANK YOU, Significard! </span>
             <div className="home-section_4-item-review-bottom-container">
               <div className="home-section_4-item-review-bottom"></div>
             </div>
           </div>
           <div className="home-section_4-item-image">
-            <img src="/media/homepage/review_3.png" alt="" />
+            <img src="/media/homepage/review_4.png" alt="" />
           </div>
-          <div className="home-section_4-item-name">Kitty Rosette</div>
+          <div className="home-section_4-item-name">Steve R</div>
         </div>
       </div>
     </div>
