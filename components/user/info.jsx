@@ -2,7 +2,7 @@ import {useState, useEffect, useRef} from 'react'
 import SVG from '../../files/svgs'
 import PlacesAutocomplete from 'react-places-autocomplete'
 import { geocodeByPlaceId } from 'react-places-autocomplete'
-import {usStates, eventsList} from '../../utils/quiz'
+import {usStates, usStatesLive, eventsList} from '../../utils/quiz'
 import SliderProfile from '../../components/slider/sliderProfile'
 import axios from 'axios'
 import {API} from '../../config'
@@ -342,7 +342,7 @@ const Info = ({user, dashboard, credits}) => {
                           {state_list && 
                           <div className="form-group-double-dropdown-list" ref={node}>
                               <div className="form-group-double-dropdown-list-container">
-                                {usStates.map( (item, idx) => (
+                                {usStatesLive.map( (item, idx) => (
                                   <div className="form-group-double-dropdown-list-item" onClick={(e) => (setState(item.abbreviation), setStateList(false))} key={idx} >{item.name}</div>
                                 ))
                                 }

@@ -28,7 +28,7 @@ import {loadStripe} from '@stripe/stripe-js';
 import CheckOutForm from '../components/checkoutForm'
 const stripeKey = STRIPE_TEST_KEY
 const stripeLiveKey = STRIPE_LIVE_KEY
-const stripePromise = loadStripe(stripeKey)
+const stripePromise = loadStripe(stripeLiveKey)
 
 const Checkout = ({newUser}) => {
   const router = useRouter()
@@ -207,7 +207,7 @@ const Checkout = ({newUser}) => {
       setCity(recipient.city)
       setZipCode(recipient.zip_code)
       setState(recipient.state)
-      usStates.forEach((item) => {
+      usStatesLive.forEach((item) => {
         if(item.abbreviation.trim() == recipient.state.trim()){
           setTaxID(item.id)
           setTax(item.taxRate)
@@ -240,7 +240,7 @@ const Checkout = ({newUser}) => {
   }
   
   const handleTax = (abbr) => {
-    usStates.forEach((item) => {
+    usStatesLive.forEach((item) => {
       if(item.abbreviation.trim() === abbr.trim()){
         setTaxID(item.id)
         setTax(item.taxRate)
@@ -325,7 +325,7 @@ const Checkout = ({newUser}) => {
               {state_list && 
               <div className="form-group-single-dropdown-list">
                   <div className="form-group-double-dropdown-list-container">
-                    {usStates.map( (item, idx) => (
+                    {usStatesLive.map( (item, idx) => (
                       <div className="form-group-double-dropdown-list-item" onClick={(e) => (setState(item.abbreviation), setStateList(false), setTax(item.taxRate), setTaxID(item.id))} key={idx} >{item.name}</div>
                     ))
                     }
