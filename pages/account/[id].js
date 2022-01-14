@@ -795,7 +795,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                     }
                     <div className="profile-dashboard-recipients-edit-event-container-card-add" style={{cursor: credits == 0 ? 'not-allowed' : 'pointer'}} onClick={() => credits == 0 ? null : (setModal('edit_card_event'), resetState())}>
                       <SVG svg={'plus'}></SVG>
-                      <span>{credits == 0 ? 'You do not have enough credits' : 'Add your next card here'}</span>
+                      <span>{credits == 0 ? 'Purchase more cards' : 'Add your next card here'}</span>
                     </div>
                     {/* <div className="profile-dashboard-recipients-edit-event-container-card-plus_button" style={{cursor: credits == 0 ? 'not-allowed' : 'pointer'}} onClick={() => credits == 0 ? null : (setModal('edit_card_event'), resetState())}>
                       <span><SVG svg={'plus'}></SVG></span>
@@ -1007,7 +1007,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                   }
               </div>
             </div>
-            <button className="form-button mail-button center-button" style={{cursor: credits == 0 ? 'not-allowed' : 'pointer'}} onClick={() => credits == 0 ? null : createRecipient('recipient')}>{loading == 'recipient' ? <div className="loading"><span></span><span></span><span></span></div> : <span>{credits == 0 ? 'Not enough credits' : 'Save Recipient'}</span>}</button>
+            <button className="form-button mail-button center-button" style={{cursor: credits == 0 ? 'not-allowed' : 'pointer'}} onClick={() => credits == 0 ? null : createRecipient('recipient')}>{loading == 'recipient' ? <div className="loading"><span></span><span></span><span></span></div> : <span>{credits == 0 ? 'Purchase more cards' : 'Save Recipient'}</span>}</button>
             {message && <div className="form-message-error left">{message}</div>}
           </div>
         }

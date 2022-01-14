@@ -948,3 +948,22 @@
     width: 100% !important;
   }
 }
+
+.address-line-2 {
+  svg {
+    position: absolute;
+    top: 50%;
+    right: 2%;
+    width: 2rem;
+    height: 2rem;
+    fill: white;
+    background-color: $color-scheme-3-variation-1;
+    border-radius: 50%;
+    padding: 0.2rem;
+    z-index: 3000;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

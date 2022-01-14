@@ -9,6 +9,7 @@ import {useRouter} from 'next/router'
 import PlacesAutocomplete, {geocodeByPlaceId} from 'react-places-autocomplete'
 import {usStates, usStatesLive} from '../utils/quiz'
 import {connect } from 'react-redux'
+import SVG from '../files/svgs'
 import ReactGA from 'react-ga'
 
 const searchOptionsAddress = {
@@ -44,6 +45,7 @@ const Checkout = ({newUser}) => {
   const [zip_code, setZipCode] = useState('')
   const [delivery, setDeliveryDate] = useState('')
   const [state_list, setStateList] = useState(false)
+  const [dropdown, setDropDown] = useState(true)
 
   const [phone, setPhone] = useState('')
   const [message, setMessage] = useState('')
@@ -260,7 +262,7 @@ const Checkout = ({newUser}) => {
       <Nav loggedIn={newUser} color={'#003E5F'}></Nav>
       <NavMobile loggedIn={newUser} color={'#003E5F'}></NavMobile>
       <div className="checkout">
-        <div className="checkout-back" onClick={(e) => (handleEventAnalytics('go_back'), quizProgressNav(e, 'message'))}>
+        <div className="checkout-back" onClick={(e) => (handleEventAnalytics('go_back'), quizProgressNav(e, 'package'))}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
         </div>
         <div className="quiz-title">Payment Method</div>
@@ -284,12 +286,13 @@ const Checkout = ({newUser}) => {
                 <input type="text" placeholder="Cardholder Name" value={cardholder} onChange={(e) => setCardholder(e.target.value)} required/>
               </span>
             </div>
-            <PlacesAutocomplete value={address} onChange={(e) => setAddress(e)} onSelect={(e) => (setAddress(e.split(',')[0]), setCity(e.split(',')[1]), setState(e.split(',')[2], handleZipCode(document.getElementById('address_place_id_checkout').value), handleTax(e.split(',')[2])))} searchOptions={searchOptionsAddress}>
+            <PlacesAutocomplete value={address} onChange={(e) => (setDropDown(true), setAddress(e))} onSelect={(e) => (setDropDown(true), setAddress(e.split(',')[0]), setCity(e.split(',')[1]), setState(e.split(',')[2], handleZipCode(document.getElementById('address_place_id_checkout').value), handleTax(e.split(',')[2])))} searchOptions={searchOptionsAddress}>
               {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                <div className="form-group-single mail checkout-group form-autocomplete-container">
+                <div className="form-group-single mail checkout-group form-autocomplete-container address-line-2">
                   <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'Address'})} onFocus={(e) => e.target.placeholder = ''} onBlur={(e) => e.target.placeholder = 'Address'} required/>
+                  {dropdown && suggestions.length > 0 && <span onClick={(e) => setDropDown(false)}><SVG svg={'close'}></SVG></span>}
                   {loading ? <div>...loading</div> : null}
-                  {suggestions.map((suggestion, idx) => {
+                  {dropdown && suggestions.map((suggestion, idx) => {
                     const className = suggestion.active
                     ? 'form-autocomplete-suggestion-active_100'
                     : 'form-autocomplete-suggestion_100';

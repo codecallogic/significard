@@ -601,11 +601,11 @@ const quiz = ({newUser, quizState}) => {
 
     if(type == 'message'){
       let inputs = []
-      if(quizState.nickname.length > 1){ inputs.push('true')}
+      // if(quizState.nickname.length > 1){ inputs.push('true')}
       if(quizState.message.length > 1){ inputs.push('true')}
       if(quizState.signature.length > 1){ inputs.push('true')}
 
-      if(inputs.length > 2) return true
+      if(inputs.length > 1) return true
     }
   }
 
@@ -669,7 +669,7 @@ const quiz = ({newUser, quizState}) => {
   const handleZipCode = (e) => {
     e.preventDefault()
     if(!/^\d{5}(-\d{4})?$/.test(quizState.zip_code)) return setMessage('Zip code is invalid');
-    quizProgressNav(e, 'package')
+    quizProgressNav(e, 'message')
   }
 
   const validateIsNumber = (type) => {
@@ -1433,8 +1433,9 @@ const quiz = ({newUser, quizState}) => {
                   </PlacesAutocomplete>
                   <PlacesAutocomplete value={quizState.address_two} onChange={(e) => handleChange('mail_api', e, null, 'address_two')} onSelect={(e) => {handleSelect('mail', e, null, 'address_two')}} searchOptions={searchOptionsAddress}>
                     {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                      <div className="form-group-single mail form-autocomplete-container_2">
+                      <div className="form-group-single mail form-autocomplete-container_2 address-line-2">
                         <input autoCorrect="off" spellCheck="false" autoComplete="off" {...getInputProps({placeholder: 'Address Line 2'})}/>
+                        {suggestions.length > 0 && <span><SVGs svg={'close'}></SVGs></span>}
                         {loading ? <div>...loading</div> : null}
                         {suggestions.map((suggestion, idx) => {
                           const className = suggestion.active
@@ -1495,8 +1496,57 @@ const quiz = ({newUser, quizState}) => {
           </div>}
         </>
         }
-        {quiz == 'package' && <>
+        {quiz == 'message' && <>
           <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'mail')}>
+            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
+          </div>
+          <div className="quiz-title">What would you like the card to say?</div>
+          <div className="quiz-title-mobile">What would you like the card to say?</div>
+          {/* <div className="quiz-subtitle">Fill in the blank!</div>
+          <div className="quiz-subtitle-mobile">Fill in the blank!</div> */}
+          <div className="quiz-recipient-message">
+            <div className="quiz-recipient-message-heading">Card: {typeof window !== 'undefined' ? window.localStorage.getItem('event') ? window.localStorage.getItem('event') : quizState.event ? quizState.event : 'event' : null}</div>
+            <div className="quiz-recipient-message-container">
+              <form>
+                {/* <div className="form-group-single message">
+                  <label htmlFor="name">Name/Nickname in front of the card:</label>
+                  <input type="text" name="name" required value={quizState.nickname == 'blank' ? '' : quizState.nickname} onChange={(e) => (handleChange('nickname', e, null, e.target.value), document.getElementsByName('nickname_blank')[0].checked = false)}/>
+                  <div className="checkbox_2"><input id="nickname" type="checkbox" name="nickname_blank" onClick={(e) => handleChange('nickname', e, null, 'blank')}/><span>Leave it blank</span></div>
+                </div> */}
+                <div className="form-group-single message p-0">
+                  <label htmlFor="message">Message inside:</label>
+                  <textarea className="w-4" rows="5" value={quizState.message == 'blank' || quizState.message == 'message_options' ? '' : quizState.message} onChange={(e) => (handleChange('message', e, null, e.target.value), document.getElementsByName('message_blank')[0].checked = false)}></textarea>
+                  {/* document.getElementsByName('message_textarea_blank')[0].checked = false */}
+                  <div className="checkbox_2"><input type="checkbox" name="message_blank" onChange={(e) => (handleChange('message', e, null, 'blank'))}/><span>Leave it blank</span></div>
+                  {/* document.getElementsByName('message_textarea_blank')[0].checked = false */}
+                  {/* <div className="checkbox_2 w-4 info-popup"><input type="checkbox" name="message_textarea_blank" onClick={(e) => (handleChange('message', e, null, 'message_options'), document.getElementsByName('message_blank')[0].checked = false)}/>
+                    <span className="checkbox_2-message">Give me message options for $2.00</span>
+                    <div className="quiz-recipient-package-description-text-bubble">
+                      <svg onMouseOver={(e) => showTooltip(e, 0)} onMouseLeave={(e) => hideTooltip(e, 0)}><use xlinkHref="sprite.svg#icon-information"></use></svg>
+                      <div className="quiz-recipient-package-description-text-bubble-tooltip">
+                      We got you! We’ll send you different message options for just $2.00 per card once you sign up.
+                      </div>
+                    </div>
+                  </div> */}
+                </div>
+                <div className="form-group-single message p-0">
+                  <label htmlFor="name">Signature:</label>
+                  <input type="text" name="signature" required value={quizState.signature == 'blank' ? '' : quizState.signature} onChange={(e) => handleChange('signature', e, null, e.target.value)}/>
+                </div>
+              </form>
+              <div className="checkbox_2 center show-on-mobile"><input type="checkbox"/><span>Not sure yet, ask me later</span></div>
+            </div>
+          </div>
+          <div className="checkbox_2 center hide-on-mobile"><input id="message_unsure" type="checkbox" onClick={(e) => e.target.checked ? (window.localStorage.setItem('message_later', 'not_sure'), resetMessage(), setMessageLater(false)) : (window.localStorage.removeItem('message_later'), setMessageLater(false))}/><span>Not sure yet, ask me later</span></div>
+          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e, 'package')} disabled={message_later}>Next</button><div className="quiz-button-container"></div></div>
+          {handleFormProgressButtons('message') && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'package')}>
+            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
+          </div>
+          }
+        </>
+        }
+        {quiz == 'package' && <>
+          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'message')}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
           </div>
           <div className="quiz-title">Choose the number of cards you'd like to receive for ANY recipients</div>
@@ -1514,7 +1564,7 @@ const quiz = ({newUser, quizState}) => {
               <div className="quiz-recipient-package-item-plan">$4.99/mo</div>
               <div className="quiz-recipient-package-item-price">$11.99 per card</div>
               {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-              <button className="quiz-recipient-package-item-button" onClick={ (e) => (handleEventAnalytics('shy_sender'), quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'shy sender', 5))}>Select</button>
+              <button className="quiz-recipient-package-item-button" onClick={ (e) => (handleEventAnalytics('shy_sender'), handleChange('package_plan', e, null, 'shy sender', 5),  window.location.href = '/checkout')}>Select</button>
               <div className="quiz-recipient-package-item-features">
                 <div>&#8226; Free Shipping</div>
                 <div>&#8226; Envelope</div>
@@ -1531,7 +1581,7 @@ const quiz = ({newUser, quizState}) => {
               <div className="quiz-recipient-package-item-plan">$7.49/mo</div>
               <div className="quiz-recipient-package-item-price">$8.99 per card</div>
               {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-              <button className="quiz-recipient-package-item-button" onClick={ (e) => (handleEventAnalytics('friends_and_fam'), quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'friends and fam', 10))}>Select</button>
+              <button className="quiz-recipient-package-item-button" onClick={ (e) => (handleEventAnalytics('friends_and_fam'), handleChange('package_plan', e, null, 'friends and fam', 10), window.location.href = '/checkout')}>Select</button>
               <div className="quiz-recipient-package-item-features">
                 <div>&#8226; Free Shipping</div>
                 <div>&#8226; Envelope</div>
@@ -1549,7 +1599,7 @@ const quiz = ({newUser, quizState}) => {
               <div className="quiz-recipient-package-item-plan">$11.65/mo</div>
               <div className="quiz-recipient-package-item-price">$6.99/card</div>
               {/* <div className="quiz-recipient-package-item-discount">%15 discount for 10+ cards</div> */}
-              <button className="quiz-recipient-package-item-button" onClick={ (e) => (handleEventAnalytics('social_butterfly'), quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'social butterfly', 20))}>Select</button>
+              <button className="quiz-recipient-package-item-button" onClick={ (e) => (handleEventAnalytics('social_butterfly'), handleChange('package_plan', e, null, 'social butterfly', 20), window.location.href = '/checkout')}>Select</button>
               <div className="quiz-recipient-package-item-features">
                 <div>&#8226; Free Shipping</div>
                 <div>&#8226; Envelope</div>
@@ -1571,7 +1621,7 @@ const quiz = ({newUser, quizState}) => {
               </div>
               {!result && <button className="quiz-recipient-package-item-button mb-2" onClick={ () => (handleEventAnalytics('custom_deal'), calculate())}>Calculate</button>
               }
-              {result && <button className="quiz-recipient-package-item-button mb-2" onClick={ (e) => (quizProgressNav(e,'message'))}>Select & Continue</button>
+              {result && <button className="quiz-recipient-package-item-button mb-2" onClick={ (e) =>  window.location.href = '/checkout'}>Select & Continue</button>
               }
               {result && <>
               <div className="quiz-recipient-package-item-price">${result} per card</div>
@@ -1620,68 +1670,19 @@ const quiz = ({newUser, quizState}) => {
           {/* <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => quizProgressNav(e,'mail')} disabled={quizState.package_plan.length < 1 ? true : false}>Next</button><div className="quiz-button-container"></div></div> */}
           {quizState.package_plan == 'custom' ? 
           result ?
-          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'message')}>
+          <div className="quiz-next" onClick={(e) => window.location.href = '/checkout'}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>
           : 
           null
           :
           quizState.package_plan ? 
-          <div className="quiz-next" onClick={(e) => quizProgressNav(e,'message')}>
+          <div className="quiz-next" onClick={(e) =>  window.location.href = '/checkout'}>
             <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
           </div>
           : 
           null
           }
-        </>
-        }
-        {quiz == 'message' && <>
-          <div className="quiz-back" onClick={(e) => quizProgressNav(e, 'package')}>
-            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-left"></use></svg>
-          </div>
-          <div className="quiz-title">What would you like the card to say?</div>
-          <div className="quiz-title-mobile">What would you like the card to say?</div>
-          {/* <div className="quiz-subtitle">Fill in the blank!</div>
-          <div className="quiz-subtitle-mobile">Fill in the blank!</div> */}
-          <div className="quiz-recipient-message">
-            <div className="quiz-recipient-message-heading">Card: {typeof window !== 'undefined' ? window.localStorage.getItem('event') ? window.localStorage.getItem('event') : quizState.event ? quizState.event : 'event' : null}</div>
-            <div className="quiz-recipient-message-container">
-              <form>
-                {/* <div className="form-group-single message">
-                  <label htmlFor="name">Name/Nickname in front of the card:</label>
-                  <input type="text" name="name" required value={quizState.nickname == 'blank' ? '' : quizState.nickname} onChange={(e) => (handleChange('nickname', e, null, e.target.value), document.getElementsByName('nickname_blank')[0].checked = false)}/>
-                  <div className="checkbox_2"><input id="nickname" type="checkbox" name="nickname_blank" onClick={(e) => handleChange('nickname', e, null, 'blank')}/><span>Leave it blank</span></div>
-                </div> */}
-                <div className="form-group-single message p-0">
-                  <label htmlFor="message">Message inside:</label>
-                  <textarea className="w-4" rows="5" value={quizState.message == 'blank' || quizState.message == 'message_options' ? '' : quizState.message} onChange={(e) => (handleChange('message', e, null, e.target.value), document.getElementsByName('message_blank')[0].checked = false)}></textarea>
-                  {/* document.getElementsByName('message_textarea_blank')[0].checked = false */}
-                  <div className="checkbox_2"><input type="checkbox" name="message_blank" onChange={(e) => (handleChange('message', e, null, 'blank'))}/><span>Leave it blank</span></div>
-                  {/* document.getElementsByName('message_textarea_blank')[0].checked = false */}
-                  {/* <div className="checkbox_2 w-4 info-popup"><input type="checkbox" name="message_textarea_blank" onClick={(e) => (handleChange('message', e, null, 'message_options'), document.getElementsByName('message_blank')[0].checked = false)}/>
-                    <span className="checkbox_2-message">Give me message options for $2.00</span>
-                    <div className="quiz-recipient-package-description-text-bubble">
-                      <svg onMouseOver={(e) => showTooltip(e, 0)} onMouseLeave={(e) => hideTooltip(e, 0)}><use xlinkHref="sprite.svg#icon-information"></use></svg>
-                      <div className="quiz-recipient-package-description-text-bubble-tooltip">
-                      We got you! We’ll send you different message options for just $2.00 per card once you sign up.
-                      </div>
-                    </div>
-                  </div> */}
-                </div>
-                <div className="form-group-single message p-0">
-                  <label htmlFor="name">Signature:</label>
-                  <input type="text" name="signature" required value={quizState.signature == 'blank' ? '' : quizState.signature} onChange={(e) => handleChange('signature', e, null, e.target.value)}/>
-                </div>
-              </form>
-              <div className="checkbox_2 center show-on-mobile"><input type="checkbox"/><span>Not sure yet, ask me later</span></div>
-            </div>
-          </div>
-          <div className="checkbox_2 center hide-on-mobile"><input id="message_unsure" type="checkbox" onClick={(e) => e.target.checked ? (window.localStorage.setItem('message_later', 'not_sure'), resetMessage(), setMessageLater(false)) : (window.localStorage.removeItem('message_later'), setMessageLater(false))}/><span>Not sure yet, ask me later</span></div>
-          <div className="quiz-button-container"><button className="quiz-button" onClick={(e) => window.location.href = '/checkout'} disabled={message_later}>Continue</button><div className="quiz-button-container"></div></div>
-          {/* {handleFormProgressButtons('message') && <div className="quiz-next" onClick={(e) => quizProgressNav(e,'description')}>
-            <svg><use xlinkHref="sprite.svg#icon-chevron-thin-right"></use></svg>
-          </div>
-          } */}
         </>
         }
       </div>

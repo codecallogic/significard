@@ -48,7 +48,7 @@ const Slider = ({slider, quizProgressNav, handleChange, result, setresult, calcu
             <div className="slider-slides-item-plan">$4.99/mo</div>
             <div className="slider-slides-item-price">$11.99 per card</div>
             {/* <div className="slider-slides-item-discount">15% discount for 10+ cards</div> */}
-            <button className="slider-slides-item-button" onClick={ (e) => (quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'shy_sender', 5))}>Select</button>
+            <button className="slider-slides-item-button" onClick={ (e) => (handleChange('package_plan', e, null, 'shy_sender', 5), window.location.href = '/checkout')}>Select</button>
             <div className="slider-slides-item-features">
               <div>&#8226; Free Shipping</div>
               <div>&#8226; Envelope</div>
@@ -63,7 +63,7 @@ const Slider = ({slider, quizProgressNav, handleChange, result, setresult, calcu
             <div className="slider-slides-item-plan">$7.49/mo</div>
             <div className="slider-slides-item-price">$8.99 per card</div>
             {/* <div className="slider-slides-item-discount">15% discount for 10+ cards</div> */}
-            <button className="slider-slides-item-button" onClick={ (e) => (quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'friends_and_fam', 10))}>Select</button>
+            <button className="slider-slides-item-button" onClick={ (e) => (handleChange('package_plan', e, null, 'friends_and_fam', 10), window.location.href = '/checkout')}>Select</button>
             <div className="slider-slides-item-features">
               <div>&#8226; Free Shipping</div>
               <div>&#8226; Envelope</div>
@@ -79,7 +79,7 @@ const Slider = ({slider, quizProgressNav, handleChange, result, setresult, calcu
             <div className="slider-slides-item-plan">$11.65/mo</div>
             <div className="slider-slides-item-price">$6.99 per card</div>
             {/* <div className="slider-slides-item-discount">15% discount for 10+ cards</div> */}
-            <button className="slider-slides-item-button" onClick={ (e) => (quizProgressNav(e,'message'), handleChange('package_plan', e, null, 'social_butterfly', 20))}>Select</button>
+            <button className="slider-slides-item-button" onClick={ (e) => (handleChange('package_plan', e, null, 'social_butterfly', 20), window.location.href = '/checkout')}>Select</button>
             <div className="slider-slides-item-features">
               <div>&#8226; Free Shipping</div>
               <div>&#8226; Envelope</div>
@@ -101,7 +101,7 @@ const Slider = ({slider, quizProgressNav, handleChange, result, setresult, calcu
             </div>
             {!result && <button className="slider-slides-item-button mb-1" onClick={ () => (calculate())}>Calculate</button>
             }
-            {result && <button className="slider-slides-item-button mb-1" onClick={ (e) => (quizProgressNav(e,'message'))}>Select</button>
+            {result && <button className="slider-slides-item-button mb-1" onClick={ (e) => (window.location.href = '/checkout')}>Select</button>
             }
             {result && <>
             <div className="slider-slides-item-price">${result} per card</div>
