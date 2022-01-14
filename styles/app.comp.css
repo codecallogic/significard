@@ -1891,15 +1891,17 @@ body {
       display: flex;
       align-items: center;
       width: 43rem;
-      height: 32.6rem;
+      height: 38.6rem;
+      max-height: 100%;
       font-family: Roboto;
       font-size: 1.8rem;
       border-radius: 2.6rem;
       border: 0.1rem solid #c4c4c4;
       padding: 8rem 2rem;
       margin-bottom: 5rem;
-      z-index: 5 !important;
       position: relative; }
+      .home-section_4-item-review span {
+        z-index: 100 !important; }
       @media only screen and (max-width: 1500px) {
         .home-section_4-item-review {
           width: 38rem !important; } }
@@ -1922,7 +1924,7 @@ body {
         border-right: none; }
         .home-section_4-item-review-bottom-container {
           position: absolute;
-          bottom: -7.5%;
+          bottom: -6.5%;
           left: 0;
           display: flex;
           justify-content: center;
@@ -1931,6 +1933,9 @@ body {
       display: flex;
       justify-content: center; }
       .home-section_4-item-image img {
+        width: 18rem;
+        height: 18rem;
+        object-fit: cover;
         border-radius: 50%; }
     .home-section_4-item-name {
       text-align: center;
