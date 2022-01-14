@@ -50,29 +50,39 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
 
     const cardElement = elements.getElement(CardElement)
 
-    const {error, paymentMethod} = await stripe.createPaymentMethod({
-      type: 'card',
-      card: cardElement,
-      // billing_details: {email: user.email}
-      billing_details: {name: cardholder, email: user.email, address: {line1: address, city: city, postal_code: zip_code}}
-    })
+    let error
+    let paymentMethod
+    
+    try {
+      const result = await stripe.createPaymentMethod({
+        type: 'card',
+        card: cardElement,
+        billing_details: {name: cardholder, email: user.email, address: {line1: address, city: city, postal_code: zip_code}}
+      })
+
+      error = result.error
+      paymentMethod = result.paymentMethod
+      
+    } catch (error) {
+      setLoading(false)
+      console.log('PAYMENT METHOD ERROR', error)
+      if(error) error.response ? setMessage(error.response.data) : setMessage('An error occurred submitting your information, please try again later')
+    }
+    
+    
 
     if(error){
-      if(error) error.code ? setMessage('Invalid information') : setMessage('We are having trouble validating your card information')
       setLoading(false)
+      if(error) return error.code ? setMessage('Invalid information') : setMessage('We are having trouble validating your card information')
     }else {
       try {
         
         let orderNumber = Math.floor(100000000 + Math.random() * 900000000)
         // console.log(paymentMethod)
         const responsePayment = await axios.post(`${API}/payment/checkout`, {'payment_method': paymentMethod.id, 'email': user.email, 'amount': amount, 'name': user.username, 'order': orderNumber, 'cardholder_name': cardholder, 'billing_address': address, 'billing_city': city, 'billing_state': state, 'billing_zip': zip_code, 'shipping_name': recipient.name, 'shipping_address': recipient.address_one, 'shipping_city': recipient.city, 'shipping_state': recipient.state, 'shipping_zip': recipient.zip_code, 'event': recipient.event, 'package_price': package_price, 'tax': tax, 'taxID': taxID, 'package_plan': recipient.package_plan, 'package_quantity': recipient.package_quantity, 'delivery_date': delivery, 'last4': paymentMethod.card.last4, 'user': user, 'subscription': subscription, 'phone': phone, 'recipient_name': recipient.recipient_name})
-        // console.log(responsePayment.data)
-
-        const responseRecipient = await axios.post(`${API}/recipient/quiz`, {user, recipient})
-        // console.log(responseRecipient)
         
         const {client_secret, status, payment_id, order} = responsePayment.data
-        // console.log(status)
+
         if(status === 'requires_payment_method'){
           try {
             const result = await stripe.confirmCardPayment(client_secret, {
@@ -82,33 +92,62 @@ const CheckOutForm = ({user, address, city, state, zip_code, delivery, amount, c
               },
               setup_future_usage: 'off_session'
             })
-            if(result.error) setMessage(`${result.error.message}. For ${result.error.decline_code}`)
-            // console.log(result)
+            if(result.error){ setLoading(false); console.log('CONFIRM CARD PAYMENT ERROR', result.error)}
+            if(result.error) return setMessage(`${result.error.message}. For ${result.error.decline_code}`)
+            
+            const responseRecipient = await axios.post(`${API}/recipient/quiz`, {user, recipient})
+            const responseSaveTransaction = await axios.post(`${API}/payment/save-transaction`, {'payment_method': paymentMethod.id, 'email': user.email, 'amount': amount, 'name': user.username, 'order': orderNumber, 'cardholder_name': cardholder, 'billing_address': address, 'billing_city': city, 'billing_state': state, 'billing_zip': zip_code, 'shipping_name': recipient.name, 'shipping_address': recipient.address_one, 'shipping_city': recipient.city, 'shipping_state': recipient.state, 'shipping_zip': recipient.zip_code, 'event': recipient.event, 'package_price': package_price, 'tax': tax, 'taxID': taxID, 'package_plan': recipient.package_plan, 'package_quantity': recipient.package_quantity, 'delivery_date': delivery, 'last4': paymentMethod.card.last4, 'user': user, 'subscription': subscription, 'phone': phone, 'recipient_name': recipient.recipient_name})
+            
             window.localStorage.removeItem('recipient')
-            window.location.href = `/${order}?id=${result.paymentIntent.id}`
+            window.location.href = `/${orderNumber}?id=${result.paymentIntent.id}`
+
           } catch (error) {
             setLoading(false)
-            console.log(error)
-            if(error) setMessage('An error occurred while processing your card. Please try again in a little bit.')
-            console.log(error)
+            console.log('REQUIRES_PAYMENT_METHOD', error)
+            if(error) return setMessage('An error occurred while processing your card. Please try again later.')
           }
         }
 
         if(status === 'requires_action'){
-          stripe.confirmCardPayment(client_secret).then( (result) => {
-            if(result.error) setMessage(`${result.error.message}. For ${result.error.decline_code}`)
-            window.location.href = `/${order}?id=${result.paymentIntent.id}`
-          })
+          try {
+            const result = await stripe.confirmCardPayment(client_secret)
+            if(result.error){ setLoading(false); console.log('CONFIRM CARD PAYMENT ERROR', result.error)}
+            if(result.error) return setMessage(`${result.error.message}. For ${result.error.decline_code}`)
+           
+
+            const responseRecipient = await axios.post(`${API}/recipient/quiz`, {user, recipient})
+            const responseSaveTransaction = await axios.post(`${API}/payment/save-transaction`, {'payment_method': paymentMethod.id, 'email': user.email, 'amount': amount, 'name': user.username, 'order': orderNumber, 'cardholder_name': cardholder, 'billing_address': address, 'billing_city': city, 'billing_state': state, 'billing_zip': zip_code, 'shipping_name': recipient.name, 'shipping_address': recipient.address_one, 'shipping_city': recipient.city, 'shipping_state': recipient.state, 'shipping_zip': recipient.zip_code, 'event': recipient.event, 'package_price': package_price, 'tax': tax, 'taxID': taxID, 'package_plan': recipient.package_plan, 'package_quantity': recipient.package_quantity, 'delivery_date': delivery, 'last4': paymentMethod.card.last4, 'user': user, 'subscription': subscription, 'phone': phone, 'recipient_name': recipient.recipient_name})
+
+            window.localStorage.removeItem('recipient')
+            window.location.href = `/${orderNumber}?id=${result.paymentIntent.id}`
+            
+          } catch (error) {
+            setLoading(false)
+            console.log('REQUIRES_ACTION', error)
+            if(error) return setMessage('An error occurred while processing your card. Please try again later.')
+          }
+         
         }
 
         if(status === 'succeeded'){
-          window.location.href = `/${order}?id=${payment_id}`
+          try {
+            const responseRecipient = await axios.post(`${API}/recipient/quiz`, {user, recipient})
+            const responseSaveTransaction = await axios.post(`${API}/payment/save-transaction`, {'payment_method': paymentMethod.id, 'email': user.email, 'amount': amount, 'name': user.username, 'order': orderNumber, 'cardholder_name': cardholder, 'billing_address': address, 'billing_city': city, 'billing_state': state, 'billing_zip': zip_code, 'shipping_name': recipient.name, 'shipping_address': recipient.address_one, 'shipping_city': recipient.city, 'shipping_state': recipient.state, 'shipping_zip': recipient.zip_code, 'event': recipient.event, 'package_price': package_price, 'tax': tax, 'taxID': taxID, 'package_plan': recipient.package_plan, 'package_quantity': recipient.package_quantity, 'delivery_date': delivery, 'last4': paymentMethod.card.last4, 'user': user, 'subscription': subscription, 'phone': phone, 'recipient_name': recipient.recipient_name})
+            
+            window.localStorage.removeItem('recipient')
+            window.location.href = `/${orderNumber}?id=${payment_id}`
+
+          } catch (error) {
+            setLoading(false)
+            console.log('ERROR SAVING RECIPIENT OR TRANSACTION', error)
+            if(error) return setMessage(`You have been charged but theres was issue processing your order ${orderNumber}. Please contact support.`)
+          }
         }
         
       } catch (error) {
-        console.log(error.response)
-        if(error) error.response ? setMessage(error.response.data) : setMessage('An error occurred submitting your information, please try again later')
         setLoading(false)
+        console.log('PAYMENT CONFIRMATION ERROR', error)
+        if(error) error.response ? setMessage(error.response.data) : setMessage('An error occurred submitting your information, please try again later')
       }
     }
     }
