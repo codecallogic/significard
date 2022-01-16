@@ -5357,6 +5357,9 @@ body {
     .message textarea:focus {
       outline: none;
       border: 0.1rem solid #e5e5e5; }
+  .message-style {
+    font-size: 1.2rem;
+    color: red; }
 
 .checkbox {
   display: flex;

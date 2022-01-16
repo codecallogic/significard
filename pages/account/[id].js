@@ -59,6 +59,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
   const [dashboard, setDashboard] = useState('orders')
   const [credits, setCredits] = useState(newUser.credits)
   const [width, setWidth] = useState('')
+  const [messageStyle, setMessageStyle] = useState('')
 
   const handleClickOutside = (event) => {
     if(myRefs.current){
@@ -84,6 +85,13 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
     setEnableCalendar(``)
     setOtherEvent('')
   }, [calendar])
+
+  useEffect(() => {
+    if(edit == 'style'){
+      if(recipient.rank.length < 6) return setMessageStyle('Please drag all 6')
+      if(recipient.rank.length == 6) return setMessageStyle('')
+    }
+  }, [recipient.rank])
 
   useEffect(() => {
     if(params) params.view ? setDashboard(params.view) : null
@@ -555,12 +563,12 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
         }
         { dashboard == 'profile' && sideNav == 'recipients' &&
         <div className="profile-dashboard-recipients">
-          <div className="profile-dashboard-recipients-item-add" onClick={() => (resetRecipient(), setRecipient(''), setAddNew(true), document.querySelector('.profile-dashboard-recipients').classList.add('hide-on-mobile'))}><SVG svg={'plus'}></SVG><span>Add Recipient</span></div>
+          <div className="profile-dashboard-recipients-item-add" onClick={() => (resetRecipient(), setRecipient(''), setAddNew(true), document.querySelector('.profile-dashboard-recipients').classList.add('hide-on-mobile'), setMessageStyle(''))}><SVG svg={'plus'}></SVG><span>Add Recipient</span></div>
           {allRecipients.map((item, idx) => 
             <div 
             key={idx} 
             className="profile-dashboard-recipients-item" 
-            onClick={() => (setEdit(''), setRecipient(item._id), setCardMenu('empty'), setAddNew(false), document.querySelector('.profile-dashboard-recipients').classList.add('hide-on-mobile'))}>{item.recipient_name}
+            onClick={() => (setEdit(''), setRecipient(item._id), setCardMenu('empty'), setAddNew(false), document.querySelector('.profile-dashboard-recipients').classList.add('hide-on-mobile'), setMessageStyle(''))}>{item.recipient_name}
             </div>
           )}
         </div>
@@ -649,7 +657,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                 </div>
               }
               <div className="profile-dashboard-recipients-edit-style">
-                <div className="profile-dashboard-recipients-edit-style-title"><span>Card style</span> (Drag boxes to rate from most important (1) to least important (6)):</div>
+                <div className="profile-dashboard-recipients-edit-style-title"><span>Card style</span> (Drag boxes to rate from most important (1) to least important (6))</div>
                 <div className="profile-dashboard-recipients-edit-style-selection">
                   {edit == 'style'
 
@@ -710,9 +718,10 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                     ))
                   }
                 </div>
+                {messageStyle && <div className="message-style">{messageStyle}</div>}
                 {edit == 'style' ? 
                    <div className="profile-dashboard-recipients-edit-profile-edit">{loading == 'style' ? <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> : <>
-                   <span onClick={() => (setRecipient(recipientID), setEdit(''))}>Cancel</span>
+                   <span onClick={() => (setRecipient(recipientID), setEdit(''), setMessageStyle(''))}>Cancel</span>
                    {recipient.rank.length == 6 ? <span onClick={() => updateRecipient('style') }>Save</span> : null}
                    </>}
                    </div>
@@ -793,7 +802,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                     )
                     )
                     }
-                    <div className="profile-dashboard-recipients-edit-event-container-card-add" style={{cursor: credits == 0 ? 'not-allowed' : 'pointer'}} onClick={() => credits == 0 ? null : (setModal('edit_card_event'), resetState())}>
+                    <div className="profile-dashboard-recipients-edit-event-container-card-add" style={{cursor: credits == 0 ? '' : 'pointer'}} onClick={() => credits == 0 ? (setAddNew(false), setDashboard('info')) : (setModal('edit_card_event'), resetState())}>
                       <SVG svg={'plus'}></SVG>
                       <span>{credits == 0 ? 'Purchase more cards' : 'Add your next card here'}</span>
                     </div>
@@ -885,7 +894,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
               </div>
             }
             <div className="profile-dashboard-recipients-edit-style">
-              <div className="profile-dashboard-recipients-edit-style-title"><span>Card style</span> (Drag boxes to rate from most important (1) to least important (6)):</div>
+              <div className="profile-dashboard-recipients-edit-style-title"><span>Card style</span> (Drag boxes to rate from most important (1) to least important (6))</div>
               <div className="profile-dashboard-recipients-edit-style-selection">
                 {edit == 'style'
 
@@ -945,13 +954,14 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                   ))
                 }
               </div>
+              {messageStyle && <div className="message-style">{messageStyle}</div>}
               {edit == 'style' ? 
                   <div className="profile-dashboard-recipients-edit-profile-edit">{loading == 'style' 
                   ? 
                   <div className="loading loading-primary loading-small"><span></span><span></span><span></span></div> 
                   : 
                   <>
-                  <span onClick={() => (setRecipient(recipientID), setEdit(''), editRecipient('rank', []))}>Cancel</span>
+                  <span onClick={() => (setRecipient(recipientID), setEdit(''), editRecipient('rank', []), setMessageStyle(''))}>Cancel</span>
                   {recipient.rank && recipient.rank.length > 5 && <span onClick={() => setEdit('')}>Save</span>}</>}
                   </div>
                 :
@@ -1007,7 +1017,7 @@ const User = ({params, newUser, recipients, recipient, editRecipient, updateTags
                   }
               </div>
             </div>
-            <button className="form-button mail-button center-button" style={{cursor: credits == 0 ? 'not-allowed' : 'pointer'}} onClick={() => credits == 0 ? null : createRecipient('recipient')}>{loading == 'recipient' ? <div className="loading"><span></span><span></span><span></span></div> : <span>{credits == 0 ? 'Purchase more cards' : 'Save Recipient'}</span>}</button>
+            <button className="form-button mail-button center-button" style={{cursor: credits == 0 ? '' : 'pointer'}} onClick={() => credits == 0 ? (setAddNew(false),setDashboard('info')) : createRecipient('recipient')}>{loading == 'recipient' ? <div className="loading"><span></span><span></span><span></span></div> : <span>{credits == 0 ? 'Purchase more cards' : 'Save Recipient'}</span>}</button>
             {message && <div className="form-message-error left">{message}</div>}
           </div>
         }

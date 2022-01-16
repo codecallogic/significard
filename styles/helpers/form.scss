@@ -614,6 +614,12 @@
       border: 0.1rem solid $color-light-gray;
     }
   }
+
+  &-style {
+    // text-align: center;
+    font-size: 1.2rem;
+    color: red;
+  }
 }
 
 .checkbox {
