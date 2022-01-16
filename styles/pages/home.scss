@@ -9,6 +9,10 @@
     // background-color: $color-scheme-3;
     position: relative;
 
+    @media only screen and (min-width: $wide-small) {
+      padding: 0 20rem !important;
+    }
+
     @media only screen and (min-width: $extra-large) {
       padding: 0 10rem;
     }
@@ -145,24 +149,52 @@
         margin-left: 20rem;
         z-index: 5;
 
-        @media only screen and (max-width: $wide-large) {
-          width: 70%;
+        // @media only screen and (max-width: $wide-large) {
+        //   width: 70%;
+        // }
+
+        // @media only screen and (max-width: $wide) {
+        //   width: 100%;
+        // }
+
+        @media only screen and (min-width: $wide) {
+          width: 120%;
+          margin-top: 8rem;
+          height: 80%;
         }
 
         @media only screen and (max-width: $wide) {
-          width: 100%;
+          width: 130%;
+          margin-top: 8rem;
+          height: 85%;
         }
 
         @media only screen and (max-width: $wide-small) {
           width: 100%;
-          margin-top: 5rem;
-          height: 80%;
+          height: 100%;
+          margin-bottom: -25rem;
+          margin-left: 18rem;
+        }
+
+        @media only screen and (max-width: $extra-large) {
+          width: 100%;
+          height: 100%;
+          margin-bottom: -25rem;
+          margin-left: 18rem;
+        }
+
+        @media only screen and (max-width: $large-medium) {
+          width: 120%;
+          height: 90%;
+          margin-bottom: -25rem;
+          margin-left: 10rem;
         }
 
         @media only screen and (max-width: $large) {
-          width: 60%;
+          width: 70%;
+          height: 80%;
           margin-bottom: -25rem;
-          margin-left: 18rem;
+          margin-left: 14rem;
         }
 
         @media only screen and (max-width: $medium) {
@@ -173,7 +205,7 @@
 
         @media only screen and (max-width: $small) {
           width: 120%;
-          margin-bottom: -20rem;
+          margin-bottom: -18rem;
           margin-left: -5rem;
         }
       }
@@ -192,10 +224,10 @@
 
   &-section_2 {
     width: 100%;
-    padding: 5rem 0;
+    padding: 5rem 10rem;
     height: 70rem;
 
-    @media only screen and (max-width: $large) {
+    @media only screen and (max-width: $extra-large) {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -282,6 +314,7 @@
   &-section_4 {
     width: 100%;
     height: 100%;
+    padding: 0 10rem;
 
     @media only screen and (max-width: $extra-large) {
       display: flex;
@@ -302,8 +335,9 @@
     &-container {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 3rem 15rem;
+      justify-content: center;
+      // justify-content: space-between;
+      // padding: 3rem 15rem;
 
       @media only screen and (max-width: $wide) {
         padding: 3rem 10rem;
@@ -324,15 +358,16 @@
 
     &-item {
       align-self: flex-start;
+      margin-right: 1rem;
 
       &-review {
         display: flex;
         align-items: center;
-        width: 43rem;
-        height: 38.6rem;
+        width: 32rem;
+        height: 33.6rem;
         max-height: 100%;
         font-family: Roboto;
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         border-radius: 2.6rem;
         border: 0.1rem solid #c4c4c4;
         padding: 8rem 2rem;
@@ -341,14 +376,6 @@
 
         span {
           z-index: 100 !important;
-        }
-
-        @media only screen and (max-width: $wide) {
-          width: 38rem !important;
-        }
-
-        @media only screen and (max-width: $wide-small) {
-          width: 35rem !important;
         }
 
         @media only screen and (max-width: $extra-large) {

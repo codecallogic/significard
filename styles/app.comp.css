@@ -1652,6 +1652,9 @@ body {
   width: 100%;
   height: 68rem;
   position: relative; }
+  @media only screen and (min-width: 1350px) {
+    .home-header {
+      padding: 0 20rem !important; } }
   @media only screen and (min-width: 1200px) {
     .home-header {
       padding: 0 10rem; } }
@@ -1756,22 +1759,40 @@ body {
     justify-content: center;
     margin-left: 20rem;
     z-index: 5; }
-    @media only screen and (max-width: 1800px) {
+    @media only screen and (min-width: 1500px) {
       .home-header-card-card_1 {
-        width: 70%; } }
+        width: 120%;
+        margin-top: 8rem;
+        height: 80%; } }
     @media only screen and (max-width: 1500px) {
       .home-header-card-card_1 {
-        width: 100%; } }
+        width: 130%;
+        margin-top: 8rem;
+        height: 85%; } }
     @media only screen and (max-width: 1350px) {
       .home-header-card-card_1 {
         width: 100%;
-        margin-top: 5rem;
-        height: 80%; } }
-    @media only screen and (max-width: 992px) {
-      .home-header-card-card_1 {
-        width: 60%;
+        height: 100%;
         margin-bottom: -25rem;
         margin-left: 18rem; } }
+    @media only screen and (max-width: 1200px) {
+      .home-header-card-card_1 {
+        width: 100%;
+        height: 100%;
+        margin-bottom: -25rem;
+        margin-left: 18rem; } }
+    @media only screen and (max-width: 1100px) {
+      .home-header-card-card_1 {
+        width: 120%;
+        height: 90%;
+        margin-bottom: -25rem;
+        margin-left: 10rem; } }
+    @media only screen and (max-width: 992px) {
+      .home-header-card-card_1 {
+        width: 70%;
+        height: 80%;
+        margin-bottom: -25rem;
+        margin-left: 14rem; } }
     @media only screen and (max-width: 768px) {
       .home-header-card-card_1 {
         width: 100%;
@@ -1780,7 +1801,7 @@ body {
     @media only screen and (max-width: 600px) {
       .home-header-card-card_1 {
         width: 120%;
-        margin-bottom: -20rem;
+        margin-bottom: -18rem;
         margin-left: -5rem; } }
   .home-header-card-card_2 {
     position: absolute;
@@ -1792,9 +1813,9 @@ body {
 
 .home-section_2 {
   width: 100%;
-  padding: 5rem 0;
+  padding: 5rem 10rem;
   height: 70rem; }
-  @media only screen and (max-width: 992px) {
+  @media only screen and (max-width: 1200px) {
     .home-section_2 {
       display: flex;
       flex-direction: column;
@@ -1854,7 +1875,8 @@ body {
 
 .home-section_4 {
   width: 100%;
-  height: 100%; }
+  height: 100%;
+  padding: 0 10rem; }
   @media only screen and (max-width: 1200px) {
     .home-section_4 {
       display: flex;
@@ -1871,8 +1893,7 @@ body {
   .home-section_4-container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 3rem 15rem; }
+    justify-content: center; }
     @media only screen and (max-width: 1500px) {
       .home-section_4-container {
         padding: 3rem 10rem; } }
@@ -1886,15 +1907,16 @@ body {
       .home-section_4-container {
         flex-direction: column; } }
   .home-section_4-item {
-    align-self: flex-start; }
+    align-self: flex-start;
+    margin-right: 1rem; }
     .home-section_4-item-review {
       display: flex;
       align-items: center;
-      width: 43rem;
-      height: 38.6rem;
+      width: 32rem;
+      height: 33.6rem;
       max-height: 100%;
       font-family: Roboto;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       border-radius: 2.6rem;
       border: 0.1rem solid #c4c4c4;
       padding: 8rem 2rem;
@@ -1902,12 +1924,6 @@ body {
       position: relative; }
       .home-section_4-item-review span {
         z-index: 100 !important; }
-      @media only screen and (max-width: 1500px) {
-        .home-section_4-item-review {
-          width: 38rem !important; } }
-      @media only screen and (max-width: 1350px) {
-        .home-section_4-item-review {
-          width: 35rem !important; } }
       @media only screen and (max-width: 1200px) {
         .home-section_4-item-review {
           width: 30rem !important; } }
@@ -5360,6 +5376,9 @@ body {
   .message-style {
     font-size: 1.2rem;
     color: red; }
+  .message-login {
+    font-size: 1.2rem;
+    color: #003e5f; }
 
 .checkbox {
   display: flex;

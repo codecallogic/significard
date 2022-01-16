@@ -25,6 +25,7 @@ const SignUp = ({loggedIn, user, userUpdate, userMessage}) => {
   const [placeholderName, setPlaceholderName] = useState(null)
   const [placeholderEmail, setPlaceholderEmail] = useState(null)
   const [placeholderPassword, setPlaceholderPassword] = useState(null)
+  const [message, setMessage] = useState('')
   
   const uiConfig = {
     signInFlow: 'popup',
@@ -52,12 +53,15 @@ const SignUp = ({loggedIn, user, userUpdate, userMessage}) => {
   }
 
   const signUp = async (e) => {
-    setLoading(true)
     e.preventDefault()
+    setLoading(true)
+    setMessage('')
+    userMessage('')
+    
     try {
       const responseSignUp = await axios.post(`${API}/auth/signup`, {name, email, password}, {withCredentials: true, credentials: 'include'})
       // console.log(responseSignUp.data)
-      userMessage(responseSignUp.data)
+      setMessage(responseSignUp.data)
       setLoading(false)
       setName('')
       setEmail('')
@@ -73,8 +77,10 @@ const SignUp = ({loggedIn, user, userUpdate, userMessage}) => {
   }
 
   const signUpFirebase = async (user) => {
-
     setLoading(true)
+    setMessage('')
+    userMessage('')
+    
     try {
       const responseLogin = await axios.post(`${API}/auth/login`, {user}, {withCredentials: true, credentials: 'include'})
       setLoading(false)
@@ -115,7 +121,7 @@ const SignUp = ({loggedIn, user, userUpdate, userMessage}) => {
     <NavMobile loggedIn={loggedIn} color={'#003E5F'}></NavMobile>
     <div className="signup-container">
     <div className="signup">
-      <h1 className="signup-heading">Let's set up your account:</h1>
+      <h1 className="signup-heading">Let's set up your account</h1>
       {/* <h2 className="signup-subheading">Select one or more events.</h2> */}
       <form className="signup-form" onSubmit={signUp}>
         <div className="signup-form-group">
@@ -133,6 +139,7 @@ const SignUp = ({loggedIn, user, userUpdate, userMessage}) => {
         <button type="submit">Continue with E-mail</button>
         <br/>
         {loading ? <iframe src="https://giphy.com/embed/sSgvbe1m3n93G" width="30" height="30" frameBorder="0" className="giphy-loading" allowFullScreen></iframe> : null }
+        {message && <div className="message-login">{message}</div>}
         {user.message !== null ? <div className="signup-form-message">{user.message !== null ? user.message : ''} </div> : loading ? null : <div className="giphy-loading-space">Loading...</div>}
         <div className="signup-form-break">
           <span></span>
