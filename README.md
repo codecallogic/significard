@@ -1,34 +1,136 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div id="top"></div>
 
-## Getting Started
+<div align="center">
+  <a href="https://github.com/codecallogic/fabworkflows">
+    <img src="public/media/logo_2.png" alt="Logo">
+  </a>
 
-First, run the development server:
+  <h3 align="center">Significard</h3>
 
-```bash
-npm run dev
-# or
-yarn dev
+  <p align="center">
+    Countertop management software
+    <br />
+    <!-- <a href="https://github.com/codecallogic/fabworkflows"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    ·
+    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a> -->
+  </p>
+</div>
+
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
+
+<br>
+
+![quote!](/public/media/readme/inventory_dashboard.png 'Quote')
+
+# About The Project
+
+Fabworkflow is a management software for a countertop fabricator. Fabworkflow allows the business to create quotes, record and manage inventory, process purchases, and track warehouse jobs and activities. Fabworkflow aims to be a fully integrated warehouse management system including drawing professional countertop layouts.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Features
+
+- QR code technology to track inventory
+- Stripe integration to process orders
+- Aggregate pipeline search
+- Simple UI optimzed for productivity
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+### Built with
+
+- Next.js [Next.js](https://nextjs.org/)
+- React.js [React.js](https://reactjs.org/)
+- Sass [Sass](https://sass-lang.com/install)
+- Redux [Redux](https://redux.js.org/)
+
+![quote!](/public/media/readme/quote.png 'Quote')
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+# Getting Started
+
+To set up the project locally follow these steps. Please note that these steps are for the client side of the project. For server side guide and set up contact us. Server installation is required to run the software.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Prerequisites
+
+Environment intallations required to use the softeware.
+
+- npm
+
+```sh
+npm install npm@latest -g
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### Installation
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+1. Clone the repo
+   ```sh
+   git clone https://github.com/codecallogic/fabworkflows.git
+   ```
+2. Install NPM packages
+   ```sh
+   npm install
+   ```
+3. Enter your KEYS in `next.config.js`
+   ```js
+   GOOGLE = 'ENTER YOUR API';
+   STRIPE = 'ENTER KEY';
+   ```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-## Learn More
+# Roadmap
 
-To learn more about Next.js, take a look at the following resources:
+- [x] Implement payment gateway
+- [ ] Integrate a DFX drawing CAD system
+  - [ ] Add documentation
+- [ ] Develop client side design
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+# Contact
 
-## Deploy on Vercel
+Fabricio Guardia - contact@fabricioguardia.com
+<br>
+LinkedIn - <a href="https://www.linkedin.com/in/fabricio-guardia/">Visit</a>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Acknowledgments
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Helpful resources used in this project
+
+- <a href="https://icomoon.io/">Icomoon</a>
+- <a href="https://stripe.com/docs/payments/quickstart">Stripe</a>
+- <a href="https://www.npmjs.com/package/react-places-autocomplete">React Places Autocomplete</a>
+- <a href="https://lodash.com/">Lodash</a>
+- <a href="https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en">Redux DevTools</a>
