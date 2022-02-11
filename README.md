@@ -1,17 +1,17 @@
 <div id="top"></div>
 
 <div align="center">
-  <a href="https://github.com/codecallogic/fabworkflows">
-    <img src="public/media/logo_2.png" alt="Logo">
+  <a href="https://github.com/codecallogic/significard.git">
+    <img src="public/significard.png" alt="Logo">
   </a>
 
   <h3 align="center">Significard</h3>
 
   <p align="center">
-    Countertop management software
+    An eco-friendly greeting cards startup
     <br />
-    <!-- <a href="https://github.com/codecallogic/fabworkflows"><strong>Explore the docs »</strong></a>
-    <br />
+     <a href="https://significard.com/"><strong>Website</strong></a>
+     <!-- <br />
     <br />
     <a href="https://github.com/github_username/repo_name">View Demo</a>
     ·
@@ -46,20 +46,18 @@
 
 <br>
 
-![quote!](/public/media/readme/inventory_dashboard.png 'Quote')
+![homepage!](/public/homepage.png 'Homepage')
 
 # About The Project
 
-Fabworkflow is a management software for a countertop fabricator. Fabworkflow allows the business to create quotes, record and manage inventory, process purchases, and track warehouse jobs and activities. Fabworkflow aims to be a fully integrated warehouse management system including drawing professional countertop layouts.
+Significard is a subscription startup that recommends and schedules relatable eco-friendly greeting cards combining technology with real independent artists. Users go through quiz to help the business determine what type of card and design will best caterr to the person who will receive the letter in the mail.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Features
 
-- QR code technology to track inventory
+- UI frienldy quiz to understand the receiver
 - Stripe integration to process orders
-- Aggregate pipeline search
-- Simple UI optimzed for productivity
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -70,13 +68,13 @@ Fabworkflow is a management software for a countertop fabricator. Fabworkflow al
 - Sass [Sass](https://sass-lang.com/install)
 - Redux [Redux](https://redux.js.org/)
 
-![quote!](/public/media/readme/quote.png 'Quote')
+![quiz!](/public/quiz.png 'Quiz')
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Getting Started
 
-To set up the project locally follow these steps. Please note that these steps are for the client side of the project. For server side guide and set up contact us. Server installation is required to run the software.
+To set up the project locally follow these steps. Please note that these steps are for the client side of the project. For server side guide and set up clone server side code. Server installation is required to run the software.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -96,26 +94,28 @@ npm install npm@latest -g
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/codecallogic/fabworkflows.git
+   git clone https://github.com/codecallogic/significard.git
    ```
 2. Install NPM packages
    ```sh
    npm install
    ```
-3. Enter your KEYS in `next.config.js`
+3. Create `next.config.js` and `config.js` files
+4. Enter your KEYS in `next.config.js`
    ```js
    GOOGLE = 'ENTER YOUR API';
    STRIPE = 'ENTER KEY';
    ```
+5. Set up enviroment variables with publicRuntimeConfig in `config.js`
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Roadmap
 
-- [x] Implement payment gateway
-- [ ] Integrate a DFX drawing CAD system
-  - [ ] Add documentation
-- [ ] Develop client side design
+- [x] Complete onboarding quiz
+- [x] Implement subscription based payment model
+- [x] Customer dashboard
+- [x] Go live!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -131,6 +131,6 @@ Helpful resources used in this project
 
 - <a href="https://icomoon.io/">Icomoon</a>
 - <a href="https://stripe.com/docs/payments/quickstart">Stripe</a>
-- <a href="https://www.npmjs.com/package/react-places-autocomplete">React Places Autocomplete</a>
-- <a href="https://lodash.com/">Lodash</a>
+- <a href="https://www.npmjs.com/package/react-swipeable">React Swipeable</a>
 - <a href="https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en">Redux DevTools</a>
+- <a href="https://firebase.google.com/docs/auth/web/firebaseui">Firebase Web</a>
